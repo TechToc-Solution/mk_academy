@@ -5,6 +5,7 @@ import 'package:mk_academy/services/app_localizations.dart';
 import 'package:mk_academy/services/locale/locale_cubit.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
