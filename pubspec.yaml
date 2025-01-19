@@ -9,6 +9,7 @@ environment:
   sdk: ^3.5.3
 
 dependencies:
+  awesome_dialog: ^3.2.1
   bloc_concurrency: ^0.2.5
   cupertino_icons: ^1.0.8
   dio: ^5.7.0
