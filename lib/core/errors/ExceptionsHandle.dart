@@ -14,7 +14,8 @@ final Map<String, String> enMessages = {
   "serverError": "Oops, there was an error. Please try again later.",
   "notFound": "The requested resource was not found.",
   "internalServerError": "Internal server error. Please try again later.",
-  "validationError": "Invalid input data."
+  "validationError": "Invalid input data.",
+  "error_tryAgain": "Opps there is was an error, try again later."
 };
 
 final Map<String, String> arMessages = {
@@ -29,7 +30,8 @@ final Map<String, String> arMessages = {
   "serverError": "هنالك خطأ ما، الرجاء المحاولة لاحقاً",
   "notFound": "الطلب غير موجود",
   "internalServerError": "خطأ في الخادم، الرجاء المحاولة لاحقاً",
-  "validationError": "بيانات غير صالحة"
+  "validationError": "بيانات غير صالحة",
+  "error_tryAgain": "هنالك خطأ ماالرجاء المحاولة لاحقا"
 };
 
 String exceptionsHandle({required DioException error}) {
@@ -101,15 +103,11 @@ String exceptionsHandle({required DioException error}) {
             break;
         }
       } else {
-        message = lang == "en"
-            ? "Opps there is was an error"
-            : "هنالك خطأ ماالرجاء المحاولة لاحقا ";
+        message = messages['error_tryAgain'];
       }
       return message!;
     default:
-      message = lang == "en"
-          ? "Opps there is was an error"
-          : "هنالك خطأ ماالرجاء المحاولة لاحقا ";
+      message = messages['error_tryAgain']!;
       return message;
   }
 }
