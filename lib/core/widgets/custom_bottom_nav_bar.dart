@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/colors.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
@@ -39,17 +40,17 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
           Icons.person_outline,
           Icons.settings_outlined
         ],
-        tabIconColor: Colors.blueGrey,
+        tabIconColor: AppColors.backgroundColor,
         tabIconSize: 28.0,
         tabIconSelectedSize: 26.0,
-        tabSelectedColor: const Color.fromARGB(255, 56, 70, 131),
-        tabIconSelectedColor: Colors.white,
-        tabBarColor: Colors.white,
+        tabSelectedColor: AppColors.primaryColors,
+        tabIconSelectedColor: AppColors.backgroundColor,
+        tabBarColor: AppColors.primaryColors,
         tabSize: 50,
         tabBarHeight: 55,
         textStyle: const TextStyle(
           fontSize: 15,
-          color: Color(0xFF252c4a),
+          color: AppColors.backgroundColor,
           fontWeight: FontWeight.w500,
         ),
         onTabItemSelected: (index) {
