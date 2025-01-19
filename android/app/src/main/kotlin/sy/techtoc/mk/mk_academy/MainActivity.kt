@@ -1,4 +1,4 @@
-package sy.techtoc.mk.mk_academy
+package sy.techtoc.mk_academy
 
 import io.flutter.embedding.android.FlutterActivity
 
