@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/locale/locale_cubit.dart';
 import 'package:mk_academy/core/utils/cache_helper.dart';
+import 'package:mk_academy/core/utils/routs.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
             ),
             home: const MyHomePage(title: 'Flutter Demo Home Page'),
+            routes: Routes.routes,
           );
         },
       ),
@@ -60,6 +62,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
+  static const String routeName = '/home';
 
   final String title;
 
