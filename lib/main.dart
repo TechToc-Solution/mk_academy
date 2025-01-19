@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:mk_academy/services/app_localizations.dart';
-import 'package:mk_academy/services/locale/locale_cubit.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/core/locale/locale_cubit.dart';
+import 'package:mk_academy/core/utils/cache_helper.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await CacheHelper.init();
   runApp(const MyApp());
 }
 
