@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
+import 'package:motion_tab_bar/MotionTabBarController.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
   final String select;
@@ -13,7 +14,25 @@ class CustomBottomNavBar extends StatefulWidget {
   State<CustomBottomNavBar> createState() => _CustomBottomNavBarState();
 }
 
-class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
+class _CustomBottomNavBarState extends State<CustomBottomNavBar>
+    with SingleTickerProviderStateMixin {
+  MotionTabBarController? _motionTabBarController;
+  @override
+  void initState() {
+    _motionTabBarController = MotionTabBarController(
+      initialIndex: 1,
+      length: 3,
+      vsync: this,
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _motionTabBarController!.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,6 +52,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
         ),
       ),
       child: MotionTabBar(
+        controller: _motionTabBarController,
         initialSelectedTab: widget.select,
         labels: const ["Home", "Profile", "Settings"],
         icons: const [
@@ -44,14 +64,14 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
         tabIconSize: 28.0,
         tabIconSelectedSize: 26.0,
         tabSelectedColor: AppColors.primaryColors,
-        tabIconSelectedColor: AppColors.backgroundColor,
+        tabIconSelectedColor: AppColors.textButtonColors,
         tabBarColor: AppColors.primaryColors,
         tabSize: 50,
         tabBarHeight: 55,
         textStyle: const TextStyle(
           fontSize: 15,
           color: AppColors.backgroundColor,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.bold,
         ),
         onTabItemSelected: (index) {
           if (index == 0) {
