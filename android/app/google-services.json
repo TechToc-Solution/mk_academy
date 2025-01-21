@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "614266747108",
+    "project_id": "mk-academy-40f5c",
+    "storage_bucket": "mk-academy-40f5c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:614266747108:android:43dc849d3f1cea674594f1",
+        "android_client_info": {
+          "package_name": "sy.techtoc.mk_academy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAs1919etD_0aVMrIFz0XBPo-cZSWqkNJ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
