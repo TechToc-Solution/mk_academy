@@ -6,7 +6,42 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mk_academy/core/utils/cache_helper.dart';
 
-Future<void> handleBackgroundMessage(RemoteMessage message) async {}
+Future<void> handleBackgroundMessage(RemoteMessage message) async {
+  final FlutterLocalNotificationsPlugin localNotifications =
+      FlutterLocalNotificationsPlugin();
+  const AndroidInitializationSettings android =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
+  const DarwinInitializationSettings ios = DarwinInitializationSettings();
+  const InitializationSettings settings =
+      InitializationSettings(android: android, iOS: ios);
+  await localNotifications.initialize(settings);
+
+  final notification = message.notification;
+  if (notification != null) {
+    localNotifications.show(
+      notification.hashCode,
+      notification.title,
+      notification.body,
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'high_importance_channel',
+          'Highly Important Notifications',
+          channelDescription:
+              'This Channel is used for important notifications',
+          importance: Importance.max,
+          priority: Priority.high,
+          icon: '@drawable/ic_launcher',
+        ),
+        iOS: DarwinNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+        ),
+      ),
+      payload: jsonEncode(message.data),
+    );
+  }
+}
 
 class FirebaseApi {
   final _firebaseMessaging = FirebaseMessaging.instance;
@@ -14,11 +49,12 @@ class FirebaseApi {
   final _androidChannel = const AndroidNotificationChannel(
     'high_importance_channel',
     'Highly Important Notifications',
-    description: 'This Cahnnel is used for important nots',
+    description: 'This Channel is used for important notifications',
     importance: Importance.max,
   );
 
   final _localNotifications = FlutterLocalNotificationsPlugin();
+
   void handleMessage(RemoteMessage? message) {
     if (message == null) return;
     log("Notification clicked with data: ${message.data}");
@@ -27,7 +63,11 @@ class FirebaseApi {
 
   Future initLocalNotifications() async {
     const android = AndroidInitializationSettings('@mipmap/ic_launcher');
-    const ios = DarwinInitializationSettings();
+    const ios = DarwinInitializationSettings(
+      requestSoundPermission: true,
+      requestBadgePermission: true,
+      requestAlertPermission: true,
+    );
 
     const settings = InitializationSettings(android: android, iOS: ios);
 
@@ -39,18 +79,6 @@ class FirebaseApi {
   }
 
   Future<void> initPushNotifications() async {
-    // Request permissions for iOS
-    NotificationSettings settings = await _firebaseMessaging.requestPermission(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
-
-    if (settings.authorizationStatus != AuthorizationStatus.authorized) {
-      log("User declined or has not granted permissions for notifications");
-      return;
-    }
-
     // Display notification in foreground
     FirebaseMessaging.onMessage.listen((message) {
       final notification = message.notification;
@@ -61,6 +89,11 @@ class FirebaseApi {
           notification.title,
           notification.body,
           NotificationDetails(
+            iOS: DarwinNotificationDetails(
+              presentAlert: true,
+              presentBadge: true,
+              presentSound: true,
+            ),
             android: AndroidNotificationDetails(
               _androidChannel.id,
               _androidChannel.name,
@@ -79,6 +112,13 @@ class FirebaseApi {
       handleMessage(message);
     });
 
+    // Handle initial message when app is launched from terminated state
+    RemoteMessage? initialMessage =
+        await _firebaseMessaging.getInitialMessage();
+    if (initialMessage != null) {
+      handleMessage(initialMessage);
+    }
+
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
 
     // Save the FCM token
@@ -91,6 +131,7 @@ class FirebaseApi {
     log("hasFCMToken: ${hasFCMToken.toString()}");
     final String? token = await CacheHelper.getData(key: "token");
     log("token: ${token.toString()}");
+
     if (!hasFCMToken) {
       final String? fcmToken = Platform.isAndroid
           ? await _firebaseMessaging.getToken()
@@ -103,15 +144,17 @@ class FirebaseApi {
       } else {
         log("Failed to retrieve FCM token");
       }
-    } else {
-      final String fcmToken = CacheHelper.getData(key: 'fcm_token');
-      log("fCMToken: ${fcmToken.toString()}");
     }
+    final String fcmToken = CacheHelper.getData(key: 'fcm_token');
+    _firebaseMessaging.onTokenRefresh.listen((newToken) async {
+      await CacheHelper.setString(key: "fcm_token", value: newToken);
+      // send it to server
+    });
+    log("fCMToken: ${fcmToken.toString()}");
   }
 
   Future<void> requestNotificationPermission() async {
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-    NotificationSettings settings = await messaging.requestPermission(
+    NotificationSettings settings = await _firebaseMessaging.requestPermission(
       alert: true,
       announcement: false,
       badge: true,
