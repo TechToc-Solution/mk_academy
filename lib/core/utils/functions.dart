@@ -23,7 +23,7 @@ Route goRoute({required var x}) {
   );
 }
 
-void massege(BuildContext context, String error, Color c, {int msgTime = 2}) {
+void messages(BuildContext context, String error, Color c, {int msgTime = 2}) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     behavior: SnackBarBehavior.floating,
     margin: EdgeInsets.symmetric(
