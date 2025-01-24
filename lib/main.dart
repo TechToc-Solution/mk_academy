@@ -10,8 +10,7 @@ import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/routs.dart';
 import 'package:mk_academy/core/utils/styles.dart';
 import 'package:mk_academy/features/auth/presentation/views/login/login_page.dart';
-
-import 'features/home/presentation/views/home_page.dart';
+import 'package:mk_academy/features/home/presentation/views/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,8 +67,7 @@ class MyApp extends StatelessWidget {
                   ColorScheme.fromSeed(seedColor: AppColors.primaryColors),
               useMaterial3: true,
             ),
-            home: const LoginPage(),
-            initialRoute: LoginPage.routeName,
+            initialRoute: HomePage.routeName,
             routes: Routes.routes,
           );
         },

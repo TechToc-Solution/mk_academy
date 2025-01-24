@@ -25,7 +25,7 @@ class _CustomAdvertiseListState extends State<CustomAdvertiseList> {
             items: widget.advertises,
             options: CarouselOptions(
               aspectRatio: 16 / 9,
-              viewportFraction: 0.8,
+              viewportFraction: 0.95,
               initialPage: 0,
               enableInfiniteScroll: true,
               reverse: false,
