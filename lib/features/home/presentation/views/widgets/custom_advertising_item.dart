@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
-import 'package:mk_academy/features/home/presentation/views/home_page.dart';
 
 class CustomAdvertiseItem extends StatelessWidget {
   const CustomAdvertiseItem({

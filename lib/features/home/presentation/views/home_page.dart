@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mk_academy/core/utils/app_localizations.dart';
-import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/widgets/custom_level_bar.dart';
 import 'package:mk_academy/features/home/presentation/views/advertising_section.dart';
 import 'package:mk_academy/features/home/presentation/views/category_section.dart';
