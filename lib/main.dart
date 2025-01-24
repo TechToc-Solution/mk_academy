@@ -9,6 +9,7 @@ import 'package:mk_academy/core/utils/cache_helper.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/routs.dart';
 import 'package:mk_academy/core/utils/styles.dart';
+import 'package:mk_academy/features/auth/presentation/views/login/login_page.dart';
 
 import 'features/home/presentation/views/home_page.dart';
 
@@ -67,7 +68,8 @@ class MyApp extends StatelessWidget {
                   ColorScheme.fromSeed(seedColor: AppColors.primaryColors),
               useMaterial3: true,
             ),
-            home: const HomePage(title: 'Flutter Demo Home Page'),
+            home: const LoginPage(),
+            initialRoute: LoginPage.routeName,
             routes: Routes.routes,
           );
         },

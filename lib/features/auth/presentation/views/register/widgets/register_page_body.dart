@@ -4,7 +4,9 @@ import 'package:mk_academy/core/utils/app_localizations.dart';
 import '../../../../../../core/utils/assets_data.dart';
 import '../../../../../../core/utils/colors.dart';
 import '../../../../../../core/utils/constats.dart';
+import '../../../../../../core/utils/enums.dart';
 import '../../../../../../core/utils/styles.dart';
+import '../../../../../../core/utils/validation.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_filed.dart';
 
@@ -16,29 +18,38 @@ class RegisterPageBody extends StatefulWidget {
 }
 
 class _RegisterPageBodyState extends State<RegisterPageBody> {
-  late final TextEditingController nameContrroler;
-  late final TextEditingController passwordContrroler;
-  late final TextEditingController ConfirnmPassword;
+  late final TextEditingController nameController;
+  late final TextEditingController passwordContoller;
+  late final TextEditingController confirnmPasswordController;
   final GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();
   @override
   void initState() {
-    nameContrroler = new TextEditingController();
-    passwordContrroler = new TextEditingController();
-    ConfirnmPassword = new TextEditingController();
+    nameController = new TextEditingController();
+    passwordContoller = new TextEditingController();
+    confirnmPasswordController = new TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    nameContrroler.dispose();
-    passwordContrroler.dispose();
-    ConfirnmPassword.dispose();
+    nameController.dispose();
+    passwordContoller.dispose();
+    confirnmPasswordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.backgroundColor,
+        elevation: 0,
+        forceMaterialTransparency: true,
+        foregroundColor: Colors.white,
+        title: Text("sing_up".tr(context)),
+        titleTextStyle: Styles.textStyle18.copyWith(color: Colors.white),
+        centerTitle: true,
+      ),
       body: ListView(
         padding: EdgeInsets.symmetric(
             horizontal: KHorizontalPadding, vertical: KVerticalPadding),
@@ -47,7 +58,8 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
             height: kSizedBoxHeight,
           ),
           Image.asset(
-            AssetsData.logo,
+            color: Colors.white,
+            AssetsData.logoNoBg,
             height: 150,
             width: 200,
           ),
@@ -69,15 +81,21 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                 CustomTextField(
                     text: "user_name".tr(context),
                     isPassword: false,
-                    controller: nameContrroler),
+                    validatorFun: (p0) =>
+                        Validator.validate(p0, ValidationState.normal),
+                    controller: nameController),
                 CustomTextField(
                     text: "password".tr(context),
+                    validatorFun: (p0) =>
+                        Validator.validate(p0, ValidationState.password),
                     isPassword: true,
-                    controller: passwordContrroler),
+                    controller: passwordContoller),
                 CustomTextField(
                     text: "confirm_password".tr(context),
                     isPassword: true,
-                    controller: passwordContrroler),
+                    validatorFun: (p0) => Validator.validateConfirmPassword(
+                        p0, passwordContoller.text),
+                    controller: confirnmPasswordController),
               ],
             ),
           ),

@@ -15,11 +15,7 @@ class SignUpForgetPassWidget extends StatelessWidget {
       children: [
         TextButton(
           onPressed: () {
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => RegisterPage(),
-                ));
+            Navigator.pushNamed(context, RegisterPage.routeName);
           },
           child: Text("create account",
               style: Styles.textStyle15.copyWith(

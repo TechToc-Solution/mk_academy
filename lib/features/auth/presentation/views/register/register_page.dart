@@ -3,7 +3,7 @@ import 'package:mk_academy/features/auth/presentation/views/register/widgets/reg
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
-  static const String routeName = '/RegisterPage';
+  static const String routeName = '/register';
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
