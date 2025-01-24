@@ -7,7 +7,6 @@ import 'package:mk_academy/features/home/presentation/views/category_section.dar
 import 'package:mk_academy/features/home/presentation/views/offers_section.dart';
 import 'package:mk_academy/features/home/presentation/views/widgets/custom_advertising_item.dart';
 import 'package:mk_academy/features/home/presentation/views/widgets/custom_search_bar.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import '../../../../core/widgets/custom_bottom_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -61,4 +60,3 @@ class _MyHomePageState extends State<HomePage> {
     );
   }
 }
-
