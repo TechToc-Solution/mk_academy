@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/assets_data.dart';
 import 'package:mk_academy/core/utils/constats.dart';
+import 'package:mk_academy/core/utils/enums.dart';
 import 'package:mk_academy/core/utils/styles.dart';
+import 'package:mk_academy/core/utils/validation.dart';
 import 'package:mk_academy/features/auth/presentation/views/widgets/custom_button.dart';
 import 'package:mk_academy/features/auth/presentation/views/widgets/custom_text_filed.dart';
 
@@ -16,26 +18,34 @@ class LoginPageBody extends StatefulWidget {
 }
 
 class _LoginPageBodyState extends State<LoginPageBody> {
-  late final TextEditingController nameContrroler;
-  late final TextEditingController passwordContrroler;
+  late final TextEditingController nameController;
+  late final TextEditingController passwordController;
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   @override
   void initState() {
-    nameContrroler = new TextEditingController();
-    passwordContrroler = new TextEditingController();
+    nameController = new TextEditingController();
+    passwordController = new TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    nameContrroler.dispose();
-    passwordContrroler.dispose();
+    nameController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.backgroundColor,
+        elevation: 0,
+        forceMaterialTransparency: true,
+        title: Text("sing_in".tr(context)),
+        titleTextStyle: Styles.textStyle18.copyWith(color: Colors.white),
+        centerTitle: true,
+      ),
       body: ListView(
         padding: EdgeInsets.symmetric(
             horizontal: KHorizontalPadding, vertical: KVerticalPadding),
@@ -44,7 +54,8 @@ class _LoginPageBodyState extends State<LoginPageBody> {
             height: kSizedBoxHeight,
           ),
           Image.asset(
-            AssetsData.logo,
+            AssetsData.logoNoBg,
+            color: Colors.white,
             height: 150,
             width: 200,
           ),
@@ -66,11 +77,15 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                 CustomTextField(
                     text: "user_name".tr(context),
                     isPassword: false,
-                    controller: nameContrroler),
+                    validatorFun: (p0) =>
+                        Validator.validate(p0, ValidationState.normal),
+                    controller: nameController),
                 CustomTextField(
                     text: "password".tr(context),
                     isPassword: true,
-                    controller: passwordContrroler),
+                    validatorFun: (p0) =>
+                        Validator.validate(p0, ValidationState.password),
+                    controller: passwordController),
               ],
             ),
           ),

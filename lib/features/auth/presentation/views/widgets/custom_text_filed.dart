@@ -30,16 +30,16 @@ class CustomTextField extends StatefulWidget {
 class _CustomTextFieldState extends State<CustomTextField> {
   @override
   void dispose() {
-    ;
-    widget.controller.clear();
+    focusNode.dispose();
     super.dispose();
   }
 
   bool showPassowrd = false;
   FocusNode focusNode = FocusNode();
   Color fillColor = const Color(0xffF4F7FE);
-  Color labelTextColor = Colors.black87;
+  Color labelTextColor = Colors.grey;
   Color passwordIconColor = Colors.black87;
+  Color textColor = Colors.black87;
   @override
   void initState() {
     focusNode.addListener(() {
@@ -48,12 +48,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
           fillColor = Colors.transparent;
           labelTextColor = Colors.white;
           passwordIconColor = AppColors.primaryColors;
+          textColor = Colors.white;
         });
       } else {
         setState(() {
-          labelTextColor = Colors.black87;
           fillColor = const Color(0xffF4F7FE);
           passwordIconColor = Colors.black87;
+          labelTextColor = Colors.grey;
+          textColor = Colors.black87;
         });
       }
     });
@@ -66,7 +68,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       padding: EdgeInsets.symmetric(vertical: 15),
       child: TextFormField(
         style: Styles.textStyle16.copyWith(
-          color: Colors.white,
+          color: textColor,
         ),
         onChanged: widget.onChange,
         keyboardType: widget.keyboardType,
