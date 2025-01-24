@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
+import 'package:mk_academy/features/home/presentation/views/home_page.dart';
 
 class CustomAdvertiseItem extends StatelessWidget {
   const CustomAdvertiseItem({
@@ -16,34 +18,75 @@ class CustomAdvertiseItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Dumy Title",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            Text(
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-              "Dumy description Dumy description Dumy description Dumy description Dumy description Dumy description",
-              style: TextStyle(),
-            ),
-            SizedBox(
-              height: 32,
-            ),
-            ListTile(
-              leading: Container(
-                height: 32,
-                width: 32,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: AppColors.backgroundColor,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Dumy Title",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        "Dumy description Dumy description Dumy description Dumy description Dumy description Dumy description",
+                        style: TextStyle(),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              title: Text("Dumy Title"),
-              subtitle: Text("Dump Suptitle Dump Suptitle Dump Suptitle"),
+                SizedBox(width: 8),
+                Container(
+                  width: 150,
+                  height: 100,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: AppColors.backgroundColor),
+                )
+              ],
+            ),
+            Spacer(),
+            Row(
+              children: [
+                Expanded(
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Container(
+                      height: 32,
+                      width: 32,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: AppColors.backgroundColor,
+                      ),
+                    ),
+                    title: Text("Dumy Title"),
+                    subtitle: Text(
+                        overflow: TextOverflow.ellipsis,
+                        "Dump Suptitle Dump Suptitle Dump Suptitle Dump Suptitle Dump Suptitle"),
+                  ),
+                ),
+                SizedBox(
+                  width: 4,
+                ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryColors),
+                    onPressed: () {},
+                    child: Text(
+                      "explore".tr(context),
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))
+              ],
             ),
           ],
         ),
