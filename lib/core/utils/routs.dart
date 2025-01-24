@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mk_academy/main.dart';
+
+import '../../features/home/presentation/views/home_page.dart';
 
 class Routes {
   static Map<String, Widget Function(BuildContext)> routes = {
-    MyHomePage.routeName: (context) => const MyHomePage(title: 'MK Academy')
+    HomePage.routeName: (context) => const HomePage(title: 'MK Academy')
   };
 }
