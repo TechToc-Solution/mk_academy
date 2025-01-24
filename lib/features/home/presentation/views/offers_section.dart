@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
-
+import 'package:mk_academy/core/utils/colors.dart';
 
 class OffersSection extends StatelessWidget {
   const OffersSection({
@@ -12,10 +12,24 @@ class OffersSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "offers".tr(context),
-          style: TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.white, fontSize: 32),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "offers".tr(context),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 32),
+            ),
+            Text(
+              "more".tr(context),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primaryColors,
+                  fontSize: 16),
+            ),
+          ],
         ),
         SizedBox(
           height: 8,

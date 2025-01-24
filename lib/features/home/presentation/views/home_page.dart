@@ -25,7 +25,11 @@ class _MyHomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(
+            top: 8.0,
+            left: 8.0,
+            right: 8.0,
+          ),
           child: Column(
             children: [
               CustomSearchBar(),
@@ -50,6 +54,9 @@ class _MyHomePageState extends State<HomePage> {
                   ),
                   CategorySection(),
                   OffersSection(),
+                  SizedBox(
+                    height: 16,
+                  )
                 ],
               ))
             ],
