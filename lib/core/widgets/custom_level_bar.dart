@@ -15,6 +15,10 @@ class customLevelBar extends StatelessWidget {
           "current_level".tr(context) + ": ",
           style: TextStyle(color: Colors.white),
         ),
+        Text(
+          "15 ",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
         Expanded(
           child: Divider(
             endIndent: 30,
@@ -23,7 +27,7 @@ class customLevelBar extends StatelessWidget {
           ),
         ),
         Text(
-          "15",
+          "16",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ],
