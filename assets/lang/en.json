@@ -1,6 +1,12 @@
 {
     "yes" : "yes",
     "no" : "no",
+    "search": "Search",
+    "current_level": "Your current level",
+    "categories": "Categories",
+    "offers": "Offers",
+    "explore": "Explore",
+    "more": "More",
     "sing_in" : "Sing in",
     "user_name" : "User Name",
     "password" : "Password",
