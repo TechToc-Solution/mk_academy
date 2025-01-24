@@ -1,4 +1,11 @@
 {
     "yes" : "yes",
-    "no" : "no"
+    "no" : "no",
+    "sing_in" : "Sing in",
+    "user_name" : "User Name",
+    "password" : "Password",
+    "login" : "Login",
+    "sing_up" : "Sing Up",
+    "confirm_password" : "Confirm Password",
+    "confirm" : "confirm"
 }
