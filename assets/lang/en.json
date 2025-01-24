@@ -1,4 +1,8 @@
 {
     "yes" : "yes",
-    "no" : "no"
+    "no" : "no",
+    "search": "Search",
+    "current_level": "Your current level",
+    "categories": "Categories",
+    "offers": "Offers"
 }
