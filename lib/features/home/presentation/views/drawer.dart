@@ -1,0 +1,50 @@
+import 'package:flutter/material.dart';
+
+class CustomDrawer extends StatelessWidget {
+  const CustomDrawer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          CircleAvatar(
+            radius: 64,
+          ),
+          Spacer(
+            flex: 1,
+          ),
+          CustomDrawerBtn(),
+          CustomDrawerBtn(),
+          CustomDrawerBtn(),
+          CustomDrawerBtn(),
+          CustomDrawerBtn(),
+          Spacer(
+            flex: 2,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CustomDrawerBtn extends StatelessWidget {
+  const CustomDrawerBtn({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8), color: Colors.white),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [Text("Test"), Icon(Icons.image)],
+      ),
+    );
+  }
+}

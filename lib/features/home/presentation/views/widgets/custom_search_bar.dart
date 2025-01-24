@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 
 class CustomSearchBar extends StatelessWidget {
   const CustomSearchBar({
     super.key,
+    required this.drawer_key,
   });
-
+  final GlobalKey<SliderDrawerState> drawer_key;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -17,8 +19,11 @@ class CustomSearchBar extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               color: AppColors.primaryColors,
             ),
-            child:
-                IconButton(onPressed: () {}, icon: Icon(Icons.list_outlined))),
+            child: IconButton(
+                onPressed: () {
+                  drawer_key..currentState?.toggle(); // Open/close drawer
+                },
+                icon: Icon(Icons.list_outlined))),
         SizedBox(
           width: 8,
         ),
