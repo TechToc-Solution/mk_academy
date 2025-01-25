@@ -44,10 +44,10 @@ class _MyHomePageState extends State<HomePage> {
                 SizedBox(
                   height: 8,
                 ),
+                customLevelBar(),
                 Expanded(
                     child: ListView(
                   children: [
-                    customLevelBar(),
                     SizedBox(
                       height: 8,
                     ),
