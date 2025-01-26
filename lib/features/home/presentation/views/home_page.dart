@@ -8,6 +8,7 @@ import 'package:mk_academy/features/home/presentation/views/drawer.dart';
 import 'package:mk_academy/features/home/presentation/views/offers_section.dart';
 import 'package:mk_academy/features/home/presentation/views/widgets/custom_advertising_item.dart';
 import 'package:mk_academy/features/home/presentation/views/widgets/custom_search_bar.dart';
+import 'package:mk_academy/features/home/presentation/views/widgets/custom_top_3.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -51,10 +52,12 @@ class _MyHomePageState extends State<HomePage> {
                       height: 8,
                     ),
                     CustomAdvertiseList(advertises: [
+                      CustomTopThreeItem(),
                       CustomAdvertiseItem(),
                       CustomAdvertiseItem(),
                       CustomAdvertiseItem(),
                       CustomAdvertiseItem(),
+
                     ]),
                     SizedBox(
                       height: 8,

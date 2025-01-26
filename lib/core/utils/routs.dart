@@ -15,7 +15,9 @@ class Routes {
     RegisterPage.routeName: (context) => const RegisterPage(),
     UnitsPage.routeName: (context) => const UnitsPage(),
     UnitPage.routeName: (context) => const UnitPage(title: ""),
-    LeaderboardPage.routeName: (context) => const LeaderboardPage(),
+    LeaderboardPage.routeName: (context) => const LeaderboardPage(
+          back_btn: false,
+        ),
     CustomBottomNavBar.routeName: (context) =>
         CustomBottomNavBar(select: "home")
   };

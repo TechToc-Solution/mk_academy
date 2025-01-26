@@ -29,7 +29,7 @@ class CustomAdvertiseItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Dumy Title",
+                        "عنوان تجريبي",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),
@@ -37,7 +37,7 @@ class CustomAdvertiseItem extends StatelessWidget {
                       Text(
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
-                        "Dumy description Dumy description Dumy description Dumy description Dumy description Dumy description",
+                        " نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي",
                         style: TextStyle(),
                       ),
                     ],
@@ -67,10 +67,10 @@ class CustomAdvertiseItem extends StatelessWidget {
                         color: AppColors.backgroundColor,
                       ),
                     ),
-                    title: Text("Dumy Title"),
+                    title: Text("عنوان تجريبي"),
                     subtitle: Text(
                         overflow: TextOverflow.ellipsis,
-                        "Dump Suptitle Dump Suptitle Dump Suptitle Dump Suptitle Dump Suptitle"),
+                        " نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي"),
                   ),
                 ),
                 SizedBox(

@@ -18,5 +18,7 @@
     "profile": "Profile",
     "home": "Home",
     "units": "Units",
-    "leaderboard": "Leaderboard"
+    "leaderboard": "Leaderboard",
+    "show_all": "Show All",
+    "top3_title": "MK Academy Champions"
 }

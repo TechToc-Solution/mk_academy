@@ -39,9 +39,7 @@ class CustomDrawerBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(goRoute(x: const LeaderboardPage()));
-      },
+      onTap: () {},
       child: Container(
         margin: EdgeInsets.all(8),
         padding: EdgeInsets.all(16),
@@ -49,7 +47,7 @@ class CustomDrawerBtn extends StatelessWidget {
             borderRadius: BorderRadius.circular(8), color: Colors.white),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [Text("Test"), Icon(Icons.image)],
+          children: [Text("تجريب"), Icon(Icons.image)],
         ),
       ),
     );

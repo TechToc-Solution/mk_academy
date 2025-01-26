@@ -54,7 +54,9 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
           HomePage(),
           HomePage(),
           UnitsPage(),
-          LeaderboardPage(),
+          LeaderboardPage(
+            back_btn: false,
+          ),
         ],
       ),
       bottomNavigationBar: Container(
