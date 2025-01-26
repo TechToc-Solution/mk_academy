@@ -23,7 +23,10 @@ class _UnitsPageState extends State<UnitPage> {
           ),
           child: Column(
             children: [
-              CustomAppBar(title: widget.title),
+              CustomAppBar(
+                title: widget.title,
+                back_btn: true,
+              ),
               Expanded(
                   child: ListView(
                 children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/widgets/custom_bottom_nav_bar.dart';
 import 'package:mk_academy/features/auth/presentation/views/login/login_page.dart';
 import 'package:mk_academy/features/leadboard/presentation/views/leadboard.dart';
 import 'package:mk_academy/features/show_unit/presentation/views/unit.dart';
@@ -15,5 +16,7 @@ class Routes {
     UnitsPage.routeName: (context) => const UnitsPage(),
     UnitPage.routeName: (context) => const UnitPage(title: ""),
     LeadboardPage.routeName: (context) => const LeadboardPage(),
+    CustomBottomNavBar.routeName: (context) =>
+        CustomBottomNavBar(select: "Home")
   };
 }

@@ -9,6 +9,7 @@ import 'package:mk_academy/core/utils/cache_helper.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/routs.dart';
 import 'package:mk_academy/core/utils/styles.dart';
+import 'package:mk_academy/core/widgets/custom_bottom_nav_bar.dart';
 import 'package:mk_academy/features/units/presentation/views/units.dart';
 
 void main() async {
@@ -66,7 +67,7 @@ class MyApp extends StatelessWidget {
                   ColorScheme.fromSeed(seedColor: AppColors.primaryColors),
               useMaterial3: true,
             ),
-            initialRoute: UnitsPage.routeName,
+            initialRoute: CustomBottomNavBar.routeName,
             routes: Routes.routes,
           );
         },

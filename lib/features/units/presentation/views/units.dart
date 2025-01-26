@@ -46,7 +46,6 @@ class _UnitsPageState extends State<UnitsPage> {
           ),
         ),
       ),
-      bottomNavigationBar: CustomBottomNavBar(select: "Units"),
     );
   }
 }

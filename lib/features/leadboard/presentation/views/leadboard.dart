@@ -23,9 +23,7 @@ class _UnitsPageState extends State<LeadboardPage> {
           ),
           child: Column(
             children: [
-              CustomAppBar(
-                title: "الترتيب",
-              ),
+              CustomAppBar(title: "الترتيب", back_btn: false),
               SizedBox(
                 height: 8,
               ),

@@ -5,8 +5,10 @@ class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
     super.key,
     required this.title,
+    required this.back_btn,
   });
   final String title;
+  final bool back_btn;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,15 +21,19 @@ class CustomAppBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              size: 32,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
+          back_btn
+              ? IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                    size: 32,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )
+              : SizedBox(
+                  width: 50,
+                ),
           Text(
             title,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),

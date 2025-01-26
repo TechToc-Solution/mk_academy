@@ -34,6 +34,7 @@ class _MyHomePageState extends State<HomePage> {
             right: 8.0,
           ),
           child: SliderDrawer(
+            isDraggable: false,
             slideDirection: SlideDirection.rightToLeft,
             key: _sliderDrawerKey,
             backgroundColor: AppColors.backgroundColor,
@@ -73,7 +74,6 @@ class _MyHomePageState extends State<HomePage> {
           ),
         ),
       ),
-      bottomNavigationBar: CustomBottomNavBar(select: "Home"),
     );
   }
 }
