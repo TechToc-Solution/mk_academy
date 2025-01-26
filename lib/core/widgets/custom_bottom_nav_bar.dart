@@ -21,7 +21,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
   void initState() {
     _motionTabBarController = MotionTabBarController(
       initialIndex: 1,
-      length: 3,
+      length: 4,
       vsync: this,
     );
     super.initState();
@@ -54,11 +54,12 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
       child: MotionTabBar(
         controller: _motionTabBarController,
         initialSelectedTab: widget.select,
-        labels: const ["Home", "Profile", "Settings"],
+        labels: const ["Home", "Profile", "Settings", "Units"],
         icons: const [
           Icons.home_outlined,
           Icons.person_outline,
-          Icons.settings_outlined
+          Icons.settings_outlined,
+          Icons.book
         ],
         tabIconColor: AppColors.backgroundColor,
         tabIconSize: 28.0,

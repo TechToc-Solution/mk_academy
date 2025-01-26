@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/features/auth/presentation/views/login/login_page.dart';
+import 'package:mk_academy/features/leadboard/presentation/views/leadboard.dart';
+import 'package:mk_academy/features/show_unit/presentation/views/unit.dart';
 import 'package:mk_academy/features/units/presentation/views/units.dart';
 
 import '../../features/auth/presentation/views/register/register_page.dart';
@@ -11,5 +13,7 @@ class Routes {
     LoginPage.routeName: (context) => const LoginPage(),
     RegisterPage.routeName: (context) => const RegisterPage(),
     UnitsPage.routeName: (context) => const UnitsPage(),
+    UnitPage.routeName: (context) => const UnitPage(title: ""),
+    LeadboardPage.routeName: (context) => const LeadboardPage(),
   };
 }

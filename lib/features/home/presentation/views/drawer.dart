@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/functions.dart';
+import 'package:mk_academy/features/leadboard/presentation/views/leadboard.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -36,14 +38,19 @@ class CustomDrawerBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(8),
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8), color: Colors.white),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [Text("Test"), Icon(Icons.image)],
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(goRoute(x: const LeadboardPage()));
+      },
+      child: Container(
+        margin: EdgeInsets.all(8),
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8), color: Colors.white),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [Text("Test"), Icon(Icons.image)],
+        ),
       ),
     );
   }

@@ -34,6 +34,7 @@ class _MyHomePageState extends State<HomePage> {
             right: 8.0,
           ),
           child: SliderDrawer(
+            slideDirection: SlideDirection.rightToLeft,
             key: _sliderDrawerKey,
             backgroundColor: AppColors.backgroundColor,
             slider: CustomDrawer(),

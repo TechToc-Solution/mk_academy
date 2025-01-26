@@ -46,7 +46,7 @@ class _UnitsPageState extends State<UnitsPage> {
           ),
         ),
       ),
-      bottomNavigationBar: CustomBottomNavBar(select: "Home"),
+      bottomNavigationBar: CustomBottomNavBar(select: "Units"),
     );
   }
 }

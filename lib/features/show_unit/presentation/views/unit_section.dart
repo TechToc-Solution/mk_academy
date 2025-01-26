@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/features/show_unit/presentation/views/widgets/custom_video_units_btn.dart';
-import 'package:mk_academy/features/units/presentation/views/widgets/custom_category_unit_btn.dart';
 
-class UnitsSection extends StatelessWidget {
-  const UnitsSection({
+class UnitSection extends StatelessWidget {
+  const UnitSection({
     super.key,
   });
 
@@ -19,9 +18,7 @@ class UnitsSection extends StatelessWidget {
             crossAxisSpacing: 16,
             mainAxisSpacing: 16),
         itemBuilder: (BuildContext context, int index) {
-          return index % 2 == 0
-              ? CustomVideoUnitBtn()
-              : CustomCategoryUnitBtn();
+          return CustomVideoUnitBtn();
         });
   }
 }

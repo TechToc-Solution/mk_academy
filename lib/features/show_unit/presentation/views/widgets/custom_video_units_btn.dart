@@ -19,7 +19,7 @@ class CustomVideoUnitBtn extends StatelessWidget {
           ),
           child: Center(
               child: Text(
-            "Temp Text",
+            "نص تجريبي",
             style: TextStyle(
                 overflow: TextOverflow.ellipsis,
                 color: Colors.white,
@@ -28,7 +28,7 @@ class CustomVideoUnitBtn extends StatelessWidget {
           )),
         ),
         Container(
-          padding: EdgeInsets.only(right: 8, bottom: 8),
+          padding: EdgeInsets.all(4),
           color: AppColors.backgroundColor,
           child: Container(
             height: 40,
@@ -36,7 +36,10 @@ class CustomVideoUnitBtn extends StatelessWidget {
             decoration: BoxDecoration(
                 color: AppColors.primaryColors,
                 borderRadius: BorderRadius.circular(8)),
-            child: Icon(Icons.play_arrow_outlined),
+            child: Icon(
+              Icons.play_arrow_outlined,
+              size: 32,
+            ),
           ),
         )
       ],
