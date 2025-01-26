@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/assets_data.dart';
 
 class CustomLeaderboardShow extends StatelessWidget {
   const CustomLeaderboardShow(
@@ -26,27 +27,27 @@ class CustomLeaderboardShow extends StatelessWidget {
         style: TextStyle(color: Colors.white),
       ),
       trailing: index == 0
-          ? Icon(
-              Icons.looks_one_rounded,
-              color: Colors.white,
+          ? Image.asset(
+              AssetsData.medal1,
             )
           : index == 1
-              ? Icon(
-                  Icons.looks_two_rounded,
-                  color: Colors.white,
+              ? Image.asset(
+                  AssetsData.medal2,
                 )
               : index == 2
-                  ? Icon(
-                      Icons.looks_3_rounded,
-                      color: Colors.white,
+                  ? Image.asset(
+                      AssetsData.medal3,
                     )
-                  : Text(
-                      textAlign: TextAlign.center,
-                      (index + 1).toString(),
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
+                  : Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        (index + 1).toString(),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 32),
+                      ),
                     ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/core/utils/assets_data.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/features/home/presentation/views/widgets/custom_user_show.dart';
@@ -71,19 +72,19 @@ class CustomTopThreeItem extends StatelessWidget {
                   CustomUserShow(
                       top: 1,
                       title: "البطل الأول",
-                      icon: Icons.emoji_events,
+                      image: AssetsData.medal1,
                       color: Colors.amber.shade700,
                       level: 30),
                   CustomUserShow(
                       top: 2,
                       title: "البطل الثاني",
-                      icon: Icons.emoji_events,
+                      image: AssetsData.medal2,
                       color: Colors.grey.shade600,
                       level: 29),
                   CustomUserShow(
                       top: 3,
                       title: "البطل الثالث",
-                      icon: Icons.emoji_events,
+                      image: AssetsData.medal3,
                       color: Colors.brown.shade600,
                       level: 28),
                 ],

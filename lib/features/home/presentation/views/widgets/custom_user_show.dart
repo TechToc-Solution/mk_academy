@@ -4,13 +4,13 @@ class CustomUserShow extends StatelessWidget {
   const CustomUserShow(
       {super.key,
       required this.title,
-      required this.icon,
+      required this.image,
       required this.color,
       required this.level,
       required this.top});
   final int top;
   final String title;
-  final IconData icon;
+  final String image;
   final Color color;
   final int level;
   @override
@@ -33,10 +33,9 @@ class CustomUserShow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(
-            icon,
-            color: color,
-            size: 28,
+          Image.asset(
+            image,
+            height: 24,
           ),
           Text(
             title,
