@@ -8,13 +8,10 @@ import 'package:mk_academy/features/home/presentation/views/drawer.dart';
 import 'package:mk_academy/features/home/presentation/views/offers_section.dart';
 import 'package:mk_academy/features/home/presentation/views/widgets/custom_advertising_item.dart';
 import 'package:mk_academy/features/home/presentation/views/widgets/custom_search_bar.dart';
-import '../../../../core/widgets/custom_bottom_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
+  const HomePage({super.key});
   static const String routeName = '/home';
-
-  final String title;
 
   @override
   State<HomePage> createState() => _MyHomePageState();

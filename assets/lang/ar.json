@@ -13,5 +13,10 @@
     "login" : "تسجيل الدخول",
     "sing_up" : "انشاء حساب",
     "confirm_password" : "تأكيد كلمة المرور",
-    "confirm" : "تأكيد"
+    "confirm" : "تأكيد",
+    "settings": "الإعدادات",
+    "profile": "الملف الشخصي",
+    "home": "الرئيسية",
+    "units": "الوحدات",
+    "leaderboard": "المتصدرين"
 }

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/widgets/custom_app_bar.dart';
-import 'package:mk_academy/features/leadboard/presentation/views/leadboard_section.dart';
+import 'package:mk_academy/features/leaderboard/presentation/views/leaderboard_section.dart';
 
-class LeadboardPage extends StatefulWidget {
-  const LeadboardPage({super.key});
-  static const String routeName = '/leadboard';
+class LeaderboardPage extends StatefulWidget {
+  const LeaderboardPage({super.key});
+  static const String routeName = '/leaderboard';
 
   @override
-  State<LeadboardPage> createState() => _UnitsPageState();
+  State<LeaderboardPage> createState() => _LeaderboardState();
 }
 
-class _UnitsPageState extends State<LeadboardPage> {
+class _LeaderboardState extends State<LeaderboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +30,7 @@ class _UnitsPageState extends State<LeadboardPage> {
               Expanded(
                   child: ListView(
                 children: [
-                  LeadboardSection(),
+                  LeaderboardSection(),
                   SizedBox(
                     height: 16,
                   )

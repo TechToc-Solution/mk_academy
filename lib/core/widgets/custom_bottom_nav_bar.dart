@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/features/home/presentation/views/home_page.dart';
-import 'package:mk_academy/features/leadboard/presentation/views/leadboard.dart';
+import 'package:mk_academy/features/leaderboard/presentation/views/leaderboard.dart';
 import 'package:mk_academy/features/units/presentation/views/units.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
@@ -26,10 +27,10 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
   void initState() {
     _motionTabBarController = MotionTabBarController(
       initialIndex: 1,
-      length: 5, // Increased to 5 for 5 pages
+      length: 5,
       vsync: this,
     );
-    _pageController = PageController(initialPage: 1); // Sync with initialIndex
+    _pageController = PageController(initialPage: 1);
     super.initState();
   }
 
@@ -49,11 +50,11 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
           _motionTabBarController!.index = index;
         },
         children: const [
-          HomePage(title: "MK Academy"),
-          HomePage(title: "MK Academy"),
-          HomePage(title: "MK Academy"),
+          HomePage(),
+          HomePage(),
+          HomePage(),
           UnitsPage(),
-          LeadboardPage(),
+          LeaderboardPage(),
         ],
       ),
       bottomNavigationBar: Container(
@@ -74,13 +75,13 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
         ),
         child: MotionTabBar(
           controller: _motionTabBarController,
-          initialSelectedTab: widget.select,
-          labels: const [
-            "Settings",
-            "Profile",
-            "Home",
-            "Units",
-            "Leadboard",
+          initialSelectedTab: widget.select.tr(context),
+          labels: [
+            "settings".tr(context),
+            "profile".tr(context),
+            "home".tr(context),
+            "units".tr(context),
+            "leaderboard".tr(context),
           ],
           icons: const [
             Icons.settings_outlined,

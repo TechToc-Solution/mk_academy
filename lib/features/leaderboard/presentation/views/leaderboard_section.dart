@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mk_academy/features/leadboard/presentation/views/widgets/custom_leadboard_show.dart';
+import 'package:mk_academy/features/leaderboard/presentation/views/widgets/custom_leaderboard_show.dart';
 
-class LeadboardSection extends StatelessWidget {
-  const LeadboardSection({
+class LeaderboardSection extends StatelessWidget {
+  const LeaderboardSection({
     super.key,
   });
 
@@ -28,7 +28,7 @@ class LeadboardSection extends StatelessWidget {
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemBuilder: (BuildContext context, int index) {
-          return CustomLeadboardShow(
+          return CustomLeaderboardShow(
               index: index,
               data: tempData[index],
               is_you: index == 5 ? true : false);

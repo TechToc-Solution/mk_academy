@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CustomLeadboardShow extends StatelessWidget {
-  const CustomLeadboardShow(
+class CustomLeaderboardShow extends StatelessWidget {
+  const CustomLeaderboardShow(
       {super.key,
       required this.index,
       required this.data,

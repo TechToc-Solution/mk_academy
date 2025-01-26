@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/functions.dart';
-import 'package:mk_academy/features/leadboard/presentation/views/leadboard.dart';
+import 'package:mk_academy/features/leaderboard/presentation/views/leaderboard.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -40,7 +40,7 @@ class CustomDrawerBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(goRoute(x: const LeadboardPage()));
+        Navigator.of(context).push(goRoute(x: const LeaderboardPage()));
       },
       child: Container(
         margin: EdgeInsets.all(8),
