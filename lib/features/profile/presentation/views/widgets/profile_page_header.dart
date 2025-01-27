@@ -23,10 +23,10 @@ class ProfilePageHeader extends StatelessWidget {
         ),
         Column(
           children: [
-            Text('user name',
+            Text('اسم المستخدم',
                 style: Styles.textStyle25
                     .copyWith(color: AppColors.ProfileTextColor)),
-            Text('years',
+            Text('21',
                 style: Styles.textStyle18
                     .copyWith(color: AppColors.ProfileTextColor)),
             SizedBox(height: 8),
@@ -40,7 +40,7 @@ class ProfilePageHeader extends StatelessWidget {
                 SizedBox(
                   width: 5,
                 ),
-                Text("syria, Damasucs",
+                Text("سوريا-دمشف",
                     style: Styles.textStyle16
                         .copyWith(color: AppColors.ProfileTextColor)),
               ],

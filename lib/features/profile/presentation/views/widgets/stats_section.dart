@@ -12,9 +12,9 @@ class StatsSection extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildStatItem('videos', '+15', Icon(Icons.watch_later_outlined)),
-            _buildStatItem('age', '+45', Icon(Icons.person_2_outlined)),
-            _buildStatItem('lavel', '+50', Icon(Icons.leaderboard_outlined)),
+            _buildStatItem('فيديوهات', '+15', Icon(Icons.watch_later_outlined)),
+            _buildStatItem('العمر', '21', Icon(Icons.person_2_outlined)),
+            _buildStatItem('مستوى', '+50', Icon(Icons.leaderboard_outlined)),
           ],
         ),
       ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
+import 'package:mk_academy/features/profile/presentation/views/profile_page.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
 
@@ -52,7 +53,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
         },
         children: const [
           HomePage(),
-          HomePage(),
+          ProfilePage(),
           HomePage(),
           UnitsPage(),
           LeaderboardPage(

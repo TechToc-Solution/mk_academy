@@ -13,9 +13,9 @@ class SubscriptionsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 12),
-        _buildSubscriptionItem('2025/1/9', ' 500.000 sp', 'MAth'),
-        _buildSubscriptionItem('2025/1/9', ' 500.000 sp', "MAth"),
-        _buildSubscriptionItem('2025/1/9', ' 500.000 sp', "Math"),
+        _buildSubscriptionItem('2025/1/9', ' 500.000 sp', 'جبر'),
+        _buildSubscriptionItem('2025/1/9', ' 500.000 sp', "اشعة"),
+        _buildSubscriptionItem('2025/1/9', ' 500.000 sp', "جبر"),
       ],
     );
   }
@@ -48,11 +48,11 @@ class SubscriptionsSection extends StatelessWidget {
                       borderRadius: BorderRadius.circular(35)),
                   onPressed: () {},
                   child: Text(
-                    "More",
+                    "المزيد",
                     style: Styles.textStyle15
                         .copyWith(color: AppColors.backgroundColor),
                   )),
-              Text('Date: $date',
+              Text('تاريخ الاشتراك : $date',
                   style: Styles.textStyle16.copyWith(color: Colors.white)),
             ],
           ),

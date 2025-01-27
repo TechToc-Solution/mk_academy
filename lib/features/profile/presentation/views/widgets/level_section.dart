@@ -15,12 +15,12 @@ class LevelSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: kSizedBoxHeight),
-          _buildLevelInfoItem('Current Level', 'Level 5'),
-          _buildLevelInfoItem('Experience Points', '1500/2000 XP'),
+          _buildLevelInfoItem('المستوى الحالي', 'مستوى 5'),
+          _buildLevelInfoItem('نقاط الخبرة', '1500/2000 XP'),
           _buildProgressBar(1500 / 2000),
           SizedBox(height: 40),
           CustomButton(
-            text: "How do I increase my level?",
+            text: "كيف يمكنني زيادة المستوى",
             onPressed: () {},
             verticalHieght: KVerticalPadding,
             horizontalWidth: KHorizontalPadding,

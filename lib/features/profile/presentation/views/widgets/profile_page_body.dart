@@ -33,7 +33,7 @@ class _ProfilePageBodyState extends State<ProfilePageBody>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('profile',
+        title: Text('الملف الشخصي',
             style:
                 Styles.textStyle25.copyWith(color: AppColors.ProfileTextColor)),
       ),

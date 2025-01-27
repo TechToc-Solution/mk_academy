@@ -23,14 +23,14 @@ class ProfileTabBar extends StatelessWidget {
         tabs: [
           Tab(
             child: Text(
-              'Subscriptions',
+              'الاشتراكات',
               style: Styles.textStyle20
                   .copyWith(color: AppColors.ProfileTextColor),
             ),
           ),
           Tab(
             child: Text(
-              'level',
+              'المستوى',
               style: Styles.textStyle20
                   .copyWith(color: AppColors.ProfileTextColor),
             ),
