@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/colors.dart';
+import 'package:mk_academy/features/home/presentation/views/home_page.dart';
+import 'package:mk_academy/features/profile/presentation/views/profile_page.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
 
@@ -74,8 +76,10 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
           fontWeight: FontWeight.bold,
         ),
         onTabItemSelected: (index) {
-          if (index == 0) {
-          } else if (index == 1) {
+          if (index == 0 && widget.select != "Home") {
+            Navigator.pushReplacementNamed(context, HomePage.routeName);
+          } else if (index == 1 && widget.select != "profile") {
+            Navigator.pushReplacementNamed(context, ProfilePage.routeName);
           } else if (index == 2) {}
         },
       ),

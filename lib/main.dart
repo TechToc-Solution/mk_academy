@@ -58,7 +58,9 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               appBarTheme: AppBarTheme(
-                  backgroundColor: AppColors.primaryColors,
+                  backgroundColor: AppColors.backgroundColor,
+                  scrolledUnderElevation: 0,
+                  centerTitle: true,
                   elevation: 0,
                   titleTextStyle: Styles.textStyle18
                       .copyWith(color: AppColors.backgroundColor)),
@@ -68,7 +70,7 @@ class MyApp extends StatelessWidget {
                   ColorScheme.fromSeed(seedColor: AppColors.primaryColors),
               useMaterial3: true,
             ),
-            initialRoute: LoginPage.routeName,
+            initialRoute: HomePage.routeName,
             routes: Routes.routes,
           );
         },

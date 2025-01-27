@@ -9,12 +9,17 @@ class CustomButton extends StatelessWidget {
       required this.onPressed,
       required this.verticalHieght,
       required this.horizontalWidth,
-      required this.color});
+      required this.color,
+      this.textStyle,
+      this.height});
   final String text;
   final void Function() onPressed;
   final double verticalHieght;
   final double horizontalWidth;
   final Color color;
+  final TextStyle? textStyle;
+  final double? height;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,14 +27,14 @@ class CustomButton extends StatelessWidget {
           vertical: verticalHieght, horizontal: horizontalWidth),
       child: MaterialButton(
         color: color,
-        height: 45,
+        height: height ?? 45,
         minWidth: double.infinity,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(kBorderRadius)),
         onPressed: onPressed,
         child: Text(
           text,
-          style: Styles.textStyle15.copyWith(color: Colors.white),
+          style: textStyle ?? Styles.textStyle15.copyWith(color: Colors.white),
         ),
       ),
     );

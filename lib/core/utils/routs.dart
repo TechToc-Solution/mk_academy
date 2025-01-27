@@ -4,6 +4,7 @@ import 'package:mk_academy/features/units/presentation/views/units.dart';
 
 import '../../features/auth/presentation/views/register/register_page.dart';
 import '../../features/home/presentation/views/home_page.dart';
+import '../../features/profile/presentation/views/profile_page.dart';
 
 class Routes {
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -11,5 +12,6 @@ class Routes {
     LoginPage.routeName: (context) => const LoginPage(),
     RegisterPage.routeName: (context) => const RegisterPage(),
     UnitsPage.routeName: (context) => const UnitsPage(),
+    ProfilePage.routeName: (context) => const ProfilePage(),
   };
 }

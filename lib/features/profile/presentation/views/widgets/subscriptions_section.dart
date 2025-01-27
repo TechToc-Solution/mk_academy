@@ -1,0 +1,68 @@
+import 'package:flutter/material.dart';
+
+import '../../../../../core/utils/colors.dart';
+import '../../../../../core/utils/constats.dart';
+import '../../../../../core/utils/styles.dart';
+
+class SubscriptionsSection extends StatelessWidget {
+  const SubscriptionsSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 12),
+        _buildSubscriptionItem('2025/1/9', ' 500.000 sp', 'MAth'),
+        _buildSubscriptionItem('2025/1/9', ' 500.000 sp', "MAth"),
+        _buildSubscriptionItem('2025/1/9', ' 500.000 sp', "Math"),
+      ],
+    );
+  }
+
+  Widget _buildSubscriptionItem(String date, String cost, String subName) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  Text(
+                    subName,
+                    style: Styles.textStyle25.copyWith(
+                        color: AppColors.primaryColors,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(cost,
+                      style: Styles.textStyle16.copyWith(
+                          color: Colors.white, fontWeight: FontWeight.w500)),
+                ],
+              ),
+              MaterialButton(
+                  height: 25,
+                  color: AppColors.primaryColors,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(35)),
+                  onPressed: () {},
+                  child: Text(
+                    "More",
+                    style: Styles.textStyle15
+                        .copyWith(color: AppColors.backgroundColor),
+                  )),
+              Text('Date: $date',
+                  style: Styles.textStyle16.copyWith(color: Colors.white)),
+            ],
+          ),
+        ),
+        Divider(
+          color: AppColors.primaryColors,
+          height: kSizedBoxHeight,
+          thickness: 0.5,
+        )
+      ],
+    );
+  }
+}
