@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/colors.dart';
-import 'package:mk_academy/features/home/presentation/views/widgets/custom_advertising_item.dart';
 
 class CustomAdvertiseList extends StatefulWidget {
   const CustomAdvertiseList({
@@ -9,7 +8,7 @@ class CustomAdvertiseList extends StatefulWidget {
     required this.advertises,
   });
 
-  final List<CustomAdvertiseItem> advertises;
+  final List<Widget> advertises;
 
   @override
   State<CustomAdvertiseList> createState() => _CustomAdvertiseListState();
@@ -30,7 +29,7 @@ class _CustomAdvertiseListState extends State<CustomAdvertiseList> {
               enableInfiniteScroll: true,
               reverse: false,
               autoPlay: true,
-              autoPlayInterval: Duration(seconds: 3),
+              autoPlayInterval: Duration(seconds: 5),
               autoPlayAnimationDuration: Duration(milliseconds: 800),
               autoPlayCurve: Curves.fastOutSlowIn,
               enlargeCenterPage: true,

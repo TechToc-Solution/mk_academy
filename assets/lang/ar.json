@@ -13,5 +13,12 @@
     "login" : "تسجيل الدخول",
     "sing_up" : "انشاء حساب",
     "confirm_password" : "تأكيد كلمة المرور",
-    "confirm" : "تأكيد"
+    "confirm" : "تأكيد",
+    "settings": "الإعدادات",
+    "profile": "الملف الشخصي",
+    "home": "الرئيسية",
+    "units": "الوحدات",
+    "leaderboard": "المتصدرين",
+    "show_all": "عرض الكل",
+    "top3_title": "أبطال MK Academy"
 }

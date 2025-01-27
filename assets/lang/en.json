@@ -13,5 +13,12 @@
     "login" : "Login",
     "sing_up" : "Sing Up",
     "confirm_password" : "Confirm Password",
-    "confirm" : "confirm"
+    "confirm" : "confirm",
+    "settings": "Settings",
+    "profile": "Profile",
+    "home": "Home",
+    "units": "Units",
+    "leaderboard": "Leaderboard",
+    "show_all": "Show All",
+    "top3_title": "MK Academy Champions"
 }

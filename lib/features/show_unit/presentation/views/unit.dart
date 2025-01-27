@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:mk_academy/core/widgets/custom_level_bar.dart';
-import 'package:mk_academy/features/units/presentation/views/units_section.dart';
-import 'package:mk_academy/features/units/presentation/views/widgets/custom_top_nav_bar.dart';
-import '../../../../core/widgets/custom_bottom_nav_bar.dart';
+import 'package:mk_academy/core/widgets/custom_app_bar.dart';
+import 'package:mk_academy/features/show_unit/presentation/views/unit_section.dart';
 
-class UnitsPage extends StatefulWidget {
-  const UnitsPage({super.key});
-  static const String routeName = '/units';
-
+class UnitPage extends StatefulWidget {
+  const UnitPage({super.key, required this.title});
+  static const String routeName = '/unit';
+  final String title;
   @override
-  State<UnitsPage> createState() => _UnitsPageState();
+  State<UnitPage> createState() => _UnitsPageState();
 }
 
-class _UnitsPageState extends State<UnitsPage> {
+class _UnitsPageState extends State<UnitPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,18 +23,17 @@ class _UnitsPageState extends State<UnitsPage> {
           ),
           child: Column(
             children: [
-              CustomTopNavBar(),
-              SizedBox(
-                height: 8,
+              CustomAppBar(
+                title: widget.title,
+                back_btn: true,
               ),
-              customLevelBar(),
               Expanded(
                   child: ListView(
                 children: [
                   SizedBox(
                     height: 8,
                   ),
-                  UnitsSection(),
+                  UnitSection(),
                   SizedBox(
                     height: 16,
                   )

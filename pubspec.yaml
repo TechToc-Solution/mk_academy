@@ -24,6 +24,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_slider_drawer: ^3.0.2
+  flutter_svg_icons: ^0.0.1+4
   get_it: ^8.0.3
   motion_tab_bar: ^2.0.4
   pretty_dio_logger: ^1.4.0

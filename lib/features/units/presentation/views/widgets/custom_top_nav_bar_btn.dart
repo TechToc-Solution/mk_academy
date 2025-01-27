@@ -12,7 +12,6 @@ class customTopNavBarBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 32,
       padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       margin: EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(

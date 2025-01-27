@@ -12,15 +12,15 @@ class CustomTopNavBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         customTopNavBarBtn(
-          title: "unit1",
+          title: "جبر",
           index: 0,
         ),
         customTopNavBarBtn(
-          title: "unit2",
+          title: "تحليل",
           index: 1,
         ),
         customTopNavBarBtn(
-          title: "unit3",
+          title: "هندسة",
           index: 2,
         )
       ],

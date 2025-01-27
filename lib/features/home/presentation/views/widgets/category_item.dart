@@ -26,7 +26,7 @@ class CategoryItem extends StatelessWidget {
           ),
           Text(
             overflow: TextOverflow.ellipsis,
-            "Title",
+            "عنوان تجريبي",
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           )
         ],
