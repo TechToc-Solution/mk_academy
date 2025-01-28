@@ -40,8 +40,7 @@ class LevelSection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label,
-              style: Styles.textStyle18
-                  .copyWith(color: AppColors.ProfileTextColor)),
+              style: Styles.textStyle18.copyWith(color: AppColors.textColor)),
           Text(value,
               style:
                   Styles.textStyle18.copyWith(color: AppColors.primaryColors)),
@@ -53,7 +52,7 @@ class LevelSection extends StatelessWidget {
   Widget _buildProgressBar(double progress) {
     return LinearProgressIndicator(
       value: progress,
-      backgroundColor: AppColors.ProfileAvatarColor,
+      backgroundColor: AppColors.avatarColor,
       valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryColors),
       minHeight: 12,
       borderRadius: BorderRadius.circular(10),

@@ -26,21 +26,19 @@ class StatsSection extends StatelessWidget {
       children: [
         CircleAvatar(
           maxRadius: 27,
-          backgroundColor: AppColors.ProfileAvatarColor,
+          backgroundColor: AppColors.avatarColor,
           child: icon,
         ),
         SizedBox(
           height: 8,
         ),
         Text(title,
-            style:
-                Styles.textStyle18.copyWith(color: AppColors.ProfileTextColor)),
+            style: Styles.textStyle18.copyWith(color: AppColors.textColor)),
         SizedBox(
           height: 15,
         ),
         Text(value,
-            style:
-                Styles.textStyle18.copyWith(color: AppColors.ProfileTextColor)),
+            style: Styles.textStyle18.copyWith(color: AppColors.textColor)),
       ],
     );
   }

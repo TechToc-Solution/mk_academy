@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/colors.dart';
-import 'package:mk_academy/core/utils/functions.dart';
-import 'package:mk_academy/features/show_unit/presentation/views/unit.dart';
 
 class CustomCategoryUnitBtn extends StatelessWidget {
+  final void Function() onTap;
   const CustomCategoryUnitBtn({
     super.key,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(goRoute(x: UnitPage(title: "نص تجريبي")));
-      },
+      onTap: onTap,
       child: Container(
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(

@@ -19,8 +19,7 @@ class Routes {
     LeaderboardPage.routeName: (context) => const LeaderboardPage(
           back_btn: false,
         ),
-    CustomBottomNavBar.routeName: (context) =>
-        CustomBottomNavBar(select: "home"),
+    CustomBottomNavBar.routeName: (context) => CustomBottomNavBar(),
     ProfilePage.routeName: (context) => const ProfilePage(),
   };
 }

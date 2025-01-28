@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mk_academy/features/show_unit/presentation/views/widgets/custom_video_units_btn.dart';
 import 'package:mk_academy/features/units/presentation/views/widgets/custom_category_unit_btn.dart';
 
+import '../../../../core/utils/functions.dart';
+import '../../../show_unit/presentation/views/unit.dart';
+
 class UnitsSection extends StatelessWidget {
   const UnitsSection({
     super.key,
@@ -21,7 +24,10 @@ class UnitsSection extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return index % 2 == 0
               ? CustomVideoUnitBtn()
-              : CustomCategoryUnitBtn();
+              : CustomCategoryUnitBtn(
+                  onTap: () => Navigator.of(context)
+                      .push(goRoute(x: UnitPage(title: "نص تجريبي"))),
+                );
         });
   }
 }

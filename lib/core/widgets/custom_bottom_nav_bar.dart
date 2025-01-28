@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
+import 'package:mk_academy/features/curriculum/presentation/views/curriculum_page.dart';
 import 'package:mk_academy/features/profile/presentation/views/profile_page.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
@@ -10,10 +11,8 @@ import '../../features/leaderboard/presentation/views/leaderboard.dart';
 import '../../features/units/presentation/views/units.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
-  final String select;
   const CustomBottomNavBar({
     super.key,
-    required this.select,
   });
   static const String routeName = "/nav";
   @override
@@ -32,7 +31,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
       length: 5,
       vsync: this,
     );
-    _pageController = PageController(initialPage: 1);
+    _pageController = PageController(initialPage: 2);
     super.initState();
   }
 
@@ -52,7 +51,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
           _motionTabBarController!.index = index;
         },
         children: const [
-          HomePage(),
+          CurriculumPage(),
           ProfilePage(),
           HomePage(),
           UnitsPage(),
@@ -79,29 +78,30 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
         ),
         child: MotionTabBar(
           controller: _motionTabBarController,
-          initialSelectedTab: widget.select.tr(context),
+          initialSelectedTab: "home".tr(context),
           labels: [
-            "settings".tr(context),
+            "curriculum".tr(context),
             "profile".tr(context),
             "home".tr(context),
             "units".tr(context),
             "leaderboard".tr(context),
           ],
           icons: const [
-            Icons.settings_outlined,
+            Icons.video_collection_outlined,
             Icons.person_outline,
             Icons.home_outlined,
-            Icons.book,
-            Icons.leaderboard,
+            Icons.book_outlined,
+            Icons.leaderboard_outlined,
           ],
+          useSafeArea: true,
           tabIconColor: AppColors.backgroundColor,
-          tabIconSize: 28.0,
-          tabIconSelectedSize: 26.0,
+          tabIconSize: 30.0,
+          tabIconSelectedSize: 30.0,
           tabSelectedColor: AppColors.primaryColors,
           tabIconSelectedColor: AppColors.textButtonColors,
           tabBarColor: AppColors.primaryColors,
           tabSize: 50,
-          tabBarHeight: 55,
+          tabBarHeight: 60,
           textStyle: const TextStyle(
             fontSize: 15,
             color: AppColors.backgroundColor,

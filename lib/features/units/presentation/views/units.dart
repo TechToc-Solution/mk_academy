@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mk_academy/core/widgets/custom_level_bar.dart';
 import 'package:mk_academy/features/units/presentation/views/units_section.dart';
 import 'package:mk_academy/features/units/presentation/views/widgets/custom_top_nav_bar.dart';
-import '../../../../core/widgets/custom_bottom_nav_bar.dart';
 
 class UnitsPage extends StatefulWidget {
   const UnitsPage({super.key});

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mk_academy/core/utils/functions.dart';
-import 'package:mk_academy/features/leaderboard/presentation/views/leaderboard.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});

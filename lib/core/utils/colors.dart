@@ -6,6 +6,6 @@ class AppColors {
   static const Color textTitleAppBarColor = Colors.white;
   static const Color textButtonColors = Colors.black;
   static const primaryColors = Color(0xffECC440);
-  static const ProfileAvatarColor = Color(0xffD9D9D9);
-  static const ProfileTextColor = Color(0xffEBEBEB);
+  static const avatarColor = Color(0xffD9D9D9);
+  static const textColor = Color(0xffEBEBEB);
 }

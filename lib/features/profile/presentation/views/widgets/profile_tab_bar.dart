@@ -15,7 +15,7 @@ class ProfileTabBar extends StatelessWidget {
         controller: tabController,
         indicatorColor: AppColors.primaryColors,
         labelColor: AppColors.primaryColors,
-        unselectedLabelColor: AppColors.ProfileTextColor,
+        unselectedLabelColor: AppColors.textColor,
         dividerColor: AppColors.primaryColors,
         indicatorWeight: 5,
         dividerHeight: 0.5,
@@ -24,15 +24,13 @@ class ProfileTabBar extends StatelessWidget {
           Tab(
             child: Text(
               'الاشتراكات',
-              style: Styles.textStyle20
-                  .copyWith(color: AppColors.ProfileTextColor),
+              style: Styles.textStyle20.copyWith(color: AppColors.textColor),
             ),
           ),
           Tab(
             child: Text(
               'المستوى',
-              style: Styles.textStyle20
-                  .copyWith(color: AppColors.ProfileTextColor),
+              style: Styles.textStyle20.copyWith(color: AppColors.textColor),
             ),
           ),
         ],
