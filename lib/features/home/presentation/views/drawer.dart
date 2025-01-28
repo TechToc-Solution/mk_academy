@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/features/test_your_self/presentation/views/test_your_self_page.dart';
+
+import '../../../../core/utils/functions.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -37,7 +40,7 @@ class CustomDrawerBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () => Navigator.of(context).push(goRoute(x: TestYourSelfPage())),
       child: Container(
         margin: EdgeInsets.all(8),
         padding: EdgeInsets.all(16),
