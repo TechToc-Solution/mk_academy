@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/features/test_your_self/presentation/views/widgets/questions_test/questions_test_page.dart';
 
 import '../../../../../core/utils/colors.dart';
 import '../../../../../core/utils/constats.dart';
@@ -17,19 +18,23 @@ class SubjectNameItem extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          Container(
-            width: screenWidth * 0.65,
-            height: 60,
-            decoration: BoxDecoration(
-              color: AppColors.backgroundColor,
-              border: Border.all(color: AppColors.borderColor),
-              borderRadius: BorderRadius.circular(25),
-            ),
-            child: Center(
-              child: Text(
-                "جبر",
-                style: Styles.textStyle30.copyWith(
-                    color: AppColors.textColor, fontWeight: FontWeight.bold),
+          GestureDetector(
+            onTap: () =>
+                Navigator.pushNamed(context, QuestionsTestPage.routeName),
+            child: Container(
+              width: screenWidth * 0.65,
+              height: 60,
+              decoration: BoxDecoration(
+                color: AppColors.backgroundColor,
+                border: Border.all(color: AppColors.borderColor),
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: Center(
+                child: Text(
+                  "جبر",
+                  style: Styles.textStyle30.copyWith(
+                      color: AppColors.textColor, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ),

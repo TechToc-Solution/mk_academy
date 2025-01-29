@@ -24,11 +24,11 @@ class CustomAppBar extends StatelessWidget {
           back_btn
               ? CircleAvatar(
                   backgroundColor: AppColors.avatarColor,
-                  maxRadius: 25,
+                  maxRadius: 20,
                   child: IconButton(
                     icon: Icon(
                       Icons.arrow_back_outlined,
-                      size: 32,
+                      size: 20,
                       color: AppColors.backgroundColor,
                     ),
                     onPressed: () {
@@ -41,7 +41,7 @@ class CustomAppBar extends StatelessWidget {
                 ),
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
           SizedBox(
             width: 50,

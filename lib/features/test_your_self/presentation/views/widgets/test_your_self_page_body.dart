@@ -23,16 +23,14 @@ class TestYourSelfPageBody extends StatelessWidget {
           BackgroundImage(),
           Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: screenWidth * 0.05, vertical: screenWidth * 0.3),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: kSizedBoxHeight),
-                  SubjectNameItem(screenWidth: screenWidth),
-                  SubjectNameItem(screenWidth: screenWidth),
-                  SubjectNameItem(screenWidth: screenWidth),
-                ],
-              ),
+                horizontal: screenWidth * 0.05, vertical: screenWidth * 0.1),
+            child: Column(
+              children: [
+                const SizedBox(height: kSizedBoxHeight),
+                SubjectNameItem(screenWidth: screenWidth),
+                SubjectNameItem(screenWidth: screenWidth),
+                SubjectNameItem(screenWidth: screenWidth),
+              ],
             ),
           ),
         ],

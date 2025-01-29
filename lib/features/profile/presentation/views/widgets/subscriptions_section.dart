@@ -9,8 +9,7 @@ class SubscriptionsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return ListView(
       children: [
         SizedBox(height: 12),
         _buildSubscriptionItem('2025/1/9', ' 500.000 sp', 'جبر'),
@@ -52,11 +51,11 @@ class SubscriptionsSection extends StatelessWidget {
                     style: Styles.textStyle15
                         .copyWith(color: AppColors.backgroundColor),
                   )),
-              Text('تاريخ الاشتراك : $date',
-                  style: Styles.textStyle16.copyWith(color: Colors.white)),
             ],
           ),
         ),
+        Text('تاريخ الاشتراك : $date',
+            style: Styles.textStyle16.copyWith(color: Colors.white)),
         Divider(
           color: AppColors.primaryColors,
           height: kSizedBoxHeight,
