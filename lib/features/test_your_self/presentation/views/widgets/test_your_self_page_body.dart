@@ -15,22 +15,27 @@ class TestYourSelfPageBody extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight * 1.5),
         child: SafeArea(
-            child: CustomAppBar(
-                title: "test_your_self".tr(context), back_btn: true)),
+          child: CustomAppBar(
+            title: "test_your_self".tr(context),
+            back_btn: true,
+          ),
+        ),
       ),
       body: Stack(
         children: [
-          BackgroundImage(),
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: screenWidth * 0.05, vertical: screenWidth * 0.1),
-            child: Column(
-              children: [
-                const SizedBox(height: kSizedBoxHeight),
-                SubjectNameItem(screenWidth: screenWidth),
-                SubjectNameItem(screenWidth: screenWidth),
-                SubjectNameItem(screenWidth: screenWidth),
-              ],
+          const BackgroundImage(),
+          SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth * 0.05, vertical: screenWidth * 0.1),
+              child: Column(
+                children: [
+                  const SizedBox(height: kSizedBoxHeight),
+                  ...List.generate(
+                      4, (index) => SubjectNameItem(screenWidth: screenWidth)),
+                ],
+              ),
             ),
           ),
         ],
