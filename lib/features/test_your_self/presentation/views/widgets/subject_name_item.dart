@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mk_academy/features/test_your_self/presentation/views/widgets/questions_test/questions_test_page.dart';
+import 'package:mk_academy/features/test_your_self/presentation/views/questions_test_page.dart';
 
 import '../../../../../core/utils/colors.dart';
 import '../../../../../core/utils/constats.dart';

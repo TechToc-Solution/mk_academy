@@ -4,8 +4,8 @@ import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/styles.dart';
 import 'package:mk_academy/core/widgets/custom_bottom_nav_bar.dart';
 
-import '../../../../../../core/utils/assets_data.dart';
-import '../../../../../../core/widgets/custom_app_bar.dart';
+import '../../../../core/utils/assets_data.dart';
+import '../../../../core/widgets/custom_app_bar.dart';
 
 class TestResultPage extends StatelessWidget {
   final int score;

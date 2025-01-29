@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/assets_data.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/styles.dart';
-import 'aswer_option.dart';
-import 'progress_dots.dart';
+import 'widgets/questions_test/aswer_option.dart';
+import 'widgets/questions_test/progress_dots.dart';
 import 'test_result_page.dart';
 import 'dart:async';
 
-import 'timer_section.dart';
+import 'widgets/questions_test/timer_section.dart';
 
 class QuestionsTestPage extends StatefulWidget {
   const QuestionsTestPage({super.key});
-  static const String routeName = 'testQuestions';
-
+  static const String routeName = 'questionsTest';
   @override
   _QuestionsTestPageState createState() => _QuestionsTestPageState();
 }
