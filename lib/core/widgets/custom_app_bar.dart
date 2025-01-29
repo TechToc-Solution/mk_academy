@@ -22,19 +22,15 @@ class CustomAppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           back_btn
-              ? CircleAvatar(
-                  backgroundColor: AppColors.avatarColor,
-                  maxRadius: 20,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back_outlined,
-                      size: 20,
-                      color: AppColors.backgroundColor,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
+              ? IconButton(
+                  icon: Icon(
+                    Icons.arrow_back_outlined,
+                    size: 20,
+                    color: AppColors.backgroundColor,
                   ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 )
               : SizedBox(
                   width: 50,
