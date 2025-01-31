@@ -13,6 +13,7 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      margin: EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
           color: AppColors.primaryColors,
           borderRadius: BorderRadius.only(
@@ -33,6 +34,7 @@ class CustomAppBar extends StatelessWidget {
                   },
                 )
               : SizedBox(
+                  height: 50,
                   width: 50,
                 ),
           Text(
@@ -40,6 +42,7 @@ class CustomAppBar extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
           SizedBox(
+            height: 50,
             width: 50,
           ),
         ],

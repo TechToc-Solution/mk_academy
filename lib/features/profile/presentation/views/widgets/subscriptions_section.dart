@@ -10,6 +10,7 @@ class SubscriptionsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      physics: NeverScrollableScrollPhysics(),
       children: [
         SizedBox(height: 12),
         _buildSubscriptionItem('2025/1/9', ' 500.000 sp', 'جبر'),
