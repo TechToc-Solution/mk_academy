@@ -20,7 +20,10 @@ class CustomBottomNavBar extends StatefulWidget {
 }
 
 class _CustomBottomNavBarState extends State<CustomBottomNavBar>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+  
   MotionTabBarController? _motionTabBarController;
   late PageController _pageController;
 
@@ -44,6 +47,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: PageView(
         controller: _pageController,
@@ -110,8 +114,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
           onTabItemSelected: (index) {
             _pageController.animateToPage(
               index,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.ease,
             );
           },
         ),
