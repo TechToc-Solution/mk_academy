@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/widgets/custom_app_bar.dart';
 import 'package:mk_academy/features/leaderboard/presentation/views/leaderboard_section.dart';
 
@@ -15,29 +16,23 @@ class _LeaderboardState extends State<LeaderboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            top: 8.0,
-            left: 8.0,
-            right: 8.0,
-          ),
-          child: Column(
-            children: [
-              CustomAppBar(title: "الترتيب", back_btn: widget.back_btn),
-              SizedBox(
-                height: 8,
-              ),
-              Expanded(
-                  child: ListView(
+        child: Column(
+          children: [
+            CustomAppBar(title: "الترتيب", back_btn: widget.back_btn),
+            Expanded(
+                child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+              child: ListView(
                 children: [
                   LeaderboardSection(),
                   SizedBox(
                     height: 16,
                   )
                 ],
-              ))
-            ],
-          ),
+              ),
+            ))
+          ],
         ),
       ),
     );

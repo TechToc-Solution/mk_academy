@@ -34,37 +34,42 @@ class _ProfilePageBodyState extends State<ProfilePageBody>
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(
-              horizontal: KHorizontalPadding, vertical: KVerticalPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomAppBar(title: "profile".tr(context), back_btn: false),
-              SizedBox(height: kSizedBoxHeight),
-              ProfilePageHeader(),
-              SizedBox(height: kSizedBoxHeight),
-              Divider(
-                color: AppColors.primaryColors,
-                height: kSizedBoxHeight,
-                thickness: 0.5,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomAppBar(title: "profile".tr(context), back_btn: false),
+            Expanded(
+                child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+              child: ListView(
+                children: [
+                  SizedBox(height: kSizedBoxHeight),
+                  ProfilePageHeader(),
+                  SizedBox(height: kSizedBoxHeight),
+                  Divider(
+                    color: AppColors.primaryColors,
+                    height: kSizedBoxHeight,
+                    thickness: 0.5,
+                  ),
+                  SizedBox(height: kSizedBoxHeight),
+                  StatsSection(),
+                  SizedBox(height: kSizedBoxHeight),
+                  ProfileTabBar(tabController: _tabController),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        SubscriptionsSection(),
+                        LevelSection(),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: kSizedBoxHeight),
-              StatsSection(),
-              SizedBox(height: kSizedBoxHeight),
-              ProfileTabBar(tabController: _tabController),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.5,
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    SubscriptionsSection(),
-                    LevelSection(),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ))
+          ],
         ),
       ),
     );

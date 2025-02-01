@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/widgets/custom_app_bar.dart';
 import 'package:mk_academy/features/show_unit/presentation/views/unit_section.dart';
 
@@ -15,32 +16,29 @@ class _UnitsPageState extends State<UnitPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            top: 8.0,
-            left: 8.0,
-            right: 8.0,
-          ),
-          child: Column(
-            children: [
-              CustomAppBar(
-                title: widget.title,
-                back_btn: true,
-              ),
-              Expanded(
-                  child: ListView(
+        child: Column(
+          children: [
+            CustomAppBar(
+              title: widget.title,
+              back_btn: true,
+            ),
+            Expanded(
+                child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+              child: ListView(
                 children: [
                   SizedBox(
-                    height: 8,
+                    height: kSizedBoxHeight,
                   ),
                   UnitSection(),
                   SizedBox(
-                    height: 16,
+                    height: kSizedBoxHeight,
                   )
                 ],
-              ))
-            ],
-          ),
+              ),
+            ))
+          ],
         ),
       ),
     );

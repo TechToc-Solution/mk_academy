@@ -12,33 +12,38 @@ class TestYourSelfPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight * 1.5),
-        child: SafeArea(
-          child: CustomAppBar(
-            title: "test_your_self".tr(context),
-            back_btn: true,
-          ),
-        ),
-      ),
-      body: Stack(
-        children: [
-          const BackgroundImage(),
-          SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: screenWidth * 0.05, vertical: screenWidth * 0.1),
-              child: Column(
-                children: [
-                  const SizedBox(height: kSizedBoxHeight),
-                  ...List.generate(
-                      4, (index) => SubjectNameItem(screenWidth: screenWidth)),
-                ],
-              ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            const BackgroundImage(),
+            Column(
+              children: [
+                CustomAppBar(
+                  title: "test_your_self".tr(context),
+                  back_btn: true,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: KHorizontalPadding,
+                        vertical: KVerticalPadding),
+                    child: ListView(
+                      children: [
+                        SizedBox(
+                          height: kSizedBoxHeight,
+                        ),
+                        ...List.generate(
+                            3,
+                            (index) =>
+                                SubjectNameItem(screenWidth: screenWidth)),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

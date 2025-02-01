@@ -13,14 +13,22 @@ class CurriculumPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: ListView(
-          padding: EdgeInsets.symmetric(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
               horizontal: KHorizontalPadding, vertical: KVerticalPadding),
-          children: [
-            CustomTopNavBar(),
-            SizedBox(height: kSizedBoxHeight),
-            CurriculumUintSection(),
-          ],
+          child: Column(
+            children: [
+              CustomTopNavBar(),
+              SizedBox(height: kSizedBoxHeight),
+              Expanded(
+                child: ListView(
+                  children: [
+                    CurriculumUintSection(),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

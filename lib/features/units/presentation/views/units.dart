@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/widgets/custom_level_bar.dart';
 import 'package:mk_academy/features/units/presentation/views/units_section.dart';
 import 'package:mk_academy/features/units/presentation/views/widgets/custom_top_nav_bar.dart';
@@ -17,27 +18,24 @@ class _UnitsPageState extends State<UnitsPage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(
-            top: 8.0,
-            left: 8.0,
-            right: 8.0,
-          ),
+          padding: const EdgeInsets.symmetric(
+              horizontal: KHorizontalPadding, vertical: KVerticalPadding),
           child: Column(
             children: [
               CustomTopNavBar(),
               SizedBox(
-                height: 8,
+                height: kSizedBoxHeight,
               ),
               customLevelBar(),
               Expanded(
                   child: ListView(
                 children: [
                   SizedBox(
-                    height: 8,
+                    height: kSizedBoxHeight,
                   ),
                   UnitsSection(),
                   SizedBox(
-                    height: 16,
+                    height: kSizedBoxHeight,
                   )
                 ],
               ))
