@@ -31,5 +31,7 @@
     "who_are_we" : "من نحن",
     "work_papers" : "اوراق عمل",
     "logout" : "تسجيل خروج",
-    "delete_account" : "حذف الحساب"
+    "delete_account" : "حذف الحساب",
+    "download" : "تحميل",
+    "show" : "مشاهدة"
 }

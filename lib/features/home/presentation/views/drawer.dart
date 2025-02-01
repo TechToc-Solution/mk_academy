@@ -6,6 +6,7 @@ import 'package:mk_academy/features/auth/presentation/views/login/login_page.dar
 import 'package:mk_academy/features/leaderboard/presentation/views/leaderboard.dart';
 import 'package:mk_academy/features/profile/presentation/views/profile_page.dart';
 import 'package:mk_academy/features/test_your_self/presentation/views/test_your_self_page.dart';
+import 'package:mk_academy/features/work%20papers/presentation/views/work_papers_page.dart';
 
 import '../../../../core/utils/functions.dart';
 
@@ -65,9 +66,13 @@ class CustomDrawer extends StatelessWidget {
               icon: Icons.sports_handball_rounded,
             ),
           ),
-          CustomDrawerBtn(
-            title: "work_papers".tr(context),
-            icon: Icons.library_books_outlined,
+          GestureDetector(
+            onTap: () =>
+                Navigator.of(context).push(goRoute(x: WorkPapersPage())),
+            child: CustomDrawerBtn(
+              title: "work_papers".tr(context),
+              icon: Icons.library_books_outlined,
+            ),
           ),
           GestureDetector(
             onTap: () => Navigator.of(context).push(
