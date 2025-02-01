@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/features/curriculum/presentation/views/curriculum_page.dart';
-import 'package:mk_academy/features/profile/presentation/views/profile_page.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
 
 import '../../features/home/presentation/views/home_page.dart';
-import '../../features/leaderboard/presentation/views/leaderboard.dart';
 import '../../features/units/presentation/views/units.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
