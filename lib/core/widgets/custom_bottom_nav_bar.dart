@@ -23,7 +23,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
-  
+
   MotionTabBarController? _motionTabBarController;
   late PageController _pageController;
 
@@ -56,12 +56,10 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
         },
         children: const [
           CurriculumPage(),
-          ProfilePage(),
+          UnitsPage(),
           HomePage(),
           UnitsPage(),
-          LeaderboardPage(
-            back_btn: false,
-          ),
+          UnitsPage()
         ],
       ),
       bottomNavigationBar: Container(
@@ -85,17 +83,17 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
           initialSelectedTab: "home".tr(context),
           labels: [
             "curriculum".tr(context),
-            "profile".tr(context),
+            "weekly_sessions".tr(context),
             "home".tr(context),
-            "units".tr(context),
-            "leaderboard".tr(context),
+            "capacitors".tr(context),
+            "exam_sessions".tr(context),
           ],
           icons: const [
-            Icons.video_collection_outlined,
-            Icons.person_outline,
+            Icons.library_books_outlined,
+            Icons.calendar_today_outlined,
             Icons.home_outlined,
-            Icons.book_outlined,
-            Icons.leaderboard_outlined,
+            Icons.video_library_outlined,
+            Icons.note_alt_outlined,
           ],
           useSafeArea: true,
           tabIconColor: AppColors.backgroundColor,

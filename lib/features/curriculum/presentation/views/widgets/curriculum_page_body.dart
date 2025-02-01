@@ -2,6 +2,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/constats.dart';
+import 'package:mk_academy/core/widgets/custom_level_bar.dart';
 import 'package:mk_academy/features/units/presentation/views/widgets/custom_top_nav_bar.dart';
 
 import 'curriclum_uint_section.dart';
@@ -19,11 +20,20 @@ class CurriculumPageBody extends StatelessWidget {
           child: Column(
             children: [
               CustomTopNavBar(),
-              SizedBox(height: kSizedBoxHeight),
+              SizedBox(
+                height: kSizedBoxHeight,
+              ),
+              customLevelBar(),
               Expanded(
                 child: ListView(
                   children: [
+                    SizedBox(
+                      height: kSizedBoxHeight,
+                    ),
                     CurriculumUintSection(),
+                    SizedBox(
+                      height: kSizedBoxHeight,
+                    ),
                   ],
                 ),
               ),

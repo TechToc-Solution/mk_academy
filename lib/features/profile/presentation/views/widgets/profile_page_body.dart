@@ -37,7 +37,7 @@ class _ProfilePageBodyState extends State<ProfilePageBody>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomAppBar(title: "profile".tr(context), back_btn: false),
+            CustomAppBar(title: "profile".tr(context), back_btn: true),
             Expanded(
                 child: Padding(
               padding:

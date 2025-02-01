@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/colors.dart';
+import 'package:mk_academy/core/utils/constats.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
@@ -13,7 +14,7 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      margin: EdgeInsets.symmetric(horizontal: 8),
+      margin: EdgeInsets.symmetric(horizontal: KHorizontalPadding),
       decoration: BoxDecoration(
           color: AppColors.primaryColors,
           borderRadius: BorderRadius.only(

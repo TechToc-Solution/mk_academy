@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:mk_academy/core/utils/colors.dart';
+import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/widgets/custom_level_bar.dart';
 import 'package:mk_academy/features/home/presentation/views/advertising_section.dart';
 import 'package:mk_academy/features/home/presentation/views/category_section.dart';
@@ -26,11 +27,8 @@ class _MyHomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(
-            top: 8.0,
-            left: 8.0,
-            right: 8.0,
-          ),
+          padding: const EdgeInsets.symmetric(
+              horizontal: KHorizontalPadding, vertical: KVerticalPadding),
           child: SliderDrawer(
             isDraggable: false,
             slideDirection: SlideDirection.rightToLeft,
@@ -57,7 +55,6 @@ class _MyHomePageState extends State<HomePage> {
                       CustomAdvertiseItem(),
                       CustomAdvertiseItem(),
                       CustomAdvertiseItem(),
-
                     ]),
                     SizedBox(
                       height: 8,
