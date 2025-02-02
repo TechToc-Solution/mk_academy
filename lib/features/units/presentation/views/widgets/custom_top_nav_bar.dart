@@ -1,29 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:mk_academy/features/units/presentation/views/widgets/custom_top_nav_bar_btn.dart';
+import 'package:mk_academy/core/utils/colors.dart';
+import 'package:mk_academy/core/utils/styles.dart';
 
 class CustomTopNavBar extends StatelessWidget {
-  const CustomTopNavBar({
-    super.key,
-  });
+  final TabController tabController;
+  const CustomTopNavBar({super.key, required this.tabController});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        customTopNavBarBtn(
-          title: "جبر",
-          index: 0,
-        ),
-        customTopNavBarBtn(
-          title: "تحليل",
-          index: 1,
-        ),
-        customTopNavBarBtn(
-          title: "هندسة",
-          index: 2,
-        )
-      ],
+    return Container(
+      color: AppColors.backgroundColor,
+      child: TabBar(
+        controller: tabController,
+        indicatorColor: AppColors.primaryColors,
+        labelColor: AppColors.primaryColors,
+        unselectedLabelColor: AppColors.textColor,
+        dividerColor: AppColors.primaryColors,
+        indicatorWeight: 5,
+        dividerHeight: 0.5,
+        indicatorSize: TabBarIndicatorSize.tab,
+        tabs: [
+          Tab(
+            child: Text(
+              "جبر",
+              style: Styles.textStyle20.copyWith(color: AppColors.textColor),
+            ),
+          ),
+          Tab(
+            child: Text(
+              'تحليل',
+              style: Styles.textStyle20.copyWith(color: AppColors.textColor),
+            ),
+          ),
+          Tab(
+            child: Text(
+              "هندسة",
+              style: Styles.textStyle20.copyWith(color: AppColors.textColor),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

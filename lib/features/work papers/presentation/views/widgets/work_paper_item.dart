@@ -79,7 +79,9 @@ class WorkPaperItem extends StatelessWidget {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
-                          Icon(Icons.download, color: Colors.white)
+                          SizedBox(width: 8),
+                          Icon(Icons.remove_red_eye_rounded,
+                              color: Colors.white)
                         ],
                       ))
                 ],

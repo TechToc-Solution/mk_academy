@@ -14,9 +14,7 @@ class CurriculumVideosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: ListView(
-        padding: EdgeInsets.symmetric(
-            horizontal: KHorizontalPadding, vertical: KVerticalPadding),
+          child: Column(
         children: [
           CustomAppBar(title: "curriculum".tr(context), back_btn: true),
           SizedBox(height: kSizedBoxHeight),
@@ -26,9 +24,18 @@ class CurriculumVideosPage extends StatelessWidget {
             color: AppColors.primaryColors,
             thickness: 0.5,
           ),
-          CustomVideoItem(),
-          CustomVideoItem(),
-          CustomVideoItem(),
+          Expanded(
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+              child: ListView.builder(
+                itemCount: 20,
+                itemBuilder: (BuildContext context, int index) {
+                  return CustomVideoItem();
+                },
+              ),
+            ),
+          )
         ],
       )),
     );

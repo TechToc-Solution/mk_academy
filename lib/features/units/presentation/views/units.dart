@@ -12,7 +12,22 @@ class UnitsPage extends StatefulWidget {
   State<UnitsPage> createState() => _UnitsPageState();
 }
 
-class _UnitsPageState extends State<UnitsPage> {
+class _UnitsPageState extends State<UnitsPage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,21 +37,23 @@ class _UnitsPageState extends State<UnitsPage> {
               horizontal: KHorizontalPadding, vertical: KVerticalPadding),
           child: Column(
             children: [
-              CustomTopNavBar(),
+              CustomTopNavBar(
+                tabController: _tabController,
+              ),
               SizedBox(
                 height: kSizedBoxHeight,
               ),
               customLevelBar(),
+              SizedBox(
+                height: kSizedBoxHeight,
+              ),
               Expanded(
-                  child: ListView(
+                  child: TabBarView(
+                controller: _tabController,
                 children: [
-                  SizedBox(
-                    height: kSizedBoxHeight,
-                  ),
                   UnitsSection(),
-                  SizedBox(
-                    height: kSizedBoxHeight,
-                  )
+                  UnitsSection(),
+                  UnitsSection(),
                 ],
               ))
             ],

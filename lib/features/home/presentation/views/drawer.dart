@@ -87,9 +87,6 @@ class CustomDrawer extends StatelessWidget {
             title: "delete_account".tr(context),
             icon: Icons.delete,
           ),
-          Spacer(
-            flex: 2,
-          ),
         ],
       ),
     );

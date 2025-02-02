@@ -13,7 +13,6 @@ class CurriculumUintSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
         itemCount: 20,
-        physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
