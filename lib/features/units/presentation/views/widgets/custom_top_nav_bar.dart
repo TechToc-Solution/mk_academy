@@ -35,7 +35,7 @@ class CustomTopNavBar extends StatelessWidget {
           ),
           Tab(
             child: Text(
-              "هندسة".tr(context),
+              "geometric".tr(context),
               style: Styles.textStyle20.copyWith(color: AppColors.textColor),
             ),
           ),
