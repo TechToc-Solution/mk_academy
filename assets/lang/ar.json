@@ -33,5 +33,9 @@
     "logout" : "تسجيل خروج",
     "delete_account" : "حذف الحساب",
     "download" : "تحميل",
-    "show" : "مشاهدة"
+    "show" : "مشاهدة",
+    "level" : "المستوى",
+    "algebra": "جبر",
+    "analysis": "تحليل",
+    "geometric": "هندسة"
 }

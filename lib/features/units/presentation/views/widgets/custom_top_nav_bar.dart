@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/styles.dart';
 
@@ -22,19 +23,19 @@ class CustomTopNavBar extends StatelessWidget {
         tabs: [
           Tab(
             child: Text(
-              "جبر",
+              "algebra".tr(context),
               style: Styles.textStyle20.copyWith(color: AppColors.textColor),
             ),
           ),
           Tab(
             child: Text(
-              'تحليل',
+              'analysis'.tr(context),
               style: Styles.textStyle20.copyWith(color: AppColors.textColor),
             ),
           ),
           Tab(
             child: Text(
-              "هندسة",
+              "هندسة".tr(context),
               style: Styles.textStyle20.copyWith(color: AppColors.textColor),
             ),
           ),

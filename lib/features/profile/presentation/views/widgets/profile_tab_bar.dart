@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
 
 import '../../../../../core/utils/colors.dart';
 import '../../../../../core/utils/styles.dart';
@@ -23,13 +24,13 @@ class ProfileTabBar extends StatelessWidget {
         tabs: [
           Tab(
             child: Text(
-              'الاشتراكات',
+              'subscriptions'.tr(context),
               style: Styles.textStyle20.copyWith(color: AppColors.textColor),
             ),
           ),
           Tab(
             child: Text(
-              'المستوى',
+              'level'.tr(context),
               style: Styles.textStyle20.copyWith(color: AppColors.textColor),
             ),
           ),
