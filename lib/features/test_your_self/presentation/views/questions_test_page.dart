@@ -62,11 +62,7 @@ class _QuestionsTestPageState extends State<QuestionsTestPage> {
             _selectedAnswer = null;
             _startTimer();
           } else {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        TestResultPage(score: answeredCorrectly ? 20 : 0)));
+            Navigator.pushReplacementNamed(context, TestResultPage.routeName);
           }
         });
       }

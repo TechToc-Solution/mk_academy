@@ -19,8 +19,8 @@ class SubjectNameItem extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: () =>
-                Navigator.pushNamed(context, QuestionsTestPage.routeName),
+            onTap: () => Navigator.pushReplacementNamed(
+                context, QuestionsTestPage.routeName),
             child: Container(
               width: screenWidth * 0.65,
               height: 60,

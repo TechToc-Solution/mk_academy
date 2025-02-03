@@ -9,6 +9,7 @@ import '../../features/auth/presentation/views/register/register_page.dart';
 import '../../features/home/presentation/views/home_page.dart';
 import '../../features/profile/presentation/views/profile_page.dart';
 import '../../features/test_your_self/presentation/views/questions_test_page.dart';
+import '../../features/test_your_self/presentation/views/test_result_page.dart';
 
 class Routes {
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -23,5 +24,6 @@ class Routes {
     CustomBottomNavBar.routeName: (context) => CustomBottomNavBar(),
     ProfilePage.routeName: (context) => const ProfilePage(),
     QuestionsTestPage.routeName: (context) => const QuestionsTestPage(),
+    TestResultPage.routeName: (context) => const TestResultPage(),
   };
 }
