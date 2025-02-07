@@ -13,21 +13,22 @@ class customLevelBar extends StatelessWidget {
       children: [
         Text(
           "current_level".tr(context) + ": ",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         Text(
           "15 ",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         Expanded(
-          child: Divider(
-            endIndent: 30,
-            thickness: 5,
-            color: AppColors.primaryColors,
-          ),
-        ),
+            child: LinearProgressIndicator(
+          value: 1200 / 1500,
+          backgroundColor: AppColors.avatarColor,
+          valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryColors),
+          minHeight: 12,
+          borderRadius: BorderRadius.circular(10),
+        )),
         Text(
-          "16",
+          " 16",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ],
