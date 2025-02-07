@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/functions.dart';
+import 'package:mk_academy/features/test_your_self/presentation/views/questions_test_page.dart';
 
 import '../../../../../core/utils/colors.dart';
 import '../../../../../core/utils/styles.dart';
@@ -28,7 +30,12 @@ class CustomVideoItem extends StatelessWidget {
                 color: AppColors.avatarColor,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(35)),
-                onPressed: () {},
+                onPressed: () {
+                  //open youtube
+                  Navigator.of(context).push(
+                    goRoute(x: QuestionsTestPage()),
+                  );
+                },
                 child: Text(
                   "مشاهدة",
                   style: Styles.textStyle16.copyWith(
