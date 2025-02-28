@@ -27,6 +27,7 @@ dependencies:
   flutter_svg_icons: ^0.0.1+4
   get_it: ^8.0.3
   motion_tab_bar: ^2.0.4
+  phone_form_field: ^10.0.4
   pretty_dio_logger: ^1.4.0
   shared_preferences: ^2.3.5
 
