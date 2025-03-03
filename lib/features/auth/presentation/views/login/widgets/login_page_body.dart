@@ -6,7 +6,9 @@ import 'package:mk_academy/core/utils/enums.dart';
 import 'package:mk_academy/core/utils/styles.dart';
 import 'package:mk_academy/core/utils/validation.dart';
 import 'package:mk_academy/features/auth/presentation/views/widgets/custom_button.dart';
+import 'package:mk_academy/features/auth/presentation/views/widgets/custom_phone_field.dart';
 import 'package:mk_academy/features/auth/presentation/views/widgets/custom_text_filed.dart';
+import 'package:phone_form_field/phone_form_field.dart';
 
 import '../../../../../../core/utils/colors.dart';
 import 'singin_forget_password.dart';
@@ -20,9 +22,12 @@ class LoginPageBody extends StatefulWidget {
 class _LoginPageBodyState extends State<LoginPageBody> {
   late final TextEditingController nameController;
   late final TextEditingController passwordController;
+  late final PhoneController phoneController;
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   @override
   void initState() {
+    phoneController = new PhoneController(
+        initialValue: PhoneNumber(isoCode: IsoCode.SY, nsn: ""));
     nameController = new TextEditingController();
     passwordController = new TextEditingController();
     super.initState();
@@ -45,6 +50,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
         title: Text("sing_in".tr(context)),
         titleTextStyle: Styles.textStyle18.copyWith(color: Colors.white),
         centerTitle: true,
+        foregroundColor: Colors.white,
       ),
       body: ListView(
         padding: EdgeInsets.symmetric(
@@ -74,12 +80,10 @@ class _LoginPageBodyState extends State<LoginPageBody> {
             key: _loginFormKey,
             child: Column(
               children: [
-                CustomTextField(
-                    text: "user_name".tr(context),
-                    isPassword: false,
-                    validatorFun: (p0) =>
-                        Validator.validate(p0, ValidationState.normal),
-                    controller: nameController),
+                CustomPhoneField(
+                  controller: phoneController,
+                  text: "phone_num".tr(context),
+                ),
                 CustomTextField(
                     text: "password".tr(context),
                     isPassword: true,

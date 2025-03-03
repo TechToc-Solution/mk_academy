@@ -10,6 +10,7 @@
     "sing_in" : "تسجيل الدخول",
     "user_name" : "اسم المستخدم",
     "password" : "كلمة المرور",
+    "phone_num" : "رقم الهاتف",
     "login" : "تسجيل الدخول",
     "sing_up" : "انشاء حساب",
     "confirm_password" : "تأكيد كلمة المرور",
@@ -37,5 +38,6 @@
     "level" : "المستوى",
     "algebra": "جبر",
     "analysis": "تحليل",
-    "geometric": "هندسة"
+    "geometric": "هندسة",
+    "forgot_password" : "نسيت كملة المرور؟"
 }
