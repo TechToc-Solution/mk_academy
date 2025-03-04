@@ -39,5 +39,9 @@
     "algebra": "جبر",
     "analysis": "تحليل",
     "geometric": "هندسة",
-    "forgot_password" : "نسيت كملة المرور؟"
+    "forgot_password" : "نسيت كملة المرور؟",
+    "first_name" : "الاسم",
+    "last_name" : "الكنية",
+    "city" : "المدينة",
+    "date_of_birth" : "تاريخ الولادة"
 }

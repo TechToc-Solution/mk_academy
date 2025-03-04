@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:phone_form_field/phone_form_field.dart';
 
 import '../../../../../../core/utils/assets_data.dart';
 import '../../../../../../core/utils/colors.dart';
 import '../../../../../../core/utils/constats.dart';
-import '../../../../../../core/utils/enums.dart';
 import '../../../../../../core/utils/styles.dart';
-import '../../../../../../core/utils/validation.dart';
 import '../../widgets/custom_button.dart';
-import '../../widgets/custom_text_filed.dart';
+import 'register_form.dart';
 
 class RegisterPageBody extends StatefulWidget {
   const RegisterPageBody({super.key});
@@ -18,23 +17,36 @@ class RegisterPageBody extends StatefulWidget {
 }
 
 class _RegisterPageBodyState extends State<RegisterPageBody> {
-  late final TextEditingController nameController;
-  late final TextEditingController passwordContoller;
-  late final TextEditingController confirnmPasswordController;
   final GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();
+  late final TextEditingController firstNameController;
+  late final TextEditingController lastNameController;
+  late final TextEditingController passwordController;
+  late final TextEditingController confirmPasswordController;
+  late final PhoneController phoneController;
+  late final TextEditingController dateController;
+  String? selectedCity;
+
   @override
   void initState() {
-    nameController = new TextEditingController();
-    passwordContoller = new TextEditingController();
-    confirnmPasswordController = new TextEditingController();
     super.initState();
+
+    firstNameController = TextEditingController();
+    lastNameController = TextEditingController();
+    passwordController = TextEditingController();
+    confirmPasswordController = TextEditingController();
+    phoneController = PhoneController(
+        initialValue: PhoneNumber(isoCode: IsoCode.SY, nsn: ""));
+    dateController = TextEditingController();
   }
 
   @override
   void dispose() {
-    nameController.dispose();
-    passwordContoller.dispose();
-    confirnmPasswordController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    phoneController.dispose();
+    dateController.dispose();
     super.dispose();
   }
 
@@ -74,37 +86,33 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                   .copyWith(color: Colors.white, fontWeight: FontWeight.w700),
             ),
           ),
-          Form(
-            key: _registerFormKey,
-            child: Column(
-              children: [
-                CustomTextField(
-                    text: "user_name".tr(context),
-                    isPassword: false,
-                    validatorFun: (p0) =>
-                        Validator.validate(p0, ValidationState.normal),
-                    controller: nameController),
-                CustomTextField(
-                    text: "password".tr(context),
-                    validatorFun: (p0) =>
-                        Validator.validate(p0, ValidationState.password),
-                    isPassword: true,
-                    controller: passwordContoller),
-                CustomTextField(
-                    text: "confirm_password".tr(context),
-                    isPassword: true,
-                    validatorFun: (p0) => Validator.validateConfirmPassword(
-                        p0, passwordContoller.text),
-                    controller: confirnmPasswordController),
-              ],
-            ),
+          RegisterForm(
+            registerFormKey: _registerFormKey,
+            firstNameController: firstNameController,
+            lastNameController: lastNameController,
+            passwordController: passwordController,
+            confirmPasswordController: confirmPasswordController,
+            phoneController: phoneController,
+            dateController: dateController,
+            selectedCity: selectedCity,
+            onCityChanged: (value) {
+              setState(() {
+                print(value);
+                selectedCity = value;
+              });
+            },
           ),
           CustomButton(
               child: Text(
                 "confirm".tr(context),
                 style: Styles.textStyle15.copyWith(color: Colors.white),
               ),
-              onPressed: () {},
+              onPressed: () {
+                if (_registerFormKey.currentState!.validate()) {
+                  print(dateController.text);
+                  print(selectedCity);
+                }
+              },
               verticalHieght: KHorizontalPadding,
               horizontalWidth: KVerticalPadding,
               color: AppColors.primaryColors)
