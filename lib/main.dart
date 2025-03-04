@@ -8,13 +8,17 @@ import 'package:mk_academy/core/locale/locale_cubit.dart';
 import 'package:mk_academy/core/utils/cache_helper.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/routs.dart';
+import 'package:mk_academy/core/utils/services_locater.dart';
 import 'package:mk_academy/core/utils/styles.dart';
 import 'package:mk_academy/core/widgets/custom_bottom_nav_bar.dart';
+import 'package:mk_academy/features/auth/data/repos/login_repo/login_repo.dart';
+import 'package:mk_academy/features/auth/presentation/view-model/login_cubit/login_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await CacheHelper.init();
+  setupLocatorServices();
   // await FirebaseApi().initNotifications();
   runApp(const MyApp());
 }
@@ -27,6 +31,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => LocaleCubit()..getSaveLanguage()),
+        BlocProvider(create: (context) => LoginCubit(getit.get<LoginRepo>()))
       ],
       child: BlocBuilder<LocaleCubit, ChangeLocaleState>(
         builder: (context, state) {

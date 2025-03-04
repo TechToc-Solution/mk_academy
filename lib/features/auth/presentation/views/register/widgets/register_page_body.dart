@@ -100,7 +100,10 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
             ),
           ),
           CustomButton(
-              text: "confirm".tr(context),
+              child: Text(
+                "confirm".tr(context),
+                style: Styles.textStyle15.copyWith(color: Colors.white),
+              ),
               onPressed: () {},
               verticalHieght: KHorizontalPadding,
               horizontalWidth: KVerticalPadding,

@@ -20,7 +20,7 @@ class LevelSection extends StatelessWidget {
           _buildProgressBar(1500 / 2000),
           SizedBox(height: 40),
           CustomButton(
-            text: "كيف يمكنني زيادة المستوى",
+            child: Text("كيف يمكنني زيادة المستوى"),
             onPressed: () {},
             verticalHieght: KVerticalPadding,
             horizontalWidth: KHorizontalPadding,
