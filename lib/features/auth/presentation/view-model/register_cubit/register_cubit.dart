@@ -7,14 +7,24 @@ part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit(this._registerRepo) : super(RegisterInitial());
+
   final RegisterRepo _registerRepo;
   final List<City> cities = [];
+
   Future getCities() async {
     var data = await _registerRepo.getCities();
     data.fold((error) => emit(GetCitiesError(errorMsg: error)), (newcities) {
       cities.clear();
       cities.addAll(newcities);
       emit(GetCitiesSuccess());
+    });
+  }
+
+  Future register(Map<String, dynamic> registerData) async {
+    emit(RegisterLoading());
+    var data = await _registerRepo.register(registerData);
+    data.fold((error) => emit(RegisterError(errorMsg: error)), (phoneNum) {
+      emit(RegisterSuccess(phoneNum: phoneNum));
     });
   }
 }

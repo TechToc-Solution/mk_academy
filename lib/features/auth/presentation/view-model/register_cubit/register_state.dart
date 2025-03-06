@@ -16,3 +16,17 @@ final class GetCitiesError extends RegisterState {
 
   GetCitiesError({required this.errorMsg});
 }
+
+final class RegisterSuccess extends RegisterState {
+  final String phoneNum;
+
+  RegisterSuccess({required this.phoneNum});
+}
+
+final class RegisterLoading extends RegisterState {}
+
+final class RegisterError extends RegisterState {
+  final String errorMsg;
+
+  RegisterError({required this.errorMsg});
+}

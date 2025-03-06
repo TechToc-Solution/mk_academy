@@ -27,8 +27,17 @@ class RegisterRepoIplm implements RegisterRepo {
   }
 
   @override
-  Future<Either<String, String>> register(Map<String, String> registerData) {
-    // TODO: implement register
-    throw UnimplementedError();
+  Future<Either<String, String>> register(
+      Map<String, dynamic> registerData) async {
+    try {
+      var resp =
+          await _apiServices.post(endPoint: Urls.register, data: registerData);
+      if (resp.statusCode == 200 && resp.data['scuccess']) {
+        return right(resp.data['data']['phone']);
+      }
+      return left(ErrorHandler.defaultMessage());
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
   }
 }

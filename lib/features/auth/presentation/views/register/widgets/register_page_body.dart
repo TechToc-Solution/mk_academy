@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/core/utils/functions.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 
 import '../../../../../../core/utils/assets_data.dart';
@@ -105,21 +106,45 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
               });
             },
           ),
-          CustomButton(
-              child: Text(
-                "confirm".tr(context),
-                style: Styles.textStyle15.copyWith(color: Colors.white),
-              ),
-              onPressed: () {
-                if (_registerFormKey.currentState!.validate() &&
-                    selectedCity != null) {
-                  print(dateController.text);
-                  print(selectedCity);
-                }
-              },
-              verticalHieght: KHorizontalPadding,
-              horizontalWidth: KVerticalPadding,
-              color: AppColors.primaryColors)
+          BlocConsumer<RegisterCubit, RegisterState>(builder: (context, state) {
+            if (state is RegisterLoading) {
+              return CustomButton(
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                  onPressed: () {});
+            }
+            return CustomButton(
+                child: Text(
+                  "confirm".tr(context),
+                  style: Styles.textStyle15.copyWith(color: Colors.white),
+                ),
+                onPressed: () {
+                  if (_registerFormKey.currentState!.validate() &&
+                      selectedCity != null) {
+                    Map<String, dynamic> registerData = {
+                      "phone":
+                          "+${phoneController.value.countryCode}${phoneController.value.nsn}",
+                      "password": passwordController.text,
+                      "first_name": firstNameController.text,
+                      "last_name": lastNameController.text,
+                      "city_id": selectedCity,
+                      "birthdate": dateController.text
+                    };
+                    context.read<RegisterCubit>().register(registerData);
+                    print(dateController.text);
+                    print(selectedCity);
+                  }
+                });
+          }, listener: (context, state) {
+            if (state is RegisterError) {
+              messages(context, state.errorMsg, Colors.red);
+            }
+            if (state is RegisterSuccess) {
+              // Navigator.pushReplacementNamed(
+              //     context, VerficationPhonePage.routeName);
+            }
+          }),
         ],
       ),
     );
