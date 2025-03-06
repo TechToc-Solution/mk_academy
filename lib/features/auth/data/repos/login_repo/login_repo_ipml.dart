@@ -10,7 +10,7 @@ import '../../../../../core/errors/error_handler.dart';
 class LoginRepoIpml implements LoginRepo {
   final ApiServices apiServices;
 
-  LoginRepoIpml({required this.apiServices});
+  LoginRepoIpml(this.apiServices);
   @override
   Future<Either<String, UserModel>> login(String pass, String phone) async {
     try {

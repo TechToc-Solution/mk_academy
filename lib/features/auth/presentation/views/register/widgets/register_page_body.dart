@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 
@@ -6,6 +7,7 @@ import '../../../../../../core/utils/assets_data.dart';
 import '../../../../../../core/utils/colors.dart';
 import '../../../../../../core/utils/constats.dart';
 import '../../../../../../core/utils/styles.dart';
+import '../../../view-model/register_cubit/register_cubit.dart';
 import '../../widgets/custom_button.dart';
 import 'register_form.dart';
 
@@ -37,6 +39,7 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
     phoneController = PhoneController(
         initialValue: PhoneNumber(isoCode: IsoCode.SY, nsn: ""));
     dateController = TextEditingController();
+    context.read<RegisterCubit>().getCities();
   }
 
   @override
@@ -108,7 +111,8 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                 style: Styles.textStyle15.copyWith(color: Colors.white),
               ),
               onPressed: () {
-                if (_registerFormKey.currentState!.validate()) {
+                if (_registerFormKey.currentState!.validate() &&
+                    selectedCity != null) {
                   print(dateController.text);
                   print(selectedCity);
                 }
