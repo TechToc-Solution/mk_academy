@@ -9,6 +9,7 @@ import '../../../../../../core/utils/colors.dart';
 import '../../../../../../core/utils/constats.dart';
 import '../../../../../../core/utils/styles.dart';
 import '../../../view-model/register_cubit/register_cubit.dart';
+import '../../verification_phone/verification_phone_page.dart';
 import '../../widgets/custom_button.dart';
 import 'register_form.dart';
 
@@ -120,21 +121,26 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                   style: Styles.textStyle15.copyWith(color: Colors.white),
                 ),
                 onPressed: () {
-                  if (_registerFormKey.currentState!.validate() &&
-                      selectedCity != null) {
-                    Map<String, dynamic> registerData = {
-                      "phone":
-                          "+${phoneController.value.countryCode}${phoneController.value.nsn}",
-                      "password": passwordController.text,
-                      "first_name": firstNameController.text,
-                      "last_name": lastNameController.text,
-                      "city_id": selectedCity,
-                      "birthdate": dateController.text
-                    };
-                    context.read<RegisterCubit>().register(registerData);
-                    print(dateController.text);
-                    print(selectedCity);
-                  }
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              VerificationPhonePage(phoneNumber: "097987541")));
+                  // if (_registerFormKey.currentState!.validate() &&
+                  //     selectedCity != null) {
+                  //   Map<String, dynamic> registerData = {
+                  //     "phone":
+                  //         "+${phoneController.value.countryCode}${phoneController.value.nsn}",
+                  //     "password": passwordController.text,
+                  //     "first_name": firstNameController.text,
+                  //     "last_name": lastNameController.text,
+                  //     "city_id": selectedCity,
+                  //     "birthdate": dateController.text
+                  //   };
+                  //   context.read<RegisterCubit>().register(registerData);
+                  //   print(dateController.text);
+                  //   print(selectedCity);
+                  // }
                 });
           }, listener: (context, state) {
             if (state is RegisterError) {

@@ -43,5 +43,10 @@
     "first_name" : "الاسم",
     "last_name" : "الكنية",
     "city" : "المدينة",
-    "date_of_birth" : "تاريخ الولادة"
+    "date_of_birth" : "تاريخ الولادة",
+    "enter_the_code_to_continue" :  "ادخل الرمز للاستمرار برحلتك",
+    "didn't_receive_code" : "لم تستلم الرمز؟",
+    "resend" : "إعادة الإرسال",
+    "verfi_num" : "التحقق من الرقم",
+    "pleas_enter_the_number" : ":الرجاء ادخال الرقم الذي تم ارساله الى الرقم التالي\n"
 }
