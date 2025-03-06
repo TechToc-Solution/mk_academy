@@ -5,8 +5,8 @@ import '../../../../../../core/utils/colors.dart';
 import '../../../../../../core/utils/constats.dart';
 import '../../../../../../core/utils/styles.dart';
 
-class CusttomOptField extends StatelessWidget {
-  const CusttomOptField({
+class CustomOptField extends StatelessWidget {
+  const CustomOptField({
     super.key,
     required this.size,
     this.onSubmit,

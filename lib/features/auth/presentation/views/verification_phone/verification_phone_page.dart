@@ -8,7 +8,7 @@ import '../../../../../core/utils/colors.dart';
 import '../../../../../core/utils/constats.dart';
 import '../../../../../core/widgets/custom_bottom_nav_bar.dart';
 import '../widgets/custom_button.dart';
-import 'widgets/custtom_opt_field.dart';
+import 'widgets/custom_opt_field.dart';
 import 'widgets/resend_code.dart';
 import 'widgets/verification_msg.dart';
 
@@ -86,7 +86,7 @@ class _VerificationPhonePageState extends State<VerificationPhonePage> {
               const SizedBox(height: kSizedBoxHeight),
               VerificationMsg(phoneNumber: widget.phoneNumber),
               SizedBox(height: size.height * 0.05),
-              CusttomOptField(
+              CustomOptField(
                   size: size,
                   onSubmit: (value) {
                     setState(() => _otpValue = value);
