@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/features/auth/presentation/views/reset_password/reset_password_page.dart';
 
 import '../../../../../../core/utils/styles.dart';
 import '../../register/register_page.dart';
@@ -27,7 +28,9 @@ class SignUpForgetPassWidget extends StatelessWidget {
               )),
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, ResetPasswordPage.routeName);
+          },
           child: Text(
             "forgot_password".tr(context),
             style: Styles.textStyle15.copyWith(

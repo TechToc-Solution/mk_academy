@@ -32,7 +32,6 @@ class RegisterForm extends StatelessWidget {
   final TextEditingController dateController;
   final String? selectedCity;
   final ValueChanged<String?> onCityChanged;
-  final List<String> cities = ['damascus', 'dara', 'hommes', 'allepo'];
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +57,6 @@ class RegisterForm extends StatelessWidget {
               controller: phoneController, text: "phone_num".tr(context)),
           CustomDropdownButton(
             text: "city".tr(context),
-            items: cities,
             value: selectedCity,
             onChanged: (value) => onCityChanged,
             validator: (value) => value == null ? 'الرجاء اختيار مدينة' : null,

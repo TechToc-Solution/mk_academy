@@ -9,7 +9,6 @@ import '../../../../data/models/city_model.dart';
 
 class CustomDropdownButton extends StatelessWidget {
   final String text;
-  final List<String> items;
   final String? value;
   final Function(String?) onChanged;
   final String? Function(String?)? validator;
@@ -17,7 +16,6 @@ class CustomDropdownButton extends StatelessWidget {
   const CustomDropdownButton({
     super.key,
     required this.text,
-    required this.items,
     required this.value,
     required this.onChanged,
     this.validator,
@@ -52,7 +50,7 @@ class CustomDropdownButton extends StatelessWidget {
                 child: Text(value.name ?? ""),
               );
             }).toList(),
-            onChanged: onChanged,
+            onChanged: onChanged(value),
             validator: validator,
             icon: const Icon(Icons.arrow_drop_down),
             style: Styles.textStyle16.copyWith(color: Colors.black87),

@@ -102,7 +102,6 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
             selectedCity: selectedCity,
             onCityChanged: (value) {
               setState(() {
-                print(value);
                 selectedCity = value;
               });
             },
@@ -121,34 +120,30 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                   style: Styles.textStyle15.copyWith(color: Colors.white),
                 ),
                 onPressed: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              VerificationPhonePage(phoneNumber: "097987541")));
-                  // if (_registerFormKey.currentState!.validate() &&
-                  //     selectedCity != null) {
-                  //   Map<String, dynamic> registerData = {
-                  //     "phone":
-                  //         "+${phoneController.value.countryCode}${phoneController.value.nsn}",
-                  //     "password": passwordController.text,
-                  //     "first_name": firstNameController.text,
-                  //     "last_name": lastNameController.text,
-                  //     "city_id": selectedCity,
-                  //     "birthdate": dateController.text
-                  //   };
-                  //   context.read<RegisterCubit>().register(registerData);
-                  //   print(dateController.text);
-                  //   print(selectedCity);
-                  // }
+                  if (_registerFormKey.currentState!.validate() &&
+                      selectedCity != null) {
+                    Map<String, dynamic> registerData = {
+                      "phone":
+                          "+${phoneController.value.countryCode}${phoneController.value.nsn}",
+                      "password": passwordController.text,
+                      "first_name": firstNameController.text,
+                      "last_name": lastNameController.text,
+                      "city_id": selectedCity,
+                      "birthdate": dateController.text
+                    };
+                    context.read<RegisterCubit>().register(registerData);
+                  }
                 });
           }, listener: (context, state) {
             if (state is RegisterError) {
               messages(context, state.errorMsg, Colors.red);
             }
             if (state is RegisterSuccess) {
-              // Navigator.pushReplacementNamed(
-              //     context, VerficationPhonePage.routeName);
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          VerificationPhonePage(phoneNumber: state.phoneNum)));
             }
           }),
         ],
