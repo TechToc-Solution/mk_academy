@@ -2,7 +2,9 @@ import 'package:dartz/dartz.dart';
 import 'package:mk_academy/core/Api_services/api_services.dart';
 import 'package:mk_academy/core/Api_services/urls.dart';
 import 'package:mk_academy/core/errors/error_handler.dart';
+import 'package:mk_academy/core/utils/cache_helper.dart';
 import 'package:mk_academy/features/auth/data/models/city_model.dart';
+import 'package:mk_academy/features/auth/data/models/user_model.dart';
 import 'package:mk_academy/features/auth/data/repos/register_repo/register_repo.dart';
 
 class RegisterRepoIplm implements RegisterRepo {
@@ -34,6 +36,23 @@ class RegisterRepoIplm implements RegisterRepo {
           await _apiServices.post(endPoint: Urls.register, data: registerData);
       if (resp.statusCode == 200 && resp.data['success']) {
         return right(resp.data['data']['phone']);
+      }
+      return left(ErrorHandler.defaultMessage());
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<String, UserModel>> verifiPhoneNum(
+      {required String phoneNumber, required String code}) async {
+    try {
+      var resp = await _apiServices.post(
+          endPoint: Urls.verifiPhoneNum,
+          data: {"phone": phoneNumber, "code": code});
+      if (resp.statusCode == 200 && resp.data['success']) {
+        CacheHelper.setString(key: 'token', value: resp.data['data']['token']);
+        return right(UserModel.fromJson(resp.data['data']['user']));
       }
       return left(ErrorHandler.defaultMessage());
     } catch (e) {

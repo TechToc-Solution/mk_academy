@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/core/utils/functions.dart';
+import 'package:mk_academy/features/auth/presentation/view-model/register_cubit/register_cubit.dart';
 
 import '../../../../../core/utils/assets_data.dart';
 import '../../../../../core/utils/colors.dart';
@@ -97,19 +100,38 @@ class _VerificationPhonePageState extends State<VerificationPhonePage> {
                   canResend: _canResend,
                   remainingTime: _remainingTime),
               const SizedBox(height: kSizedBoxHeight),
-              CustomButton(
-                child: Text(
-                  "verfi_num".tr(context),
-                  style: theme.textTheme.titleMedium!
-                      .copyWith(color: Colors.white),
-                ),
-                onPressed: () {
-                  if (_otpValue.isNotEmpty) {
-                    Navigator.pushReplacementNamed(
-                        context, CustomBottomNavBar.routeName);
-                  }
-                },
-              ),
+              BlocConsumer<RegisterCubit, RegisterState>(
+                  builder: (context, state) {
+                if (state is VerifiPhoneLoading) {
+                  return CustomButton(
+                    child: Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    ),
+                    onPressed: () {},
+                  );
+                }
+                return CustomButton(
+                  child: Text(
+                    "verfi_num".tr(context),
+                    style: theme.textTheme.titleMedium!
+                        .copyWith(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    if (_otpValue.isNotEmpty && _otpValue.length == 6) {
+                      context.read<RegisterCubit>().verifiPhoneNum(
+                          phone: widget.phoneNumber, code: _otpValue);
+                    }
+                  },
+                );
+              }, listener: (context, state) {
+                if (state is VerifiPhoneError) {
+                  messages(context, state.errorMsg, Colors.red);
+                }
+                if (state is VerifiPhoneSuccess) {
+                  Navigator.pushReplacementNamed(
+                      context, CustomBottomNavBar.routeName);
+                }
+              })
             ],
           ),
         ),

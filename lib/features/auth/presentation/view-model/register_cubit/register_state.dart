@@ -30,3 +30,17 @@ final class RegisterError extends RegisterState {
 
   RegisterError({required this.errorMsg});
 }
+
+final class VerifiPhoneSuccess extends RegisterState {
+  final UserModel user;
+
+  VerifiPhoneSuccess({required this.user});
+}
+
+final class VerifiPhoneLoading extends RegisterState {}
+
+final class VerifiPhoneError extends RegisterState {
+  final String errorMsg;
+
+  VerifiPhoneError({required this.errorMsg});
+}

@@ -6,5 +6,6 @@ class Urls {
   //auth endpoint
   static String login = "auth/login";
   static String register = "auth/register";
+  static String verifiPhoneNum = "auth/verify-account";
   static String getCities = "cities";
 }

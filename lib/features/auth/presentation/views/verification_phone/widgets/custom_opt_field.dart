@@ -27,7 +27,7 @@ class CustomOptField extends StatelessWidget {
           cursorColor: AppColors.primaryColors,
           fieldWidth: size.width * 0.15,
           showFieldAsBox: true,
-          numberOfFields: 5,
+          numberOfFields: 6,
           borderRadius: BorderRadius.circular(kBorderRadius),
           textStyle: Styles.textStyle18.copyWith(color: Colors.white),
         ),
