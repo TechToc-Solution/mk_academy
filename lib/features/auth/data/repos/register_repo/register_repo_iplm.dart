@@ -32,7 +32,7 @@ class RegisterRepoIplm implements RegisterRepo {
     try {
       var resp =
           await _apiServices.post(endPoint: Urls.register, data: registerData);
-      if (resp.statusCode == 200 && resp.data['scuccess']) {
+      if (resp.statusCode == 200 && resp.data['success']) {
         return right(resp.data['data']['phone']);
       }
       return left(ErrorHandler.defaultMessage());

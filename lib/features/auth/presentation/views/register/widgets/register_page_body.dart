@@ -1,3 +1,4 @@
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
@@ -122,16 +123,15 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                 onPressed: () {
                   if (_registerFormKey.currentState!.validate() &&
                       selectedCity != null) {
-                    Map<String, dynamic> registerData = {
-                      "phone":
-                          "+${phoneController.value.countryCode}${phoneController.value.nsn}",
-                      "password": passwordController.text,
-                      "first_name": firstNameController.text,
-                      "last_name": lastNameController.text,
-                      "city_id": selectedCity,
-                      "birthdate": dateController.text
-                    };
-                    context.read<RegisterCubit>().register(registerData);
+                    final DateTime? birthDate =
+                        parseDateFromController(dateController.text);
+                    if (birthDate == null) {
+                      messages(context, "تنسيق التاريخ غير صالح", Colors.red);
+                      return;
+                    }
+                    context
+                        .read<RegisterCubit>()
+                        .register(getRegisterData(birthDate));
                   }
                 });
           }, listener: (context, state) {
@@ -149,5 +149,33 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
         ],
       ),
     );
+  }
+
+  DateTime? parseDateFromController(String dateString) {
+    try {
+      final parts = dateString.split('/');
+      if (parts.length != 3) return null;
+      return DateTime(
+        int.parse(parts[0]),
+        int.parse(parts[1]),
+        int.parse(parts[2]),
+      );
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Map<String, dynamic> getRegisterData(DateTime birthDate) {
+    final String formattedDate =
+        formatDate(birthDate, [yyyy, '-', mm, '-', dd]);
+    return {
+      "phone":
+          "+${phoneController.value.countryCode}${phoneController.value.nsn}",
+      "password": passwordController.text,
+      "first_name": firstNameController.text,
+      "last_name": lastNameController.text,
+      "city_id": selectedCity,
+      "birthdate": formattedDate
+    };
   }
 }

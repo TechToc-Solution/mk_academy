@@ -23,9 +23,9 @@ class CustomDatePicker extends StatelessWidget {
       lastDate: DateTime.now(),
     );
     if (picked != null) {
-      controller.text = "${picked.day.toString().padLeft(2, '0')}/"
+      controller.text = "${picked.year}/"
           "${picked.month.toString().padLeft(2, '0')}/"
-          "${picked.year}";
+          "${picked.day.toString().padLeft(2, '0')}";
     }
   }
 
