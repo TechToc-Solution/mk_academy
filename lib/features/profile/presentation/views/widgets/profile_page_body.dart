@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/constats.dart';
-import 'package:mk_academy/core/widgets/custom_app_bar.dart';
+import 'package:mk_academy/features/auth/data/models/user_model.dart';
 import 'package:mk_academy/features/profile/presentation/views/widgets/level_section.dart';
 import 'package:mk_academy/features/profile/presentation/views/widgets/profile_page_header.dart';
 import 'package:mk_academy/features/profile/presentation/views/widgets/profile_tab_bar.dart';
@@ -10,6 +9,9 @@ import 'package:mk_academy/features/profile/presentation/views/widgets/stats_sec
 import 'package:mk_academy/features/profile/presentation/views/widgets/subscriptions_section.dart';
 
 class ProfilePageBody extends StatefulWidget {
+  final UserModel userModel;
+
+  const ProfilePageBody({super.key, required this.userModel});
   @override
   _ProfilePageBodyState createState() => _ProfilePageBodyState();
 }
@@ -32,43 +34,41 @@ class _ProfilePageBodyState extends State<ProfilePageBody>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+        child: ListView(
           children: [
-            CustomAppBar(title: "profile".tr(context), back_btn: true),
-            Expanded(
-                child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
-              child: ListView(
+            SizedBox(height: kSizedBoxHeight),
+            ProfilePageHeader(
+              userModel: widget.userModel,
+            ),
+            SizedBox(height: kSizedBoxHeight),
+            Divider(
+              color: AppColors.primaryColors,
+              height: kSizedBoxHeight,
+              thickness: 0.5,
+            ),
+            SizedBox(height: kSizedBoxHeight),
+            StatsSection(
+              userModel: widget.userModel,
+            ),
+            SizedBox(height: kSizedBoxHeight),
+            ProfileTabBar(tabController: _tabController),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: TabBarView(
+                controller: _tabController,
                 children: [
-                  SizedBox(height: kSizedBoxHeight),
-                  ProfilePageHeader(),
-                  SizedBox(height: kSizedBoxHeight),
-                  Divider(
-                    color: AppColors.primaryColors,
-                    height: kSizedBoxHeight,
-                    thickness: 0.5,
+                  SubscriptionsSection(
+                    courses: widget.userModel.courses ?? [],
                   ),
-                  SizedBox(height: kSizedBoxHeight),
-                  StatsSection(),
-                  SizedBox(height: kSizedBoxHeight),
-                  ProfileTabBar(tabController: _tabController),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.5,
-                    child: TabBarView(
-                      controller: _tabController,
-                      children: [
-                        SubscriptionsSection(),
-                        LevelSection(),
-                      ],
-                    ),
+                  LevelSection(
+                    userModel: widget.userModel,
                   ),
                 ],
               ),
-            ))
+            ),
           ],
         ),
       ),

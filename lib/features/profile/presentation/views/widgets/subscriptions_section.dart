@@ -1,26 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/features/auth/data/models/courses_model.dart';
 
 import '../../../../../core/utils/colors.dart';
 import '../../../../../core/utils/constats.dart';
 import '../../../../../core/utils/styles.dart';
 
 class SubscriptionsSection extends StatelessWidget {
-  const SubscriptionsSection({super.key});
+  final List<Courses> courses;
+  const SubscriptionsSection({super.key, required this.courses});
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      physics: NeverScrollableScrollPhysics(),
-      children: [
-        SizedBox(height: 12),
-        _buildSubscriptionItem('2025/1/9', ' 500.000 sp', 'جبر'),
-        _buildSubscriptionItem('2025/1/9', ' 500.000 sp', "اشعة"),
-        _buildSubscriptionItem('2025/1/9', ' 500.000 sp', "جبر"),
-      ],
-    );
+    if (courses.isEmpty)
+      return Center(
+        child: Text("there_is_no_subs".tr(context),
+            style: Styles.textStyle16.copyWith(
+                color: AppColors.textColor, fontWeight: FontWeight.bold)),
+      );
+    if (courses.isNotEmpty)
+      return ListView.separated(
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: courses.length,
+        itemBuilder: (BuildContext context, int index) {
+          return _buildSubscriptionItem(courses[index].purchasedDate!,
+              courses[index].price!.toString(), courses[index].name!, context);
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(height: 12);
+        },
+      );
+    return SizedBox();
   }
 
-  Widget _buildSubscriptionItem(String date, String cost, String subName) {
+  Widget _buildSubscriptionItem(
+      String date, String cost, String subName, BuildContext context) {
     return Column(
       children: [
         Padding(
@@ -48,14 +62,14 @@ class SubscriptionsSection extends StatelessWidget {
                       borderRadius: BorderRadius.circular(35)),
                   onPressed: () {},
                   child: Text(
-                    "المزيد",
+                    "moore".tr(context),
                     style: Styles.textStyle15
                         .copyWith(color: AppColors.backgroundColor),
                   )),
             ],
           ),
         ),
-        Text('تاريخ الاشتراك : $date',
+        Text('${"subs_date".tr(context)} : $date',
             style: Styles.textStyle16.copyWith(color: Colors.white)),
         Divider(
           color: AppColors.primaryColors,

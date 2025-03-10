@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/features/auth/data/models/user_model.dart';
 
 import '../../../../../core/utils/colors.dart';
 import '../../../../../core/utils/styles.dart';
 
 class StatsSection extends StatelessWidget {
-  const StatsSection({super.key});
+  final UserModel userModel;
+  const StatsSection({super.key, required this.userModel});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -12,9 +15,10 @@ class StatsSection extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildStatItem('فيديوهات', '+15', Icon(Icons.watch_later_outlined)),
-            _buildStatItem('العمر', '21', Icon(Icons.person_2_outlined)),
-            _buildStatItem('مستوى', '+50', Icon(Icons.leaderboard_outlined)),
+            _buildStatItem('age'.tr(context), "${userModel.age}",
+                Icon(Icons.person_2_outlined)),
+            _buildStatItem('level'.tr(context), userModel.level!,
+                Icon(Icons.leaderboard_outlined)),
           ],
         ),
       ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/features/auth/data/models/user_model.dart';
 
 import '../../../../../core/utils/colors.dart';
 import '../../../../../core/utils/constats.dart';
@@ -6,7 +8,8 @@ import '../../../../../core/utils/styles.dart';
 import '../../../../auth/presentation/views/widgets/custom_button.dart';
 
 class LevelSection extends StatelessWidget {
-  const LevelSection({super.key});
+  final UserModel userModel;
+  const LevelSection({super.key, required this.userModel});
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +18,13 @@ class LevelSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: kSizedBoxHeight),
-          _buildLevelInfoItem('المستوى الحالي', 'مستوى 5'),
-          _buildLevelInfoItem('نقاط الخبرة', '1500/2000 XP'),
-          _buildProgressBar(1500 / 2000),
+          _buildLevelInfoItem("current_level".tr(context), userModel.level!),
+          _buildLevelInfoItem('export_points'.tr(context),
+              "${userModel.points}/${userModel.maxPoints}xp"),
+          _buildProgressBar(userModel.points! / userModel.maxPoints!),
           SizedBox(height: 40),
           CustomButton(
-            child: Text("كيف يمكنني زيادة المستوى"),
+            child: Text("how_increase_level".tr(context)),
             onPressed: () {},
             verticalHieght: KVerticalPadding,
             horizontalWidth: KHorizontalPadding,

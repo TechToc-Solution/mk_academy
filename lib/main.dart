@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => LocaleCubit()..getSaveLanguage()),
         BlocProvider(create: (context) => LoginCubit(getit.get<LoginRepo>())),
         BlocProvider(
-            create: (context) => RegisterCubit(getit.get<RegisterRepo>()))
+            create: (context) => RegisterCubit(getit.get<RegisterRepo>())),
       ],
       child: BlocBuilder<LocaleCubit, ChangeLocaleState>(
         builder: (context, state) {
