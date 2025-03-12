@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/assets_data.dart';
 
+import '../../../data/models/students_leaderboard_model.dart';
+
 class CustomLeaderboardShow extends StatelessWidget {
   const CustomLeaderboardShow(
       {super.key,
       required this.index,
-      required this.data,
-      required this.is_you});
+      required this.is_you,
+      required this.students});
   final int index;
-  final Map data;
+  final List<StudentsLeaderboardModel> students;
   final bool is_you;
   @override
   Widget build(BuildContext context) {
@@ -19,11 +21,11 @@ class CustomLeaderboardShow extends StatelessWidget {
         child: Icon(Icons.person),
       ),
       title: Text(
-        data["name"],
+        students[index].name!,
         style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
       ),
       subtitle: Text(
-        "المستوى: " + data["level"],
+        students[index].level!,
         style: TextStyle(color: Colors.white),
       ),
       trailing: index == 0

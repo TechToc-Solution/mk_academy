@@ -8,5 +8,8 @@ class Urls {
   static String register = "auth/register";
   static String verifiPhoneNum = "auth/verify-account";
   static String getCities = "cities";
-  static String getProfile = "/auth/me";
+  static String getProfile = "auth/me";
+
+  //leaderbord
+  static String getLeaderbord = "students";
 }

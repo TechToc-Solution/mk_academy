@@ -19,6 +19,8 @@ class LoginRepoIpml implements LoginRepo {
           .post(endPoint: Urls.login, data: {"phone": phone, "password": pass});
       if (resp.statusCode == 200 && resp.data['success']) {
         CacheHelper.setString(key: 'token', value: resp.data["data"]["token"]);
+        CacheHelper.setString(
+            key: "userId", value: resp.data['data']['user']['id'].toString());
         return right(UserModel.fromJson(resp.data["data"]["user"]));
       }
       return left(
