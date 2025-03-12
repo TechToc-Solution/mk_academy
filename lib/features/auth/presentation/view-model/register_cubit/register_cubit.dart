@@ -14,7 +14,8 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   Future getCities() async {
     var data = await _registerRepo.getCities();
-    data.fold((error) => emit(GetCitiesError(errorMsg: error)), (newcities) {
+    data.fold((failure) => emit(GetCitiesError(errorMsg: failure.message)),
+        (newcities) {
       cities.clear();
       cities.addAll(newcities);
       emit(GetCitiesSuccess());
@@ -24,7 +25,8 @@ class RegisterCubit extends Cubit<RegisterState> {
   Future register(Map<String, dynamic> registerData) async {
     emit(RegisterLoading());
     var data = await _registerRepo.register(registerData);
-    data.fold((error) => emit(RegisterError(errorMsg: error)), (phoneNum) {
+    data.fold((failure) => emit(RegisterError(errorMsg: failure.message)),
+        (phoneNum) {
       emit(RegisterSuccess(phoneNum: phoneNum));
     });
   }
@@ -33,7 +35,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     emit(VerifiPhoneLoading());
     var data =
         await _registerRepo.verifiPhoneNum(phoneNumber: phone, code: code);
-    data.fold((error) => emit(VerifiPhoneError(errorMsg: error)),
+    data.fold((failure) => emit(VerifiPhoneError(errorMsg: failure.message)),
         (user) => emit(VerifiPhoneSuccess(user: user)));
   }
 }

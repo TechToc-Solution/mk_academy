@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'dart:io';
 
 import '../utils/constats.dart';
+import 'failuer.dart';
 
 class ErrorHandler {
   static const Map<String, String> _enMessages = {
@@ -37,63 +38,64 @@ class ErrorHandler {
   };
   static Map<String, String> get _messages =>
       lang == 'en' ? _enMessages : _arMessages;
+  static String defaultMessage() => _messages['error_tryAgain']!;
 
-  static String handle(dynamic error) {
+  static Failure handle(dynamic error) {
     if (error is DioException) {
       return _handleDioError(error);
     }
     if (error is SocketException) {
-      return _messages['noInternet']!;
+      return NetworkFailure(_messages['noInternet']!);
     }
-    return _messages['error_tryAgain']!;
+    return UnknownFailure(_messages['error_tryAgain']!);
   }
 
-  static String defaultMessage() => _messages['error_tryAgain']!;
-
-  static String _handleDioError(DioException error) {
+  static Failure _handleDioError(DioException error) {
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
-        return _messages['connectionTimeout']!;
+        return NetworkFailure(_messages['connectionTimeout']!);
       case DioExceptionType.sendTimeout:
-        return _messages['sendTimeout']!;
+        return NetworkFailure(_messages['sendTimeout']!);
       case DioExceptionType.receiveTimeout:
-        return _messages['receiveTimeout']!;
+        return NetworkFailure(_messages['receiveTimeout']!);
       case DioExceptionType.cancel:
-        return _messages['cancel']!;
+        return NetworkFailure(_messages['cancel']!);
       case DioExceptionType.unknown:
         return error.error is SocketException
-            ? _messages['noInternet']!
-            : _messages['unknownError']!;
+            ? NetworkFailure(_messages['noInternet']!)
+            : UnknownFailure(_messages['unknownError']!);
       case DioExceptionType.badCertificate:
-        return _messages['badCertificate']!;
+        return NetworkFailure(_messages['badCertificate']!);
       case DioExceptionType.connectionError:
-        return _messages['connectionError']!;
+        return NetworkFailure(_messages['connectionError']!);
       case DioExceptionType.badResponse:
         return _handleResponseError(error);
       default:
-        return _messages['error_tryAgain']!;
+        return ServerFailure(_messages['error_tryAgain']!);
     }
   }
 
-  static String _handleResponseError(DioException error) {
+  static Failure _handleResponseError(DioException error) {
     final response = error.response;
-    if (response == null) return _messages['error_tryAgain']!;
-
+    if (response == null) return ServerFailure(_messages['serverError']!);
     switch (response.statusCode) {
       case 400:
       case 401:
       case 403:
-        return response.data['message'] ?? _messages['error_tryAgain']!;
+        return ServerFailure(
+            response.data['message'] ?? _messages['error_tryAgain']!);
       case 404:
-        return _messages['notFound']!;
+        return ServerFailure(_messages['notFound']!);
       case 422:
-        return _handleValidationErrors(response.data);
+        return ValidationFailure(_handleValidationErrors(response.data));
       case 500:
-        return response.data['message'] ?? _messages['internalServerError']!;
+        return ServerFailure(
+            response.data['message'] ?? _messages['internalServerError']!);
       case 503:
-        return response.data['message'] ?? _messages['serverError']!;
+        return ServerFailure(
+            response.data['message'] ?? _messages['serverError']!);
       default:
-        return _messages['serverError']!;
+        return ServerFailure(_messages['serverError']!);
     }
   }
 

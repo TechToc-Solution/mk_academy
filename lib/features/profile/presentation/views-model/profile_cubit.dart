@@ -12,7 +12,8 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future getProfile() async {
     emit(ProfileLoading());
     var data = await _profileRepo.getUserProfile();
-    data.fold((error) => emit(ProfileError(errorMsg: error)), (user) {
+    data.fold((failure) => emit(ProfileError(errorMsg: failure.message)),
+        (user) {
       emit(ProfileSuccess(userModel: user));
     });
   }
