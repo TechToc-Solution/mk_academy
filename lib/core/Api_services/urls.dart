@@ -12,4 +12,7 @@ class Urls {
 
   //leaderbord
   static String getLeaderbord = "students";
+
+  //courses
+  static String getCourses = "courses";
 }

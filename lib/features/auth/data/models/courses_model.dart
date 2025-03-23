@@ -1,12 +1,12 @@
-class Courses {
+class UserCourses {
   int? id;
   String? name;
   int? price;
   String? purchasedDate;
 
-  Courses({this.id, this.name, this.price, this.purchasedDate});
+  UserCourses({this.id, this.name, this.price, this.purchasedDate});
 
-  Courses.fromJson(Map<String, dynamic> json) {
+  UserCourses.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     price = json['price'];

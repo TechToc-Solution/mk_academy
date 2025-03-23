@@ -54,10 +54,16 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
         },
         children: const [
           CurriculumPage(),
-          UnitsPage(),
+          UnitsPage(
+            courseMode: "weekly",
+          ),
           HomePage(),
-          UnitsPage(),
-          UnitsPage()
+          UnitsPage(
+            courseMode: "examination",
+          ),
+          UnitsPage(
+            courseMode: "capacitors",
+          )
         ],
       ),
       bottomNavigationBar: Container(

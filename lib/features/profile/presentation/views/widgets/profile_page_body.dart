@@ -34,43 +34,41 @@ class _ProfilePageBodyState extends State<ProfilePageBody>
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
-        child: ListView(
-          children: [
-            SizedBox(height: kSizedBoxHeight),
-            ProfilePageHeader(
-              userModel: widget.userModel,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+      child: ListView(
+        children: [
+          SizedBox(height: kSizedBoxHeight),
+          ProfilePageHeader(
+            userModel: widget.userModel,
+          ),
+          SizedBox(height: kSizedBoxHeight),
+          Divider(
+            color: AppColors.primaryColors,
+            height: kSizedBoxHeight,
+            thickness: 0.5,
+          ),
+          SizedBox(height: kSizedBoxHeight),
+          StatsSection(
+            userModel: widget.userModel,
+          ),
+          SizedBox(height: kSizedBoxHeight),
+          ProfileTabBar(tabController: _tabController),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.5,
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                SubscriptionsSection(
+                  courses: widget.userModel.courses ?? [],
+                ),
+                LevelSection(
+                  userModel: widget.userModel,
+                ),
+              ],
             ),
-            SizedBox(height: kSizedBoxHeight),
-            Divider(
-              color: AppColors.primaryColors,
-              height: kSizedBoxHeight,
-              thickness: 0.5,
-            ),
-            SizedBox(height: kSizedBoxHeight),
-            StatsSection(
-              userModel: widget.userModel,
-            ),
-            SizedBox(height: kSizedBoxHeight),
-            ProfileTabBar(tabController: _tabController),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.5,
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  SubscriptionsSection(
-                    courses: widget.userModel.courses ?? [],
-                  ),
-                  LevelSection(
-                    userModel: widget.userModel,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

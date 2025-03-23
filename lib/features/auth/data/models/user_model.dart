@@ -12,7 +12,7 @@ class UserModel {
   String? level;
   int? age;
   City? city;
-  List<Courses>? courses;
+  List<UserCourses>? courses;
   UserModel(
       {this.id,
       this.firstName,
@@ -38,9 +38,9 @@ class UserModel {
     maxPoints = json['max_points'];
     city = json['city'] != null ? new City.fromJson(json['city']) : null;
     if (json['courses'] != null) {
-      courses = <Courses>[];
+      courses = <UserCourses>[];
       json['courses'].forEach((v) {
-        courses!.add(new Courses.fromJson(v));
+        courses!.add(new UserCourses.fromJson(v));
       });
     }
   }
