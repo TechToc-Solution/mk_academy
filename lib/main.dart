@@ -16,6 +16,9 @@ import 'package:mk_academy/features/auth/data/repos/register_repo/register_repo.
 import 'package:mk_academy/features/auth/presentation/view-model/login_cubit/login_cubit.dart';
 import 'package:mk_academy/features/auth/presentation/view-model/register_cubit/register_cubit.dart';
 
+import 'features/courses/data/repo/courses_repo.dart';
+import 'features/courses/presentation/view_model/cubit/courses_cubit.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -36,6 +39,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => LoginCubit(getit.get<LoginRepo>())),
         BlocProvider(
             create: (context) => RegisterCubit(getit.get<RegisterRepo>())),
+        BlocProvider(
+            create: (context) => CoursesCubit(getit.get<CoursesRepo>()))
       ],
       child: BlocBuilder<LocaleCubit, ChangeLocaleState>(
         builder: (context, state) {
