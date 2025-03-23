@@ -7,7 +7,7 @@ import '../../../../../core/utils/constats.dart';
 import '../../../../../core/utils/styles.dart';
 
 class SubscriptionsSection extends StatelessWidget {
-  final List<Courses> courses;
+  final List<UserCourses> courses;
   const SubscriptionsSection({super.key, required this.courses});
 
   @override
