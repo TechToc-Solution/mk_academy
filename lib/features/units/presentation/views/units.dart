@@ -8,9 +8,10 @@ import 'package:mk_academy/features/units/presentation/views/widgets/custom_top_
 import '../../../courses/presentation/view_model/cubit/courses_cubit.dart';
 
 class UnitsPage extends StatefulWidget {
-  const UnitsPage({super.key, required this.courseMode});
+  const UnitsPage({
+    super.key,
+  });
   static const String routeName = '/units';
-  final String courseMode;
   @override
   State<UnitsPage> createState() => _UnitsPageState();
 }
@@ -25,7 +26,7 @@ class _UnitsPageState extends State<UnitsPage>
     _tabController = TabController(length: 3, vsync: this);
     context.read<CoursesCubit>().resetPagination();
     context.read<CoursesCubit>().getCourses(
-          courseMode: widget.courseMode,
+          courseTypeId: 1,
           subjectId: 1,
         );
   }
