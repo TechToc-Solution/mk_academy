@@ -57,7 +57,7 @@ class _UnitsPageState extends State<UnitsPage>
                     horizontal: KHorizontalPadding, vertical: KVerticalPadding),
                 child: uintsPageBody(
                     tabController: _tabController,
-                    subjectsData: state.subjectsData),
+                    subjects: state.subjectsData[0].subjects!),
               );
             }
             return SizedBox();
@@ -72,9 +72,9 @@ class uintsPageBody extends StatelessWidget {
   const uintsPageBody({
     super.key,
     required TabController tabController,
-    required this.subjectsData,
+    required this.subjects,
   }) : _tabController = tabController;
-  final List<SubjectsData> subjectsData;
+  final List<Subjects> subjects;
   final TabController _tabController;
 
   @override
@@ -82,6 +82,7 @@ class uintsPageBody extends StatelessWidget {
     return Column(
       children: [
         CustomTopNavBar(
+          subjects: subjects,
           tabController: _tabController,
         ),
         SizedBox(
@@ -95,9 +96,7 @@ class uintsPageBody extends StatelessWidget {
             child: TabBarView(
           controller: _tabController,
           children: [
-            UnitsSection(),
-            UnitsSection(),
-            UnitsSection(),
+            for (int i = 0; i < subjects.length; i++) UnitsSection(),
           ],
         ))
       ],

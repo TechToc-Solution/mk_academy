@@ -40,6 +40,7 @@ class _CurriculumPageBodyState extends State<CurriculumPageBody>
           child: Column(
             children: [
               CustomTopNavBar(
+                subjects: [],
                 tabController: _tabController,
               ),
               SizedBox(

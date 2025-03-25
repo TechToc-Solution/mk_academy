@@ -1,14 +1,19 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
+import 'package:mk_academy/core/shared/models/subjects_model.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/styles.dart';
 
 class CustomTopNavBar extends StatelessWidget {
   final TabController tabController;
-  const CustomTopNavBar({
-    super.key,
+  List<Subjects> subjects;
+  CustomTopNavBar({
+    Key? key,
     required this.tabController,
-  });
+    required this.subjects,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,24 +29,13 @@ class CustomTopNavBar extends StatelessWidget {
         dividerHeight: 0.5,
         indicatorSize: TabBarIndicatorSize.tab,
         tabs: [
-          Tab(
-            child: Text(
-              "algebra".tr(context),
-              style: Styles.textStyle20.copyWith(color: AppColors.textColor),
+          for (int i = 0; i < subjects.length; i++)
+            Tab(
+              child: Text(
+                subjects[i].name!,
+                style: Styles.textStyle20.copyWith(color: AppColors.textColor),
+              ),
             ),
-          ),
-          Tab(
-            child: Text(
-              'analysis'.tr(context),
-              style: Styles.textStyle20.copyWith(color: AppColors.textColor),
-            ),
-          ),
-          Tab(
-            child: Text(
-              "geometric".tr(context),
-              style: Styles.textStyle20.copyWith(color: AppColors.textColor),
-            ),
-          ),
         ],
       ),
     );
