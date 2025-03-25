@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/assets_data.dart';
 
 class CustomUserShow extends StatelessWidget {
   const CustomUserShow(
       {super.key,
       required this.title,
-      required this.image,
       required this.color,
       required this.level,
       required this.top});
   final int top;
   final String title;
-  final String image;
   final Color color;
-  final int level;
+  final String level;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,7 +33,11 @@ class CustomUserShow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Image.asset(
-            image,
+            top == 1
+                ? AssetsData.medal1
+                : top == 2
+                    ? AssetsData.medal2
+                    : AssetsData.medal3,
             height: 24,
           ),
           Text(

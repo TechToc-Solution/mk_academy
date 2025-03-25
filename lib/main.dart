@@ -16,6 +16,10 @@ import 'package:mk_academy/features/auth/data/repos/login_repo/login_repo.dart';
 import 'package:mk_academy/features/auth/data/repos/register_repo/register_repo.dart';
 import 'package:mk_academy/features/auth/presentation/view-model/login_cubit/login_cubit.dart';
 import 'package:mk_academy/features/auth/presentation/view-model/register_cubit/register_cubit.dart';
+import 'package:mk_academy/features/leaderboard/data/repos/leaderboard_repo.dart';
+import 'package:mk_academy/features/leaderboard/presentation/views-model/leaderboard_cubit.dart';
+import 'package:mk_academy/features/profile/data/repos/profile_repo.dart';
+import 'package:mk_academy/features/profile/presentation/views-model/profile_cubit.dart';
 
 import 'core/shared/repos/subjects/subjects_repo.dart';
 import 'features/courses/data/repo/courses_repo.dart';
@@ -45,6 +49,12 @@ class MyApp extends StatelessWidget {
             create: (context) => CoursesCubit(getit.get<CoursesRepo>())),
         BlocProvider(
             create: (context) => subjectsCubit(getit.get<subjectsRepo>())),
+        BlocProvider(
+            create: (context) => LeaderboardCubit(getit.get<LeaderboardRepo>())
+              ..getLeaderbord()),
+        BlocProvider(
+            create: (context) =>
+                ProfileCubit(getit.get<ProfileRepo>())..getProfile()),
       ],
       child: BlocBuilder<LocaleCubit, ChangeLocaleState>(
         builder: (context, state) {

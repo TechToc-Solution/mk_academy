@@ -4,13 +4,12 @@ import 'package:mk_academy/core/utils/assets_data.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/features/home/presentation/views/widgets/custom_user_show.dart';
+import 'package:mk_academy/features/leaderboard/data/models/students_leaderboard_model.dart';
 import 'package:mk_academy/features/leaderboard/presentation/views/leaderboard.dart';
 
 class CustomTopThreeItem extends StatelessWidget {
-  const CustomTopThreeItem({
-    super.key,
-  });
-
+  CustomTopThreeItem({super.key, required this.students});
+  List<StudentsLeaderboardModel> students;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -69,24 +68,25 @@ class CustomTopThreeItem extends StatelessWidget {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 children: [
-                  CustomUserShow(
-                      top: 1,
-                      title: "البطل الأول",
-                      image: AssetsData.medal1,
-                      color: Colors.amber.shade700,
-                      level: 30),
-                  CustomUserShow(
-                      top: 2,
-                      title: "البطل الثاني",
-                      image: AssetsData.medal2,
-                      color: Colors.grey.shade600,
-                      level: 29),
-                  CustomUserShow(
-                      top: 3,
-                      title: "البطل الثالث",
-                      image: AssetsData.medal3,
-                      color: Colors.brown.shade600,
-                      level: 28),
+                  for (int i = 0; i < 3; i++)
+                    if (i < students.length)
+                      CustomUserShow(
+                          top: i + 1,
+                          title: students[i].name!,
+                          color: Colors.amber.shade700,
+                          level: students[i].level!),
+                  // CustomUserShow(
+                  //     top: 2,
+                  //     title: "البطل الثاني",
+                  //     image: AssetsData.medal2,
+                  //     color: Colors.grey.shade600,
+                  //     level: 29),
+                  // CustomUserShow(
+                  //     top: 3,
+                  //     title: "البطل الثالث",
+                  //     image: AssetsData.medal3,
+                  //     color: Colors.brown.shade600,
+                  //     level: 28),
                 ],
               ),
             ),
