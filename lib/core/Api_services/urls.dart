@@ -15,4 +15,7 @@ class Urls {
 
   //courses
   static String getCourses = "courses";
+
+  //subjects
+  static String getSubjects = "subjects";
 }

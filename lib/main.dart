@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:mk_academy/core/shared/cubits/subjects/subjects_cubit.dart';
 // import 'package:mk_academy/core/notification_services/notification.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/locale/locale_cubit.dart';
@@ -16,6 +17,7 @@ import 'package:mk_academy/features/auth/data/repos/register_repo/register_repo.
 import 'package:mk_academy/features/auth/presentation/view-model/login_cubit/login_cubit.dart';
 import 'package:mk_academy/features/auth/presentation/view-model/register_cubit/register_cubit.dart';
 
+import 'core/shared/repos/subjects/subjects_repo.dart';
 import 'features/courses/data/repo/courses_repo.dart';
 import 'features/courses/presentation/view_model/cubit/courses_cubit.dart';
 
@@ -40,7 +42,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) => RegisterCubit(getit.get<RegisterRepo>())),
         BlocProvider(
-            create: (context) => CoursesCubit(getit.get<CoursesRepo>()))
+            create: (context) => CoursesCubit(getit.get<CoursesRepo>())),
+        BlocProvider(
+            create: (context) => subjectsCubit(getit.get<subjectsRepo>())),
       ],
       child: BlocBuilder<LocaleCubit, ChangeLocaleState>(
         builder: (context, state) {

@@ -5,7 +5,10 @@ import 'package:mk_academy/core/utils/styles.dart';
 
 class CustomTopNavBar extends StatelessWidget {
   final TabController tabController;
-  const CustomTopNavBar({super.key, required this.tabController});
+  const CustomTopNavBar({
+    super.key,
+    required this.tabController,
+  });
 
   @override
   Widget build(BuildContext context) {

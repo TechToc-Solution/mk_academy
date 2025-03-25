@@ -5,7 +5,7 @@ import '../model/courses_model.dart';
 
 abstract class CoursesRepo {
   Future<Either<Failure, CoursesData>> getCourses({
-    required String courseMode,
+    required int courseTypeId,
     required int subjectId,
     required int page,
     String? search,

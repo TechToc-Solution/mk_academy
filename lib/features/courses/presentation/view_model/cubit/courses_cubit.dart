@@ -9,13 +9,13 @@ class CoursesCubit extends Cubit<CoursesState> {
   CoursesCubit(this._coursesRepo) : super(CoursesState());
   final CoursesRepo _coursesRepo;
   Future<void> getCourses({
-    required String courseMode,
+    required int courseTypeId,
     required int subjectId,
     String? search,
   }) async {
     if (state.hasReachedMax) return;
     var data = await _coursesRepo.getCourses(
-        courseMode: courseMode,
+        courseTypeId: courseTypeId,
         subjectId: subjectId,
         page: state.currentPage + 1);
     data.fold(
