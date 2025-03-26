@@ -18,7 +18,7 @@ class Routes {
     HomePage.routeName: (context) => const HomePage(),
     LoginPage.routeName: (context) => const LoginPage(),
     RegisterPage.routeName: (context) => const RegisterPage(),
-    UnitsPage.routeName: (context) => const UnitsPage(),
+    UnitsPage.routeName: (context) => UnitsPage(courseTypeId: 1),
     UnitPage.routeName: (context) => const UnitPage(title: ""),
     LeaderboardPage.routeName: (context) => const LeaderboardPage(
           back_btn: false,

@@ -10,11 +10,11 @@ import 'package:mk_academy/features/units/presentation/views/widgets/custom_top_
 
 import '../../../courses/presentation/view_model/cubit/courses_cubit.dart';
 
+// ignore: must_be_immutable
 class UnitsPage extends StatefulWidget {
-  const UnitsPage({
-    super.key,
-  });
+  UnitsPage({super.key, required this.courseTypeId});
   static const String routeName = '/units';
+  int courseTypeId;
   @override
   State<UnitsPage> createState() => _UnitsPageState();
 }
@@ -29,10 +29,10 @@ class _UnitsPageState extends State<UnitsPage>
     _tabController = TabController(length: 3, vsync: this);
     context.read<subjectsCubit>().getSubjects();
     context.read<CoursesCubit>().resetPagination();
-    context.read<CoursesCubit>().getCourses(
-          courseTypeId: 1,
-          subjectId: 1,
-        );
+    // context.read<CoursesCubit>().getCourses(
+    //       courseTypeId: widget.courseTypeId,
+    //       subjectId: 3,
+    //     );
   }
 
   @override
@@ -55,7 +55,8 @@ class _UnitsPageState extends State<UnitsPage>
               return Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: KHorizontalPadding, vertical: KVerticalPadding),
-                child: uintsPageBody(
+                child: UintsPageBody(
+                    courseTypeId: widget.courseTypeId,
                     tabController: _tabController,
                     subjects: state.subjectsData[0].subjects!),
               );
@@ -68,22 +69,29 @@ class _UnitsPageState extends State<UnitsPage>
   }
 }
 
-class uintsPageBody extends StatelessWidget {
-  const uintsPageBody({
+class UintsPageBody extends StatefulWidget {
+  const UintsPageBody({
     super.key,
     required TabController tabController,
     required this.subjects,
+    required this.courseTypeId,
   }) : _tabController = tabController;
   final List<Subjects> subjects;
   final TabController _tabController;
+  final int courseTypeId;
 
+  @override
+  State<UintsPageBody> createState() => _uintsPageBodyState();
+}
+
+class _uintsPageBodyState extends State<UintsPageBody> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         CustomTopNavBar(
-          subjects: subjects,
-          tabController: _tabController,
+          subjects: widget.subjects,
+          tabController: widget._tabController,
         ),
         SizedBox(
           height: kSizedBoxHeight,
@@ -94,9 +102,13 @@ class uintsPageBody extends StatelessWidget {
         ),
         Expanded(
             child: TabBarView(
-          controller: _tabController,
+          controller: widget._tabController,
           children: [
-            for (int i = 0; i < subjects.length; i++) UnitsSection(),
+            for (int i = 0; i < widget.subjects.length; i++)
+              UnitsSection(
+                courseTypeId: widget.courseTypeId,
+                subjectId: widget.subjects[i].id!,
+              ),
           ],
         ))
       ],

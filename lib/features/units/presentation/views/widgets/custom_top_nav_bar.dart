@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:mk_academy/core/shared/models/subjects_model.dart';
-import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/styles.dart';
 
+// ignore: must_be_immutable
 class CustomTopNavBar extends StatelessWidget {
   final TabController tabController;
   List<Subjects> subjects;

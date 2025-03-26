@@ -52,12 +52,18 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
         onPageChanged: (index) {
           _motionTabBarController!.index = index;
         },
-        children: const [
-          CurriculumPage(),
-          UnitsPage(),
-          HomePage(),
-          UnitsPage(),
-          UnitsPage()
+        children: [
+          const CurriculumPage(),
+          UnitsPage(
+            courseTypeId: 2,
+          ),
+          const HomePage(),
+          UnitsPage(
+            courseTypeId: 3,
+          ),
+          UnitsPage(
+            courseTypeId: 1,
+          )
         ],
       ),
       bottomNavigationBar: Container(
