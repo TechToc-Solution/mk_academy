@@ -7,6 +7,8 @@ import 'package:mk_academy/features/auth/data/repos/login_repo/login_repo_ipml.d
 import 'package:mk_academy/features/auth/data/repos/register_repo/register_repo.dart';
 import 'package:mk_academy/features/courses/data/repo/courses_repo.dart';
 import 'package:mk_academy/features/courses/data/repo/courses_repo_iplm.dart';
+import 'package:mk_academy/features/curriculum/data/repos/curriculum_repo.dart';
+import 'package:mk_academy/features/curriculum/data/repos/curriculum_repo_iplm.dart';
 import 'package:mk_academy/features/leaderboard/data/repos/leaderboard_repo.dart';
 import 'package:mk_academy/features/leaderboard/data/repos/leaderboard_repo_iplm.dart';
 import 'package:mk_academy/features/profile/data/repos/profile_repo.dart';
@@ -42,6 +44,10 @@ void setupLocatorServices() {
   //courses singleton
   getit.registerSingleton<CoursesRepo>(CoursesRepoIplm(getit<ApiServices>()));
 
-  //subjects sinleton
+  //subjects singleton
   getit.registerSingleton<subjectsRepo>(subjectsRepoIplm(getit<ApiServices>()));
+
+  //curriculum singleton
+  getit.registerSingleton<CurriculumRepo>(
+      CurriculumRepoIplm(getit.get<ApiServices>()));
 }

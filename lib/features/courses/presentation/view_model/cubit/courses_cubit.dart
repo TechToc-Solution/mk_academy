@@ -13,27 +13,29 @@ class CoursesCubit extends Cubit<CoursesState> {
     required int subjectId,
     String? search,
   }) async {
-    if (state.hasReachedMax) return;
+    if (state.hasReachedMax || isClosed) return;
     var data = await _coursesRepo.getCourses(
         courseTypeId: courseTypeId,
         subjectId: subjectId,
         page: state.currentPage + 1);
-    data.fold(
-        (failure) => emit(state.copyWith(
-              status: CoursesStatus.failure,
-              errorMessage: failure.message,
-            )), (coursesData) {
-      final newCourses = [
-        ...state.courses,
-        ...coursesData.courses!,
-      ];
-      emit(state.copyWith(
-        courses: newCourses,
-        currentPage: coursesData.currentPage,
-        status: CoursesStatus.success,
-        hasReachedMax: !coursesData.hasNext!,
-      ));
-    });
+    if (!isClosed) {
+      data.fold(
+          (failure) => emit(state.copyWith(
+                status: CoursesStatus.failure,
+                errorMessage: failure.message,
+              )), (coursesData) {
+        final newCourses = [
+          ...state.courses,
+          ...coursesData.courses!,
+        ];
+        emit(state.copyWith(
+          courses: newCourses,
+          currentPage: coursesData.currentPage,
+          status: CoursesStatus.success,
+          hasReachedMax: !coursesData.hasNext!,
+        ));
+      });
+    }
   }
 
   void resetPagination() {

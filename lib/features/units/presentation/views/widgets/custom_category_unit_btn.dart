@@ -3,9 +3,11 @@ import 'package:mk_academy/core/utils/colors.dart';
 
 class CustomCategoryUnitBtn extends StatelessWidget {
   final void Function() onTap;
+  final String unitText;
   const CustomCategoryUnitBtn({
     super.key,
     required this.onTap,
+    required this.unitText,
   });
 
   @override
@@ -21,7 +23,7 @@ class CustomCategoryUnitBtn extends StatelessWidget {
         ),
         child: Center(
             child: Text(
-          "نص تجريبي",
+          unitText,
           style: TextStyle(
               overflow: TextOverflow.ellipsis,
               color: Colors.white,

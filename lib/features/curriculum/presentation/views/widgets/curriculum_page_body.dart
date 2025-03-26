@@ -1,12 +1,16 @@
 // ignore: unused_import
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/widgets/custom_level_bar.dart';
+import 'package:mk_academy/features/curriculum/data/repos/curriculum_repo.dart';
+import 'package:mk_academy/features/curriculum/presentation/views-model/curriculum_cubit.dart';
 import 'package:mk_academy/features/units/presentation/views/widgets/custom_top_nav_bar.dart';
 
 import '../../../../../core/shared/models/subjects_model.dart';
-import 'curriclum_uint_section.dart';
+import '../../../../../core/utils/services_locater.dart';
+import 'curriculum_units_section.dart';
 
 class CurriculumPageBody extends StatefulWidget {
   const CurriculumPageBody({super.key, required this.subjects});
@@ -55,9 +59,17 @@ class _CurriculumPageBodyState extends State<CurriculumPageBody>
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    CurriculumUintSection(),
-                    CurriculumUintSection(),
-                    CurriculumUintSection(),
+                    for (int i = 0; i < widget.subjects.length; i++)
+                      BlocProvider(
+                        create: (context) =>
+                            CurriculumCubit(getit.get<CurriculumRepo>())
+                              ..getUnits(
+                                subjectId: widget.subjects[i].id!,
+                              ),
+                        child: CurriculumUnitsSection(
+                          subjectId: widget.subjects[i].id!,
+                        ),
+                      ),
                   ],
                 ),
               ),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/shared/cubits/subjects/subjects_cubit.dart';
 import 'package:mk_academy/core/shared/models/subjects_model.dart';
 import 'package:mk_academy/core/utils/constats.dart';
+import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
 import 'package:mk_academy/core/widgets/custom_level_bar.dart';
 import 'package:mk_academy/features/courses/data/repo/courses_repo.dart';
@@ -30,11 +31,6 @@ class _UnitsPageState extends State<UnitsPage>
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     context.read<subjectsCubit>().getSubjects();
-    //context.read<CoursesCubit>().resetPagination();
-    // context.read<CoursesCubit>().getCourses(
-    //       courseTypeId: widget.courseTypeId,
-    //       subjectId: 3,
-    //     );
   }
 
   @override
@@ -63,7 +59,7 @@ class _UnitsPageState extends State<UnitsPage>
                     subjects: state.subjectsData[0].subjects!),
               );
             }
-            return SizedBox();
+            return CustomCircualProgressIndicator();
           },
         ),
       ),
