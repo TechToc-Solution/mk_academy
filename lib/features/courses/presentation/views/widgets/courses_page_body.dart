@@ -8,7 +8,7 @@ import '../../../../../core/widgets/custom_level_bar.dart';
 import '../../../data/repo/courses_repo.dart';
 import '../../view_model/courses_cubit.dart';
 import 'courses_units_section.dart';
-import 'custom_top_nav_bar.dart';
+import '../../../../../core/widgets/custom_top_nav_bar.dart';
 
 class CoursesPageBody extends StatelessWidget {
   const CoursesPageBody({

@@ -6,7 +6,7 @@ import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/widgets/custom_level_bar.dart';
 import 'package:mk_academy/features/curriculum/data/repos/curriculum_repo.dart';
 import 'package:mk_academy/features/curriculum/presentation/views-model/curriculum_cubit.dart';
-import 'package:mk_academy/features/courses/presentation/views/widgets/custom_top_nav_bar.dart';
+import 'package:mk_academy/core/widgets/custom_top_nav_bar.dart';
 
 import '../../../../../core/shared/models/subjects_model.dart';
 import '../../../../../core/utils/services_locater.dart';
