@@ -1,25 +1,23 @@
 class UnitsModel {
-  final List<UnitModel> units;
+  final List<Unit> units;
 
   UnitsModel({required this.units});
 
   factory UnitsModel.fromJson(Map<String, dynamic> json) {
     return UnitsModel(
-      units: (json['data'] as List)
-          .map((unit) => UnitModel.fromJson(unit))
-          .toList(),
+      units: (json['data'] as List).map((unit) => Unit.fromJson(unit)).toList(),
     );
   }
 }
 
-class UnitModel {
+class Unit {
   final int id;
   final String name;
 
-  UnitModel({required this.id, required this.name});
+  Unit({required this.id, required this.name});
 
-  factory UnitModel.fromJson(Map<String, dynamic> json) {
-    return UnitModel(
+  factory Unit.fromJson(Map<String, dynamic> json) {
+    return Unit(
       id: json['id'],
       name: json['name'],
     );

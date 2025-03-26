@@ -17,7 +17,7 @@ class CurriculumUnitsSection extends StatelessWidget {
       builder: (context, state) {
         if (state is UnitsSuccess) {
           return GridView.builder(
-              itemCount: state.units.units.length,
+              itemCount: state.units.length,
               shrinkWrap: true,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -26,10 +26,13 @@ class CurriculumUnitsSection extends StatelessWidget {
                   mainAxisSpacing: 16),
               itemBuilder: (BuildContext context, int index) {
                 return CustomCategoryUnitBtn(
-                  unitText: state.units.units[index].name,
-                  onTap: () => Navigator.of(context)
-                      .push(goRoute(x: CurriculumVideosPage())),
-                );
+                    unitText: state.units[index].name,
+                    onTap: () {
+                      Navigator.of(context).push(goRoute(
+                          x: CurriculumVideosPage(
+                        unit: state.units[index],
+                      )));
+                    });
               });
         } else if (state is UnitsError) {
           return CustomErrorWidget(

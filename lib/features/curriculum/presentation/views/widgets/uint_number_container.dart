@@ -4,8 +4,10 @@ import '../../../../../core/utils/colors.dart';
 import '../../../../../core/utils/styles.dart';
 
 class UintNumberContainer extends StatelessWidget {
+  final String unitNumber;
   const UintNumberContainer({
     super.key,
+    required this.unitNumber,
   });
 
   @override
@@ -25,7 +27,7 @@ class UintNumberContainer extends StatelessWidget {
         child: Center(
           child: Text(
             textAlign: TextAlign.center,
-            "الوحدة الاولى",
+            unitNumber,
             style: Styles.textStyle25.copyWith(color: AppColors.textColor),
           ),
         ),

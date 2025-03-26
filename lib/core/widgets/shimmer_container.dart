@@ -21,10 +21,9 @@ class ShimmerContainer extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return Shimmer.fromColors(
             baseColor: Colors.grey[100]!,
-            highlightColor: Colors.grey[300]!,
+            highlightColor: Colors.yellow[200]!,
             child: Container(
               margin: margin,
-              // alignment: Alignment.center,
               width: width,
               height: height,
               decoration: BoxDecoration(

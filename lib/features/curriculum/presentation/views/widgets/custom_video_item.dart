@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mk_academy/core/utils/functions.dart';
-import 'package:mk_academy/features/test_your_self/presentation/views/questions_test_page.dart';
+import 'package:mk_academy/features/curriculum/data/model/lesson_model.dart';
 
 import '../../../../../core/utils/colors.dart';
 import '../../../../../core/utils/styles.dart';
@@ -8,8 +7,11 @@ import '../../../../../core/utils/styles.dart';
 class CustomVideoItem extends StatelessWidget {
   const CustomVideoItem({
     super.key,
+    required this.lesson,
+    required this.onPressed,
   });
-
+  final Lesson lesson;
+  final VoidCallback onPressed;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,7 +24,7 @@ class CustomVideoItem extends StatelessWidget {
               style: Styles.textStyle20.copyWith(color: AppColors.textColor),
             ),
             Text(
-              "الاشتقاق",
+              lesson.name,
               style: Styles.textStyle20.copyWith(color: AppColors.textColor),
             ),
             MaterialButton(
@@ -30,12 +32,7 @@ class CustomVideoItem extends StatelessWidget {
                 color: AppColors.avatarColor,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(35)),
-                onPressed: () {
-                  //open youtube
-                  Navigator.of(context).push(
-                    goRoute(x: QuestionsTestPage()),
-                  );
-                },
+                onPressed: onPressed,
                 child: Text(
                   "مشاهدة",
                   style: Styles.textStyle16.copyWith(
