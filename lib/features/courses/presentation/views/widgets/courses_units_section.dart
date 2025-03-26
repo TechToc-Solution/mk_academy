@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/widgets/shimmer_container.dart';
 
-import '../../../../core/utils/functions.dart';
-import '../../../../core/widgets/custom_error_widget.dart';
-import '../../../courses/presentation/view_model/cubit/courses_cubit.dart';
-import '../../../show_unit/presentation/views/unit.dart';
-import '../../../show_unit/presentation/views/widgets/custom_video_units_btn.dart';
-import 'widgets/custom_category_unit_btn.dart';
+import '../../../../../core/utils/functions.dart';
+import '../../../../../core/widgets/custom_error_widget.dart';
+import '../../view_model/courses_cubit.dart';
+import '../../../../show_unit/presentation/views/unit.dart';
+import '../../../../show_unit/presentation/views/widgets/custom_video_units_btn.dart';
+import 'custom_category_unit_btn.dart';
 
 // ignore: must_be_immutable
-class UnitsSection extends StatelessWidget {
-  UnitsSection(
+class CoursesUnitsSection extends StatelessWidget {
+  CoursesUnitsSection(
       {super.key, required this.courseTypeId, required this.subjectId});
   int courseTypeId;
   int subjectId;

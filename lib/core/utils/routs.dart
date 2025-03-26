@@ -10,7 +10,7 @@ import '../../features/profile/presentation/views/profile_page.dart';
 import '../../features/show_unit/presentation/views/unit.dart';
 import '../../features/test_your_self/presentation/views/questions_test_page.dart';
 import '../../features/test_your_self/presentation/views/test_result_page.dart';
-import '../../features/units/presentation/views/units.dart';
+import '../../features/courses/presentation/views/courses_page.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
 
 class Routes {
@@ -18,7 +18,7 @@ class Routes {
     HomePage.routeName: (context) => const HomePage(),
     LoginPage.routeName: (context) => const LoginPage(),
     RegisterPage.routeName: (context) => const RegisterPage(),
-    UnitsPage.routeName: (context) => UnitsPage(courseTypeId: 1),
+    CoursesPage.routeName: (context) => CoursesPage(courseTypeId: 1),
     UnitPage.routeName: (context) => const UnitPage(title: ""),
     LeaderboardPage.routeName: (context) => const LeaderboardPage(
           back_btn: false,

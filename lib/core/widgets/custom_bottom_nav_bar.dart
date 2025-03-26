@@ -6,7 +6,7 @@ import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
 
 import '../../features/home/presentation/views/home_page.dart';
-import '../../features/units/presentation/views/units.dart';
+import '../../features/courses/presentation/views/courses_page.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
   const CustomBottomNavBar({
@@ -54,14 +54,14 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
         },
         children: [
           const CurriculumPage(),
-          UnitsPage(
+          CoursesPage(
             courseTypeId: 2,
           ),
           const HomePage(),
-          UnitsPage(
+          CoursesPage(
             courseTypeId: 3,
           ),
-          UnitsPage(
+          CoursesPage(
             courseTypeId: 1,
           )
         ],

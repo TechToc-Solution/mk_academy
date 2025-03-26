@@ -4,7 +4,7 @@ import 'package:mk_academy/core/widgets/shimmer_container.dart';
 
 import '../../../../../core/utils/functions.dart';
 import '../../../../../core/widgets/custom_error_widget.dart';
-import '../../../../units/presentation/views/widgets/custom_category_unit_btn.dart';
+import '../../../../courses/presentation/views/widgets/custom_category_unit_btn.dart';
 import '../../views-model/curriculum_cubit.dart';
 import 'curriculum_videos_page.dart';
 
