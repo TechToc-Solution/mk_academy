@@ -22,8 +22,6 @@ import 'package:mk_academy/features/profile/data/repos/profile_repo.dart';
 import 'package:mk_academy/features/profile/presentation/views-model/profile_cubit.dart';
 
 import 'core/shared/repos/subjects/subjects_repo.dart';
-import 'features/courses/data/repo/courses_repo.dart';
-import 'features/courses/presentation/view_model/cubit/courses_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,8 +43,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => LoginCubit(getit.get<LoginRepo>())),
         BlocProvider(
             create: (context) => RegisterCubit(getit.get<RegisterRepo>())),
-        BlocProvider(
-            create: (context) => CoursesCubit(getit.get<CoursesRepo>())),
+        // BlocProvider(
+        //     create: (context) => CoursesCubit(getit.get<CoursesRepo>())),
         BlocProvider(
             create: (context) => subjectsCubit(getit.get<subjectsRepo>())),
         BlocProvider(

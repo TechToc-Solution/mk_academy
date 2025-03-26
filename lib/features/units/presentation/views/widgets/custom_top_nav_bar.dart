@@ -8,7 +8,7 @@ import 'package:mk_academy/core/utils/styles.dart';
 // ignore: must_be_immutable
 class CustomTopNavBar extends StatelessWidget {
   final TabController tabController;
-  List<Subjects> subjects;
+  final List<Subjects> subjects;
   CustomTopNavBar({
     Key? key,
     required this.tabController,

@@ -5,11 +5,12 @@ import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/widgets/custom_level_bar.dart';
 import 'package:mk_academy/features/units/presentation/views/widgets/custom_top_nav_bar.dart';
 
+import '../../../../../core/shared/models/subjects_model.dart';
 import 'curriclum_uint_section.dart';
 
 class CurriculumPageBody extends StatefulWidget {
-  const CurriculumPageBody({super.key});
-
+  const CurriculumPageBody({super.key, required this.subjects});
+  final List<Subjects> subjects;
   @override
   State<CurriculumPageBody> createState() => _CurriculumPageBodyState();
 }
@@ -40,7 +41,7 @@ class _CurriculumPageBodyState extends State<CurriculumPageBody>
           child: Column(
             children: [
               CustomTopNavBar(
-                subjects: [],
+                subjects: widget.subjects,
                 tabController: _tabController,
               ),
               SizedBox(

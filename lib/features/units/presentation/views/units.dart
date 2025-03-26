@@ -5,9 +5,11 @@ import 'package:mk_academy/core/shared/models/subjects_model.dart';
 import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
 import 'package:mk_academy/core/widgets/custom_level_bar.dart';
+import 'package:mk_academy/features/courses/data/repo/courses_repo.dart';
 import 'package:mk_academy/features/units/presentation/views/units_section.dart';
 import 'package:mk_academy/features/units/presentation/views/widgets/custom_top_nav_bar.dart';
 
+import '../../../../core/utils/services_locater.dart';
 import '../../../courses/presentation/view_model/cubit/courses_cubit.dart';
 
 // ignore: must_be_immutable
@@ -28,7 +30,7 @@ class _UnitsPageState extends State<UnitsPage>
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     context.read<subjectsCubit>().getSubjects();
-    context.read<CoursesCubit>().resetPagination();
+    //context.read<CoursesCubit>().resetPagination();
     // context.read<CoursesCubit>().getCourses(
     //       courseTypeId: widget.courseTypeId,
     //       subjectId: 3,
@@ -105,9 +107,16 @@ class _uintsPageBodyState extends State<UintsPageBody> {
           controller: widget._tabController,
           children: [
             for (int i = 0; i < widget.subjects.length; i++)
-              UnitsSection(
-                courseTypeId: widget.courseTypeId,
-                subjectId: widget.subjects[i].id!,
+              BlocProvider(
+                create: (context) => CoursesCubit(getit.get<CoursesRepo>())
+                  ..getCourses(
+                    courseTypeId: widget.courseTypeId,
+                    subjectId: widget.subjects[i].id!,
+                  ),
+                child: UnitsSection(
+                  courseTypeId: widget.courseTypeId,
+                  subjectId: widget.subjects[i].id!,
+                ),
               ),
           ],
         ))
