@@ -13,6 +13,8 @@ import 'package:mk_academy/features/home/presentation/views/widgets/custom_searc
 import 'package:mk_academy/features/home/presentation/views/widgets/custom_top_3.dart';
 import 'package:mk_academy/features/leaderboard/presentation/views-model/leaderboard_cubit.dart';
 
+import '../../../../core/widgets/custom_error_widget.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
   static const String routeName = '/home';
@@ -63,7 +65,14 @@ class _MyHomePageState extends State<HomePage> {
                           if (state is LeaderboardSuccess)
                             return CustomTopThreeItem(students: state.students);
                           else if (state is LeaderboardError)
-                            return ErrorWidget(state.errorMsg);
+                            return CustomErrorWidget(
+                              errorMessage: state.errorMsg,
+                              onRetry: () {
+                                context
+                                    .read<LeaderboardCubit>()
+                                    .getLeaderbord();
+                              },
+                            );
                           else
                             return Expanded(
                               child: Container(

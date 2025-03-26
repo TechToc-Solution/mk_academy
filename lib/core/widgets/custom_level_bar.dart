@@ -4,6 +4,8 @@ import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/features/profile/presentation/views-model/profile_cubit.dart';
 
+import 'custom_error_widget.dart';
+
 class customLevelBar extends StatelessWidget {
   const customLevelBar({
     super.key,
@@ -43,7 +45,12 @@ class customLevelBar extends StatelessWidget {
             ],
           );
         else if (state is ProfileError)
-          return ErrorWidget(state.errorMsg);
+          return CustomErrorWidget(
+            errorMessage: state.errorMsg,
+            onRetry: () {
+              context.read<ProfileCubit>().getProfile();
+            },
+          );
         else
           return LinearProgressIndicator();
       },
