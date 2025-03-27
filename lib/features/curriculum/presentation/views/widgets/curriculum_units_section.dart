@@ -6,7 +6,7 @@ import '../../../../../core/utils/functions.dart';
 import '../../../../../core/widgets/custom_error_widget.dart';
 import '../../../../courses/presentation/views/widgets/custom_category_unit_btn.dart';
 import '../../views-model/curriculum_cubit.dart';
-import 'curriculum_videos_page.dart';
+import '../curriculum_lessons_page.dart';
 
 class CurriculumUnitsSection extends StatelessWidget {
   const CurriculumUnitsSection({super.key, required this.subjectId});
@@ -29,7 +29,7 @@ class CurriculumUnitsSection extends StatelessWidget {
                     unitText: state.units[index].name,
                     onTap: () {
                       Navigator.of(context).push(goRoute(
-                          x: CurriculumVideosPage(
+                          x: CurriculumLessonsPage(
                         unit: state.units[index],
                       )));
                     });

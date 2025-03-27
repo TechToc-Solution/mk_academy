@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/features/curriculum/data/model/lesson_model.dart';
 
-import '../../../../../core/utils/colors.dart';
-import '../../../../../core/utils/styles.dart';
+import '../../../../../../core/utils/colors.dart';
+import '../../../../../../core/utils/styles.dart';
 
-class CustomVideoItem extends StatelessWidget {
-  const CustomVideoItem({
+class CustomLessonsItem extends StatelessWidget {
+  const CustomLessonsItem({
     super.key,
     required this.lesson,
     required this.onPressed,
+    required this.LessonNum,
   });
   final Lesson lesson;
+  final int LessonNum;
   final VoidCallback onPressed;
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class CustomVideoItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "الدرس الاول",
+              "${"lesson".tr(context)} $LessonNum",
               style: Styles.textStyle20.copyWith(color: AppColors.textColor),
             ),
             Text(

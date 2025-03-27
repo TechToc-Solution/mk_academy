@@ -30,7 +30,7 @@ class Routes {
     QuestionsTestPage.routeName: (context) => const QuestionsTestPage(),
     TestResultPage.routeName: (context) => const TestResultPage(),
     VerificationPhonePage.routeName: (context) =>
-        VerificationPhonePage(phoneNumber: ""),
+        VerificationPhonePage(fromRigster: false, phoneNumber: ""),
     ResetPasswordPage.routeName: (context) => ResetPasswordPage(),
     WebViewScreen.routeName: (context) => WebViewScreen(),
     TestListBody.routeName: (context) => TestListBody()

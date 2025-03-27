@@ -31,20 +31,7 @@ class LessonsLoading extends CurriculumState {
   const LessonsLoading({this.isFirstFetch = true});
 }
 
-class LessonsSuccess extends CurriculumState {
-  final List<Lesson> lessons;
-  final bool hasReachedMax;
-  final int currentPage;
-
-  const LessonsSuccess({
-    required this.lessons,
-    this.hasReachedMax = false,
-    this.currentPage = 1,
-  });
-
-  @override
-  List<Object> get props => [lessons, hasReachedMax, currentPage];
-}
+class LessonsSuccess extends CurriculumState {}
 
 class LessonsError extends CurriculumState {
   final String errorMsg;

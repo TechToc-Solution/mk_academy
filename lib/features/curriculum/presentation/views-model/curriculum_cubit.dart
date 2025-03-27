@@ -34,7 +34,7 @@ class CurriculumCubit extends Cubit<CurriculumState> {
     if (!loadMore) {
       currentPage = 1;
       hasReachedMax = false;
-      lessons = [];
+      lessons.clear();
       emit(LessonsLoading(isFirstFetch: true));
     } else {
       emit(LessonsLoading(isFirstFetch: false));
@@ -48,13 +48,8 @@ class CurriculumCubit extends Cubit<CurriculumState> {
         (lessonsModel) {
           currentPage++;
           hasReachedMax = !lessonsModel.hasNext;
-          lessons.addAll(lessonsModel.lessons);
-
-          emit(LessonsSuccess(
-            lessons: lessons,
-            currentPage: lessonsModel.currentPage,
-            hasReachedMax: hasReachedMax,
-          ));
+          lessons = [...lessons, ...lessonsModel.lessons];
+          emit(LessonsSuccess());
         },
       );
     }
@@ -63,7 +58,7 @@ class CurriculumCubit extends Cubit<CurriculumState> {
   void resetLessonsPagination() {
     currentPage = 1;
     hasReachedMax = false;
-    lessons = [];
+    lessons.clear();
     emit(CurriculumInitial());
   }
 }
