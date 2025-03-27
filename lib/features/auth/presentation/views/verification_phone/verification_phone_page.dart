@@ -1,25 +1,23 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
-import 'package:mk_academy/core/utils/functions.dart';
-import 'package:mk_academy/features/auth/presentation/view-model/register_cubit/register_cubit.dart';
+import 'package:mk_academy/features/auth/presentation/views/verification_phone/widgets/verfi_reset_passwrod_bloc_consumer.dart';
 
 import '../../../../../core/utils/assets_data.dart';
 import '../../../../../core/utils/colors.dart';
 import '../../../../../core/utils/constats.dart';
-import '../../../../../core/widgets/custom_bottom_nav_bar.dart';
-import '../widgets/custom_button.dart';
 import 'widgets/custom_opt_field.dart';
+import 'widgets/register_bloc_consumer.dart';
 import 'widgets/resend_code.dart';
 import 'widgets/verification_msg.dart';
 
 class VerificationPhonePage extends StatefulWidget {
-  const VerificationPhonePage({super.key, required this.phoneNumber});
+  const VerificationPhonePage(
+      {super.key, required this.phoneNumber, required this.fromRigster});
   static const String routeName = "verificationPhone";
   final String phoneNumber;
-
+  final bool fromRigster;
   @override
   State<VerificationPhonePage> createState() => _VerificationPhonePageState();
 }
@@ -100,38 +98,16 @@ class _VerificationPhonePageState extends State<VerificationPhonePage> {
                   canResend: _canResend,
                   remainingTime: _remainingTime),
               const SizedBox(height: kSizedBoxHeight),
-              BlocConsumer<RegisterCubit, RegisterState>(
-                  builder: (context, state) {
-                if (state is VerifiPhoneLoading) {
-                  return CustomButton(
-                    child: Center(
-                      child: CircularProgressIndicator.adaptive(),
-                    ),
-                    onPressed: () {},
-                  );
-                }
-                return CustomButton(
-                  child: Text(
-                    "verfi_num".tr(context),
-                    style: theme.textTheme.titleMedium!
-                        .copyWith(color: Colors.white),
-                  ),
-                  onPressed: () {
-                    if (_otpValue.isNotEmpty && _otpValue.length == 6) {
-                      context.read<RegisterCubit>().verifiPhoneNum(
-                          phone: widget.phoneNumber, code: _otpValue);
-                    }
-                  },
-                );
-              }, listener: (context, state) {
-                if (state is VerifiPhoneError) {
-                  messages(context, state.errorMsg, Colors.red);
-                }
-                if (state is VerifiPhoneSuccess) {
-                  Navigator.pushReplacementNamed(
-                      context, CustomBottomNavBar.routeName);
-                }
-              })
+              if (widget.fromRigster)
+                RegisterBlocConsumer(
+                    theme: theme,
+                    otpValue: _otpValue,
+                    phoneNumber: widget.phoneNumber),
+              if (!widget.fromRigster)
+                VerfiResetPasswrodBlocConsumer(
+                    theme: theme,
+                    otpValue: _otpValue,
+                    phoneNumber: widget.phoneNumber)
             ],
           ),
         ),

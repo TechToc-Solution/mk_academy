@@ -142,8 +142,8 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          VerificationPhonePage(phoneNumber: state.phoneNum)));
+                      builder: (context) => VerificationPhonePage(
+                          fromRigster: true, phoneNumber: state.phoneNum)));
             }
           }),
         ],
