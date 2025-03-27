@@ -12,10 +12,6 @@ import 'package:mk_academy/core/utils/routs.dart';
 import 'package:mk_academy/core/utils/services_locater.dart';
 import 'package:mk_academy/core/utils/styles.dart';
 import 'package:mk_academy/core/widgets/custom_bottom_nav_bar.dart';
-import 'package:mk_academy/features/auth/data/repos/login_repo/login_repo.dart';
-import 'package:mk_academy/features/auth/data/repos/register_repo/register_repo.dart';
-import 'package:mk_academy/features/auth/presentation/view-model/login_cubit/login_cubit.dart';
-import 'package:mk_academy/features/auth/presentation/view-model/register_cubit/register_cubit.dart';
 import 'package:mk_academy/features/leaderboard/data/repos/leaderboard_repo.dart';
 import 'package:mk_academy/features/leaderboard/presentation/views-model/leaderboard_cubit.dart';
 import 'package:mk_academy/features/profile/data/repos/profile_repo.dart';
@@ -42,12 +38,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => LocaleCubit()..getSaveLanguage()),
-        BlocProvider(create: (context) => LoginCubit(getit.get<LoginRepo>())),
-        BlocProvider(
-            create: (context) => RegisterCubit(getit.get<RegisterRepo>())),
         BlocProvider(create: (context) => LogoutCubit(getit.get<LogoutRepo>())),
-        // BlocProvider(
-        //     create: (context) => CoursesCubit(getit.get<CoursesRepo>())),
         BlocProvider(
             create: (context) => subjectsCubit(getit.get<subjectsRepo>())),
         BlocProvider(
