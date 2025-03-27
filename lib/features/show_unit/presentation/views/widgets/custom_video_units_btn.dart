@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/colors.dart';
+import 'package:mk_academy/core/utils/functions.dart';
+import 'package:mk_academy/features/show%20video/presentation/views/show_video.dart';
 
 class CustomVideoUnitBtn extends StatelessWidget {
   const CustomVideoUnitBtn({
@@ -36,9 +38,14 @@ class CustomVideoUnitBtn extends StatelessWidget {
             decoration: BoxDecoration(
                 color: AppColors.primaryColors,
                 borderRadius: BorderRadius.circular(8)),
-            child: Icon(
-              Icons.play_arrow_outlined,
-              size: 32,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(goRoute(x: WebViewScreen()));
+              },
+              child: Icon(
+                Icons.play_arrow_outlined,
+                size: 32,
+              ),
             ),
           ),
         )
