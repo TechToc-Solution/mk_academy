@@ -6,13 +6,13 @@ import 'package:mk_academy/core/widgets/custom_error_widget.dart';
 import 'package:mk_academy/features/curriculum/data/model/units_model.dart';
 import 'package:mk_academy/features/curriculum/data/repos/curriculum_repo.dart';
 
-import '../../../../../core/utils/services_locater.dart';
-import '../../../../../core/widgets/custom_app_bar.dart';
-import '../../views-model/curriculum_cubit.dart';
-import 'curriculum_videos_page_body.dart';
+import '../../../../core/utils/services_locater.dart';
+import '../../../../core/widgets/custom_app_bar.dart';
+import '../views-model/curriculum_cubit.dart';
+import 'widgets/lessons/curriculum_lessons_page_body.dart';
 
-class CurriculumVideosPage extends StatelessWidget {
-  const CurriculumVideosPage({super.key, required this.unit});
+class CurriculumLessonsPage extends StatelessWidget {
+  const CurriculumLessonsPage({super.key, required this.unit});
   final Unit unit;
   @override
   Widget build(BuildContext context) {
@@ -40,13 +40,11 @@ class CurriculumVideosPage extends StatelessWidget {
                         .read<CurriculumCubit>()
                         .getLessons(unit.id, loadMore: false);
                   });
-            } else if (state is LessonsSuccess) {
-              return CurriculumVideosPageBody(
-                unit: unit,
-                lessons: state.lessons,
-              );
             }
-            return SizedBox();
+            return CurriculumLessonsPageBody(
+              unit: unit,
+              lessons: context.read<CurriculumCubit>().lessons,
+            );
           },
         ),
       ),
