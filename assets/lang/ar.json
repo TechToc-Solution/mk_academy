@@ -62,5 +62,6 @@
     "the_order": "الترتيب",
     "lesson" : "الدرس",
     "there_is_no_lesson" : "لا يوجد دروس حاليا!",
-    "could_not_launch_video" : "لا يمكن تشغيل الفيديو حاليا"
+    "could_not_launch_video" : "لا يمكن تشغيل الفيديو حاليا",
+    "success_logout" : "تم تسجيل الخروج بنجاح"
 }

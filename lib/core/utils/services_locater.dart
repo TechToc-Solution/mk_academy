@@ -4,6 +4,7 @@ import 'package:mk_academy/core/shared/repos/subjects/subjects_repo.dart';
 import 'package:mk_academy/core/shared/repos/subjects/subjects_repo_iplm.dart';
 import 'package:mk_academy/features/auth/data/repos/login_repo/login_repo.dart';
 import 'package:mk_academy/features/auth/data/repos/login_repo/login_repo_ipml.dart';
+import 'package:mk_academy/features/auth/data/repos/logout_repo/logout_repo.dart';
 import 'package:mk_academy/features/auth/data/repos/register_repo/register_repo.dart';
 import 'package:mk_academy/features/courses/data/repo/courses_repo.dart';
 import 'package:mk_academy/features/courses/data/repo/courses_repo_iplm.dart';
@@ -14,6 +15,7 @@ import 'package:mk_academy/features/leaderboard/data/repos/leaderboard_repo_iplm
 import 'package:mk_academy/features/profile/data/repos/profile_repo.dart';
 import 'package:mk_academy/features/profile/data/repos/profile_repo_iplm.dart';
 
+import '../../features/auth/data/repos/logout_repo/logout_repo_iplm.dart';
 import '../../features/auth/data/repos/register_repo/register_repo_iplm.dart';
 import '../Api_services/api_services.dart';
 
@@ -36,6 +38,8 @@ void setupLocatorServices() {
 
   getit.registerSingleton<ProfileRepo>(
       ProfileRepoIplm(getit.get<ApiServices>()));
+
+  getit.registerSingleton<LogoutRepo>(LogoutRepoIplm(getit.get<ApiServices>()));
 
   //leaderboard singleton
   getit.registerSingleton<LeaderboardRepo>(
