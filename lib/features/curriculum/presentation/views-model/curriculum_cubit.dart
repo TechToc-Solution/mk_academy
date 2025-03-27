@@ -58,7 +58,7 @@ class CurriculumCubit extends Cubit<CurriculumState> {
   void resetLessonsPagination() {
     currentPage = 1;
     hasReachedMax = false;
-    lessons = [];
+    lessons.clear();
     emit(CurriculumInitial());
   }
 }
