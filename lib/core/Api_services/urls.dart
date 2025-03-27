@@ -12,6 +12,7 @@ class Urls {
   static String getProfile = "auth/me";
   static String forgetPassword = "auth/forget-password";
   static String verfiResetPassword = "auth/verify-reset-password";
+  static String resendCode = "/auth/resend-code";
 
   //leaderbord
   static String getLeaderbord = "students";

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 
 import '../../../../../../core/utils/functions.dart';
 import '../../../../../../core/widgets/custom_bottom_nav_bar.dart';
@@ -26,7 +27,7 @@ class RegisterBlocConsumer extends StatelessWidget {
       if (state is VerifiPhoneLoading) {
         return CustomButton(
           child: Center(
-            child: CircularProgressIndicator.adaptive(),
+            child: CustomCircualProgressIndicator(),
           ),
           onPressed: () {},
         );

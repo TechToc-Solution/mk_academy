@@ -64,5 +64,6 @@
     "lesson" : "الدرس",
     "there_is_no_lesson" : "لا يوجد دروس حاليا!",
     "could_not_launch_video" : "لا يمكن تشغيل الفيديو حاليا",
-    "success_logout" : "تم تسجيل الخروج بنجاح"
+    "success_logout" : "تم تسجيل الخروج بنجاح",
+    "success_code_send_agen" :  "تم إعادة إرسال الكود بنجاح"
 }

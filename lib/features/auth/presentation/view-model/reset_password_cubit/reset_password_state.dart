@@ -32,3 +32,5 @@ class VerifyResetPasswordSuccess extends ResetPasswordState {
 
   VerifyResetPasswordSuccess({required this.message});
 }
+
+class ResendCodeSuccess extends ResetPasswordState {}

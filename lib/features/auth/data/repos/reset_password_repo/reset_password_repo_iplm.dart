@@ -54,4 +54,23 @@ class ResetPasswordRepoImpl implements ResetPasswordRepo {
       return Left(ErrorHandler.handle(e));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> resendCode({required String phone}) async {
+    try {
+      final response = await _apiServices.post(
+        endPoint: Urls.resendCode,
+        data: {"phone": phone},
+      );
+
+      if (response.data["success"] == true) {
+        return Right(null);
+      } else {
+        return Left(ServerFailure(
+            response.data["message"] ?? ErrorHandler.defaultMessage()));
+      }
+    } catch (e) {
+      return Left(ErrorHandler.handle(e));
+    }
+  }
 }
