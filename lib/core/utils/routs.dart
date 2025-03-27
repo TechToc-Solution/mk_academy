@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/features/auth/presentation/views/reset_password/reset_password_page.dart';
+import 'package:mk_academy/features/show%20video/presentation/views/show_video.dart';
 
 import '../../features/auth/presentation/views/login/login_page.dart';
 import '../../features/auth/presentation/views/register/register_page.dart';
@@ -30,5 +31,6 @@ class Routes {
     VerificationPhonePage.routeName: (context) =>
         VerificationPhonePage(phoneNumber: ""),
     ResetPasswordPage.routeName: (context) => ResetPasswordPage(),
+    WebViewScreen.routeName: (context) => WebViewScreen()
   };
 }
