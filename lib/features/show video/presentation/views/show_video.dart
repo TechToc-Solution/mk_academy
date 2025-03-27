@@ -10,12 +10,14 @@ class WebViewScreen extends StatefulWidget {
 
 class _WebViewScreenState extends State<WebViewScreen> {
   late final WebViewController _controller;
-
+  final String url =
+      "https://iframe.mediadelivery.net/embed/399054/9a5c88dd-2c88-49bd-b4f2-d8bba7697858?token=3062beb925d363b30d6eb0f2b13ad77a701c9f5e8820c6d041d52d4f8fdd338f&expires=1743174086&autoplay=false&loop=false&muted=false&preload=false&responsive=true";
   @override
   void initState() {
     super.initState();
+
     _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted) // Allow JavaScript
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..loadHtmlString('''
         <!DOCTYPE html>
         <html lang="en">
@@ -29,8 +31,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
         </head>
         <body>
           <div class="container">
-            <iframe class="iframe-container" src="https://www.youtube.com/watch?v=1xDuyhZtQFY&t=29s" frameborder="0" 
-            allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+            <iframe class="iframe-container" src="$url" frameborder="0"
+              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
           </div>
         </body>
         </html>

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/features/test_your_self/presentation/views/questions_test_page.dart';
 
 import '../../../../../core/utils/colors.dart';
@@ -9,9 +11,15 @@ class SubjectNameItem extends StatelessWidget {
   const SubjectNameItem({
     super.key,
     required this.screenWidth,
+    required this.title,
+    required this.price,
+    required this.onTap,
   });
 
   final double screenWidth;
+  final String title;
+  final String price;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +27,7 @@ class SubjectNameItem extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: () => Navigator.pushReplacementNamed(
-                context, QuestionsTestPage.routeName),
+            onTap: onTap,
             child: Container(
               width: screenWidth * 0.65,
               height: 60,
@@ -31,7 +38,7 @@ class SubjectNameItem extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  "جبر",
+                  title,
                   style: Styles.textStyle30.copyWith(
                       color: AppColors.textColor, fontWeight: FontWeight.bold),
                 ),
@@ -39,11 +46,12 @@ class SubjectNameItem extends StatelessWidget {
             ),
           ),
           SizedBox(height: 15),
-          Text(
-            "السعر :50000sp",
-            style: Styles.textStyle20.copyWith(
-                color: AppColors.textColor, fontWeight: FontWeight.w500),
-          ),
+          if (price != "")
+            Text(
+              "${"price".tr(context)}: ${price} ${"sp".tr(context)}",
+              style: Styles.textStyle20.copyWith(
+                  color: AppColors.textColor, fontWeight: FontWeight.w500),
+            ),
           const SizedBox(height: kSizedBoxHeight),
         ],
       ),

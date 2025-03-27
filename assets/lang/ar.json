@@ -59,5 +59,9 @@
     "there_is_no_subs" :"لا يوجد اشتراكات بعد!",
     "export_points" : "نقاط الخبرة",
     "how_increase_level" : "كيف يمكنني زيادة المستوى",
-    "the_order": "الترتيب"
+    "the_order": "الترتيب",
+    "partialـexams": "اختبارات جزئية",
+    "general_exams": "اختبارات عامة",
+    "price": "السعر",
+    "sp": "ل.س"
 }

@@ -23,5 +23,9 @@
     "top3_title": "MK Academy Champions",
     "curriculum" : "Curriculum",
     "test_your_self" : "Test your self",
-    "test_result" : "Test Result"
+    "test_result" : "Test Result",
+    "partialـexams": "Partial Exams",
+    "general_exams": "General Exams",
+    "price": "Price",
+    "sp": "SP"
 }
