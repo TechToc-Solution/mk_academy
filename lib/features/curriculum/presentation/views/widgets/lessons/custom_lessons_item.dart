@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/features/curriculum/data/model/lesson_model.dart';
 
 import '../../../../../../core/utils/colors.dart';
@@ -22,7 +23,7 @@ class CustomLessonsItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "الدرس $LessonNum",
+              "${"lesson".tr(context)} $LessonNum",
               style: Styles.textStyle20.copyWith(color: AppColors.textColor),
             ),
             Text(

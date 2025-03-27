@@ -59,5 +59,8 @@
     "there_is_no_subs" :"لا يوجد اشتراكات بعد!",
     "export_points" : "نقاط الخبرة",
     "how_increase_level" : "كيف يمكنني زيادة المستوى",
-    "the_order": "الترتيب"
+    "the_order": "الترتيب",
+    "lesson" : "الدرس",
+    "there_is_no_lesson" : "لا يوجد دروس حاليا!",
+    "could_not_launch_video" : "لا يمكن تشغيل الفيديو حاليا"
 }

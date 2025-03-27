@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
 
 import '../../../../../../core/utils/colors.dart';
 import '../../../../../../core/utils/constats.dart';
@@ -35,7 +36,7 @@ class CurriculumLessonsPageBody extends StatelessWidget {
         if (lessons.isEmpty)
           Center(
             child: Text(
-              "لايوجد دروس حاليا!",
+              "there_is_no_lesson".tr(context),
               style: Styles.textStyle18.copyWith(color: Colors.white),
             ),
           )
