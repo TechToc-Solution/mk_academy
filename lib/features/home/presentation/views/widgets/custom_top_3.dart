@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
-import 'package:mk_academy/core/utils/assets_data.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/features/home/presentation/views/widgets/custom_user_show.dart';

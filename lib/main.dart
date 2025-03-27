@@ -11,7 +11,6 @@ import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/routs.dart';
 import 'package:mk_academy/core/utils/services_locater.dart';
 import 'package:mk_academy/core/utils/styles.dart';
-import 'package:mk_academy/core/widgets/custom_bottom_nav_bar.dart';
 import 'package:mk_academy/features/auth/presentation/view-model/reset_password_cubit/reset_password_cubit.dart';
 import 'package:mk_academy/features/leaderboard/data/repos/leaderboard_repo.dart';
 import 'package:mk_academy/features/leaderboard/presentation/views-model/leaderboard_cubit.dart';
