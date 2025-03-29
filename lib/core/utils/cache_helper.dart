@@ -22,4 +22,8 @@ class CacheHelper {
   static clearData() {
     sharedPreferences?.clear();
   }
+
+  static removeData({required String key}) async {
+    await sharedPreferences?.remove(key);
+  }
 }
