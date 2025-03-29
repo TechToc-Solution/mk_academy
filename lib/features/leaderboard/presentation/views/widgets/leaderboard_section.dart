@@ -21,7 +21,7 @@ class LeaderboardSection extends StatelessWidget {
           return CustomLeaderboardShow(
               index: index,
               students: students,
-              is_you: CacheHelper.getData(key: "userId") ==
+              isYou: CacheHelper.getData(key: "userId") ==
                   students[index].id.toString());
         });
   }

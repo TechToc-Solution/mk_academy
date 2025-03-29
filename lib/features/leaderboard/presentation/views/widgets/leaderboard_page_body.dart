@@ -14,7 +14,7 @@ class LeaderboardPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+      padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
       child: ListView(
         children: [
           LeaderboardSection(

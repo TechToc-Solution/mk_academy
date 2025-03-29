@@ -7,8 +7,8 @@ import 'package:mk_academy/features/leaderboard/data/models/students_leaderboard
 import 'package:mk_academy/features/leaderboard/presentation/views/leaderboard.dart';
 
 class CustomTopThreeItem extends StatelessWidget {
-  CustomTopThreeItem({super.key, required this.students});
-  List<StudentsLeaderboardModel> students;
+  const CustomTopThreeItem({super.key, required this.students});
+  final List<StudentsLeaderboardModel> students;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,7 +49,7 @@ class CustomTopThreeItem extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.of(context)
-                        .push(goRoute(x: LeaderboardPage(back_btn: true)));
+                        .push(goRoute(x: LeaderboardPage(backBtn: true)));
                   },
                   child: Text(
                     "show_all".tr(context),

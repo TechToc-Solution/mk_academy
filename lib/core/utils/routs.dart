@@ -23,7 +23,7 @@ class Routes {
     CoursesPage.routeName: (context) => CoursesPage(courseTypeId: 1),
     UnitPage.routeName: (context) => const UnitPage(title: ""),
     LeaderboardPage.routeName: (context) => const LeaderboardPage(
-          back_btn: false,
+          backBtn: false,
         ),
     CustomBottomNavBar.routeName: (context) => CustomBottomNavBar(),
     ProfilePage.routeName: (context) => const ProfilePage(),

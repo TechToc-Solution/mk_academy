@@ -46,7 +46,7 @@ class SubjectNameItem extends StatelessWidget {
           SizedBox(height: 15),
           if (price != "")
             Text(
-              "${"price".tr(context)}: ${price} ${"sp".tr(context)}",
+              "${"price".tr(context)}: $price ${"sp".tr(context)}",
               style: Styles.textStyle20.copyWith(
                   color: AppColors.textColor, fontWeight: FontWeight.w500),
             ),

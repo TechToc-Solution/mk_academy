@@ -1,4 +1,6 @@
 // ignore_for_file: deprecated_member_use
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 
@@ -77,7 +79,7 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
             PhoneValidator.required(context, errorText: "رقم الهاتف مطلوب"),
             PhoneValidator.validMobile(context, errorText: "رقم هاتف غير صالح"),
           ]),
-          onChanged: (phoneNumber) => print(
+          onChanged: (phoneNumber) => log(
               "+${widget.controller.value.countryCode}${widget.controller.value.nsn}"),
         ),
       ),

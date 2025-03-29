@@ -54,7 +54,7 @@ void setupLocatorServices() {
   getit.registerSingleton<CoursesRepo>(CoursesRepoIplm(getit<ApiServices>()));
 
   //subjects singleton
-  getit.registerSingleton<subjectsRepo>(subjectsRepoIplm(getit<ApiServices>()));
+  getit.registerSingleton<SubjectsRepo>(SubjectsRepoIplm(getit<ApiServices>()));
 
   //curriculum singleton
   getit.registerSingleton<CurriculumRepo>(

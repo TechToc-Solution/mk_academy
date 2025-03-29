@@ -17,24 +17,24 @@ class CurriculumPage extends StatefulWidget {
 class _CurriculumPageState extends State<CurriculumPage> {
   @override
   void initState() {
-    context.read<subjectsCubit>().getSubjects();
+    context.read<SubjectsCubit>().getSubjects();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(body:
-        BlocBuilder<subjectsCubit, subjectsState>(builder: (context, state) {
-      if (state is getSubjectsSucess) {
+        BlocBuilder<SubjectsCubit, SubjectsState>(builder: (context, state) {
+      if (state is GetSubjectsSucess) {
         return CurriculumPageBody(
           subjects: state.subjectsData[0].subjects!,
         );
       }
-      if (state is getSubjectsError) {
+      if (state is GetSubjectsError) {
         return CustomErrorWidget(
             errorMessage: state.erroMsg,
             onRetry: () {
-              context.read<subjectsCubit>().getSubjects();
+              context.read<SubjectsCubit>().getSubjects();
             });
       }
       return CustomCircualProgressIndicator();

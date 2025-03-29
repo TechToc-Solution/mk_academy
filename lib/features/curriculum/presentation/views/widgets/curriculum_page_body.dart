@@ -41,7 +41,7 @@ class _CurriculumPageBodyState extends State<CurriculumPageBody>
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(
-              horizontal: KHorizontalPadding, vertical: KVerticalPadding),
+              horizontal: kHorizontalPadding, vertical: kVerticalPadding),
           child: Column(
             children: [
               CustomTopNavBar(
@@ -51,7 +51,7 @@ class _CurriculumPageBodyState extends State<CurriculumPageBody>
               SizedBox(
                 height: kSizedBoxHeight,
               ),
-              customLevelBar(),
+              CustomLevelBar(),
               SizedBox(
                 height: kSizedBoxHeight,
               ),

@@ -16,5 +16,5 @@ final class LoginLoading extends LoginState {}
 final class LoginError extends LoginState {
   final String errorMsg;
 
-  LoginError({required this.errorMsg});
+  const LoginError({required this.errorMsg});
 }

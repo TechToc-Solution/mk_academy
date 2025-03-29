@@ -110,7 +110,7 @@ class _VerificationPhonePageState extends State<VerificationPhonePage> {
                       setState(() => _otpValue = value);
                     }),
                 const SizedBox(height: kSizedBoxHeight),
-                resendCode(
+                ResendCode(
                     onPressed: _canResend ? _resendCode : null,
                     canResend: _canResend,
                     remainingTime: _remainingTime),

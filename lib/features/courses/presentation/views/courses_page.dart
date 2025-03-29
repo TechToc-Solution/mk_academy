@@ -24,7 +24,7 @@ class _CoursesPageState extends State<CoursesPage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    context.read<subjectsCubit>().getSubjects();
+    context.read<SubjectsCubit>().getSubjects();
   }
 
   @override
@@ -37,16 +37,16 @@ class _CoursesPageState extends State<CoursesPage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<subjectsCubit, subjectsState>(
+        child: BlocBuilder<SubjectsCubit, SubjectsState>(
           builder: (context, state) {
-            if (state is getSubjectsError) {
+            if (state is GetSubjectsError) {
               return CustomErrorWidget(
                   errorMessage: state.erroMsg,
-                  onRetry: () => context.read<subjectsCubit>().getSubjects());
-            } else if (state is getSubjectsSucess) {
+                  onRetry: () => context.read<SubjectsCubit>().getSubjects());
+            } else if (state is GetSubjectsSucess) {
               return Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: KHorizontalPadding, vertical: KVerticalPadding),
+                    horizontal: kHorizontalPadding, vertical: kVerticalPadding),
                 child: CoursesPageBody(
                     courseTypeId: widget.courseTypeId,
                     tabController: _tabController,

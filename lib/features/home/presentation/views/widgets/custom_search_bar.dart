@@ -6,9 +6,9 @@ import 'package:mk_academy/core/utils/colors.dart';
 class CustomSearchBar extends StatelessWidget {
   const CustomSearchBar({
     super.key,
-    required this.drawer_key,
+    required this.drawerKey,
   });
-  final GlobalKey<SliderDrawerState> drawer_key;
+  final GlobalKey<SliderDrawerState> drawerKey;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -21,7 +21,7 @@ class CustomSearchBar extends StatelessWidget {
             ),
             child: IconButton(
                 onPressed: () {
-                  drawer_key..currentState?.toggle(); // Open/close drawer
+                  drawerKey.currentState?.toggle(); // Open/close drawer
                 },
                 icon: Icon(Icons.list_outlined))),
         SizedBox(

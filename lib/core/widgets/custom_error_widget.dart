@@ -47,7 +47,7 @@ class CustomErrorWidget extends StatelessWidget {
               backgroundColor: Colors.red,
               foregroundColor: colorScheme.errorContainer,
               padding: const EdgeInsets.symmetric(
-                  horizontal: KHorizontalPadding, vertical: KVerticalPadding),
+                  horizontal: kHorizontalPadding, vertical: kVerticalPadding),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),

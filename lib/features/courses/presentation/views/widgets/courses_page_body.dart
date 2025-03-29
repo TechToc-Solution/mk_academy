@@ -32,7 +32,7 @@ class CoursesPageBody extends StatelessWidget {
         SizedBox(
           height: kSizedBoxHeight,
         ),
-        customLevelBar(),
+        CustomLevelBar(),
         SizedBox(
           height: kSizedBoxHeight,
         ),

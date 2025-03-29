@@ -11,9 +11,9 @@ import 'package:mk_academy/features/leaderboard/presentation/views-model/leaderb
 import 'widgets/leaderboard_page_body.dart';
 
 class LeaderboardPage extends StatefulWidget {
-  const LeaderboardPage({super.key, required this.back_btn});
+  const LeaderboardPage({super.key, required this.backBtn});
   static const String routeName = '/leaderboard';
-  final bool back_btn;
+  final bool backBtn;
   @override
   State<LeaderboardPage> createState() => _LeaderboardState();
 }
@@ -29,7 +29,7 @@ class _LeaderboardState extends State<LeaderboardPage> {
             preferredSize: MediaQuery.sizeOf(context),
             child: SafeArea(
               child: CustomAppBar(
-                  title: "the_order".tr(context), back_btn: widget.back_btn),
+                  title: "the_order".tr(context), backBtn: widget.backBtn),
             )),
         body: BlocBuilder<LeaderboardCubit, LeaderboardState>(
             builder: (context, state) {

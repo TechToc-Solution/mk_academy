@@ -20,7 +20,7 @@ class TestResultPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            CustomAppBar(title: "test_result".tr(context), back_btn: false),
+            CustomAppBar(title: "test_result".tr(context), backBtn: false),
             Spacer(),
             Center(
               child: Container(

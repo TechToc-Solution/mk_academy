@@ -10,10 +10,10 @@ class CustomLessonsItem extends StatelessWidget {
     super.key,
     required this.lesson,
     required this.onPressed,
-    required this.LessonNum,
+    required this.lessonNum,
   });
   final Lesson lesson;
-  final int LessonNum;
+  final int lessonNum;
   final VoidCallback onPressed;
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class CustomLessonsItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "${"lesson".tr(context)} $LessonNum",
+              "${"lesson".tr(context)} $lessonNum",
               style: Styles.textStyle20.copyWith(color: AppColors.textColor),
             ),
             Text(

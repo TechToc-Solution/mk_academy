@@ -26,8 +26,8 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          vertical: verticalHieght ?? KVerticalPadding,
-          horizontal: horizontalWidth ?? KHorizontalPadding),
+          vertical: verticalHieght ?? kVerticalPadding,
+          horizontal: horizontalWidth ?? kHorizontalPadding),
       child: MaterialButton(
         color: color ?? AppColors.primaryColors,
         height: height ?? 45,

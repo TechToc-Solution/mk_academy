@@ -1,20 +1,20 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/shared/models/subjects_model.dart';
 import 'package:mk_academy/core/shared/repos/subjects/subjects_repo.dart';
 
 part 'subjects_state.dart';
 
-class subjectsCubit extends Cubit<subjectsState> {
-  subjectsCubit(this._homeRepo) : super(SubjectsInitial());
-  subjectsRepo _homeRepo;
+class SubjectsCubit extends Cubit<SubjectsState> {
+  SubjectsCubit(this._homeRepo) : super(SubjectsInitial());
+  final SubjectsRepo _homeRepo;
 
   Future<void> getSubjects() async {
     var data = await _homeRepo.getSubjects();
     data.fold((failure) {
-      emit(getSubjectsError(erroMsg: failure.message));
+      emit(GetSubjectsError(erroMsg: failure.message));
     }, (subjects) {
-      emit(getSubjectsSucess(subjectsData: subjects.subjectData!));
+      emit(GetSubjectsSucess(subjectsData: subjects.subjectData!));
     });
   }
 }

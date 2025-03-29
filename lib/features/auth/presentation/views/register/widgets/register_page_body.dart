@@ -70,7 +70,7 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
       ),
       body: ListView(
         padding: EdgeInsets.symmetric(
-            horizontal: KHorizontalPadding, vertical: KVerticalPadding),
+            horizontal: kHorizontalPadding, vertical: kVerticalPadding),
         children: [
           SizedBox(
             height: kSizedBoxHeight,

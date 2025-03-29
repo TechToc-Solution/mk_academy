@@ -36,31 +36,31 @@ class UserModel {
     level = json['level'];
     age = json['age'];
     maxPoints = json['max_points'];
-    city = json['city'] != null ? new City.fromJson(json['city']) : null;
+    city = json['city'] != null ? City.fromJson(json['city']) : null;
     if (json['courses'] != null) {
       courses = <UserCourses>[];
       json['courses'].forEach((v) {
-        courses!.add(new UserCourses.fromJson(v));
+        courses!.add(UserCourses.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['phone'] = this.phone;
-    data['birthdate'] = this.birthdate;
-    data['points'] = this.points;
-    data['level'] = this.level;
-    data['age'] = this.age;
-    data['max_points'] = this.maxPoints;
-    if (this.city != null) {
-      data['city'] = this.city!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['phone'] = phone;
+    data['birthdate'] = birthdate;
+    data['points'] = points;
+    data['level'] = level;
+    data['age'] = age;
+    data['max_points'] = maxPoints;
+    if (city != null) {
+      data['city'] = city!.toJson();
     }
-    if (this.courses != null) {
-      data['courses'] = this.courses!.map((v) => v.toJson()).toList();
+    if (courses != null) {
+      data['courses'] = courses!.map((v) => v.toJson()).toList();
     }
     return data;
   }

@@ -20,12 +20,12 @@ class _UnitsPageState extends State<UnitPage> {
           children: [
             CustomAppBar(
               title: widget.title,
-              back_btn: true,
+              backBtn: true,
             ),
             Expanded(
                 child: Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+                  const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
               child: ListView(
                 children: [
                   SizedBox(

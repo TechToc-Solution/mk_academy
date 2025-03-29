@@ -7,15 +7,15 @@ class CustomLeaderboardShow extends StatelessWidget {
   const CustomLeaderboardShow(
       {super.key,
       required this.index,
-      required this.is_you,
+      required this.isYou,
       required this.students});
   final int index;
   final List<StudentsLeaderboardModel> students;
-  final bool is_you;
+  final bool isYou;
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      selected: is_you,
+      selected: isYou,
       selectedTileColor: const Color.fromARGB(55, 0, 0, 0),
       leading: CircleAvatar(
         child: Icon(Icons.person),

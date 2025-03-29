@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 
-class customTopNavBarBtn extends StatelessWidget {
-  const customTopNavBarBtn({
+class CustomTopNavBarBtn extends StatelessWidget {
+  const CustomTopNavBarBtn({
     super.key,
     required this.title,
     required this.index,

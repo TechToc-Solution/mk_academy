@@ -48,7 +48,7 @@ class _RestPasswordPageBodyState extends State<RestPasswordPageBody> {
 
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+        padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
         child: Form(
           key: _formKey,
           child: ListView(

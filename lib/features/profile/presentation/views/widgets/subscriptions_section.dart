@@ -12,13 +12,14 @@ class SubscriptionsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (courses.isEmpty)
+    if (courses.isEmpty) {
       return Center(
         child: Text("there_is_no_subs".tr(context),
             style: Styles.textStyle16.copyWith(
                 color: AppColors.textColor, fontWeight: FontWeight.bold)),
       );
-    if (courses.isNotEmpty)
+    }
+    if (courses.isNotEmpty) {
       return ListView.separated(
         physics: NeverScrollableScrollPhysics(),
         itemCount: courses.length,
@@ -30,6 +31,7 @@ class SubscriptionsSection extends StatelessWidget {
           return SizedBox(height: 12);
         },
       );
+    }
     return SizedBox();
   }
 

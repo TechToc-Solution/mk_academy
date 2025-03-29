@@ -4,11 +4,13 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewScreen extends StatefulWidget {
   static const String routeName = '/video';
+
+  const WebViewScreen({super.key});
   @override
-  _WebViewScreenState createState() => _WebViewScreenState();
+  WebViewScreenState createState() => WebViewScreenState();
 }
 
-class _WebViewScreenState extends State<WebViewScreen> {
+class WebViewScreenState extends State<WebViewScreen> {
   late final WebViewController _controller;
   final String url =
       "https://iframe.mediadelivery.net/embed/399054/9a5c88dd-2c88-49bd-b4f2-d8bba7697858?token=3062beb925d363b30d6eb0f2b13ad77a701c9f5e8820c6d041d52d4f8fdd338f&expires=1743174086&autoplay=false&loop=false&muted=false&preload=false&responsive=true";
@@ -48,7 +50,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
           children: [
             CustomAppBar(
               title: "",
-              back_btn: true,
+              backBtn: true,
             ),
             Expanded(child: WebViewWidget(controller: _controller)),
           ],

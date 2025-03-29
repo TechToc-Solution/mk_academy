@@ -31,7 +31,7 @@ class CustomDrawer extends StatelessWidget {
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),
           ),
-          customLevelBar(),
+          CustomLevelBar(),
           SizedBox(
             height: kSizedBoxHeight,
           ),
@@ -49,7 +49,7 @@ class CustomDrawer extends StatelessWidget {
           GestureDetector(
             onTap: () => Navigator.of(context).push(goRoute(
                 x: LeaderboardPage(
-              back_btn: true,
+              backBtn: true,
             ))),
             child: CustomDrawerBtn(
               title: "leaderboard".tr(context),

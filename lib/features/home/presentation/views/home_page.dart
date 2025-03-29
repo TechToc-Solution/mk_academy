@@ -38,7 +38,7 @@ class _MyHomePageState extends State<HomePage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(
-              horizontal: KHorizontalPadding, vertical: KVerticalPadding),
+              horizontal: kHorizontalPadding, vertical: kVerticalPadding),
           child: SliderDrawer(
             isDraggable: false,
             slideDirection: SlideDirection.rightToLeft,
@@ -48,11 +48,11 @@ class _MyHomePageState extends State<HomePage> {
             appBar: SizedBox(),
             child: Column(
               children: [
-                CustomSearchBar(drawer_key: _sliderDrawerKey),
+                CustomSearchBar(drawerKey: _sliderDrawerKey),
                 SizedBox(
                   height: 8,
                 ),
-                customLevelBar(),
+                CustomLevelBar(),
                 Expanded(
                     child: ListView(
                   children: [
@@ -62,9 +62,9 @@ class _MyHomePageState extends State<HomePage> {
                     CustomAdvertiseList(advertises: [
                       BlocBuilder<LeaderboardCubit, LeaderboardState>(
                         builder: (context, state) {
-                          if (state is LeaderboardSuccess)
+                          if (state is LeaderboardSuccess) {
                             return CustomTopThreeItem(students: state.students);
-                          else if (state is LeaderboardError)
+                          } else if (state is LeaderboardError) {
                             return CustomErrorWidget(
                               errorMessage: state.errorMsg,
                               onRetry: () {
@@ -73,24 +73,23 @@ class _MyHomePageState extends State<HomePage> {
                                     .getLeaderbord();
                               },
                             );
-                          else
-                            return Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      AppColors.backgroundColor,
-                                      Colors.white
-                                    ],
-                                    end: Alignment.topCenter,
-                                    begin: Alignment.bottomCenter,
-                                  ),
-                                  borderRadius: BorderRadius.circular(16),
+                          }
+                          return Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    AppColors.backgroundColor,
+                                    Colors.white
+                                  ],
+                                  end: Alignment.topCenter,
+                                  begin: Alignment.bottomCenter,
                                 ),
-                                child:
-                                    Center(child: CircularProgressIndicator()),
+                                borderRadius: BorderRadius.circular(16),
                               ),
-                            );
+                              child: Center(child: CircularProgressIndicator()),
+                            ),
+                          );
                         },
                       ),
                       CustomAdvertiseItem(),

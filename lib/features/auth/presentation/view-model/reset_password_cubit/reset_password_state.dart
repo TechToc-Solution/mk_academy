@@ -30,7 +30,7 @@ class ResetPasswordError extends ResetPasswordState {
 class VerifyResetPasswordSuccess extends ResetPasswordState {
   final String message;
 
-  VerifyResetPasswordSuccess({required this.message});
+  const VerifyResetPasswordSuccess({required this.message});
 }
 
 class ResendCodeSuccess extends ResetPasswordState {}

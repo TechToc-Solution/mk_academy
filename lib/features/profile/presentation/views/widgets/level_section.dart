@@ -24,13 +24,13 @@ class LevelSection extends StatelessWidget {
           _buildProgressBar(userModel.points! / userModel.maxPoints!),
           SizedBox(height: 40),
           CustomButton(
-            child: Text("how_increase_level".tr(context)),
             onPressed: () {},
-            verticalHieght: KVerticalPadding,
-            horizontalWidth: KHorizontalPadding,
+            verticalHieght: kVerticalPadding,
+            horizontalWidth: kHorizontalPadding,
             color: AppColors.primaryColors,
             textStyle: Styles.textStyle18.copyWith(
                 color: AppColors.backgroundColor, fontWeight: FontWeight.w700),
+            child: Text("how_increase_level".tr(context)),
           ),
         ],
       ),

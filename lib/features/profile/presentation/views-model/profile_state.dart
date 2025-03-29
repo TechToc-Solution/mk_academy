@@ -12,13 +12,13 @@ final class ProfileInitial extends ProfileState {}
 final class ProfileSuccess extends ProfileState {
   final UserModel userModel;
 
-  ProfileSuccess({required this.userModel});
+  const ProfileSuccess({required this.userModel});
 }
 
 final class ProfileError extends ProfileState {
   final String errorMsg;
 
-  ProfileError({required this.errorMsg});
+  const ProfileError({required this.errorMsg});
 }
 
 final class ProfileLoading extends ProfileState {}

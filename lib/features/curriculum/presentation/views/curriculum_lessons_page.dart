@@ -23,8 +23,8 @@ class CurriculumLessonsPage extends StatelessWidget {
         appBar: PreferredSize(
           preferredSize: MediaQuery.sizeOf(context),
           child: SafeArea(
-              child: CustomAppBar(
-                  title: "curriculum".tr(context), back_btn: true)),
+              child:
+                  CustomAppBar(title: "curriculum".tr(context), backBtn: true)),
         ),
         body: BlocBuilder<CurriculumCubit, CurriculumState>(
           builder: (context, state) {

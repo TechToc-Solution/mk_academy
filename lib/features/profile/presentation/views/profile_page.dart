@@ -20,8 +20,7 @@ class ProfilePage extends StatelessWidget {
         appBar: PreferredSize(
           preferredSize: MediaQuery.sizeOf(context),
           child: SafeArea(
-              child:
-                  CustomAppBar(title: "profile".tr(context), back_btn: true)),
+              child: CustomAppBar(title: "profile".tr(context), backBtn: true)),
         ),
         body:
             BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {

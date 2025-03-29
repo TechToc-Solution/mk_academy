@@ -30,10 +30,10 @@ class _LoginPageBodyState extends State<LoginPageBody> {
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   @override
   void initState() {
-    phoneController = new PhoneController(
+    phoneController = PhoneController(
         initialValue: PhoneNumber(isoCode: IsoCode.SY, nsn: ""));
-    nameController = new TextEditingController();
-    passwordController = new TextEditingController();
+    nameController = TextEditingController();
+    passwordController = TextEditingController();
     super.initState();
   }
 
@@ -58,7 +58,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
       ),
       body: ListView(
         padding: EdgeInsets.symmetric(
-            horizontal: KHorizontalPadding, vertical: KVerticalPadding),
+            horizontal: kHorizontalPadding, vertical: kVerticalPadding),
         children: [
           SizedBox(
             height: kSizedBoxHeight,

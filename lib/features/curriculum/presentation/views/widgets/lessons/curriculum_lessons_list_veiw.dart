@@ -20,7 +20,7 @@ class CurriculumLessonListView extends StatelessWidget {
     final cubit = context.read<CurriculumCubit>();
     return Expanded(
       child: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+        padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
         itemCount: lessons.length + (cubit.hasReachedMax ? 0 : 1),
         itemBuilder: (context, index) {
           if (index >= lessons.length) {
@@ -37,7 +37,7 @@ class CurriculumLessonListView extends StatelessWidget {
           }
           return CustomLessonsItem(
             lesson: lessons[index],
-            LessonNum: index + 1,
+            lessonNum: index + 1,
             onPressed: () => _handleVideoPlay(context, lessons[index]),
           );
         },
@@ -49,6 +49,7 @@ class CurriculumLessonListView extends StatelessWidget {
     if (await canLaunchUrl(Uri.parse(lesson.path))) {
       await launchUrl(Uri.parse(lesson.path));
     } else {
+      // ignore: use_build_context_synchronously
       messages(context, 'could_not_launch_video'.tr(context), Colors.red);
     }
   }

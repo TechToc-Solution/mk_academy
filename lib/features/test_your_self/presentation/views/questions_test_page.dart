@@ -13,10 +13,10 @@ class QuestionsTestPage extends StatefulWidget {
   const QuestionsTestPage({super.key});
   static const String routeName = 'questionsTest';
   @override
-  _QuestionsTestPageState createState() => _QuestionsTestPageState();
+  QuestionsTestPageState createState() => QuestionsTestPageState();
 }
 
-class _QuestionsTestPageState extends State<QuestionsTestPage> {
+class QuestionsTestPageState extends State<QuestionsTestPage> {
   int _currentQuestionIndex = 0;
   int? _selectedAnswer;
   late Timer _timer;

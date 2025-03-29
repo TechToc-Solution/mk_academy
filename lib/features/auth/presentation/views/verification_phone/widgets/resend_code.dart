@@ -4,8 +4,8 @@ import 'package:mk_academy/core/utils/app_localizations.dart';
 import '../../../../../../core/utils/colors.dart';
 import '../../../../../../core/utils/styles.dart';
 
-class resendCode extends StatelessWidget {
-  const resendCode({
+class ResendCode extends StatelessWidget {
+  const ResendCode({
     super.key,
     required bool canResend,
     required int remainingTime,

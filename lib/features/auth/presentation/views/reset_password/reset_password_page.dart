@@ -15,7 +15,7 @@ class ResetPasswordPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomAppBar(
-            back_btn: true,
+            backBtn: true,
             title: "rest_password".tr(context),
           ),
           RestPasswordPageBody(),

@@ -10,7 +10,7 @@ import 'custom_date_picker.dart';
 import 'custom_drop_dpown_button.dart';
 
 class RegisterForm extends StatelessWidget {
-  RegisterForm({
+  const RegisterForm({
     super.key,
     required GlobalKey<FormState> registerFormKey,
     required this.firstNameController,

@@ -9,9 +9,9 @@ import '../../../errors/error_handler.dart';
 import '../../../errors/failuer.dart';
 import 'subjects_repo.dart';
 
-class subjectsRepoIplm implements subjectsRepo {
-  ApiServices _apiServices;
-  subjectsRepoIplm(
+class SubjectsRepoIplm implements SubjectsRepo {
+  final ApiServices _apiServices;
+  SubjectsRepoIplm(
     this._apiServices,
   );
   @override

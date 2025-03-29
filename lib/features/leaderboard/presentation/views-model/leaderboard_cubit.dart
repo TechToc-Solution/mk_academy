@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/features/leaderboard/data/models/students_leaderboard_model.dart';
 import 'package:mk_academy/features/leaderboard/data/repos/leaderboard_repo.dart';
 

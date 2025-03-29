@@ -1,22 +1,22 @@
 part of 'subjects_cubit.dart';
 
-sealed class subjectsState extends Equatable {
-  const subjectsState();
+sealed class SubjectsState extends Equatable {
+  const SubjectsState();
 
   @override
   List<Object> get props => [];
 }
 
-final class SubjectsInitial extends subjectsState {}
+final class SubjectsInitial extends SubjectsState {}
 
-final class getSubjectsSucess extends subjectsState {
+final class GetSubjectsSucess extends SubjectsState {
   final List<SubjectsData> subjectsData;
 
-  getSubjectsSucess({required this.subjectsData});
+  const GetSubjectsSucess({required this.subjectsData});
 }
 
-final class getSubjectsError extends subjectsState {
+final class GetSubjectsError extends SubjectsState {
   final String erroMsg;
 
-  getSubjectsError({required this.erroMsg});
+  const GetSubjectsError({required this.erroMsg});
 }

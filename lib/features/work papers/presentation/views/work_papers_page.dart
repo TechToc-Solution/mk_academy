@@ -21,12 +21,12 @@ class _MyHomePageState extends State<WorkPapersPage> {
           children: [
             CustomAppBar(
               title: "work_papers".tr(context),
-              back_btn: true,
+              backBtn: true,
             ),
             Expanded(
                 child: Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+                  const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
               child: ListView(
                 children: [
                   WorkPapersSection(),

@@ -6,8 +6,8 @@ import 'package:mk_academy/features/profile/presentation/views-model/profile_cub
 
 import 'custom_error_widget.dart';
 
-class customLevelBar extends StatelessWidget {
-  const customLevelBar({
+class CustomLevelBar extends StatelessWidget {
+  const CustomLevelBar({
     super.key,
   });
 
@@ -15,11 +15,11 @@ class customLevelBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
-        if (state is ProfileSuccess)
+        if (state is ProfileSuccess) {
           return Row(
             children: [
               Text(
-                "current_level".tr(context) + ": ",
+                "${"current_level".tr(context)}: ",
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
@@ -44,15 +44,15 @@ class customLevelBar extends StatelessWidget {
               ),
             ],
           );
-        else if (state is ProfileError)
+        } else if (state is ProfileError) {
           return CustomErrorWidget(
             errorMessage: state.errorMsg,
             onRetry: () {
               context.read<ProfileCubit>().getProfile();
             },
           );
-        else
-          return LinearProgressIndicator();
+        }
+        return LinearProgressIndicator();
       },
     );
   }

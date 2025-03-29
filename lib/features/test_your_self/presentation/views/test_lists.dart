@@ -22,7 +22,7 @@ class TestListBody extends StatelessWidget {
               children: [
                 CustomAppBar(
                   title: "test_your_self".tr(context),
-                  back_btn: true,
+                  backBtn: true,
                 ),
                 Expanded(
                     child: Padding(

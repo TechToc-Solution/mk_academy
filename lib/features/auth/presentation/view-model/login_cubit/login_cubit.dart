@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/features/auth/data/repos/login_repo/login_repo.dart';
 
 part 'login_state.dart';

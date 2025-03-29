@@ -16,7 +16,7 @@ class CoursesData {
     if (json['list'] != null) {
       courses = <Courses>[];
       json['list'].forEach((v) {
-        courses!.add(new Courses.fromJson(v));
+        courses!.add(Courses.fromJson(v));
       });
     }
     hasNext = json['has_next'];
@@ -26,14 +26,14 @@ class CoursesData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.courses != null) {
-      data['list'] = this.courses!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (courses != null) {
+      data['list'] = courses!.map((v) => v.toJson()).toList();
     }
-    data['has_next'] = this.hasNext;
-    data['current_page'] = this.currentPage;
-    data['total_pages'] = this.totalPages;
-    data['per_page'] = this.perPage;
+    data['has_next'] = hasNext;
+    data['current_page'] = currentPage;
+    data['total_pages'] = totalPages;
+    data['per_page'] = perPage;
     return data;
   }
 }
@@ -67,14 +67,14 @@ class Courses {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['description'] = this.description;
-    data['price'] = this.price;
-    data['created_at'] = this.createdAt;
-    data['course_mode'] = this.courseMode;
-    data['image'] = this.image;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['description'] = description;
+    data['price'] = price;
+    data['created_at'] = createdAt;
+    data['course_mode'] = courseMode;
+    data['image'] = image;
     return data;
   }
 }

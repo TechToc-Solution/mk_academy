@@ -12,7 +12,7 @@ class WorkPaperItem extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.sizeOf(context).width;
     return Container(
-      margin: EdgeInsets.symmetric(vertical: KVerticalPadding),
+      margin: EdgeInsets.symmetric(vertical: kVerticalPadding),
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,

@@ -6,15 +6,15 @@ class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
     super.key,
     required this.title,
-    required this.back_btn,
+    required this.backBtn,
   });
   final String title;
-  final bool back_btn;
+  final bool backBtn;
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      margin: EdgeInsets.symmetric(horizontal: KHorizontalPadding + 4),
+      margin: EdgeInsets.symmetric(horizontal: kHorizontalPadding + 4),
       decoration: BoxDecoration(
           color: AppColors.primaryColors,
           borderRadius: BorderRadius.only(
@@ -23,7 +23,7 @@ class CustomAppBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          back_btn
+          backBtn
               ? IconButton(
                   icon: Icon(
                     Icons.arrow_back_outlined,

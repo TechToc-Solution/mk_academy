@@ -13,10 +13,10 @@ class ProfilePageBody extends StatefulWidget {
 
   const ProfilePageBody({super.key, required this.userModel});
   @override
-  _ProfilePageBodyState createState() => _ProfilePageBodyState();
+  ProfilePageBodyState createState() => ProfilePageBodyState();
 }
 
-class _ProfilePageBodyState extends State<ProfilePageBody>
+class ProfilePageBodyState extends State<ProfilePageBody>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -35,7 +35,7 @@ class _ProfilePageBodyState extends State<ProfilePageBody>
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+      padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
       child: ListView(
         children: [
           SizedBox(height: kSizedBoxHeight),
