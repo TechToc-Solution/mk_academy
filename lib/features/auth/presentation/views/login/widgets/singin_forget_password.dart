@@ -43,9 +43,7 @@ class CustomTextButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {
-        Navigator.pushNamed(context, ResetPasswordPage.routeName);
-      },
+      onPressed: onPressed,
       child: Text(
         text,
         style: Styles.textStyle15.copyWith(

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/functions.dart';
+import 'package:mk_academy/core/widgets/custom_app_bar.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 
 import '../../../../../../core/utils/assets_data.dart';
-import '../../../../../../core/utils/colors.dart';
 import '../../../../../../core/utils/constats.dart';
 import '../../../../../../core/utils/styles.dart';
 import '../../../view-model/register_cubit/register_cubit.dart';
@@ -59,15 +59,11 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.backgroundColor,
-        elevation: 0,
-        forceMaterialTransparency: true,
-        foregroundColor: Colors.white,
-        title: Text("sing_up".tr(context)),
-        titleTextStyle: Styles.textStyle18.copyWith(color: Colors.white),
-        centerTitle: true,
-      ),
+      appBar: PreferredSize(
+          preferredSize: MediaQuery.sizeOf(context),
+          child: SafeArea(
+              child:
+                  CustomAppBar(title: "sing_up".tr(context), backBtn: true))),
       body: ListView(
         padding: EdgeInsets.symmetric(
             horizontal: kHorizontalPadding, vertical: kVerticalPadding),

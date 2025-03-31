@@ -29,6 +29,7 @@ class CustomDropdownButton extends StatelessWidget {
         builder: (context, state) {
           List<City> cities = context.read<RegisterCubit>().cities;
           return DropdownButtonFormField<String>(
+            dropdownColor: Colors.white,
             decoration: InputDecoration(
               labelText: text,
               labelStyle: const TextStyle(color: Colors.grey),

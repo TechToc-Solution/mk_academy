@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/colors.dart';
 
 import '../../../../../../core/utils/constats.dart';
 import '../../../../../../core/utils/styles.dart';
@@ -19,9 +20,56 @@ class CustomDatePicker extends StatelessWidget {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
+      firstDate: DateTime(1990),
       lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: AppColors.primaryColors,
+              onPrimary: Colors.white,
+              surface: Colors.white,
+              onSurface: Colors.black87,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: AppColors.primaryColors,
+              ),
+            ),
+            datePickerTheme: DatePickerThemeData(
+              backgroundColor: Colors.white,
+              dayStyle: TextStyle(
+                color: Colors.black87,
+                fontWeight: FontWeight.w500,
+              ),
+              todayBorder: BorderSide(
+                color: AppColors.primaryColors,
+                width: 1.5,
+              ),
+              headerHelpStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+              yearStyle: TextStyle(
+                color: AppColors.primaryColors,
+                fontWeight: FontWeight.bold,
+              ),
+              dayForegroundColor: WidgetStateColor.resolveWith((states) {
+                if (states.contains(WidgetState.disabled)) {
+                  return Colors.grey;
+                }
+                return Colors.black87;
+              }),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
+
     if (picked != null) {
       controller.text = "${picked.year}/"
           "${picked.month.toString().padLeft(2, '0')}/"
