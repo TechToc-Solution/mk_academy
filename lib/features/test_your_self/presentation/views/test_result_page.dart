@@ -8,9 +8,11 @@ import '../../../../core/utils/assets_data.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 
 class TestResultPage extends StatelessWidget {
-  final int? score;
+  final int score;
+  final int quizScore;
   static const String routeName = "testResult";
-  const TestResultPage({super.key, this.score});
+  const TestResultPage(
+      {super.key, required this.score, required this.quizScore});
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.sizeOf(context).width;
@@ -49,13 +51,12 @@ class TestResultPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    if (score != null)
-                      Text(
-                        'درجاتك: $score/15',
-                        style: Styles.textStyle20.copyWith(
-                          color: AppColors.backgroundColor,
-                        ),
+                    Text(
+                      'درجاتك: $score/$quizScore',
+                      style: Styles.textStyle20.copyWith(
+                        color: AppColors.backgroundColor,
                       ),
+                    ),
                     const SizedBox(height: 20),
                     _buildActionButton(
                       icon: Icons.visibility,

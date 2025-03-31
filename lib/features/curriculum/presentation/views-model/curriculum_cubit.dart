@@ -55,6 +55,21 @@ class CurriculumCubit extends Cubit<CurriculumState> {
     }
   }
 
+  Future<void> getLessonDetails(int lessonId) async {
+    if (isClosed) return;
+
+    emit(LessonDetailsLoading(lessonId: lessonId));
+
+    final result = await _curriculumRepo.fetchLessonDetails(lessonId);
+
+    if (!isClosed) {
+      result.fold(
+        (failure) => emit(LessonDetailsError(errorMsg: failure.message)),
+        (lesson) => emit(LessonDetailsSuccess(lesson: lesson)),
+      );
+    }
+  }
+
   void resetLessonsPagination() {
     currentPage = 1;
     hasReachedMax = false;

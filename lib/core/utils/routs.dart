@@ -27,8 +27,13 @@ class Routes {
         ),
     CustomBottomNavBar.routeName: (context) => CustomBottomNavBar(),
     ProfilePage.routeName: (context) => const ProfilePage(),
-    QuestionsTestPage.routeName: (context) => const QuestionsTestPage(),
-    TestResultPage.routeName: (context) => const TestResultPage(),
+    QuestionsTestPage.routeName: (context) => const QuestionsTestPage(
+          questions: [],
+        ),
+    TestResultPage.routeName: (context) => const TestResultPage(
+          score: 0,
+          quizScore: 0,
+        ),
     VerificationPhonePage.routeName: (context) =>
         VerificationPhonePage(fromRigster: false, phoneNumber: ""),
     ResetPasswordPage.routeName: (context) => ResetPasswordPage(),

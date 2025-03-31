@@ -5,19 +5,19 @@ import '../../../../../../core/utils/colors.dart';
 class ProgressDots extends StatelessWidget {
   const ProgressDots({
     super.key,
-    required this.questions,
     required int currentQuestionIndex,
-  }) : _currentQuestionIndex = currentQuestionIndex;
+    required int totalQuestions,
+  })  : _currentQuestionIndex = currentQuestionIndex,
+        _totalQuestions = totalQuestions;
 
-  final List<Map<String, dynamic>> questions;
   final int _currentQuestionIndex;
-
+  final int _totalQuestions;
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
-        questions.length,
+        _totalQuestions,
         (index) => Container(
           margin: const EdgeInsets.symmetric(horizontal: 4),
           width: 12,

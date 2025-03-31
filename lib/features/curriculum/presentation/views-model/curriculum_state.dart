@@ -9,7 +9,7 @@ sealed class CurriculumState extends Equatable {
 
 final class CurriculumInitial extends CurriculumState {}
 
-//uints state
+//uints states
 class UnitsLoading extends CurriculumState {}
 
 class UnitsSuccess extends CurriculumState {
@@ -24,7 +24,7 @@ class UnitsError extends CurriculumState {
   const UnitsError({required this.errorMsg});
 }
 
-// lesson state
+// lesson states
 class LessonsLoading extends CurriculumState {
   final bool isFirstFetch;
 
@@ -37,4 +37,26 @@ class LessonsError extends CurriculumState {
   final String errorMsg;
 
   const LessonsError({required this.errorMsg});
+}
+
+//lessson details states
+class LessonDetailsLoading extends CurriculumState {
+  final int lessonId;
+
+  const LessonDetailsLoading({required this.lessonId});
+
+  @override
+  List<Object> get props => [lessonId];
+}
+
+class LessonDetailsSuccess extends CurriculumState {
+  final Lesson lesson;
+  const LessonDetailsSuccess({required this.lesson});
+}
+
+class LessonDetailsError extends CurriculumState {
+  final String errorMsg;
+  const LessonDetailsError({
+    required this.errorMsg,
+  });
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/assets_data.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/styles.dart';
+import '../../../../core/shared/models/questions_model.dart';
 import 'widgets/questions_test/aswer_option.dart';
 import 'widgets/questions_test/progress_dots.dart';
 import 'test_result_page.dart';
@@ -10,8 +11,11 @@ import 'dart:async';
 import 'widgets/questions_test/timer_section.dart';
 
 class QuestionsTestPage extends StatefulWidget {
-  const QuestionsTestPage({super.key});
+  final List<Question> questions;
+
+  const QuestionsTestPage({super.key, required this.questions});
   static const String routeName = 'questionsTest';
+
   @override
   QuestionsTestPageState createState() => QuestionsTestPageState();
 }
@@ -20,49 +24,56 @@ class QuestionsTestPageState extends State<QuestionsTestPage> {
   int _currentQuestionIndex = 0;
   int? _selectedAnswer;
   late Timer _timer;
-  int _remainingTime = 10;
-
-  final List<Map<String, dynamic>> questions = [
-    {
-      'question': 'نص السؤال التوضيحي هنا',
-      'answers': ['إجابة 1', 'إجابة 2', 'إجابة 3', 'إجابة 4'],
-      'correctIndex': 1,
-    },
-    {
-      'question': 'نص السؤال الطويل جدًا الذي يحتاج إلى مساحة عرض مناسبة',
-      'answers': ['إجابة طويلة', 'إجابة متوسطة', 'إجابة قصيرة', 'إجابة'],
-      'correctIndex': 2,
-    },
-  ];
-
+  int _remainingTime = 0;
+  int _totalMarks = 0;
+  int _quizScore = 0;
   @override
   void initState() {
     super.initState();
+    _initializeTimer();
+  }
+
+  void _initializeTimer() {
+    _remainingTime = widget.questions[_currentQuestionIndex].duration;
     _startTimer();
   }
 
   void _startTimer() {
-    _remainingTime = 10;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_remainingTime > 0) {
         setState(() => _remainingTime--);
       } else {
         _timer.cancel();
-        _nextQuestion(false);
+        _handleTimeExpired();
       }
     });
+  }
+
+  void _handleTimeExpired() {
+    _nextQuestion(false);
   }
 
   void _nextQuestion(bool answeredCorrectly) {
     Future.delayed(const Duration(seconds: 1), () {
       if (mounted) {
         setState(() {
-          if (_currentQuestionIndex < questions.length - 1) {
+          _quizScore += widget.questions[_currentQuestionIndex].marks;
+          if (answeredCorrectly) {
+            _totalMarks += widget.questions[_currentQuestionIndex].marks;
+          }
+
+          if (_currentQuestionIndex < widget.questions.length - 1) {
             _currentQuestionIndex++;
             _selectedAnswer = null;
-            _startTimer();
+            _initializeTimer();
           } else {
-            Navigator.pushReplacementNamed(context, TestResultPage.routeName);
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => TestResultPage(
+                          score: _totalMarks,
+                          quizScore: _quizScore,
+                        )));
           }
         });
       }
@@ -74,7 +85,9 @@ class QuestionsTestPageState extends State<QuestionsTestPage> {
       _selectedAnswer = index;
       _timer.cancel();
     });
-    bool isCorrect = index == questions[_currentQuestionIndex]['correctIndex'];
+
+    final currentQuestion = widget.questions[_currentQuestionIndex];
+    bool isCorrect = currentQuestion.options[index].isCorrect;
     _nextQuestion(isCorrect);
   }
 
@@ -86,6 +99,8 @@ class QuestionsTestPageState extends State<QuestionsTestPage> {
 
   @override
   Widget build(BuildContext context) {
+    final currentQuestion = widget.questions[_currentQuestionIndex];
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -99,36 +114,37 @@ class QuestionsTestPageState extends State<QuestionsTestPage> {
                 child: Text(
                   'السؤال ${_currentQuestionIndex + 1}',
                   style: Styles.textStyle20.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primaryColors),
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primaryColors,
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
               Text(
-                questions[_currentQuestionIndex]['question'],
+                currentQuestion.title,
                 style: Styles.textStyle16.copyWith(
-                    height: 1.5,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.textColor),
+                  height: 1.5,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.textColor,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
               ListView.separated(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: questions[_currentQuestionIndex]['answers'].length,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: currentQuestion.options.length,
                 separatorBuilder: (_, __) => const SizedBox(height: 10),
                 itemBuilder: (context, index) => AnswerOption(
-                  text: questions[_currentQuestionIndex]['answers'][index],
+                  text: currentQuestion.options[index].title,
                   isSelected: _selectedAnswer == index,
-                  isTrueAnswer:
-                      index == questions[_currentQuestionIndex]['correctIndex'],
+                  isTrueAnswer: currentQuestion.options[index].isCorrect,
                   onTap: () => _onAnswerSelected(index),
                 ),
               ),
               const SizedBox(height: 16),
               ProgressDots(
-                questions: questions,
+                totalQuestions: widget.questions.length,
                 currentQuestionIndex: _currentQuestionIndex,
               ),
               const SizedBox(height: 16),

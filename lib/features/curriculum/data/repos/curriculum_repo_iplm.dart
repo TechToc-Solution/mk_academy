@@ -49,4 +49,21 @@ class CurriculumRepoIplm implements CurriculumRepo {
       return Left(ErrorHandler.handle(e));
     }
   }
+
+  @override
+  Future<Either<Failure, Lesson>> fetchLessonDetails(int lessonId) async {
+    try {
+      final resp =
+          await _apiServices.get(endPoint: "units/curriculum/$lessonId");
+
+      if (resp.statusCode == 200 && resp.data['success']) {
+        return Right(Lesson.fromJson(resp.data['data']));
+      } else {
+        return Left(ServerFailure(
+            resp.data['message'] ?? ErrorHandler.defaultMessage()));
+      }
+    } catch (e) {
+      return Left(ErrorHandler.handle(e));
+    }
+  }
 }
