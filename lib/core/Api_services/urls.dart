@@ -25,4 +25,8 @@ class Urls {
   //Tests
   static String getGeneralTests = "quizzes/general";
   static String getSpecialTests = "quizzes/special";
+
+  //Ads
+  static String getInternalAds = "ads/internal";
+  static String getExternalAds = "ads/external";
 }
