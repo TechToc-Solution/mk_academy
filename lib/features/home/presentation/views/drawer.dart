@@ -25,13 +25,9 @@ class CustomDrawer extends StatelessWidget {
           CircleAvatar(
             radius: 64,
           ),
-          Text(
-            textAlign: TextAlign.center,
-            "اسم الطالب",
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),
+          CustomLevelBar(
+            is_drawer: true,
           ),
-          CustomLevelBar(),
           SizedBox(
             height: kSizedBoxHeight,
           ),
