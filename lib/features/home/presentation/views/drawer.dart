@@ -26,7 +26,7 @@ class CustomDrawer extends StatelessWidget {
             radius: 64,
           ),
           CustomLevelBar(
-            is_drawer: true,
+            isDrawer: true,
           ),
           SizedBox(
             height: kSizedBoxHeight,
@@ -43,10 +43,16 @@ class CustomDrawer extends StatelessWidget {
             icon: Icons.settings,
           ),
           GestureDetector(
-            onTap: () => Navigator.of(context).push(goRoute(
-                x: LeaderboardPage(
-              backBtn: true,
-            ))),
+            onTap: () {
+              if (isGuset) {
+                showLoginDialog(context);
+              } else {
+                Navigator.of(context).push(goRoute(
+                    x: LeaderboardPage(
+                  backBtn: true,
+                )));
+              }
+            },
             child: CustomDrawerBtn(
               title: "leaderboard".tr(context),
               icon: Icons.leaderboard,
@@ -66,44 +72,72 @@ class CustomDrawer extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () =>
-                Navigator.of(context).push(goRoute(x: WorkPapersPage())),
+            onTap: () {
+              if (isGuset) {
+                showLoginDialog(context);
+              } else {
+                Navigator.of(context).push(goRoute(x: WorkPapersPage()));
+              }
+            },
             child: CustomDrawerBtn(
               title: "work_papers".tr(context),
               icon: Icons.library_books_outlined,
             ),
           ),
-          BlocConsumer<LogoutCubit, LogoutState>(
-            listener: (BuildContext context, LogoutState state) {
-              if (state is LogoutSuccess) {
-                messages(context, "success_logout".tr(context), Colors.green);
-                Navigator.pushReplacementNamed(context, LoginPage.routeName);
-              }
-              if (state is LogoutError) {
-                messages(context, state.errorMsg, Colors.red);
-              }
-            },
-            builder: (context, state) {
-              if (state is LogoutLoading) {
-                return CustomDrawerLoadingBtn(
-                  icon: Icons.logout,
+          if (!isGuset)
+            BlocConsumer<LogoutCubit, LogoutState>(
+              listener: (BuildContext context, LogoutState state) {
+                if (state is LogoutSuccess) {
+                  messages(context, "success_logout".tr(context), Colors.green);
+                  Navigator.pushReplacementNamed(context, LoginPage.routeName);
+                }
+                if (state is LogoutError) {
+                  messages(context, state.errorMsg, Colors.red);
+                }
+              },
+              builder: (context, state) {
+                if (state is LogoutLoading) {
+                  return CustomDrawerLoadingBtn(
+                    icon: Icons.logout,
+                  );
+                }
+                return GestureDetector(
+                  onTap: () => context.read<LogoutCubit>().logout(),
+                  child: CustomDrawerBtn(
+                    title: "logout".tr(context),
+                    icon: Icons.logout,
+                  ),
                 );
-              }
-              return GestureDetector(
-                onTap: () => context.read<LogoutCubit>().logout(),
-                child: CustomDrawerBtn(
-                  title: "logout".tr(context),
-                  icon: Icons.logout,
-                ),
-              );
-            },
-          ),
-          CustomDrawerBtn(
-            title: "delete_account".tr(context),
-            icon: Icons.delete,
-          ),
+              },
+            ),
+          if (isGuset)
+            GestureDetector(
+              onTap: () =>
+                  Navigator.pushReplacementNamed(context, LoginPage.routeName),
+              child: CustomDrawerBtn(
+                icon: Icons.login_outlined,
+                title: "login".tr(context),
+              ),
+            ),
+          if (!isGuset)
+            CustomDrawerBtn(
+              title: "delete_account".tr(context),
+              icon: Icons.delete,
+            ),
         ],
       ),
+    );
+  }
+
+  void showLoginDialog(BuildContext context) {
+    showCustomDialog(
+      context: context,
+      title: "req_login".tr(context),
+      description: "you_should_login".tr(context),
+      primaryButtonText: "login".tr(context),
+      onPrimaryAction: () {
+        Navigator.pushReplacementNamed(context, LoginPage.routeName);
+      },
     );
   }
 }

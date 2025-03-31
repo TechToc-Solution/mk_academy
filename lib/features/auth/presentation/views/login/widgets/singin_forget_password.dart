@@ -15,33 +15,46 @@ class SignUpForgetPassWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        TextButton(
+        CustomTextButtonWidget(
+          text: "sing_up".tr(context),
           onPressed: () {
             Navigator.pushNamed(context, RegisterPage.routeName);
           },
-          child: Text("sing_up".tr(context),
-              style: Styles.textStyle15.copyWith(
-                decoration: TextDecoration.underline,
-                decorationThickness: 0.6,
-                decorationColor: Colors.white,
-                color: Colors.white,
-              )),
         ),
-        TextButton(
+        CustomTextButtonWidget(
+          text: "forgot_password".tr(context),
           onPressed: () {
             Navigator.pushNamed(context, ResetPasswordPage.routeName);
           },
-          child: Text(
-            "forgot_password".tr(context),
-            style: Styles.textStyle15.copyWith(
-              decoration: TextDecoration.underline,
-              decorationThickness: 0.6,
-              decorationColor: Colors.white,
-              color: Colors.white,
-            ),
-          ),
         ),
       ],
+    );
+  }
+}
+
+class CustomTextButtonWidget extends StatelessWidget {
+  const CustomTextButtonWidget({
+    super.key,
+    required this.text,
+    required this.onPressed,
+  });
+  final String text;
+  final void Function()? onPressed;
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        Navigator.pushNamed(context, ResetPasswordPage.routeName);
+      },
+      child: Text(
+        text,
+        style: Styles.textStyle15.copyWith(
+          decoration: TextDecoration.underline,
+          decorationThickness: 0.6,
+          decorationColor: Colors.white,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }

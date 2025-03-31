@@ -132,6 +132,19 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                 messages(context, state.errorMsg, Colors.red);
               }
             },
+          ),
+          SizedBox(
+            height: kSizedBoxHeight,
+          ),
+          TextButton(
+            child: Text("تخطي بدون تسجيل دخول",
+                style: Styles.textStyle18.copyWith(
+                  color: AppColors.primaryColors,
+                )),
+            onPressed: () {
+              Navigator.pushReplacementNamed(
+                  context, CustomBottomNavBar.routeName);
+            },
           )
         ],
       ),

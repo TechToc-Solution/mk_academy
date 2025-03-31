@@ -4,11 +4,9 @@ import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/features/profile/presentation/views-model/profile_cubit.dart';
 
-import 'custom_error_widget.dart';
-
 class CustomLevelBar extends StatelessWidget {
-  const CustomLevelBar({super.key, this.is_drawer = false});
-  final bool is_drawer;
+  const CustomLevelBar({super.key, this.isDrawer = false});
+  final bool isDrawer;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +16,7 @@ class CustomLevelBar extends StatelessWidget {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (is_drawer)
+              if (isDrawer)
                 Text(
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
@@ -36,7 +34,7 @@ class CustomLevelBar extends StatelessWidget {
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "${state.userModel.level} ",
+                    "level${state.userModel.level} ",
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
@@ -50,7 +48,7 @@ class CustomLevelBar extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   )),
                   Text(
-                    " level${int.parse(state.userModel.level![5]) + 1}",
+                    " level${int.parse(state.userModel.level!) + 1}",
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
@@ -59,12 +57,7 @@ class CustomLevelBar extends StatelessWidget {
             ],
           );
         } else if (state is ProfileError) {
-          return CustomErrorWidget(
-            errorMessage: state.errorMsg,
-            onRetry: () {
-              context.read<ProfileCubit>().getProfile();
-            },
-          );
+          return SizedBox();
         }
         return LinearProgressIndicator();
       },

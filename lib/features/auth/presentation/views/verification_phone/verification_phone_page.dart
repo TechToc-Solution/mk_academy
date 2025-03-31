@@ -59,11 +59,8 @@ class _VerificationPhonePageState extends State<VerificationPhonePage> {
 
   void _resendCode() {
     if (_canResend) {
-      if (!widget.fromRigster) {
-        BlocProvider.of<ResetPasswordCubit>(context)
-            .resendCode(phone: widget.phoneNumber);
-      }
-
+      BlocProvider.of<ResetPasswordCubit>(context)
+          .resendCode(phone: widget.phoneNumber);
       _startTimer();
     }
   }

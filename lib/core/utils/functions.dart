@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
+import '../widgets/cutom_dialog.dart';
+
 Route goRoute({required var x}) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => x,
@@ -34,6 +36,37 @@ void messages(BuildContext context, String error, Color c, {int msgTime = 2}) {
     content: Center(child: Text(error)),
     duration: Duration(seconds: msgTime),
   ));
+}
+
+void showCustomDialog({
+  required BuildContext context,
+  required String title,
+  required String description,
+  required String primaryButtonText,
+  String? secondaryButtonText,
+  Color? primaryButtonColor,
+  Color? secondaryButtonColor,
+  IconData? icon,
+  required void Function() onPrimaryAction,
+  void Function()? onSecondaryAction,
+}) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return CustomDialog(
+        title: title,
+        description: description,
+        primaryButtonText: primaryButtonText,
+        secondaryButtonText: secondaryButtonText ?? "cancel".tr(context),
+        primaryButtonColor: primaryButtonColor,
+        secondaryButtonColor: secondaryButtonColor,
+        icon: icon ?? Icons.lock,
+        onPrimaryAction: onPrimaryAction,
+        onSecondaryAction: onSecondaryAction ?? () => Navigator.pop(context),
+      );
+    },
+  );
 }
 
 void showAwesomeDialog({
