@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mk_academy/features/test_your_self/data/repo/tests_repo.dart';
+import 'package:mk_academy/features/test_your_self/data/repo/tests_repo_iplm.dart';
 
 import '../../features/auth/data/repos/login_repo/login_repo.dart';
 import '../../features/auth/data/repos/login_repo/login_repo_ipml.dart';
@@ -59,4 +61,7 @@ void setupLocatorServices() {
   //curriculum singleton
   getit.registerSingleton<CurriculumRepo>(
       CurriculumRepoIplm(getit.get<ApiServices>()));
+
+  //Tests singleton
+  getit.registerSingleton<TestsRepo>(TestsRepoIplm(getit.get<ApiServices>()));
 }

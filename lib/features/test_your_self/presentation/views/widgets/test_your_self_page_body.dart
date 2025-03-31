@@ -25,8 +25,9 @@ class TestYourSelfPageBody extends StatelessWidget {
                 ),
                 Spacer(),
                 SubjectNameItem(
-                    onTap: () =>
-                        Navigator.pushNamed(context, TestListBody.routeName),
+                    onTap: () => Navigator.pushNamed(
+                        context, TestListBody.routeName,
+                        arguments: {'testType': 1}),
                     title: "partialـexams".tr(context),
                     price: "",
                     screenWidth: screenWidth),
@@ -34,8 +35,9 @@ class TestYourSelfPageBody extends StatelessWidget {
                   height: kSizedBoxHeight,
                 ),
                 SubjectNameItem(
-                    onTap: () =>
-                        Navigator.pushNamed(context, TestListBody.routeName),
+                    onTap: () => Navigator.pushNamed(
+                        context, TestListBody.routeName,
+                        arguments: {'testType': 0}),
                     title: "general_exams".tr(context),
                     price: "",
                     screenWidth: screenWidth),
