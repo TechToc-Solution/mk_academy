@@ -63,7 +63,7 @@ class CurriculumLessonListView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(35)),
                   onPressed: () => cubit.getLessonDetails(lesson.id),
                   child: Text(
-                    "حل الاختبارات",
+                    "solve_quizes".tr(context),
                     style: Styles.textStyle13.copyWith(
                         color: AppColors.backgroundColor,
                         fontWeight: FontWeight.bold),
@@ -89,11 +89,8 @@ class CurriculumLessonListView extends StatelessWidget {
                   MaterialPageRoute(
                       builder: (context) => QuestionsTestPage(
                           questions: state.lesson.questions!)));
-              // Navigator.pushReplacementNamed(
-              //     context, QuestionsTestPage.routeName,
-              //     arguments: state.lesson.questions);
             } else {
-              messages(context, "لقد قمت بحل الاختبار مسبقاً", Colors.grey);
+              messages(context, "quiz_solved".tr(context), Colors.grey);
             }
           }
         },
