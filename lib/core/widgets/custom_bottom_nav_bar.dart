@@ -1,44 +1,48 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
+import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/features/curriculum/presentation/views/curriculum_page.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
-import 'package:motion_tab_bar/MotionTabBarController.dart';
 
+import '../../features/auth/presentation/views/login/login_page.dart';
 import '../../features/home/presentation/views/home_page.dart';
 import '../../features/courses/presentation/views/courses_page.dart';
+import '../utils/functions.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
-  const CustomBottomNavBar({
-    super.key,
-  });
+  const CustomBottomNavBar({super.key});
   static const String routeName = "/nav";
+
   @override
   State<CustomBottomNavBar> createState() => _CustomBottomNavBarState();
 }
 
 class _CustomBottomNavBarState extends State<CustomBottomNavBar>
-    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
-  MotionTabBarController? _motionTabBarController;
   late PageController _pageController;
+  int _currentIndex = 2;
+
+  bool isIndexAllowed(int index) {
+    if (isGuest) {
+      return index == 0 || index == 2;
+    }
+    return true;
+  }
 
   @override
   void initState() {
-    _motionTabBarController = MotionTabBarController(
-      initialIndex: 1,
-      length: 5,
-      vsync: this,
-    );
-    _pageController = PageController(initialPage: 2);
+    _pageController = PageController(initialPage: _currentIndex);
     super.initState();
   }
 
   @override
   void dispose() {
-    _motionTabBarController!.dispose();
     _pageController.dispose();
     super.dispose();
   }
@@ -50,20 +54,20 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {
-          _motionTabBarController!.index = index;
+          log('Page changed to: $index');
+          if (!isIndexAllowed(index)) {
+            handleGuestLogin(context);
+            _pageController.jumpToPage(_currentIndex);
+          } else {
+            setState(() => _currentIndex = index);
+          }
         },
         children: [
-          const CurriculumPage(),
-          CoursesPage(
-            courseTypeId: 2,
-          ),
-          const HomePage(),
-          CoursesPage(
-            courseTypeId: 3,
-          ),
-          CoursesPage(
-            courseTypeId: 1,
-          )
+          CurriculumPage(),
+          CoursesPage(courseTypeId: 2),
+          HomePage(),
+          CoursesPage(courseTypeId: 3),
+          CoursesPage(courseTypeId: 1),
         ],
       ),
       bottomNavigationBar: Container(
@@ -71,11 +75,10 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 8.0,
-              spreadRadius: 2.0,
-              offset: const Offset(0, -2),
-            ),
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 8.0,
+                spreadRadius: 2.0,
+                offset: const Offset(0, -2)),
           ],
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(15),
@@ -83,7 +86,6 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
           ),
         ),
         child: MotionTabBar(
-          controller: _motionTabBarController,
           initialSelectedTab: "home".tr(context),
           labels: [
             "curriculum".tr(context),
@@ -114,14 +116,20 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
             fontWeight: FontWeight.bold,
           ),
           onTabItemSelected: (index) {
-            _pageController.animateToPage(
-              index,
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.ease,
-            );
+            if (!isIndexAllowed(index)) {
+              handleGuestLogin(context);
+            } else {
+              setState(() => _currentIndex = index);
+              _pageController.jumpToPage(index);
+            }
           },
         ),
       ),
     );
+  }
+
+  void handleGuestLogin(BuildContext context) {
+    messages(context, "you_should_login".tr(context), Colors.red);
+    Navigator.pushReplacementNamed(context, LoginPage.routeName);
   }
 }

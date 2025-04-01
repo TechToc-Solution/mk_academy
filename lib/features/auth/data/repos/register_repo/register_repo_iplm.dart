@@ -8,6 +8,7 @@ import 'package:mk_academy/features/auth/data/models/user_model.dart';
 import 'package:mk_academy/features/auth/data/repos/register_repo/register_repo.dart';
 
 import '../../../../../core/errors/failuer.dart';
+import '../../../../../core/utils/constats.dart';
 
 class RegisterRepoIplm implements RegisterRepo {
   final ApiServices _apiServices;
@@ -57,6 +58,7 @@ class RegisterRepoIplm implements RegisterRepo {
         CacheHelper.setString(key: 'token', value: resp.data['data']['token']);
         CacheHelper.setString(
             key: "userId", value: resp.data['data']['user']['id'].toString());
+        isGuest = false;
         return right(UserModel.fromJson(resp.data['data']['user']));
       }
       return left(

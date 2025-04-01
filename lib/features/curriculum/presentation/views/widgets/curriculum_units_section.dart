@@ -31,7 +31,7 @@ class CurriculumUnitsSection extends StatelessWidget {
                 return CustomCategoryUnitBtn(
                     unitText: state.units[index].name,
                     onTap: () {
-                      if (isGuset) {
+                      if (isGuest) {
                         showCustomDialog(
                           context: context,
                           title: "req_login".tr(context),

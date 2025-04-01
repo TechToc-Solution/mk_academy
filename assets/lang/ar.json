@@ -85,5 +85,6 @@
     "all_subjects": "كل المواد",
     "no_data": "لا يوجد بيانات لعرضها!",
     "all_ads": "جميع العروض",
-    "try_again": "اعد المحاولة"
+    "try_again": "اعد المحاولة",
+    "continue_without_login" : "تخطي بدون تسجيل دخول"
 }

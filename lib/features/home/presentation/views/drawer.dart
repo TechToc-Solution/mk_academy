@@ -8,7 +8,7 @@ import 'package:mk_academy/features/auth/presentation/views/login/login_page.dar
 import 'package:mk_academy/features/leaderboard/presentation/views/leaderboard.dart';
 import 'package:mk_academy/features/profile/presentation/views/profile_page.dart';
 import 'package:mk_academy/features/test_your_self/presentation/views/test_your_self_page.dart';
-import 'package:mk_academy/features/work%20papers/presentation/views/work_papers_page.dart';
+//import 'package:mk_academy/features/work%20papers/presentation/views/work_papers_page.dart';
 
 import '../../../../core/utils/colors.dart';
 import '../../../../core/utils/functions.dart';
@@ -32,19 +32,25 @@ class CustomDrawer extends StatelessWidget {
             height: kSizedBoxHeight,
           ),
           GestureDetector(
-            onTap: () => Navigator.of(context).push(goRoute(x: ProfilePage())),
+            onTap: () {
+              if (isGuest) {
+                showLoginDialog(context);
+              } else {
+                Navigator.of(context).push(goRoute(x: ProfilePage()));
+              }
+            },
             child: CustomDrawerBtn(
               title: "profile".tr(context),
               icon: Icons.person,
             ),
           ),
-          CustomDrawerBtn(
-            title: "settings".tr(context),
-            icon: Icons.settings,
-          ),
+          // CustomDrawerBtn(
+          //   title: "settings".tr(context),
+          //   icon: Icons.settings,
+          // ),
           GestureDetector(
             onTap: () {
-              if (isGuset) {
+              if (isGuest) {
                 showLoginDialog(context);
               } else {
                 Navigator.of(context).push(goRoute(
@@ -71,20 +77,20 @@ class CustomDrawer extends StatelessWidget {
               icon: Icons.sports_handball_rounded,
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              if (isGuset) {
-                showLoginDialog(context);
-              } else {
-                Navigator.of(context).push(goRoute(x: WorkPapersPage()));
-              }
-            },
-            child: CustomDrawerBtn(
-              title: "work_papers".tr(context),
-              icon: Icons.library_books_outlined,
-            ),
-          ),
-          if (!isGuset)
+          // GestureDetector(
+          //   onTap: () {
+          //     if (isGuset) {
+          //       showLoginDialog(context);
+          //     } else {
+          //       Navigator.of(context).push(goRoute(x: WorkPapersPage()));
+          //     }
+          //   },
+          //   child: CustomDrawerBtn(
+          //     title: "work_papers".tr(context),
+          //     icon: Icons.library_books_outlined,
+          //   ),
+          // ),
+          if (!isGuest)
             BlocConsumer<LogoutCubit, LogoutState>(
               listener: (BuildContext context, LogoutState state) {
                 if (state is LogoutSuccess) {
@@ -110,7 +116,7 @@ class CustomDrawer extends StatelessWidget {
                 );
               },
             ),
-          if (isGuset)
+          if (isGuest)
             GestureDetector(
               onTap: () =>
                   Navigator.pushReplacementNamed(context, LoginPage.routeName),
@@ -119,7 +125,7 @@ class CustomDrawer extends StatelessWidget {
                 title: "login".tr(context),
               ),
             ),
-          if (!isGuset)
+          if (!isGuest)
             CustomDrawerBtn(
               title: "delete_account".tr(context),
               icon: Icons.delete,

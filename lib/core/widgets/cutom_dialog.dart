@@ -31,7 +31,7 @@ class CustomDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: Colors.transparent,
-      elevation: 10,
+      elevation: 4,
       insetPadding: const EdgeInsets.all(24),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(kBorderRadius))),

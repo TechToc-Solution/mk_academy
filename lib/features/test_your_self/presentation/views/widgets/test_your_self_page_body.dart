@@ -49,7 +49,7 @@ class TestYourSelfPageBody extends StatelessWidget {
   }
 
   void onTap(BuildContext context, Map<String, dynamic> arg) {
-    if (isGuset) {
+    if (isGuest) {
       showCustomDialog(
         context: context,
         title: "req_login".tr(context),

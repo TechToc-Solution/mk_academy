@@ -3,6 +3,7 @@ import 'package:mk_academy/core/Api_services/api_services.dart';
 import 'package:mk_academy/core/errors/error_handler.dart';
 
 import 'package:mk_academy/core/errors/failuer.dart';
+import 'package:mk_academy/core/utils/constats.dart';
 
 import '../../../../../core/Api_services/urls.dart';
 import '../../../../../core/utils/cache_helper.dart';
@@ -18,6 +19,7 @@ class LogoutRepoIplm implements LogoutRepo {
       var resp = await _apiServices.post(endPoint: Urls.logout, data: {});
       if (resp.statusCode == 204) {
         CacheHelper.removeData(key: "token");
+        isGuest = true;
         return right(null);
       }
       return left(ServerFailure(ErrorHandler.defaultMessage()));

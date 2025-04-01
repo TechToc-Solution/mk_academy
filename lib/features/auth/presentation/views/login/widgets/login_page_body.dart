@@ -137,8 +137,11 @@ class _LoginPageBodyState extends State<LoginPageBody> {
             height: kSizedBoxHeight,
           ),
           TextButton(
-            child: Text("تخطي بدون تسجيل دخول",
+            child: Text("continue_without_login".tr(context),
                 style: Styles.textStyle18.copyWith(
+                  decoration: TextDecoration.underline,
+                  decorationThickness: 0.6,
+                  decorationColor: AppColors.primaryColors,
                   color: AppColors.primaryColors,
                 )),
             onPressed: () {

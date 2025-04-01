@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:mk_academy/core/Api_services/api_services.dart';
 import 'package:mk_academy/core/errors/failuer.dart';
 import 'package:mk_academy/core/utils/cache_helper.dart';
+import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/features/auth/data/models/user_model.dart';
 import 'package:mk_academy/features/auth/data/repos/login_repo/login_repo.dart';
 
@@ -21,6 +22,7 @@ class LoginRepoIpml implements LoginRepo {
         CacheHelper.setString(key: 'token', value: resp.data["data"]["token"]);
         CacheHelper.setString(
             key: "userId", value: resp.data['data']['user']['id'].toString());
+        isGuest = false;
         return right(UserModel.fromJson(resp.data["data"]["user"]));
       }
       return left(
