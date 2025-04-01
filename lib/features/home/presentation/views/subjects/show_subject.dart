@@ -39,18 +39,22 @@ class ShowSubSubjects extends StatelessWidget {
                 Expanded(
                     child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: kSizedBoxHeight),
-                  child: ListView.builder(
-                    itemCount:
-                        subject.subjects == null ? 0 : subject.subjects!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return SubjectNameItem(
-                          onTap: () => Navigator.pushReplacementNamed(
-                              context, QuestionsTestPage.routeName),
-                          title: subject.subjects![index].name!,
-                          price: "",
-                          screenWidth: screenWidth);
-                    },
-                  ),
+                  child: subject.subjects == null
+                      ? Text(
+                          "no_data".tr(context),
+                          style: TextStyle(color: Colors.white),
+                        )
+                      : ListView.builder(
+                          itemCount: subject.subjects!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return SubjectNameItem(
+                                onTap: () => Navigator.pushReplacementNamed(
+                                    context, QuestionsTestPage.routeName),
+                                title: subject.subjects![index].name!,
+                                price: "",
+                                screenWidth: screenWidth);
+                          },
+                        ),
                 ))
               ],
             ),
