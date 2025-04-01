@@ -1,42 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/widgets/shimmer_container.dart';
-
-import '../../../../../core/utils/functions.dart';
+import 'package:mk_academy/features/courses/data/model/courses_model.dart';
 import '../../../../../core/widgets/custom_error_widget.dart';
 import '../../view_model/courses_cubit.dart';
-import '../../../../show_unit/presentation/views/unit.dart';
 import '../../../../show_unit/presentation/views/widgets/custom_video_units_btn.dart';
-import 'custom_category_unit_btn.dart';
 
 // ignore: must_be_immutable
 class CoursesUnitsSection extends StatelessWidget {
   CoursesUnitsSection(
       {super.key, required this.courseTypeId, required this.subjectId});
-  int courseTypeId;
+  int? courseTypeId;
   int subjectId;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CoursesCubit, CoursesState>(
       builder: (context, state) {
         if (CoursesStatus.success == state.status) {
-          return GridView.builder(
-              itemCount: 20,
-              shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 12 / 9,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16),
-              itemBuilder: (BuildContext context, int index) {
-                return index % 2 == 0
-                    ? CustomVideoUnitBtn()
-                    : CustomCategoryUnitBtn(
-                        unitText: "نص تجريبي",
-                        onTap: () => Navigator.of(context)
-                            .push(goRoute(x: UnitPage(title: "نص تجريبي"))),
-                      );
-              });
+          return state.courses.isEmpty
+              ? Center(
+                  child: Text(
+                    "no_data".tr(context),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
+              : GridView.builder(
+                  itemCount: state.courses.length,
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 12 / 9,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 16),
+                  itemBuilder: (BuildContext context, int index) {
+                    return CustomVideoUnitBtn(course: state.courses[index]);
+                  });
         } else if (CoursesStatus.failure == state.status) {
           return CustomErrorWidget(
             errorMessage: state.errorMessage!,

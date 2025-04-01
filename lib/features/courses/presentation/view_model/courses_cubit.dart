@@ -9,7 +9,7 @@ class CoursesCubit extends Cubit<CoursesState> {
   CoursesCubit(this._coursesRepo) : super(CoursesState());
   final CoursesRepo _coursesRepo;
   Future<void> getCourses({
-    required int courseTypeId,
+    required int? courseTypeId,
     required int subjectId,
     String? search,
   }) async {

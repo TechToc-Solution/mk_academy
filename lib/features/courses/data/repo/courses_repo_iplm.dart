@@ -13,14 +13,14 @@ class CoursesRepoIplm implements CoursesRepo {
   CoursesRepoIplm(this._apiServices);
   @override
   Future<Either<Failure, CoursesData>> getCourses(
-      {required int courseTypeId,
+      {required int? courseTypeId,
       required int subjectId,
       required int page,
       String? search}) async {
     try {
       var resp = await _apiServices.get(
           endPoint:
-              "${Urls.getCourses}?name=$search&course_type_id=$courseTypeId&subject_id=$subjectId&page=$page");
+              "${Urls.getCourses}?name=${search ?? ""}&course_type_id=${courseTypeId ?? ""}&subject_id=$subjectId&page=$page");
       if (resp.statusCode == 200 && resp.data['success']) {
         return right(CoursesData.fromJson(resp.data['data']));
       }
