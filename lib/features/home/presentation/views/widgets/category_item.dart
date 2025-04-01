@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/shared/models/subjects_model.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 
+// ignore: must_be_immutable
 class CategoryItem extends StatelessWidget {
-  const CategoryItem({
-    super.key,
-  });
-
+   CategoryItem({super.key, required this.subject});
+  SubjectsData subject;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -26,7 +26,7 @@ class CategoryItem extends StatelessWidget {
           ),
           Text(
             overflow: TextOverflow.ellipsis,
-            "عنوان تجريبي",
+            subject.name!,
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           )
         ],

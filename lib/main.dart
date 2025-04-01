@@ -49,7 +49,8 @@ class MyApp extends StatelessWidget {
             create: (context) =>
                 ResetPasswordCubit(getit.get<ResetPasswordRepo>())),
         BlocProvider(
-            create: (context) => SubjectsCubit(getit.get<SubjectsRepo>())),
+            create: (context) =>
+                SubjectsCubit(getit.get<SubjectsRepo>())..getSubjects()),
         BlocProvider(
             create: (context) => LeaderboardCubit(getit.get<LeaderboardRepo>())
               ..getLeaderbord()),

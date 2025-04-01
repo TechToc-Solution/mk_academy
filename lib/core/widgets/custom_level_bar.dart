@@ -34,7 +34,7 @@ class CustomLevelBar extends StatelessWidget {
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "level${state.userModel.level} ",
+                    "${state.userModel.level} ",
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
@@ -48,7 +48,7 @@ class CustomLevelBar extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   )),
                   Text(
-                    " level${int.parse(state.userModel.level!) + 1}",
+                    " ${int.parse(state.userModel.level!) + 1}",
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
