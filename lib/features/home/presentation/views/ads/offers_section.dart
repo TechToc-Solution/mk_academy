@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
+import 'package:mk_academy/features/home/presentation/views/ads/all_ads.dart';
 
 class OffersSection extends StatelessWidget {
   const OffersSection({
@@ -22,12 +23,15 @@ class OffersSection extends StatelessWidget {
                   color: Colors.white,
                   fontSize: 32),
             ),
-            Text(
-              "more".tr(context),
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primaryColors,
-                  fontSize: 16),
+            GestureDetector(
+              onTap: () => Navigator.pushNamed(context, AllAds.routeName),
+              child: Text(
+                "more".tr(context),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primaryColors,
+                    fontSize: 16),
+              ),
             ),
           ],
         ),

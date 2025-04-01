@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
 
 import '../utils/constats.dart';
 import '../utils/styles.dart';
@@ -53,7 +54,7 @@ class CustomErrorWidget extends StatelessWidget {
               ),
             ),
             icon: const Icon(Icons.refresh_rounded),
-            label: Text(retryButtonText ?? "try agen",
+            label: Text(retryButtonText ?? "try_again".tr(context),
                 style: Styles.textStyle16.copyWith(
                     fontWeight: FontWeight.w600, color: Colors.white)),
           ),

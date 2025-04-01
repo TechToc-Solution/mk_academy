@@ -12,6 +12,8 @@ import 'package:mk_academy/core/utils/routs.dart';
 import 'package:mk_academy/core/utils/services_locater.dart';
 import 'package:mk_academy/core/utils/styles.dart';
 import 'package:mk_academy/features/auth/presentation/view-model/reset_password_cubit/reset_password_cubit.dart';
+import 'package:mk_academy/features/home/data/repo/ads.dart';
+import 'package:mk_academy/features/home/presentation/views-model/ads/ads_cubit.dart';
 import 'package:mk_academy/features/leaderboard/data/repos/leaderboard_repo.dart';
 import 'package:mk_academy/features/leaderboard/presentation/views-model/leaderboard_cubit.dart';
 import 'package:mk_academy/features/profile/data/repos/profile_repo.dart';
@@ -54,6 +56,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) => LeaderboardCubit(getit.get<LeaderboardRepo>())
               ..getLeaderbord()),
+        BlocProvider(create: (context) => AdsCubit(getit.get<AdsRepo>())),
         BlocProvider(
             create: (context) =>
                 ProfileCubit(getit.get<ProfileRepo>())..getProfile()),

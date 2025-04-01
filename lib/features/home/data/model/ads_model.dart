@@ -13,7 +13,7 @@ class AdsData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.ads != null) {
       data['data'] = this.ads!.map((v) => v.toJson()).toList();
     }
