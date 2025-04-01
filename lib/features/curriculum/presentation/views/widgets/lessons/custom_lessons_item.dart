@@ -46,7 +46,7 @@ class CustomLessonsItem extends StatelessWidget {
               ),
               onPressed: onPressed,
               child: Text(
-                "مشاهدة",
+                "watch".tr(context),
                 style: Styles.textStyle13.copyWith(
                   color: AppColors.backgroundColor,
                   fontWeight: FontWeight.bold,

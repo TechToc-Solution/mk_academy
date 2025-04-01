@@ -43,7 +43,7 @@ class TestResultPage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'لقد أتممت الاختبار بنجاح!',
+                      "quiz_done".tr(context),
                       textAlign: TextAlign.center,
                       style: Styles.textStyle20.copyWith(
                         color: AppColors.textButtonColors,
@@ -52,7 +52,7 @@ class TestResultPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      'درجاتك: $score/$quizScore',
+                      '${"ur_socre".tr(context)}: $score/$quizScore',
                       style: Styles.textStyle20.copyWith(
                         color: AppColors.backgroundColor,
                       ),
@@ -60,19 +60,19 @@ class TestResultPage extends StatelessWidget {
                     const SizedBox(height: 20),
                     _buildActionButton(
                       icon: Icons.visibility,
-                      text: 'مشاهدة سلم التصحيح',
+                      text: "watch_solution".tr(context),
                       onPressed: () {},
                     ),
                     const SizedBox(height: 20),
                     _buildActionButton(
                       icon: Icons.download,
-                      text: 'تحميل سلم التصحيح',
+                      text: "download_solution".tr(context),
                       onPressed: () {},
                     ),
                     const SizedBox(height: 20),
                     _buildActionButton(
                       icon: Icons.home,
-                      text: 'العودة للصفحة الرئيسية',
+                      text: "back_home_page".tr(context),
                       onPressed: () {
                         Navigator.pushReplacementNamed(
                             context, CustomBottomNavBar.routeName);

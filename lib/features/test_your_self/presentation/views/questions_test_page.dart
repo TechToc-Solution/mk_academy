@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/assets_data.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/styles.dart';
@@ -112,7 +113,7 @@ class QuestionsTestPageState extends State<QuestionsTestPage> {
               const SizedBox(height: 16),
               Center(
                 child: Text(
-                  'السؤال ${_currentQuestionIndex + 1}',
+                  '${"question".tr(context)} ${_currentQuestionIndex + 1}',
                   style: Styles.textStyle20.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.primaryColors,

@@ -10,7 +10,7 @@ part 'curriculum_state.dart';
 class CurriculumCubit extends Cubit<CurriculumState> {
   final CurriculumRepo _curriculumRepo;
   List<Lesson> lessons = [];
-  int currentPage = 1;
+  int _currentPage = 1;
   bool hasReachedMax = false;
 
   CurriculumCubit(this._curriculumRepo) : super(CurriculumInitial());
@@ -32,7 +32,7 @@ class CurriculumCubit extends Cubit<CurriculumState> {
     if (isClosed || hasReachedMax) return;
 
     if (!loadMore) {
-      currentPage = 1;
+      _currentPage = 1;
       hasReachedMax = false;
       lessons.clear();
       emit(LessonsLoading(isFirstFetch: true));
@@ -40,13 +40,13 @@ class CurriculumCubit extends Cubit<CurriculumState> {
       emit(LessonsLoading(isFirstFetch: false));
     }
 
-    final result = await _curriculumRepo.fetchLessons(unitId, currentPage);
+    final result = await _curriculumRepo.fetchLessons(unitId, _currentPage);
 
     if (!isClosed) {
       result.fold(
         (failure) => emit(LessonsError(errorMsg: failure.message)),
         (lessonsModel) {
-          currentPage++;
+          _currentPage++;
           hasReachedMax = !lessonsModel.hasNext;
           lessons = [...lessons, ...lessonsModel.lessons];
           emit(LessonsSuccess());
@@ -71,7 +71,7 @@ class CurriculumCubit extends Cubit<CurriculumState> {
   }
 
   void resetLessonsPagination() {
-    currentPage = 1;
+    _currentPage = 1;
     hasReachedMax = false;
     lessons.clear();
     emit(CurriculumInitial());
