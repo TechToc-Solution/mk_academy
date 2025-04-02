@@ -32,13 +32,13 @@ class CustomErrorWidget extends StatelessWidget {
           Icon(
             Icons.error_outline_rounded,
             size: 50,
-            color: textColor ?? Colors.red,
+            color: Colors.red,
           ),
           const SizedBox(height: kSizedBoxHeight),
           Text(
             errorMessage,
-            style: Styles.textStyle18
-                .copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+            style: Styles.textStyle18.copyWith(
+                color: textColor ?? Colors.white, fontWeight: FontWeight.w600),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: kSizedBoxHeight),

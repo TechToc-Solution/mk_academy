@@ -86,5 +86,13 @@
     "no_data": "لا يوجد بيانات لعرضها!",
     "all_ads": "جميع العروض",
     "try_again": "اعد المحاولة",
-    "continue_without_login" : "تخطي بدون تسجيل دخول"
+    "continue_without_login" : "تخطي بدون تسجيل دخول",
+    "test_name": "اسم الاختبار",
+    "questions": "الاسئلة",
+    "total_marks": "العلامة الكلية",
+    "subject": "المادة",
+    "unit": "الوحدة",
+    "start_test": "ابدأ الاختبار",
+    "purchase_now": "قم بالشراء الان",
+    "test_details" : "تفاصيل الاختبار"
 }

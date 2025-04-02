@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/widgets/custom_app_bar.dart';
-import 'package:mk_academy/features/test_your_self/presentation/views/test_lists.dart';
+import 'package:mk_academy/features/test_your_self/presentation/views/tests_list_page.dart';
 import '../../../../../core/utils/functions.dart';
 import '../../../../auth/presentation/views/login/login_page.dart';
 import 'back_ground_image.dart';
@@ -60,7 +60,7 @@ class TestYourSelfPageBody extends StatelessWidget {
         },
       );
     } else {
-      Navigator.pushNamed(context, TestListBody.routeName, arguments: arg);
+      Navigator.pushNamed(context, TestsListPage.routeName, arguments: arg);
     }
   }
 }

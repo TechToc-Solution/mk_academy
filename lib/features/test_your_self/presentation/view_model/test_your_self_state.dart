@@ -1,44 +1,47 @@
 part of 'test_your_self_cubit.dart';
 
-enum TestYourSelfStatus { initial, loading, success, failure }
-
-class TestYourSelfState extends Equatable {
-  final TestYourSelfStatus status;
-  final List<Tests> tests;
-  final bool hasReachedMax;
-  final int currentPage;
-  final String? errorMessage;
-
-  const TestYourSelfState({
-    this.status = TestYourSelfStatus.loading,
-    this.tests = const [],
-    this.hasReachedMax = false,
-    this.currentPage = 0,
-    this.errorMessage,
-  });
-
-  TestYourSelfState copyWith({
-    TestYourSelfStatus? status,
-    List<Tests>? tests,
-    bool? hasReachedMax,
-    int? currentPage,
-    String? errorMessage,
-  }) {
-    return TestYourSelfState(
-      status: status ?? this.status,
-      tests: tests ?? this.tests,
-      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
-      currentPage: currentPage ?? this.currentPage,
-      errorMessage: errorMessage ?? this.errorMessage,
-    );
-  }
+sealed class TestYourSelfState extends Equatable {
+  const TestYourSelfState();
 
   @override
-  List<Object?> get props => [
-        status,
-        tests,
-        hasReachedMax,
-        currentPage,
-        errorMessage,
-      ];
+  List<Object> get props => [];
+}
+
+final class TestYourSelfInitial extends TestYourSelfState {}
+
+// Tests List States
+class TestsLoading extends TestYourSelfState {
+  final bool isFirstFetch;
+
+  const TestsLoading({this.isFirstFetch = true});
+}
+
+class TestsSuccess extends TestYourSelfState {}
+
+class TestsError extends TestYourSelfState {
+  final String errorMsg;
+
+  const TestsError({required this.errorMsg});
+}
+
+// Test Details States
+class TestDetailsLoading extends TestYourSelfState {
+  final int testId;
+
+  const TestDetailsLoading({required this.testId});
+
+  @override
+  List<Object> get props => [testId];
+}
+
+class TestDetailsSuccess extends TestYourSelfState {
+  final Tests testDetails;
+
+  const TestDetailsSuccess({required this.testDetails});
+}
+
+class TestDetailsError extends TestYourSelfState {
+  final String errorMsg;
+
+  const TestDetailsError({required this.errorMsg});
 }

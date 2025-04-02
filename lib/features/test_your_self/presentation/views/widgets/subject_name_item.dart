@@ -34,11 +34,15 @@ class SubjectNameItem extends StatelessWidget {
                 border: Border.all(color: AppColors.borderColor),
                 borderRadius: BorderRadius.circular(25),
               ),
-              child: Center(
-                child: Text(
-                  title,
-                  style: Styles.textStyle30.copyWith(
-                      color: AppColors.textColor, fontWeight: FontWeight.bold),
+              child: Flexible(
+                child: Center(
+                  child: Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: Styles.textStyle18.copyWith(
+                        color: AppColors.textColor,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ),
