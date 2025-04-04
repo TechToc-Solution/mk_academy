@@ -7,15 +7,15 @@ class AdsData {
     if (json['data'] != null) {
       ads = <Ads>[];
       json['data'].forEach((v) {
-        ads!.add(new Ads.fromJson(v));
+        ads!.add(Ads.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (this.ads != null) {
-      data['data'] = this.ads!.map((v) => v.toJson()).toList();
+    if (ads != null) {
+      data['data'] = ads!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -35,10 +35,10 @@ class Ads {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['image'] = this.image;
-    data['created_at'] = this.createdAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['image'] = image;
+    data['created_at'] = createdAt;
     return data;
   }
 }

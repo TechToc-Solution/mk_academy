@@ -14,7 +14,7 @@ import 'package:mk_academy/features/test_your_self/presentation/views/widgets/ba
 
 class ShowSubSubjects extends StatelessWidget {
   static const routeName = '/SubSubjects';
-  ShowSubSubjects({super.key});
+  const ShowSubSubjects({super.key});
 
   @override
   Widget build(BuildContext context) {

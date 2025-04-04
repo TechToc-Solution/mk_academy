@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/widgets/shimmer_container.dart';
-import 'package:mk_academy/features/courses/data/model/courses_model.dart';
 import '../../../../../core/widgets/custom_error_widget.dart';
 import '../../view_model/courses_cubit.dart';
 import '../../../../show_unit/presentation/views/widgets/custom_video_units_btn.dart';
