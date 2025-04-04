@@ -83,7 +83,10 @@ class CustomBottomSheet {
                 ?.copyWith(fontWeight: FontWeight.w600, color: Colors.white),
           ),
           IconButton(
-            icon: const Icon(Icons.close),
+            icon: const Icon(
+              Icons.close,
+              color: Colors.white,
+            ),
             onPressed: () => Navigator.pop(context),
           ),
         ],

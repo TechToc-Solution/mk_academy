@@ -16,7 +16,11 @@ class TestsLoading extends TestYourSelfState {
   const TestsLoading({this.isFirstFetch = true});
 }
 
-class TestsSuccess extends TestYourSelfState {}
+class TestsSuccess extends TestYourSelfState {
+  final List<Tests> tests;
+
+  const TestsSuccess({required this.tests});
+}
 
 class TestsError extends TestYourSelfState {
   final String errorMsg;

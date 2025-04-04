@@ -15,35 +15,38 @@ class TestYourSelfPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            const BackgroundImage(),
-            Column(
-              children: [
-                CustomAppBar(
-                  title: "test_your_self".tr(context),
-                  backBtn: true,
-                ),
-                Spacer(),
-                SubjectNameItem(
-                    onTap: () => onTap(context, {'testType': 1}),
-                    title: "partialـexams".tr(context),
-                    price: "",
-                    screenWidth: screenWidth),
-                SizedBox(
-                  height: kSizedBoxHeight,
-                ),
-                SubjectNameItem(
-                    onTap: () => onTap(context, {'testType': 0}),
-                    title: "general_exams".tr(context),
-                    price: "",
-                    screenWidth: screenWidth),
-                Spacer()
-              ],
-            ),
-          ],
+      appBar: PreferredSize(
+        preferredSize: MediaQuery.sizeOf(context),
+        child: SafeArea(
+          child: CustomAppBar(
+            title: "test_your_self".tr(context),
+            backBtn: true,
+          ),
         ),
+      ),
+      body: Stack(
+        children: [
+          const BackgroundImage(),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SubjectNameItem(
+                  onTap: () => onTap(context, {'testType': 1}),
+                  title: "partialـexams".tr(context),
+                  price: "",
+                  screenWidth: screenWidth),
+              SizedBox(
+                height: kSizedBoxHeight,
+              ),
+              SubjectNameItem(
+                  onTap: () => onTap(context, {'testType': 0}),
+                  title: "general_exams".tr(context),
+                  price: "",
+                  screenWidth: screenWidth),
+            ],
+          ),
+        ],
       ),
     );
   }

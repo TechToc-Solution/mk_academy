@@ -41,7 +41,7 @@ class TestYourSelfCubit extends Cubit<TestYourSelfState> {
           _currentPage++;
           hasReachedMax = !testsModel.hasNext!;
           tests = [...tests, ...testsModel.tests!];
-          emit(TestsSuccess());
+          emit(TestsSuccess(tests: tests));
         },
       );
     }

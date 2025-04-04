@@ -20,39 +20,52 @@ class TestDetailsContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildDetailItem(
-              Icons.quiz_outlined, 'test_name'.tr(context), details.name),
+              Icons.quiz_outlined, 'test_name'.tr(context), details.name, true),
           if (details.questionsCount != null)
             _buildDetailItem(Icons.format_list_numbered_outlined,
-                'questions'.tr(context), '${details.questionsCount}'),
+                'questions'.tr(context), '${details.questionsCount}', false),
           _buildDetailItem(Icons.summarize_outlined, 'total_marks'.tr(context),
-              '${details.totalMarks}'),
+              '${details.totalMarks}', false),
           if (details.subject != null)
             _buildDetailItem(Icons.question_answer_outlined,
-                'subject'.tr(context), details.subject!),
+                'subject'.tr(context), details.subject!, false),
           _buildDetailItem(
-              Icons.subject_outlined, 'unit'.tr(context), details.unit),
+              Icons.subject_outlined, 'unit'.tr(context), details.unit, false),
           _buildActionButton(context),
         ],
       ),
     );
   }
 
-  Widget _buildDetailItem(IconData icon, String title, String value) {
+  Widget _buildDetailItem(
+      IconData icon, String title, String value, bool underTilte) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: kVerticalPadding,
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: AppColors.primaryColors),
-          const SizedBox(width: 10),
-          Text('$title: ',
-              style: Styles.textStyle18
-                  .copyWith(fontWeight: FontWeight.bold, color: Colors.white)),
-          Text(
-            value,
-            style: Styles.textStyle16.copyWith(color: Colors.white),
+          Row(
+            children: [
+              Icon(icon, color: AppColors.primaryColors),
+              const SizedBox(width: 10),
+              Text('$title: ',
+                  style: Styles.textStyle16.copyWith(
+                      fontWeight: FontWeight.bold, color: Colors.white)),
+              if (!underTilte)
+                Text(
+                  value,
+                  style:
+                      Styles.textStyle16.copyWith(color: AppColors.avatarColor),
+                ),
+            ],
           ),
+          if (underTilte)
+            Text(
+              value,
+              style: Styles.textStyle16.copyWith(color: AppColors.avatarColor),
+            ),
         ],
       ),
     );
@@ -65,8 +78,9 @@ class TestDetailsContent extends StatelessWidget {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) =>
-                      QuestionsTestPage(questions: details.questions!)));
+                  builder: (context) => QuestionsTestPage(
+                        questions: details.questions!,
+                      )));
         } else {
           // Handle purchase logic
         }

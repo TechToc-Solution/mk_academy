@@ -38,36 +38,36 @@ class Tests {
   bool? canSolve;
   String? answersFile;
   String? subject;
-
-  Tests({
-    required this.id,
-    required this.name,
-    this.questionsCount,
-    required this.totalMarks,
-    required this.unit,
-    this.questions,
-    this.canSolve,
-    this.answersFile,
-    this.subject,
-  });
+  String? answer;
+  Tests(
+      {required this.id,
+      required this.name,
+      this.questionsCount,
+      required this.totalMarks,
+      required this.unit,
+      this.questions,
+      this.canSolve,
+      this.answersFile,
+      this.subject,
+      this.answer});
 
   factory Tests.fromJson(Map<String, dynamic> json) {
     return Tests(
-      id: json['id'] as int,
-      name: json['name'] as String,
-      questionsCount: json.containsKey('questions_count')
-          ? json['questions_count'] as int
-          : null,
-      totalMarks: json['total_marks'] as int,
-      unit: json['unit'] as String,
-      questions: json.containsKey('questions')
-          ? (json['questions'] as List)
-              .map((q) => Question.fromJson(q))
-              .toList()
-          : null,
-      canSolve: json['can_solve'] as bool?,
-      answersFile: json['answers_file'] as String?,
-      subject: json['subject'] as String?,
-    );
+        id: json['id'] as int,
+        name: json['name'] as String,
+        questionsCount: json.containsKey('questions_count')
+            ? json['questions_count'] as int
+            : null,
+        totalMarks: json['total_marks'] as int,
+        unit: json['unit'] as String,
+        questions: json.containsKey('questions')
+            ? (json['questions'] as List)
+                .map((q) => Question.fromJson(q))
+                .toList()
+            : null,
+        canSolve: json['can_solve'] as bool?,
+        answersFile: json['answers_file'] as String?,
+        subject: json['subject'] as String?,
+        answer: json.containsKey('answers_file') ? json['answers_file'] : null);
   }
 }
