@@ -6,7 +6,7 @@ import '../../../../../core/utils/constats.dart';
 import '../../../../../core/utils/services_locater.dart';
 import '../../../../../core/widgets/custom_level_bar.dart';
 import '../../../data/repo/courses_repo.dart';
-import '../../view_model/courses_cubit.dart';
+import '../../view_model/courses cubit/courses_cubit.dart';
 import 'courses_units_section.dart';
 import '../../../../../core/widgets/custom_top_nav_bar.dart';
 

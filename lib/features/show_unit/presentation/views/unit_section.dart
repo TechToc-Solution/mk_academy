@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
 import 'package:mk_academy/core/widgets/shimmer_container.dart';
-import 'package:mk_academy/features/courses/presentation/view_model/courses_cubit.dart';
-import 'package:mk_academy/features/show_unit/presentation/views/widgets/custom_video_units_btn.dart';
+import 'package:mk_academy/features/courses/presentation/view_model/courses%20cubit/courses_cubit.dart';
+import 'package:mk_academy/features/courses/presentation/views/widgets/custom_video_units_btn.dart';
 
 class UnitSection extends StatefulWidget {
   const UnitSection({super.key, required this.subjectId});

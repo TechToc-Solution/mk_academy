@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/widgets/shimmer_container.dart';
 import '../../../../../core/widgets/custom_error_widget.dart';
-import '../../view_model/courses_cubit.dart';
-import '../../../../show_unit/presentation/views/widgets/custom_video_units_btn.dart';
+import '../../view_model/courses cubit/courses_cubit.dart';
+import 'custom_video_units_btn.dart';
 
 // ignore: must_be_immutable
 class CoursesUnitsSection extends StatelessWidget {

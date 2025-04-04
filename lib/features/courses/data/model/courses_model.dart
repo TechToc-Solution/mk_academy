@@ -47,6 +47,7 @@ class Courses {
   String? courseMode;
   String? image;
   bool? can_show;
+  String? subject;
 
   Courses(
       {this.id,
@@ -56,7 +57,8 @@ class Courses {
       this.createdAt,
       this.courseMode,
       this.image,
-      this.can_show});
+      this.can_show,
+      this.subject});
 
   Courses.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -67,6 +69,7 @@ class Courses {
     courseMode = json['course_mode'];
     image = json['image'];
     can_show = json['can_show'];
+    subject = json['subject'];
   }
 
   Map<String, dynamic> toJson() {
@@ -79,6 +82,7 @@ class Courses {
     data['course_mode'] = courseMode;
     data['image'] = image;
     data['can_show'] = can_show;
+    data['subject'] = subject;
     return data;
   }
 }

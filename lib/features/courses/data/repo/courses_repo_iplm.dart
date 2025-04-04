@@ -30,4 +30,21 @@ class CoursesRepoIplm implements CoursesRepo {
       return left(ErrorHandler.handle(e));
     }
   }
+
+  @override
+  Future<Either<Failure, Courses>> getCourse({
+    required int? courseId,
+  }) async {
+    try {
+      var resp =
+          await _apiServices.get(endPoint: "${Urls.getCourses}/$courseId");
+      if (resp.statusCode == 200 && resp.data['success']) {
+        return right(Courses.fromJson(resp.data['data']));
+      }
+      return left(
+          ServerFailure(resp.data['message'] ?? ErrorHandler.defaultMessage()));
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
 }

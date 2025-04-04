@@ -10,4 +10,8 @@ abstract class CoursesRepo {
     required int page,
     String? search,
   });
+
+  Future<Either<Failure, Courses>> getCourse({
+    required int? courseId,
+  });
 }

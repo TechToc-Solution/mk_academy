@@ -7,7 +7,7 @@ import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/core/widgets/custom_app_bar.dart';
-import 'package:mk_academy/features/courses/presentation/view_model/courses_cubit.dart';
+import 'package:mk_academy/features/courses/presentation/view_model/courses%20cubit/courses_cubit.dart';
 import 'package:mk_academy/features/courses/presentation/views/widgets/custom_category_unit_btn.dart';
 import 'package:mk_academy/features/show_unit/presentation/views/unit.dart';
 import 'package:mk_academy/features/test_your_self/presentation/views/widgets/back_ground_image.dart';
