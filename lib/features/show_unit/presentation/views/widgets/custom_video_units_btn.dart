@@ -3,7 +3,7 @@ import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/features/courses/data/model/courses_model.dart';
-import 'package:mk_academy/features/show%20video/presentation/views/show_video.dart';
+import 'package:mk_academy/features/show_video/presentation/views/show_video.dart';
 
 class CustomVideoUnitBtn extends StatelessWidget {
   const CustomVideoUnitBtn({super.key, required this.course});

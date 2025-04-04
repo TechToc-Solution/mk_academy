@@ -3,7 +3,7 @@ import 'package:mk_academy/features/auth/presentation/views/reset_password/reset
 import 'package:mk_academy/features/home/presentation/views/ads/all_ads.dart';
 import 'package:mk_academy/features/home/presentation/views/subjects/all_subjects.dart';
 import 'package:mk_academy/features/home/presentation/views/subjects/show_subject.dart';
-import 'package:mk_academy/features/show%20video/presentation/views/show_video.dart';
+import 'package:mk_academy/features/show_video/presentation/views/show_video.dart';
 import 'package:mk_academy/features/test_your_self/presentation/views/tests_list_page.dart';
 
 import '../../features/auth/presentation/views/login/login_page.dart';

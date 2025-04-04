@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mk_academy/features/work%20papers/presentation/views/widgets/work_paper_item.dart';
+import 'package:mk_academy/features/work_papers/presentation/views/widgets/work_paper_item.dart';
 
 class WorkPapersSection extends StatelessWidget {
   const WorkPapersSection({super.key});
