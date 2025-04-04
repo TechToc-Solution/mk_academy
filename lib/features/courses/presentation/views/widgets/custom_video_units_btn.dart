@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/widgets/custom_buttom_sheet.dart';
 import 'package:mk_academy/features/courses/data/model/courses_model.dart';
@@ -15,7 +14,6 @@ class CustomVideoUnitBtn extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            // Navigator.of(context).push(goRoute(x: WebViewScreen()));
             CustomBottomSheet.show(
                 title: course.name,
                 backgroundColor: AppColors.backgroundColor,
