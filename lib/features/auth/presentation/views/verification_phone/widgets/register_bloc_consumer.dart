@@ -50,6 +50,7 @@ class RegisterBlocConsumer extends StatelessWidget {
         messages(context, state.errorMsg, Colors.red);
       }
       if (state is VerifiPhoneSuccess) {
+        resetHomeCubits(context);
         Navigator.pushReplacementNamed(context, CustomBottomNavBar.routeName);
       }
     });

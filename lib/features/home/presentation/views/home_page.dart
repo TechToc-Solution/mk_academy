@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mk_academy/core/utils/constats.dart';
+import 'package:mk_academy/features/profile/presentation/views-model/profile_cubit.dart';
 
 import '../../../../core/shared/cubits/subjects/subjects_cubit.dart';
 import '../../../../core/widgets/custom_error_widget.dart';
@@ -10,20 +12,9 @@ import '../views-model/ads/ads_cubit.dart';
 import 'widgets/custom_home_shimmer.dart';
 import 'widgets/home_page_body.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
   static const String routeName = '/home';
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    onInit(context);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +33,7 @@ class _HomePageState extends State<HomePage> {
                     return CustomErrorWidget(
                       errorMessage: _getErrorMessage(
                           studentsState, subjectsState, adsState),
-                      onRetry: () => onInit(context),
+                      onRetry: () => onError(context),
                     );
                   }
                   // Success State
@@ -55,7 +46,6 @@ class _HomePageState extends State<HomePage> {
                       ads: adsState.ads,
                     );
                   }
-
                   // Loading State with Shimmer
                   return const CustomHomeShimmer();
                 },
@@ -78,10 +68,11 @@ class _HomePageState extends State<HomePage> {
     return "هنالك خطأ ما,الرجاء المحاولة مجدداً";
   }
 
-  void onInit(BuildContext context) {
+  void onError(BuildContext context) {
     context.read<AdsCubit>().resetPagination();
     context.read<LeaderboardCubit>().getLeaderbord();
     context.read<SubjectsCubit>().getSubjects();
     context.read<AdsCubit>().getAds(adsType: 0);
+    isGuest ? null : context.read<ProfileCubit>().getProfile();
   }
 }

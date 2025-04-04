@@ -126,6 +126,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
             },
             listener: (BuildContext context, LoginState state) {
               if (state is LoginSuccess) {
+                resetHomeCubits(context);
                 Navigator.pushReplacementNamed(
                     context, CustomBottomNavBar.routeName);
               } else if (state is LoginError) {
@@ -145,6 +146,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                   color: AppColors.primaryColors,
                 )),
             onPressed: () {
+              resetHomeCubits(context);
               Navigator.pushReplacementNamed(
                   context, CustomBottomNavBar.routeName);
             },

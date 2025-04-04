@@ -16,14 +16,12 @@ import 'package:mk_academy/features/courses/presentation/view_model/courses%20cu
 
 import 'core/shared/cubits/subjects/subjects_cubit.dart';
 import 'core/shared/repos/subjects/subjects_repo.dart';
-import 'core/utils/constats.dart';
 import 'core/widgets/custom_bottom_nav_bar.dart';
 import 'features/auth/data/repos/logout_repo/logout_repo.dart';
 import 'features/auth/data/repos/register_repo/register_repo.dart';
 import 'features/auth/data/repos/reset_password_repo/reset_password_repo.dart';
 import 'features/auth/presentation/view-model/logout_cubit/logout_cubit.dart';
 import 'features/auth/presentation/view-model/register_cubit/register_cubit.dart';
-import 'features/auth/presentation/views/login/login_page.dart';
 import 'features/home/data/repo/ads.dart';
 import 'features/home/presentation/views-model/ads/ads_cubit.dart';
 import 'features/leaderboard/data/repos/leaderboard_repo.dart';
@@ -60,12 +58,14 @@ class MyApp extends StatelessWidget {
             create: (context) => LeaderboardCubit(getit.get<LeaderboardRepo>())
               ..getLeaderbord()),
         BlocProvider(
-            create: (context) => SubjectsCubit(getit.get<SubjectsRepo>())),
-        BlocProvider(create: (context) => AdsCubit(getit.get<AdsRepo>())),
-        if (!isGuest)
-          BlocProvider(
-              create: (context) =>
-                  ProfileCubit(getit.get<ProfileRepo>())..getProfile()),
+            create: (context) =>
+                SubjectsCubit(getit.get<SubjectsRepo>())..getSubjects()),
+        BlocProvider(
+            create: (context) =>
+                AdsCubit(getit.get<AdsRepo>())..getAds(adsType: 0)),
+        BlocProvider(
+            create: (context) =>
+                ProfileCubit(getit.get<ProfileRepo>())..getProfile()),
       ],
       child: BlocBuilder<LocaleCubit, ChangeLocaleState>(
         builder: (context, state) {
@@ -107,7 +107,7 @@ class MyApp extends StatelessWidget {
                   ColorScheme.fromSeed(seedColor: AppColors.primaryColors),
               useMaterial3: true,
             ),
-            initialRoute: LoginPage.routeName,
+            initialRoute: CustomBottomNavBar.routeName,
             routes: Routes.routes,
           );
         },
