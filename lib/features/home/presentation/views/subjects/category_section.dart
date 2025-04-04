@@ -4,9 +4,13 @@ import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/features/home/presentation/views/subjects/all_subjects.dart';
 import 'package:mk_academy/features/home/presentation/views/widgets/custom_category_list.dart';
 
+import '../../../../../core/shared/models/subjects_model.dart';
+
 class CategorySection extends StatelessWidget {
+  final List<SubjectsData> subjects;
   const CategorySection({
     super.key,
+    required this.subjects,
   });
 
   @override
@@ -39,10 +43,15 @@ class CategorySection extends StatelessWidget {
         SizedBox(
           height: 8,
         ),
-        SizedBox(
-          height: 100,
-          child: CustomCategoryList(),
-        )
+        if (subjects.isNotEmpty)
+          SizedBox(
+            height: 100,
+            child: CustomCategoryList(
+              subjectsData: subjects,
+            ),
+          )
+        else
+          Text("no_data".tr(context))
       ],
     );
   }

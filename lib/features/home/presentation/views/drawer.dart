@@ -22,12 +22,10 @@ class CustomDrawer extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: ListView(
         children: [
-          CircleAvatar(
-            radius: 64,
-          ),
-          CustomLevelBar(
-            isDrawer: true,
-          ),
+          if (!isGuest)
+            CustomLevelBar(
+              isDrawer: true,
+            ),
           SizedBox(
             height: kSizedBoxHeight,
           ),
@@ -118,8 +116,9 @@ class CustomDrawer extends StatelessWidget {
             ),
           if (isGuest)
             GestureDetector(
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, LoginPage.routeName),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, LoginPage.routeName);
+              },
               child: CustomDrawerBtn(
                 icon: Icons.login_outlined,
                 title: "login".tr(context),

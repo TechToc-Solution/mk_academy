@@ -20,3 +20,7 @@ final class GetSubjectsError extends SubjectsState {
 
   const GetSubjectsError({required this.erroMsg});
 }
+
+final class GetSubjectsLoading extends SubjectsState {
+  const GetSubjectsLoading();
+}

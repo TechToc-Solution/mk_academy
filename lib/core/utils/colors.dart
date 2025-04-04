@@ -5,7 +5,9 @@ class AppColors {
   static Color borderColor = Colors.white;
   static const Color textTitleAppBarColor = Colors.white;
   static const Color textButtonColors = Colors.black;
-  static const primaryColors = Color(0xffECC440);
-  static const avatarColor = Color(0xffD9D9D9);
-  static const textColor = Color(0xffEBEBEB);
+  static const Color primaryColors = Color(0xffECC440);
+  static const Color avatarColor = Color(0xffD9D9D9);
+  static const Color textColor = Color(0xffEBEBEB);
+  static const Color baseShimmerColor = Color(0xff2D3548);
+  static Color highLightShimmerColor = Color(0xff3E475A).withOpacity(0.6);
 }

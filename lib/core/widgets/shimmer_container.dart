@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/constats.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../utils/colors.dart';
+
 class ShimmerContainer extends StatelessWidget {
   const ShimmerContainer(
       {super.key, this.width, this.height, this.circularRadius, this.margin});
@@ -20,14 +22,14 @@ class ShimmerContainer extends StatelessWidget {
             mainAxisSpacing: 16),
         itemBuilder: (BuildContext context, int index) {
           return Shimmer.fromColors(
-            baseColor: Colors.grey[100]!,
-            highlightColor: Colors.yellow[200]!,
+            baseColor: AppColors.baseShimmerColor,
+            highlightColor: AppColors.highLightShimmerColor,
             child: Container(
               margin: margin,
               width: width,
               height: height,
               decoration: BoxDecoration(
-                  color: Colors.grey[100]!,
+                  color: AppColors.baseShimmerColor,
                   borderRadius: BorderRadius.circular(kBorderRadius)),
             ),
           );
