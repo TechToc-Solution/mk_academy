@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:mk_academy/core/Api_services/api_services.dart';
 import 'package:mk_academy/core/Api_services/urls.dart';
@@ -20,11 +22,12 @@ class AdsRepoIplm implements AdsRepo {
           ? await _apiServices.get(endPoint: Urls.getInternalAds)
           : await _apiServices.get(endPoint: Urls.getExternalAds);
       if (resp.statusCode == 200 && resp.data['success']) {
-        return right(AdsData.fromJson(resp.data['data']));
+        return right(AdsData.fromJson(resp.data));
       }
       return left(
           ServerFailure(resp.data['message'] ?? ErrorHandler.defaultMessage()));
     } catch (e) {
+      log(e.toString());
       return left(ErrorHandler.handle(e));
     }
   }

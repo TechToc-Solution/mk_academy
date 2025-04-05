@@ -51,7 +51,7 @@ class _CurriculumPageBodyState extends State<CurriculumPageBody>
               SizedBox(
                 height: kSizedBoxHeight,
               ),
-              CustomLevelBar(),
+              if (!isGuest) CustomLevelBar(),
               SizedBox(
                 height: kSizedBoxHeight,
               ),

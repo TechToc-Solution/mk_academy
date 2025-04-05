@@ -3,9 +3,13 @@ import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/features/home/presentation/views/ads/all_ads.dart';
 
+import '../../../data/model/ads_model.dart';
+
 class OffersSection extends StatelessWidget {
+  final List<Ads> ads;
   const OffersSection({
     super.key,
+    required this.ads,
   });
 
   @override

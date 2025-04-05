@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
+import '../../features/home/presentation/views-model/ads/ads_cubit.dart';
+import '../../features/leaderboard/presentation/views-model/leaderboard_cubit.dart';
+import '../../features/profile/presentation/views-model/profile_cubit.dart';
+import '../shared/cubits/subjects/subjects_cubit.dart';
 import '../widgets/cutom_dialog.dart';
+import 'constats.dart';
 
 Route goRoute({required var x}) {
   return PageRouteBuilder(
@@ -67,6 +73,14 @@ void showCustomDialog({
       );
     },
   );
+}
+
+resetHomeCubits(BuildContext context) {
+  context.read<AdsCubit>().resetPagination();
+  context.read<LeaderboardCubit>().getLeaderbord();
+  context.read<SubjectsCubit>().getSubjects();
+  context.read<AdsCubit>().getAds(adsType: 0);
+  isGuest ? null : context.read<ProfileCubit>().getProfile();
 }
 
 void showAwesomeDialog({

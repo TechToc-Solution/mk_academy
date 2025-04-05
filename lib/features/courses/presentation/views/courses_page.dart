@@ -24,7 +24,6 @@ class _CoursesPageState extends State<CoursesPage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    context.read<SubjectsCubit>().getSubjects();
   }
 
   @override
@@ -37,25 +36,28 @@ class _CoursesPageState extends State<CoursesPage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<SubjectsCubit, SubjectsState>(
-          builder: (context, state) {
-            if (state is GetSubjectsError) {
-              return CustomErrorWidget(
-                  errorMessage: state.erroMsg,
-                  onRetry: () => context.read<SubjectsCubit>().getSubjects());
-            } else if (state is GetSubjectsSucess) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: kHorizontalPadding, vertical: kVerticalPadding),
-                child: CoursesPageBody(
-                    courseTypeId: widget.courseTypeId,
-                    tabController: _tabController,
-                    subjects: state.subjectsData[0].subjects!),
-              );
-            }
-            return CustomCircualProgressIndicator();
-          },
-        ),
+        child: BlocConsumer<SubjectsCubit, SubjectsState>(
+            builder: (context, state) {
+          if (state is GetSubjectsError) {
+            return CustomErrorWidget(
+                errorMessage: state.erroMsg,
+                onRetry: () => context.read<SubjectsCubit>().getSubjects());
+          } else if (state is GetSubjectsSucess) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: kHorizontalPadding, vertical: kVerticalPadding),
+              child: CoursesPageBody(
+                  courseTypeId: widget.courseTypeId,
+                  tabController: _tabController,
+                  subjects: state.subjectsData[0].subjects!),
+            );
+          }
+          return CustomCircualProgressIndicator();
+        }, listener: (BuildContext context, SubjectsState state) {
+          if (state is SubjectsInitial) {
+            context.read<SubjectsCubit>().getSubjects();
+          }
+        }),
       ),
     );
   }

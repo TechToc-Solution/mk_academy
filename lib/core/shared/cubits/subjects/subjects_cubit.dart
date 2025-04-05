@@ -10,6 +10,7 @@ class SubjectsCubit extends Cubit<SubjectsState> {
   final SubjectsRepo _homeRepo;
 
   Future<void> getSubjects() async {
+    emit(GetSubjectsLoading());
     var data = await _homeRepo.getSubjects();
     data.fold((failure) {
       emit(GetSubjectsError(erroMsg: failure.message));

@@ -12,6 +12,7 @@ import 'package:mk_academy/features/test_your_self/data/repo/tests_repo.dart';
 import 'package:mk_academy/features/test_your_self/presentation/view_model/test_your_self_cubit.dart';
 import 'package:mk_academy/features/test_your_self/presentation/views/widgets/back_ground_image.dart';
 
+import '../../../../core/utils/styles.dart';
 import 'widgets/tests_list/tests_list_veiw.dart';
 
 class TestsListPage extends StatelessWidget {
@@ -54,6 +55,12 @@ class TestsListPage extends StatelessWidget {
                                 .read<TestYourSelfCubit>()
                                 .getTests(testsType: testType, loadMore: false);
                           });
+                    }
+                    if (state is TestsSuccess && state.tests.isEmpty) {
+                      return Text(
+                        "no_data".tr(context),
+                        style: Styles.textStyle18.copyWith(color: Colors.white),
+                      );
                     }
                     return TestsListVeiw(
                       screenWidth: screenWidth,

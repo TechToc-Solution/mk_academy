@@ -27,22 +27,20 @@ class SubjectNameItem extends StatelessWidget {
           GestureDetector(
             onTap: onTap,
             child: Container(
-              width: screenWidth * 0.65,
-              height: 60,
+              width: screenWidth * 0.63,
+              height: 75,
               decoration: BoxDecoration(
                 color: AppColors.backgroundColor,
                 border: Border.all(color: AppColors.borderColor),
                 borderRadius: BorderRadius.circular(25),
               ),
-              child: Flexible(
-                child: Center(
-                  child: Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: Styles.textStyle18.copyWith(
-                        color: AppColors.textColor,
-                        fontWeight: FontWeight.bold),
-                  ),
+              child: Center(
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.clip,
+                  style: Styles.textStyle16.copyWith(
+                      color: AppColors.textColor, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
