@@ -20,7 +20,7 @@ import '../widgets/custom_bottom_nav_bar.dart';
 
 class Routes {
   static Map<String, Widget Function(BuildContext)> routes = {
-    HomePage.routeName: (context) => const HomePage(),
+    HomePage.routeName: (context) => HomePage(),
     LoginPage.routeName: (context) => const LoginPage(),
     RegisterPage.routeName: (context) => const RegisterPage(),
     CoursesPage.routeName: (context) => CoursesPage(courseTypeId: 1),

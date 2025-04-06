@@ -11,17 +11,15 @@ class CustomHomeShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
-      child: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(height: kSizedBoxHeight),
-            const TopThreeShimmer(),
-            const SizedBox(height: kSizedBoxHeight),
-            const CategorySectionShimmer(),
-            const SizedBox(height: kSizedBoxHeight),
-            const AdsSectionShimmer(),
-          ],
-        ),
+      child: Column(
+        children: [
+          SizedBox(height: kSizedBoxHeight),
+          const TopThreeShimmer(),
+          const SizedBox(height: kSizedBoxHeight),
+          const CategorySectionShimmer(),
+          const SizedBox(height: kSizedBoxHeight),
+          const AdsSectionShimmer(),
+        ],
       ),
     );
   }
