@@ -6,7 +6,6 @@ import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
 import 'package:mk_academy/core/widgets/custom_top_nav_bar.dart';
-import 'package:mk_academy/features/home/presentation/views/drawer.dart';
 import 'widgets/courses_page_body.dart';
 
 // ignore: must_be_immutable
