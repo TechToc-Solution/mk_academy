@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mk_academy/core/shared/repos/pay/pay_repo.dart';
+import 'package:mk_academy/core/shared/repos/pay/pay_repo_iplm.dart';
 import 'package:mk_academy/features/auth/data/repos/token_repo/token_repo.dart';
 import 'package:mk_academy/features/auth/data/repos/token_repo/token_repo_ipml.dart';
-import 'package:mk_academy/features/auth/presentation/view-model/token_cubit/token_cubit.dart';
 import 'package:mk_academy/features/home/data/repo/ads.dart';
 import 'package:mk_academy/features/home/data/repo/ads_repo_iplm.dart';
 import 'package:mk_academy/features/test_your_self/data/repo/tests_repo.dart';
@@ -74,4 +75,7 @@ void setupLocatorServices() {
 
   //Ads singleton
   getit.registerSingleton<AdsRepo>(AdsRepoIplm(getit.get<ApiServices>()));
+
+  //pay singleton
+  getit.registerSingleton<PayRepo>(PayRepoIplm(getit.get<ApiServices>()));
 }

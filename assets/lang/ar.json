@@ -97,6 +97,9 @@
     "test_details" : "تفاصيل الاختبار",
     "play_list": "قائمة التشغيل",
     "could_not_open_pdf" : "لا يمكن فتح الملف",
-    "rank": "ترتيب"
-
+    "rank": "ترتيب",
+    "enter_promo_code": "أدخل كود التفعيل",
+    "promo_code": "كود التفعيل",
+    "apply": "تطبيق",
+    "payment_success": "تم الدفع بنجاح"
 }
