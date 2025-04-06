@@ -6,11 +6,11 @@ import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/features/home/presentation/views/drawer.dart';
-import 'package:mk_academy/features/home/presentation/views/widgets/custom_search_bar.dart';
 import 'package:mk_academy/features/profile/presentation/views-model/profile_cubit.dart';
 
 import '../../../../core/shared/cubits/subjects/subjects_cubit.dart';
 import '../../../../core/widgets/custom_error_widget.dart';
+import '../../../../core/widgets/custom_level_bar.dart';
 import '../../../leaderboard/presentation/views-model/leaderboard_cubit.dart';
 import '../views-model/ads/ads_cubit.dart';
 import 'widgets/custom_home_shimmer.dart';
@@ -37,7 +37,26 @@ class HomePage extends StatelessWidget {
             appBar: SizedBox(),
             child: Column(
               children: [
-                CustomSearchBar(drawerKey: _sliderDrawerKey),
+                Row(
+                  children: [
+                    Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: AppColors.primaryColors,
+                        ),
+                        child: IconButton(
+                            onPressed: () {
+                              _sliderDrawerKey.currentState
+                                  ?.toggle(); // Open/close drawer
+                            },
+                            icon: Icon(Icons.list_outlined))),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    if (!isGuest) Expanded(child: CustomLevelBar()),
+                  ],
+                ),
                 BlocBuilder<LeaderboardCubit, LeaderboardState>(
                   builder: (context, studentsState) {
                     return BlocBuilder<SubjectsCubit, SubjectsState>(

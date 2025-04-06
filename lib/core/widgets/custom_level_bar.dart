@@ -5,9 +5,11 @@ import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/features/profile/presentation/views-model/profile_cubit.dart';
 
 class CustomLevelBar extends StatelessWidget {
-  const CustomLevelBar({super.key, this.isDrawer = false});
+  const CustomLevelBar({
+    super.key,
+    this.isDrawer = false,
+  });
   final bool isDrawer;
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileCubit, ProfileState>(
@@ -26,6 +28,9 @@ class CustomLevelBar extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontSize: 24),
                 ),
+              SizedBox(
+                width: 8,
+              ),
               Row(
                 children: [
                   Text(

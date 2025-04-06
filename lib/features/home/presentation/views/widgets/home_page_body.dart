@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mk_academy/core/utils/constats.dart';
-import 'package:mk_academy/core/widgets/custom_level_bar.dart';
 import 'package:mk_academy/features/home/presentation/views/ads/advertising_section.dart';
 import 'package:mk_academy/features/home/presentation/views/subjects/category_section.dart';
 import 'package:mk_academy/features/home/presentation/views/ads/offers_section.dart';
@@ -31,7 +29,6 @@ class HomePageBody extends StatelessWidget {
         SizedBox(
           height: 8,
         ),
-        if (!isGuest) CustomLevelBar(),
         Expanded(
           child: ListView(
             children: [
