@@ -51,7 +51,7 @@ class CustomVideoUnitBtn extends StatelessWidget {
                     color: AppColors.primaryColors,
                     borderRadius: BorderRadius.circular(8)),
                 child: Icon(
-                  Icons.play_arrow_outlined,
+                  Icons.featured_play_list,
                   size: 30,
                 ),
               ),

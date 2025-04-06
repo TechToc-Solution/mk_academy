@@ -9,7 +9,8 @@ import 'package:mk_academy/core/widgets/custom_error_widget.dart';
 import 'package:mk_academy/features/auth/presentation/views/widgets/custom_button.dart';
 import 'package:mk_academy/features/courses/data/repo/courses_repo.dart';
 import 'package:mk_academy/features/courses/presentation/view_model/one%20course%20cubit/one_course_cubit.dart';
-import 'package:mk_academy/features/show_video/presentation/views/show_video.dart';
+import 'package:mk_academy/features/courses/presentation/view_model/videos_cubit/videos_cubit.dart';
+import 'package:mk_academy/features/courses/presentation/views/widgets/play_list_page.dart';
 
 class CustomVideoDetailsSheet extends StatelessWidget {
   const CustomVideoDetailsSheet({super.key, required this.courseId});
@@ -50,8 +51,13 @@ class CustomVideoDetailsSheet extends StatelessWidget {
                   CustomButton(
                       onPressed: () {
                         if (state.course!.can_show!) {
-                          Navigator.of(context)
-                              .push(goRoute(x: WebViewScreen()));
+                          context
+                              .read<VideosCubit>()
+                              .getVideos(courseId: courseId);
+                          Navigator.of(context).push(goRoute(
+                              x: ShowPlayList(
+                            courseId: courseId,
+                          )));
                         } else {
                           // go to pay
                         }

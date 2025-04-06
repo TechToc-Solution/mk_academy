@@ -15,6 +15,7 @@ import 'package:mk_academy/features/auth/presentation/view-model/reset_password_
 import 'package:mk_academy/features/auth/presentation/view-model/token_cubit/token_cubit.dart';
 import 'package:mk_academy/features/courses/data/repo/courses_repo.dart';
 import 'package:mk_academy/features/courses/presentation/view_model/courses%20cubit/courses_cubit.dart';
+import 'package:mk_academy/features/courses/presentation/view_model/videos_cubit/videos_cubit.dart';
 import 'package:mk_academy/splashScreen.dart';
 
 import 'core/shared/cubits/subjects/subjects_cubit.dart';
@@ -53,6 +54,8 @@ class MyApp extends StatelessWidget {
             create: (context) =>
                 TokenCubit(getit.get<TokenRepo>())..cheackToken()),
         BlocProvider(create: (context) => LogoutCubit(getit.get<LogoutRepo>())),
+        BlocProvider(
+            create: (context) => VideosCubit(getit.get<CoursesRepo>())),
         BlocProvider(
             create: (context) => RegisterCubit(getit.get<RegisterRepo>())),
         BlocProvider(

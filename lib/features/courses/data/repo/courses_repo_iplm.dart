@@ -3,6 +3,7 @@ import 'package:mk_academy/core/Api_services/api_services.dart';
 import 'package:mk_academy/core/Api_services/urls.dart';
 import 'package:mk_academy/core/errors/failuer.dart';
 import 'package:mk_academy/features/courses/data/model/courses_model.dart';
+import 'package:mk_academy/features/courses/data/model/video_model.dart';
 import 'package:mk_academy/features/courses/data/repo/courses_repo.dart';
 
 import '../../../../core/errors/error_handler.dart';
@@ -40,6 +41,23 @@ class CoursesRepoIplm implements CoursesRepo {
           await _apiServices.get(endPoint: "${Urls.getCourses}/$courseId");
       if (resp.statusCode == 200 && resp.data['success']) {
         return right(Courses.fromJson(resp.data['data']));
+      }
+      return left(
+          ServerFailure(resp.data['message'] ?? ErrorHandler.defaultMessage()));
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, VideoData>> getVideos({
+    required int? courseId,
+  }) async {
+    try {
+      var resp = await _apiServices.get(
+          endPoint: "${Urls.getCourses}/$courseId/videos");
+      if (resp.statusCode == 200 && resp.data['success']) {
+        return right(VideoData.fromJson(resp.data['data']));
       }
       return left(
           ServerFailure(resp.data['message'] ?? ErrorHandler.defaultMessage()));

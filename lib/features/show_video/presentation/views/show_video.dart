@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/widgets/custom_app_bar.dart';
+import 'package:mk_academy/features/courses/data/model/video_model.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewScreen extends StatefulWidget {
   static const String routeName = '/video';
 
-  const WebViewScreen({super.key});
+  const WebViewScreen({super.key, required this.video});
+  final Video? video;
   @override
   WebViewScreenState createState() => WebViewScreenState();
 }
 
 class WebViewScreenState extends State<WebViewScreen> {
   late final WebViewController _controller;
-  final String url =
-      "https://iframe.mediadelivery.net/embed/399054/9a5c88dd-2c88-49bd-b4f2-d8bba7697858?token=3062beb925d363b30d6eb0f2b13ad77a701c9f5e8820c6d041d52d4f8fdd338f&expires=1743174086&autoplay=false&loop=false&muted=false&preload=false&responsive=true";
   @override
   void initState() {
     super.initState();
@@ -33,7 +33,7 @@ class WebViewScreenState extends State<WebViewScreen> {
         </head>
         <body>
           <div class="container">
-            <iframe class="iframe-container" src="$url" frameborder="0"
+            <iframe class="iframe-container" src="${widget.video!.video!}" frameborder="0"
               allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
           </div>
         </body>
@@ -49,7 +49,7 @@ class WebViewScreenState extends State<WebViewScreen> {
         child: Column(
           children: [
             CustomAppBar(
-              title: "",
+              title: widget.video!.name!,
               backBtn: true,
             ),
             Expanded(child: WebViewWidget(controller: _controller)),
