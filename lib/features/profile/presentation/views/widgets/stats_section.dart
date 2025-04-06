@@ -17,8 +17,10 @@ class StatsSection extends StatelessWidget {
           children: [
             _buildStatItem('age'.tr(context), "${userModel.age}",
                 Icon(Icons.person_2_outlined)),
-            _buildStatItem('level'.tr(context), userModel.level!,
-                Icon(Icons.leaderboard_outlined)),
+            _buildStatItem(
+                'level'.tr(context), userModel.level!, Icon(Icons.upload)),
+            _buildStatItem('rank'.tr(context), "${userModel.rank}",
+                Icon(Icons.leaderboard)),
           ],
         ),
       ],
