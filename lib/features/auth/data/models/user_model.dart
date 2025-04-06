@@ -12,6 +12,7 @@ class UserModel {
   String? level;
   int? age;
   City? city;
+  int? rank;
   List<UserCourses>? courses;
   UserModel(
       {this.id,
@@ -24,7 +25,8 @@ class UserModel {
       this.courses,
       this.age,
       this.maxPoints,
-      this.city});
+      this.city,
+      this.rank});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -37,6 +39,7 @@ class UserModel {
     age = json['age'];
     maxPoints = json['max_points'];
     city = json['city'] != null ? City.fromJson(json['city']) : null;
+    rank = json['rank'];
     if (json['courses'] != null) {
       courses = <UserCourses>[];
       json['courses'].forEach((v) {
@@ -58,6 +61,9 @@ class UserModel {
     data['max_points'] = maxPoints;
     if (city != null) {
       data['city'] = city!.toJson();
+    }
+    if (rank != null) {
+      data['rank'] = rank!;
     }
     if (courses != null) {
       data['courses'] = courses!.map((v) => v.toJson()).toList();
