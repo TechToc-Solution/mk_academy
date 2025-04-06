@@ -146,6 +146,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                   color: AppColors.primaryColors,
                 )),
             onPressed: () {
+              isGuest = true;
               resetHomeCubits(context);
               Navigator.pushReplacementNamed(
                   context, CustomBottomNavBar.routeName);

@@ -13,8 +13,9 @@ import 'widgets/questions_test/timer_section.dart';
 
 class QuestionsTestPage extends StatefulWidget {
   final List<Question> questions;
-
-  const QuestionsTestPage({super.key, required this.questions});
+  final String? asnwerPath;
+  const QuestionsTestPage(
+      {super.key, required this.questions, this.asnwerPath});
   static const String routeName = 'questionsTest';
 
   @override
@@ -74,6 +75,7 @@ class QuestionsTestPageState extends State<QuestionsTestPage> {
                     builder: (context) => TestResultPage(
                           score: _totalMarks,
                           quizScore: _quizScore,
+                          answerPath: widget.asnwerPath,
                         )));
           }
         });

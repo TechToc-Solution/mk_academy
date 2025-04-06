@@ -45,6 +45,7 @@ class TestsListVeiw extends StatelessWidget {
             screenWidth: screenWidth,
             onTap: () {
               final testId = cubit.tests[index].id;
+
               CustomBottomSheet.show(
                 context: context,
                 heightFactor: 0.5,
@@ -54,7 +55,7 @@ class TestsListVeiw extends StatelessWidget {
               );
             },
             title: cubit.tests[index].name,
-            price: cubit.tests[index].totalMarks.toString(),
+            questionsQount: cubit.tests[index].questionsCount,
           );
         },
         separatorBuilder: (BuildContext context, int index) {

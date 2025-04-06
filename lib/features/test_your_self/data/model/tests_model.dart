@@ -33,7 +33,7 @@ class Tests {
   String name;
   int? questionsCount;
   int totalMarks;
-  String unit;
+  String? unit;
   List<Question>? questions;
   bool? canSolve;
   String? answersFile;
@@ -59,7 +59,7 @@ class Tests {
             ? json['questions_count'] as int
             : null,
         totalMarks: json['total_marks'] as int,
-        unit: json['unit'] as String,
+        unit: json.containsKey('unit') ? json['unit'] as String? : null,
         questions: json.containsKey('questions')
             ? (json['questions'] as List)
                 .map((q) => Question.fromJson(q))

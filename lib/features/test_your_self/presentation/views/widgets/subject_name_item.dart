@@ -10,13 +10,13 @@ class SubjectNameItem extends StatelessWidget {
     super.key,
     required this.screenWidth,
     required this.title,
-    required this.price,
+    required this.questionsQount,
     required this.onTap,
   });
 
   final double screenWidth;
   final String title;
-  final String price;
+  final int? questionsQount;
   final VoidCallback onTap;
 
   @override
@@ -46,9 +46,9 @@ class SubjectNameItem extends StatelessWidget {
             ),
           ),
           SizedBox(height: 15),
-          if (price != "")
+          if (questionsQount != null)
             Text(
-              "${"price".tr(context)}: $price ${"sp".tr(context)}",
+              "${'questions'.tr(context)}: $questionsQount",
               style: Styles.textStyle20.copyWith(
                   color: AppColors.textColor, fontWeight: FontWeight.w500),
             ),
