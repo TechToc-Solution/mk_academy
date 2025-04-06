@@ -25,14 +25,11 @@ class CoursesPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        if (!isGuest) CustomLevelBar(),
         CustomTopNavBar(
           subjects: subjects,
           tabController: _tabController,
         ),
-        SizedBox(
-          height: kSizedBoxHeight,
-        ),
-        if (!isGuest) CustomLevelBar(),
         SizedBox(
           height: kSizedBoxHeight,
         ),
