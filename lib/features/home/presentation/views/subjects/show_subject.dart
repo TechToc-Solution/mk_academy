@@ -18,7 +18,6 @@ class ShowSubSubjects extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     // Retrieve the arguments
     final args =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
