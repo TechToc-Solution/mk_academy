@@ -4,6 +4,7 @@ import 'package:mk_academy/features/auth/data/models/user_model.dart';
 
 import '../../../../../core/utils/colors.dart';
 import '../../../../../core/utils/constats.dart';
+import '../../../../../core/utils/functions.dart';
 import '../../../../../core/utils/styles.dart';
 import '../../../../auth/presentation/views/widgets/custom_button.dart';
 
@@ -24,13 +25,16 @@ class LevelSection extends StatelessWidget {
           _buildProgressBar(userModel.points! / userModel.maxPoints!),
           SizedBox(height: 40),
           CustomButton(
-            onPressed: () {},
+            onPressed: () => _showDeleteDialog(context),
             verticalHieght: kVerticalPadding,
             horizontalWidth: kHorizontalPadding,
             color: AppColors.primaryColors,
             textStyle: Styles.textStyle18.copyWith(
                 color: AppColors.backgroundColor, fontWeight: FontWeight.w700),
-            child: Text("how_increase_level".tr(context)),
+            child: Text(
+              "how_increase_level".tr(context),
+              style: Styles.textStyle15.copyWith(color: AppColors.textColor),
+            ),
           ),
         ],
       ),
@@ -60,6 +64,19 @@ class LevelSection extends StatelessWidget {
       valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryColors),
       minHeight: 12,
       borderRadius: BorderRadius.circular(10),
+    );
+  }
+
+  void _showDeleteDialog(BuildContext context) {
+    showCustomDialog(
+      oneButton: true,
+      context: context,
+      title: "increse_your_level".tr(context),
+      description: "increse_level_msg".tr(context),
+      primaryButtonText: "ok".tr(context),
+      secondaryButtonText: "ok".tr(context),
+      onPrimaryAction: () => {},
+      icon: Icons.label_important_outline_rounded,
     );
   }
 }

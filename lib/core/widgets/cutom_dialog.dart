@@ -13,7 +13,7 @@ class CustomDialog extends StatelessWidget {
   final Color? primaryButtonColor;
   final Color? secondaryButtonColor;
   final IconData? icon;
-
+  final bool? oneButton;
   const CustomDialog({
     super.key,
     required this.title,
@@ -25,6 +25,7 @@ class CustomDialog extends StatelessWidget {
     this.primaryButtonColor,
     this.secondaryButtonColor,
     this.icon,
+    this.oneButton,
   });
 
   @override
@@ -84,11 +85,8 @@ class CustomDialog extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-
-            // Buttons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
+            if (oneButton != null)
+              if (oneButton!)
                 TextButton(
                   onPressed: onSecondaryAction,
                   style: TextButton.styleFrom(
@@ -105,28 +103,49 @@ class CustomDialog extends StatelessWidget {
                     ),
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: onPrimaryAction,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        primaryButtonColor ?? AppColors.primaryColors,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+            if (oneButton == null)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
+                    onPressed: onSecondaryAction,
+                    style: TextButton.styleFrom(
+                      foregroundColor:
+                          secondaryButtonColor ?? AppColors.primaryColors,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 12),
+                    ),
+                    child: Text(
+                      secondaryButtonText,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
-                  child: Text(
-                    primaryButtonText,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                  ElevatedButton(
+                    onPressed: onPrimaryAction,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          primaryButtonColor ?? AppColors.primaryColors,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      primaryButtonText,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            // Buttons
           ],
         ),
       ),

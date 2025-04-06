@@ -53,6 +53,7 @@ void showCustomDialog({
   Color? primaryButtonColor,
   Color? secondaryButtonColor,
   IconData? icon,
+  bool? oneButton,
   required void Function() onPrimaryAction,
   void Function()? onSecondaryAction,
 }) {
@@ -62,6 +63,7 @@ void showCustomDialog({
     builder: (BuildContext context) {
       return CustomDialog(
         title: title,
+        oneButton: oneButton,
         description: description,
         primaryButtonText: primaryButtonText,
         secondaryButtonText: secondaryButtonText ?? "cancel".tr(context),
