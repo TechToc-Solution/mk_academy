@@ -10,7 +10,9 @@ import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/routs.dart';
 import 'package:mk_academy/core/utils/services_locater.dart';
 import 'package:mk_academy/core/utils/styles.dart';
+import 'package:mk_academy/features/auth/data/repos/delete_account_repo.dart/delete_account_repo.dart';
 import 'package:mk_academy/features/auth/data/repos/token_repo/token_repo.dart';
+import 'package:mk_academy/features/auth/presentation/view-model/delete_account/delete_account_cubit.dart';
 import 'package:mk_academy/features/auth/presentation/view-model/reset_password_cubit/reset_password_cubit.dart';
 import 'package:mk_academy/features/auth/presentation/view-model/token_cubit/token_cubit.dart';
 import 'package:mk_academy/features/courses/data/repo/courses_repo.dart';
@@ -60,6 +62,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 ResetPasswordCubit(getit.get<ResetPasswordRepo>())),
+        BlocProvider(
+            create: (context) =>
+                DeleteAccountCubit(getit.get<DeleteAccountRepo>())),
         BlocProvider(
             create: (context) => CoursesCubit(getit.get<CoursesRepo>())),
         BlocProvider(
