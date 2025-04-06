@@ -31,21 +31,6 @@ class _CurriculumPageState extends State<CurriculumPage>
     super.dispose();
   }
 
-  void _initControllers(int mainLength, int subLength) {
-    _mainTabController = TabController(length: mainLength, vsync: this);
-    _subTabController = TabController(length: subLength, vsync: this);
-
-    _mainTabController.addListener(() {
-      setState(() {
-        selectedMainIndex = _mainTabController.index;
-        _subTabController?.dispose();
-        final newSubSubjects = mainSubjects[selectedMainIndex].subjects ?? [];
-        _subTabController =
-            TabController(length: newSubSubjects.length, vsync: this);
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

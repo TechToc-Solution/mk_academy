@@ -6,13 +6,13 @@ import 'package:mk_academy/features/home/data/repo/ads.dart';
 part 'ads_state.dart';
 
 class AdsCubit extends Cubit<AdsState> {
-  AdsCubit(this._AdsRepo) : super(AdsState());
-  final AdsRepo _AdsRepo;
+  AdsCubit(this._adsRepo) : super(AdsState());
+  final AdsRepo _adsRepo;
   Future<void> getAllAds({
     String? search,
   }) async {
-    var dataInt = await _AdsRepo.getAds(adsType: 0, page: 1);
-    var dataExt = await _AdsRepo.getAds(adsType: 1, page: 1);
+    var dataInt = await _adsRepo.getAds(adsType: 0, page: 1);
+    var dataExt = await _adsRepo.getAds(adsType: 1, page: 1);
     dataInt.fold(
         (failure) => emit(state.copyWith(
               status: AdsStatus.failure,
@@ -47,7 +47,7 @@ class AdsCubit extends Cubit<AdsState> {
     required int adsType,
     String? search,
   }) async {
-    var data = await _AdsRepo.getAds(adsType: adsType, page: 1);
+    var data = await _adsRepo.getAds(adsType: adsType, page: 1);
 
     data.fold(
         (failure) => emit(state.copyWith(
