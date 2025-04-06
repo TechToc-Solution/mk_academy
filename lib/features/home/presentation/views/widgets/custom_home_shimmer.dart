@@ -10,7 +10,6 @@ class CustomHomeShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
       child: Column(
         children: [
           SizedBox(height: kSizedBoxHeight),

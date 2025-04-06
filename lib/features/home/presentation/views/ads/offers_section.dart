@@ -43,7 +43,7 @@ class OffersSection extends StatelessWidget {
           height: 8,
         ),
         GridView.builder(
-            itemCount: 5,
+            itemCount: ads.length,
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -54,6 +54,8 @@ class OffersSection extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return Container(
                 decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(ads[index].image!), fit: BoxFit.fill),
                   borderRadius: BorderRadius.circular(8),
                   color: Colors.white,
                 ),

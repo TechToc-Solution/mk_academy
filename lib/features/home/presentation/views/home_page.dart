@@ -49,10 +49,13 @@ class HomePage extends StatelessWidget {
                             if (studentsState is LeaderboardError ||
                                 subjectsState is GetSubjectsError ||
                                 adsState.status == AdsStatus.failure) {
-                              return CustomErrorWidget(
-                                errorMessage: _getErrorMessage(
-                                    studentsState, subjectsState, adsState),
-                                onRetry: () => onError(context),
+                              return Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: CustomErrorWidget(
+                                  errorMessage: _getErrorMessage(
+                                      studentsState, subjectsState, adsState),
+                                  onRetry: () => onError(context),
+                                ),
                               );
                             }
                             // Success State
@@ -61,10 +64,10 @@ class HomePage extends StatelessWidget {
                                 adsState.status == AdsStatus.success) {
                               return Expanded(
                                 child: HomePageBody(
-                                  students: studentsState.students,
-                                  subjects: subjectsState.subjectsData,
-                                  ads: adsState.ads,
-                                ),
+                                    students: studentsState.students,
+                                    subjects: subjectsState.subjectsData,
+                                    adsInt: adsState.adsInt,
+                                    adsExt: adsState.adsExt),
                               );
                             }
                             // Loading State with Shimmer

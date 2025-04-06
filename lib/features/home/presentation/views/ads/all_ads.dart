@@ -20,8 +20,8 @@ class AllAds extends StatefulWidget {
 class _AllAdsState extends State<AllAds> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    context.read<AdsCubit>().resetPagination();
     context.read<AdsCubit>().getAds(adsType: 0); // 0 = internal ads
   }
 
@@ -48,14 +48,14 @@ class _AllAdsState extends State<AllAds> {
                         onRetry: () =>
                             context.read<AdsCubit>().getAds(adsType: 0));
                   } else if (state.status == AdsStatus.success) {
-                    return state.ads.isEmpty
+                    return state.adsInt.isEmpty
                         ? Expanded(
                             child: Text("no_data".tr(context),
                                 style: TextStyle(color: Colors.white)),
                           )
                         : Expanded(
                             child: AdsBtn(
-                            ads: state.ads,
+                            ads: state.adsInt,
                           ));
                   } else {
                     return CustomCircualProgressIndicator();
@@ -89,6 +89,9 @@ class AdsBtn extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return Container(
                 decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(ads[index].image!),
+                      fit: BoxFit.cover),
                   borderRadius: BorderRadius.circular(8),
                   color: Colors.white,
                 ),

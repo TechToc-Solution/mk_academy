@@ -16,11 +16,13 @@ class HomePageBody extends StatelessWidget {
     super.key,
     required this.subjects,
     required this.students,
-    required this.ads,
+    required this.adsInt,
+    required this.adsExt,
   });
   final List<SubjectsData> subjects;
   final List<StudentsLeaderboardModel> students;
-  final List<Ads> ads;
+  final List<Ads> adsInt;
+  final List<Ads> adsExt;
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +40,8 @@ class HomePageBody extends StatelessWidget {
               ),
               CustomAdvertiseList(advertises: [
                 CustomTopThreeItem(students: students),
-                CustomAdvertiseItem(),
-                CustomAdvertiseItem(),
-                CustomAdvertiseItem(),
-                CustomAdvertiseItem(),
+                for (int i = 0; i < adsExt.length; i++)
+                  CustomAdvertiseItem(ads: adsExt[i]),
               ]),
               SizedBox(
                 height: 8,
@@ -50,7 +50,7 @@ class HomePageBody extends StatelessWidget {
                 subjects: subjects,
               ),
               OffersSection(
-                ads: ads,
+                ads: adsInt,
               ),
               SizedBox(
                 height: 16,

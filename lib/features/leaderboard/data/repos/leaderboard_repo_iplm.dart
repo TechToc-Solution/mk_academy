@@ -17,13 +17,13 @@ class LeaderboardRepoIplm implements LeaderboardRepo {
   Future<Either<Failure, List<StudentsLeaderboardModel>>>
       getLeaderbord() async {
     try {
-      var resp = await _apiServices.get(endPoint: Urls.getLeaderbord);
+      var resp =
+          await _apiServices.get(endPoint: "${Urls.getLeaderbord}/?page=1");
 
       if (resp.statusCode == 200 || resp.data['success']) {
-        final students = (resp.data['data'] as List)
-            .map((e) => StudentsLeaderboardModel.fromJson(e))
-            .toList();
-        return right(students);
+        final students = StudentsLeaderboardData.fromJson(resp.data['data']);
+
+        return right(students.students!);
       }
       return left(ServerFailure(ErrorHandler.defaultMessage()));
     } catch (e) {
