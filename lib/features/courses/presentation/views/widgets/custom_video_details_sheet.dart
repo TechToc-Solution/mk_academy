@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/core/utils/services_locater.dart';
@@ -11,6 +12,10 @@ import 'package:mk_academy/features/courses/data/repo/courses_repo.dart';
 import 'package:mk_academy/features/courses/presentation/view_model/one%20course%20cubit/one_course_cubit.dart';
 import 'package:mk_academy/features/courses/presentation/view_model/videos_cubit/videos_cubit.dart';
 import 'package:mk_academy/features/courses/presentation/views/widgets/play_list_page.dart';
+
+import '../../../../../core/shared/cubits/pay/pay_cubit.dart';
+import '../../../../../core/shared/repos/pay/pay_repo.dart';
+import '../../../../../core/widgets/custom_pay_dailog.dart';
 
 class CustomVideoDetailsSheet extends StatelessWidget {
   const CustomVideoDetailsSheet({super.key, required this.courseId});
@@ -60,11 +65,36 @@ class CustomVideoDetailsSheet extends StatelessWidget {
                           )));
                         } else {
                           // go to pay
+                          showDialog(
+                            context: context,
+                            builder: (context) => BlocProvider(
+                              create: (context) =>
+                                  PayCubit(GetIt.instance<PayRepo>()),
+                              child: PaymentCodeDialog(courseId: courseId),
+                            ),
+                          );
                         }
                       },
-                      child: Icon(state.course!.can_show!
-                          ? Icons.play_arrow_outlined
-                          : Icons.lock_outline))
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            state.course!.can_show! ? "مشاهدة" : "شراء",
+                            style: Styles.textStyle16
+                                .copyWith(color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Icon(
+                            state.course!.can_show!
+                                ? Icons.play_arrow_outlined
+                                : Icons.payment_rounded,
+                            color: Colors.white,
+                          ),
+                        ],
+                      ))
                 ],
               ),
             );

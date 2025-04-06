@@ -20,7 +20,6 @@ import 'package:mk_academy/splashScreen.dart';
 
 import 'core/shared/cubits/subjects/subjects_cubit.dart';
 import 'core/shared/repos/subjects/subjects_repo.dart';
-import 'core/widgets/custom_bottom_nav_bar.dart';
 import 'features/auth/data/repos/logout_repo/logout_repo.dart';
 import 'features/auth/data/repos/register_repo/register_repo.dart';
 import 'features/auth/data/repos/reset_password_repo/reset_password_repo.dart';
