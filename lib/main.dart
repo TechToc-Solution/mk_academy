@@ -10,9 +10,12 @@ import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/routs.dart';
 import 'package:mk_academy/core/utils/services_locater.dart';
 import 'package:mk_academy/core/utils/styles.dart';
+import 'package:mk_academy/features/auth/data/repos/token_repo/token_repo.dart';
 import 'package:mk_academy/features/auth/presentation/view-model/reset_password_cubit/reset_password_cubit.dart';
+import 'package:mk_academy/features/auth/presentation/view-model/token_cubit/token_cubit.dart';
 import 'package:mk_academy/features/courses/data/repo/courses_repo.dart';
 import 'package:mk_academy/features/courses/presentation/view_model/courses%20cubit/courses_cubit.dart';
+import 'package:mk_academy/splashScreen.dart';
 
 import 'core/shared/cubits/subjects/subjects_cubit.dart';
 import 'core/shared/repos/subjects/subjects_repo.dart';
@@ -46,6 +49,9 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => LocaleCubit()..getSaveLanguage()),
+        BlocProvider(
+            create: (context) =>
+                TokenCubit(getit.get<TokenRepo>())..cheackToken()),
         BlocProvider(create: (context) => LogoutCubit(getit.get<LogoutRepo>())),
         BlocProvider(
             create: (context) => RegisterCubit(getit.get<RegisterRepo>())),
@@ -107,7 +113,7 @@ class MyApp extends StatelessWidget {
                   ColorScheme.fromSeed(seedColor: AppColors.primaryColors),
               useMaterial3: true,
             ),
-            initialRoute: CustomBottomNavBar.routeName,
+            initialRoute: SplashScreen.routeName,
             routes: Routes.routes,
           );
         },

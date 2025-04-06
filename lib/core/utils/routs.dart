@@ -5,6 +5,7 @@ import 'package:mk_academy/features/home/presentation/views/subjects/all_subject
 import 'package:mk_academy/features/home/presentation/views/subjects/show_subject.dart';
 import 'package:mk_academy/features/show_video/presentation/views/show_video.dart';
 import 'package:mk_academy/features/test_your_self/presentation/views/tests_list_page.dart';
+import 'package:mk_academy/splashScreen.dart';
 
 import '../../features/auth/presentation/views/login/login_page.dart';
 import '../../features/auth/presentation/views/register/register_page.dart';
@@ -47,6 +48,7 @@ class Routes {
     TestsListPage.routeName: (context) => TestsListPage(),
     ShowSubSubjects.routeName: (context) => ShowSubSubjects(),
     AllSubjects.routeName: (context) => AllSubjects(),
-    AllAds.routeName: (context) => AllAds()
+    AllAds.routeName: (context) => AllAds(),
+    SplashScreen.routeName: (context) => SplashScreen()
   };
 }
