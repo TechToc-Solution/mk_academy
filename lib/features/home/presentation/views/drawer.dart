@@ -78,19 +78,14 @@ class CustomDrawer extends StatelessWidget {
               icon: Icons.sports_handball_rounded,
             ),
           ),
-          // GestureDetector(
-          //   onTap: () {
-          //     if (isGuset) {
-          //       showLoginDialog(context);
-          //     } else {
-          //       Navigator.of(context).push(goRoute(x: WorkPapersPage()));
-          //     }
-          //   },
-          //   child: CustomDrawerBtn(
-          //     title: "work_papers".tr(context),
-          //     icon: Icons.library_books_outlined,
-          //   ),
-          // ),
+          GestureDetector(
+            onTap: () => messages(
+                context, "coming_soon".tr(context), AppColors.primaryColors),
+            child: CustomDrawerBtn(
+              title: "work_papers".tr(context),
+              icon: Icons.library_books_outlined,
+            ),
+          ),
           if (!isGuest)
             BlocConsumer<LogoutCubit, LogoutState>(
               listener: (BuildContext context, LogoutState state) {

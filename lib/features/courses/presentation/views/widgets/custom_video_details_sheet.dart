@@ -37,6 +37,9 @@ class CustomVideoDetailsSheet extends StatelessWidget {
             return Center(
               child: Column(
                 children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(state.course!.image!),
+                  ),
                   Text(
                     state.course!.subject!,
                     style: Styles.textStyle20.copyWith(color: Colors.white),

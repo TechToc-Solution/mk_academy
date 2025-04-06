@@ -44,9 +44,11 @@ class ShowSubSubjects extends StatelessWidget {
                         padding:
                             EdgeInsets.symmetric(horizontal: kSizedBoxHeight),
                         child: subject.subjects == null
-                            ? Text(
-                                "no_data".tr(context),
-                                style: TextStyle(color: Colors.white),
+                            ? Center(
+                                child: Text(
+                                  "no_data".tr(context),
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               )
                             : GridView.builder(
                                 itemCount: subject.subjects!.length,

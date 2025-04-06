@@ -20,9 +20,11 @@ class _UnitSectionState extends State<UnitSection> {
       builder: (context, state) {
         if (CoursesStatus.success == state.status) {
           return state.courses.isEmpty
-              ? Center(
-                  child: Text("no_data".tr(context),
-                      style: TextStyle(color: Colors.white)),
+              ? Expanded(
+                  child: Center(
+                    child: Text("no_data".tr(context),
+                        style: TextStyle(color: Colors.white)),
+                  ),
                 )
               : GridView.builder(
                   itemCount: state.courses.length,
