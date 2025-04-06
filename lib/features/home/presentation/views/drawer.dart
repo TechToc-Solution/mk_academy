@@ -7,7 +7,6 @@ import 'package:mk_academy/features/auth/presentation/view-model/logout_cubit/lo
 import 'package:mk_academy/features/auth/presentation/views/login/login_page.dart';
 import 'package:mk_academy/features/leaderboard/presentation/views/leaderboard.dart';
 import 'package:mk_academy/features/profile/presentation/views/profile_page.dart';
-import 'package:mk_academy/features/test_your_self/presentation/views/test_your_self_page.dart';
 //import 'package:mk_academy/features/work%20papers/presentation/views/work_papers_page.dart';
 
 import '../../../../core/utils/colors.dart';
