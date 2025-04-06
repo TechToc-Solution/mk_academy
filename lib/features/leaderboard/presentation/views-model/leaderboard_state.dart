@@ -1,24 +1,37 @@
 part of 'leaderboard_cubit.dart';
 
-sealed class LeaderboardState extends Equatable {
+abstract class LeaderboardState extends Equatable {
   const LeaderboardState();
 
   @override
   List<Object> get props => [];
 }
 
-final class LeaderboardInitial extends LeaderboardState {}
+class LeaderboardInitial extends LeaderboardState {}
 
-final class LeaderboardSuccess extends LeaderboardState {
+class LeaderboardLoading extends LeaderboardState {
+  final bool isFirstFetch;
+
+  const LeaderboardLoading({this.isFirstFetch = true});
+
+  @override
+  List<Object> get props => [isFirstFetch];
+}
+
+class LeaderboardSuccess extends LeaderboardState {
   final List<StudentsLeaderboardModel> students;
 
   const LeaderboardSuccess({required this.students});
+
+  @override
+  List<Object> get props => [students];
 }
 
-final class LeaderboardError extends LeaderboardState {
+class LeaderboardError extends LeaderboardState {
   final String errorMsg;
 
   const LeaderboardError({required this.errorMsg});
-}
 
-final class LeaderboardLoading extends LeaderboardState {}
+  @override
+  List<Object> get props => [errorMsg];
+}

@@ -22,8 +22,8 @@ class _LeaderboardState extends State<LeaderboardPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          LeaderboardCubit(getit.get<LeaderboardRepo>())..getLeaderbord(),
+      create: (context) => LeaderboardCubit(getit.get<LeaderboardRepo>())
+        ..getLeaderboard(loadMore: false),
       child: Scaffold(
         appBar: PreferredSize(
             preferredSize: MediaQuery.sizeOf(context),
@@ -33,17 +33,19 @@ class _LeaderboardState extends State<LeaderboardPage> {
             )),
         body: BlocBuilder<LeaderboardCubit, LeaderboardState>(
             builder: (context, state) {
-          if (state is LeaderboardSuccess) {
-            return LeaderboardPageBody(
-              students: state.students,
-            );
+          if ((state is LeaderboardLoading && state.isFirstFetch) ||
+              state is LeaderboardInitial) {
+            return CustomCircualProgressIndicator();
           } else if (state is LeaderboardError) {
             return CustomErrorWidget(
                 errorMessage: state.errorMsg,
-                onRetry: () =>
-                    context.read<LeaderboardCubit>().getLeaderbord());
+                onRetry: () => context
+                    .read<LeaderboardCubit>()
+                    .getLeaderboard(loadMore: false));
           }
-          return CustomCircualProgressIndicator();
+          return LeaderboardPageBody(
+            students: context.read<LeaderboardCubit>().students,
+          );
         }),
       ),
     );

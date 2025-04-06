@@ -14,16 +14,16 @@ class LeaderboardRepoIplm implements LeaderboardRepo {
 
   LeaderboardRepoIplm(this._apiServices);
   @override
-  Future<Either<Failure, List<StudentsLeaderboardModel>>>
-      getLeaderbord() async {
+  Future<Either<Failure, StudentsLeaderboardData>> getLeaderbord(
+      int page) async {
     try {
       var resp =
-          await _apiServices.get(endPoint: "${Urls.getLeaderbord}/?page=1");
+          await _apiServices.get(endPoint: "${Urls.getLeaderbord}/?page=$page");
 
       if (resp.statusCode == 200 || resp.data['success']) {
         final students = StudentsLeaderboardData.fromJson(resp.data['data']);
 
-        return right(students.students!);
+        return right(students);
       }
       return left(ServerFailure(ErrorHandler.defaultMessage()));
     } catch (e) {

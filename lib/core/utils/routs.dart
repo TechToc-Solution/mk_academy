@@ -44,7 +44,9 @@ class Routes {
     VerificationPhonePage.routeName: (context) =>
         VerificationPhonePage(fromRigster: false, phoneNumber: ""),
     ResetPasswordPage.routeName: (context) => ResetPasswordPage(),
-    WebViewScreen.routeName: (context) => WebViewScreen(video: null,),
+    WebViewScreen.routeName: (context) => WebViewScreen(
+          video: null,
+        ),
     TestsListPage.routeName: (context) => TestsListPage(),
     ShowSubSubjects.routeName: (context) => ShowSubSubjects(),
     AllSubjects.routeName: (context) => AllSubjects(),

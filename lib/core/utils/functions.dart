@@ -79,7 +79,7 @@ void showCustomDialog({
 
 resetHomeCubits(BuildContext context) {
   context.read<AdsCubit>().resetPagination();
-  context.read<LeaderboardCubit>().getLeaderbord();
+  context.read<LeaderboardCubit>().getLeaderboard(loadMore: false);
   context.read<SubjectsCubit>().getSubjects();
   context.read<AdsCubit>().getAds(adsType: 0);
   isGuest ? null : context.read<ProfileCubit>().getProfile();

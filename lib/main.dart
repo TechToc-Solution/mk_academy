@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
             create: (context) => CoursesCubit(getit.get<CoursesRepo>())),
         BlocProvider(
             create: (context) => LeaderboardCubit(getit.get<LeaderboardRepo>())
-              ..getLeaderbord()),
+              ..getLeaderboard()),
         BlocProvider(
             create: (context) =>
                 SubjectsCubit(getit.get<SubjectsRepo>())..getSubjects()),
