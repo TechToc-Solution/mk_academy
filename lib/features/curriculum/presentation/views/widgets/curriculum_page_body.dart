@@ -12,71 +12,46 @@ import '../../../../../core/shared/models/subjects_model.dart';
 import '../../../../../core/utils/services_locater.dart';
 import 'curriculum_units_section.dart';
 
-class CurriculumPageBody extends StatefulWidget {
-  const CurriculumPageBody({super.key, required this.subjects});
+class CurriculumPageBody extends StatelessWidget {
+  const CurriculumPageBody({
+    super.key,
+    required TabController tabController,
+    required this.subjects,
+  }) : _tabController = tabController;
   final List<Subjects> subjects;
-  @override
-  State<CurriculumPageBody> createState() => _CurriculumPageBodyState();
-}
-
-class _CurriculumPageBodyState extends State<CurriculumPageBody>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
+  final TabController _tabController;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: kHorizontalPadding, vertical: kVerticalPadding),
-          child: Column(
+    return Column(
+      children: [
+        if (!isGuest) CustomLevelBar(),
+        CustomTopNavBar(
+          subjects: subjects,
+          tabController: _tabController,
+        ),
+        SizedBox(
+          height: kSizedBoxHeight,
+        ),
+        Expanded(
+          child: TabBarView(
+            controller: _tabController,
             children: [
-              CustomTopNavBar(
-                subjects: widget.subjects,
-                tabController: _tabController,
-              ),
-              SizedBox(
-                height: kSizedBoxHeight,
-              ),
-              if (!isGuest) CustomLevelBar(),
-              SizedBox(
-                height: kSizedBoxHeight,
-              ),
-              Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    for (int i = 0; i < widget.subjects.length; i++)
-                      BlocProvider(
-                        create: (context) =>
-                            CurriculumCubit(getit.get<CurriculumRepo>())
-                              ..getUnits(
-                                subjectId: widget.subjects[i].id!,
-                              ),
-                        child: CurriculumUnitsSection(
-                          subjectId: widget.subjects[i].id!,
+              for (int i = 0; i < subjects.length; i++)
+                BlocProvider(
+                  create: (context) =>
+                      CurriculumCubit(getit.get<CurriculumRepo>())
+                        ..getUnits(
+                          subjectId: subjects[i].id!,
                         ),
-                      ),
-                  ],
+                  child: CurriculumUnitsSection(
+                    subjectId: subjects[i].id!,
+                  ),
                 ),
-              ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }

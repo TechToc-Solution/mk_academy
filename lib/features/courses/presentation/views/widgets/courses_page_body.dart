@@ -30,9 +30,6 @@ class CoursesPageBody extends StatelessWidget {
           subjects: subjects,
           tabController: _tabController,
         ),
-        SizedBox(
-          height: kSizedBoxHeight,
-        ),
         Expanded(
             child: TabBarView(
           controller: _tabController,
