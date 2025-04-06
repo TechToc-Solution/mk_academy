@@ -29,9 +29,14 @@ class ShowPlayList extends StatelessWidget {
               child: BlocBuilder<VideosCubit, VideosState>(
                 builder: (context, state) {
                   if (state.status == VideoStatus.success) {
-                    return PlayListBody(
-                      videos: state.videos!,
-                    );
+                    return state.videos == null || state.videos!.isEmpty
+                        ? Center(
+                            child: Text("no_data".tr(context),
+                                style: TextStyle(color: Colors.white)),
+                          )
+                        : PlayListBody(
+                            videos: state.videos!,
+                          );
                   } else if (state.status == VideoStatus.failure) {
                     return CustomErrorWidget(
                         errorMessage: state.errorMessage!,

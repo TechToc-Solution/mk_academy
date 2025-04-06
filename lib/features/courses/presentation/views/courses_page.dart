@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/shared/cubits/subjects/subjects_cubit.dart';
 import 'package:mk_academy/core/shared/models/subjects_model.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
 import 'package:mk_academy/core/widgets/custom_top_nav_bar.dart';
+import 'package:mk_academy/features/home/presentation/views/drawer.dart';
 import 'widgets/courses_page_body.dart';
 
 // ignore: must_be_immutable
@@ -98,16 +100,25 @@ class _CoursesPageState extends State<CoursesPage>
                   SizedBox(
                     height: 8,
                   ),
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: CoursesPageBody(
-                        courseTypeId: widget.courseTypeId,
-                        subjects: mainSubjects[selectedMainIndex].subjects!,
-                        tabController: _subTabController!,
+                  if (mainSubjects[selectedMainIndex].subjects!.isNotEmpty)
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: CoursesPageBody(
+                          courseTypeId: widget.courseTypeId,
+                          subjects: mainSubjects[selectedMainIndex].subjects!,
+                          tabController: _subTabController!,
+                        ),
                       ),
                     ),
-                  ),
+                  if (mainSubjects[selectedMainIndex].subjects!.isEmpty)
+                    Expanded(
+                      child: Center(
+                          child: Text(
+                        "no_data".tr(context),
+                        style: TextStyle(color: Colors.white),
+                      )),
+                    )
                 ],
               );
             }

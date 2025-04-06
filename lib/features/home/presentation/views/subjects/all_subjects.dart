@@ -53,8 +53,10 @@ class _AllSubjectsState extends State<AllSubjects> {
                   } else if (state is GetSubjectsSucess) {
                     return state.subjectsData.isEmpty
                         ? Expanded(
-                            child: Text("no_data".tr(context),
-                                style: TextStyle(color: Colors.white)),
+                            child: Center(
+                              child: Text("no_data".tr(context),
+                                  style: TextStyle(color: Colors.white)),
+                            ),
                           )
                         : Expanded(
                             child: SubjectBtn(
