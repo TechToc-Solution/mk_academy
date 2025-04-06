@@ -20,25 +20,26 @@ class WebViewScreenState extends State<WebViewScreen> {
 
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadHtmlString('''
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta name="viewport" content="width=device-width, initial-scale=1">
-          <style>
-            body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
-            .container { position: relative; width: 100%; height: 100vh; }
-            .iframe-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <iframe class="iframe-container" src="${widget.video!.video!}" frameborder="0"
-              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-          </div>
-        </body>
-        </html>
-      ''');
+      ..loadRequest(Uri.parse(widget.video!.video!));
+    // ..loadHtmlString('''
+    //   <!DOCTYPE html>
+    //   <html lang="en">
+    //   <head>
+    //     <meta name="viewport" content="width=device-width, initial-scale=1">
+    //     <style>
+    //       body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+    //       .container { position: relative; width: 100%; height: 100vh; }
+    //       .iframe-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    //     </style>
+    //   </head>
+    //   <body>
+    //     <div class="container">
+    //       <iframe class="iframe-container" src="${widget.video!.video!}" frameborder="0"
+    //         allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+    //     </div>
+    //   </body>
+    //   </html>
+    // ''');
   }
 
   @override
