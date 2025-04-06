@@ -68,9 +68,11 @@ class CustomDrawer extends StatelessWidget {
             icon: Icons.people,
           ),
           GestureDetector(
-            onTap: () => Navigator.of(context).push(
-              goRoute(x: TestYourSelfPage()),
-            ),
+            onTap: () => messages(
+                context, "coming_soon".tr(context), AppColors.primaryColors),
+            // Navigator.of(context).push(
+            //   goRoute(x: TestYourSelfPage()),
+            // ),
             child: CustomDrawerBtn(
               title: "test_your_self".tr(context),
               icon: Icons.sports_handball_rounded,

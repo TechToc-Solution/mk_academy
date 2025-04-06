@@ -97,5 +97,6 @@
     "test_details": "Test Details",
     "play_list": "Playlist",
     "could_not_open_pdf" : "Could not open the PDF!",
-    "rank": "Rank"
+    "rank": "Rank",
+    "coming_soon": "Coming Soon..."
 }

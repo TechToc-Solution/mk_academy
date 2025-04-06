@@ -39,7 +39,7 @@ void messages(BuildContext context, String error, Color c, {int msgTime = 2}) {
     ),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     backgroundColor: c,
-    content: Center(child: Text(error)),
+    content: Text(error),
     duration: Duration(seconds: msgTime),
   ));
 }

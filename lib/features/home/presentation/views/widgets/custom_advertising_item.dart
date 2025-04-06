@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mk_academy/core/utils/app_localizations.dart';
-import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/features/home/data/model/ads_model.dart';
 
 class CustomAdvertiseItem extends StatelessWidget {
