@@ -57,7 +57,7 @@ class CoursesRepoIplm implements CoursesRepo {
       var resp = await _apiServices.get(
           endPoint: "${Urls.getCourses}/$courseId/videos");
       if (resp.statusCode == 200 && resp.data['success']) {
-        return right(VideoData.fromJson(resp.data['data']));
+        return right(VideoData.fromJson(resp.data));
       }
       return left(
           ServerFailure(resp.data['message'] ?? ErrorHandler.defaultMessage()));
