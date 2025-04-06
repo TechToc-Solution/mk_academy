@@ -34,7 +34,7 @@ class TestYourSelfPageBody extends StatelessWidget {
               SubjectNameItem(
                   onTap: () => onTap(context, {'testType': 1}),
                   title: "partialـexams".tr(context),
-                  price: "",
+                  questionsQount: null,
                   screenWidth: screenWidth),
               SizedBox(
                 height: kSizedBoxHeight,
@@ -42,7 +42,7 @@ class TestYourSelfPageBody extends StatelessWidget {
               SubjectNameItem(
                   onTap: () => onTap(context, {'testType': 0}),
                   title: "general_exams".tr(context),
-                  price: "",
+                  questionsQount: null,
                   screenWidth: screenWidth),
             ],
           ),

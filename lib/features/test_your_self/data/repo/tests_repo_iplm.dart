@@ -26,6 +26,7 @@ class TestsRepoIplm implements TestsRepo {
       return left(
           ServerFailure(resp.data['message'] ?? ErrorHandler.defaultMessage()));
     } catch (e) {
+      log(e.toString());
       return left(ErrorHandler.handle(e));
     }
   }

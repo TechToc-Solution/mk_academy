@@ -29,8 +29,9 @@ class TestDetailsContent extends StatelessWidget {
           if (details.subject != null)
             _buildDetailItem(Icons.question_answer_outlined,
                 'subject'.tr(context), details.subject!, false),
-          _buildDetailItem(
-              Icons.subject_outlined, 'unit'.tr(context), details.unit, false),
+          if (details.unit != null)
+            _buildDetailItem(Icons.subject_outlined, 'unit'.tr(context),
+                details.unit!, false),
           _buildActionButton(context),
         ],
       ),
@@ -80,6 +81,7 @@ class TestDetailsContent extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => QuestionsTestPage(
                         questions: details.questions!,
+                        asnwerPath: details.answer,
                       )));
         } else {
           // Handle purchase logic

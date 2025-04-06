@@ -3,16 +3,22 @@ import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/styles.dart';
 import 'package:mk_academy/core/widgets/custom_bottom_nav_bar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/utils/assets_data.dart';
+import '../../../../core/utils/functions.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 
 class TestResultPage extends StatelessWidget {
   final int score;
   final int quizScore;
+  final String? answerPath;
   static const String routeName = "testResult";
   const TestResultPage(
-      {super.key, required this.score, required this.quizScore});
+      {super.key,
+      required this.score,
+      required this.quizScore,
+      this.answerPath});
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.sizeOf(context).width;
@@ -58,17 +64,17 @@ class TestResultPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    _buildActionButton(
-                      icon: Icons.visibility,
-                      text: "watch_solution".tr(context),
-                      onPressed: () {},
-                    ),
-                    const SizedBox(height: 20),
-                    _buildActionButton(
-                      icon: Icons.download,
-                      text: "download_solution".tr(context),
-                      onPressed: () {},
-                    ),
+                    if (answerPath != null)
+                      _buildActionButton(
+                          icon: Icons.visibility,
+                          text: "watch_solution".tr(context),
+                          onPressed: () => _launchPdfUrl(context, answerPath!)),
+                    // const SizedBox(height: 20),
+                    // _buildActionButton(
+                    //   icon: Icons.download,
+                    //   text: "download_solution".tr(context),
+                    //   onPressed: () {},
+                    // ),
                     const SizedBox(height: 20),
                     _buildActionButton(
                       icon: Icons.home,
@@ -126,5 +132,16 @@ class TestResultPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _launchPdfUrl(BuildContext context, String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(
+        Uri.parse(url),
+        mode: LaunchMode.externalApplication,
+      );
+    } else {
+      messages(context, 'could_not_open_pdf'.tr(context), Colors.red);
+    }
   }
 }
