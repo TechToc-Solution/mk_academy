@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mk_academy/core/shared/repos/pay/pay_repo.dart';
 import 'package:mk_academy/core/shared/repos/pay/pay_repo_iplm.dart';
+import 'package:mk_academy/features/auth/data/repos/delete_account_repo.dart/delete_aacount_repo_iplm.dart';
+import 'package:mk_academy/features/auth/data/repos/delete_account_repo.dart/delete_account_repo.dart';
 import 'package:mk_academy/features/auth/data/repos/token_repo/token_repo.dart';
 import 'package:mk_academy/features/auth/data/repos/token_repo/token_repo_ipml.dart';
 import 'package:mk_academy/features/home/data/repo/ads.dart';
@@ -55,6 +57,9 @@ void setupLocatorServices() {
 
   getit.registerSingleton<ResetPasswordRepo>(
       ResetPasswordRepoImpl(getit.get<ApiServices>()));
+
+  getit.registerSingleton<DeleteAccountRepo>(
+      DeleteAccountRepoIplm(getit.get<ApiServices>()));
 
   //leaderboard singleton
   getit.registerSingleton<LeaderboardRepo>(

@@ -12,6 +12,7 @@ import 'package:mk_academy/features/test_your_self/presentation/views/test_your_
 
 import '../../../../core/utils/colors.dart';
 import '../../../../core/utils/functions.dart';
+import '../../../auth/presentation/view-model/delete_account/delete_account_cubit.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -125,12 +126,44 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
           if (!isGuest)
-            CustomDrawerBtn(
-              title: "delete_account".tr(context),
-              icon: Icons.delete,
+            BlocConsumer<DeleteAccountCubit, DeleteAccountState>(
+              listener: (context, state) {
+                if (state is DeleteAccountSuccess) {
+                  messages(
+                      context, "account_deleted".tr(context), Colors.green);
+                  Navigator.pushReplacementNamed(context, LoginPage.routeName);
+                }
+                if (state is DeleteAccountError) {
+                  messages(context, state.message, Colors.red);
+                }
+              },
+              builder: (context, state) {
+                return GestureDetector(
+                  onTap: () => _showDeleteDialog(context),
+                  child: CustomDrawerBtn(
+                    title: "delete_account".tr(context),
+                    icon: Icons.delete,
+                  ),
+                );
+              },
             ),
         ],
       ),
+    );
+  }
+
+  void _showDeleteDialog(BuildContext context) {
+    showCustomDialog(
+      context: context,
+      title: "warning".tr(context),
+      description: "delete_account_warning".tr(context),
+      primaryButtonText: "confirm".tr(context),
+      secondaryButtonText: "cancel".tr(context),
+      primaryButtonColor: Colors.red,
+      secondaryButtonColor: Colors.green,
+      onPrimaryAction: () => context.read<DeleteAccountCubit>().deleteAccount(),
+      onSecondaryAction: Navigator.of(context).pop,
+      icon: Icons.warning_rounded,
     );
   }
 
