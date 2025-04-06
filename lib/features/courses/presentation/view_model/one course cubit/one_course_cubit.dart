@@ -8,27 +8,35 @@ part 'one_course_state.dart';
 class OneCourseCubit extends Cubit<OneCourseState> {
   OneCourseCubit(this._coursesRepo) : super(OneCourseState());
   final CoursesRepo _coursesRepo;
-  Future<void> getCourse({
-    required int? courseId,
-  }) async {
+
+  Future<void> getCourse({required int? courseId}) async {
     if (isClosed) return;
-    var data = await _coursesRepo.getCourse(
-      courseId: courseId,
-    );
-    emit(OneCourseState(
-      status: CourseStatus.loading,
-    ));
+
     if (!isClosed) {
-      data.fold(
-          (failure) => emit(OneCourseState(
-                status: CourseStatus.failure,
-                errorMessage: failure.message,
-              )), (courseData) {
-        emit(OneCourseState(
-          course: courseData,
-          status: CourseStatus.success,
-        ));
-      });
+      emit(OneCourseState(status: CourseStatus.loading));
     }
+
+    final data = await _coursesRepo.getCourse(courseId: courseId);
+
+    if (isClosed) return;
+
+    data.fold(
+      (failure) {
+        if (!isClosed) {
+          emit(OneCourseState(
+            status: CourseStatus.failure,
+            errorMessage: failure.message,
+          ));
+        }
+      },
+      (courseData) {
+        if (!isClosed) {
+          emit(OneCourseState(
+            course: courseData,
+            status: CourseStatus.success,
+          ));
+        }
+      },
+    );
   }
 }

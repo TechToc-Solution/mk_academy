@@ -5,6 +5,8 @@ import 'package:mk_academy/features/auth/data/models/courses_model.dart';
 import '../../../../../core/utils/colors.dart';
 import '../../../../../core/utils/constats.dart';
 import '../../../../../core/utils/styles.dart';
+import '../../../../../core/widgets/custom_buttom_sheet.dart';
+import '../../../../courses/presentation/views/widgets/custom_video_details_sheet.dart';
 
 class SubscriptionsSection extends StatelessWidget {
   final List<UserCourses> courses;
@@ -24,8 +26,7 @@ class SubscriptionsSection extends StatelessWidget {
         physics: NeverScrollableScrollPhysics(),
         itemCount: courses.length,
         itemBuilder: (BuildContext context, int index) {
-          return _buildSubscriptionItem(courses[index].purchasedDate!,
-              courses[index].price!.toString(), courses[index].name!, context);
+          return _buildSubscriptionItem(courses[index], context);
         },
         separatorBuilder: (BuildContext context, int index) {
           return SizedBox(height: 12);
@@ -35,24 +36,25 @@ class SubscriptionsSection extends StatelessWidget {
     return SizedBox();
   }
 
-  Widget _buildSubscriptionItem(
-      String date, String cost, String subName, BuildContext context) {
+  Widget _buildSubscriptionItem(UserCourses course, BuildContext context) {
     return Column(
       children: [
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          course.name!,
+          style: Styles.textStyle20.copyWith(
+              color: AppColors.primaryColors, fontWeight: FontWeight.bold),
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Column(
                 children: [
-                  Text(
-                    subName,
-                    style: Styles.textStyle25.copyWith(
-                        color: AppColors.primaryColors,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(cost,
+                  Text("${"price".tr(context)}: ${course.price}",
                       style: Styles.textStyle16.copyWith(
                           color: Colors.white, fontWeight: FontWeight.w500)),
                 ],
@@ -62,7 +64,13 @@ class SubscriptionsSection extends StatelessWidget {
                   color: AppColors.primaryColors,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(35)),
-                  onPressed: () {},
+                  onPressed: () {
+                    CustomBottomSheet.show(
+                        title: course.name,
+                        backgroundColor: AppColors.backgroundColor,
+                        context: context,
+                        child: CustomVideoDetailsSheet(courseId: course.id!));
+                  },
                   child: Text(
                     "moore".tr(context),
                     style: Styles.textStyle15
@@ -71,7 +79,7 @@ class SubscriptionsSection extends StatelessWidget {
             ],
           ),
         ),
-        Text('${"subs_date".tr(context)} : $date',
+        Text('${"subs_date".tr(context)} : ${course.purchasedDate}',
             style: Styles.textStyle16.copyWith(color: Colors.white)),
         Divider(
           color: AppColors.primaryColors,
