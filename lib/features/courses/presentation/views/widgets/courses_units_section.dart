@@ -48,7 +48,10 @@ class CoursesUnitsSection extends StatelessWidget {
           );
         }
         return Center(
-          child: ShimmerContainer(),
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: ShimmerContainer(),
+          ),
         );
       },
     );

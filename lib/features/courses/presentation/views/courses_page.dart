@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/shared/cubits/subjects/subjects_cubit.dart';
 import 'package:mk_academy/core/shared/models/subjects_model.dart';
-import 'package:mk_academy/core/utils/colors.dart';
-import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
 import 'package:mk_academy/core/widgets/custom_top_nav_bar.dart';
@@ -100,12 +98,14 @@ class _CoursesPageState extends State<CoursesPage>
                   SizedBox(
                     height: 8,
                   ),
-                  // المحتوى
                   Flexible(
-                    child: CoursesPageBody(
-                      courseTypeId: widget.courseTypeId,
-                      subjects: mainSubjects[selectedMainIndex].subjects!,
-                      tabController: _subTabController!,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: CoursesPageBody(
+                        courseTypeId: widget.courseTypeId,
+                        subjects: mainSubjects[selectedMainIndex].subjects!,
+                        tabController: _subTabController!,
+                      ),
                     ),
                   ),
                 ],

@@ -22,6 +22,7 @@ class CustomVideoUnitBtn extends StatelessWidget {
           },
           child: Container(
             padding: EdgeInsets.all(8),
+            margin: EdgeInsets.only(top: 4),
             decoration: BoxDecoration(
               border: Border.all(color: AppColors.primaryColors, width: 2),
               borderRadius: BorderRadius.circular(16),

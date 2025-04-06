@@ -38,9 +38,12 @@ class CustomAppBar extends StatelessWidget {
                   height: 50,
                   width: 50,
                 ),
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          Flexible(
+            child: Text(
+              overflow: TextOverflow.ellipsis,
+              title,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
           ),
           SizedBox(
             height: 50,
