@@ -40,9 +40,9 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<TokenCubit, TokenState>(
-      listener: (context, state) async {
-        await Future.delayed(const Duration(seconds: 1), () {
+    return BlocBuilder<TokenCubit, TokenState>(
+      builder: (context, state) {
+        Future.delayed(const Duration(seconds: 3), () {
           if (state is IsVaildToken) {
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (builder) {
@@ -66,8 +66,6 @@ class _SplashScreenState extends State<SplashScreen>
             }));
           }
         });
-      },
-      builder: (context, state) {
         return Scaffold(
           body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -78,6 +76,8 @@ class _SplashScreenState extends State<SplashScreen>
                 child: Padding(
                   padding: const EdgeInsets.all(60.0),
                   child: Image.asset(
+                    width: MediaQuery.sizeOf(context).width * 0.4,
+                    height: MediaQuery.sizeOf(context).height * 0.3,
                     AssetsData.logoNoBg,
                     color: Colors.white,
                     // fit: BoxFit.cover,
