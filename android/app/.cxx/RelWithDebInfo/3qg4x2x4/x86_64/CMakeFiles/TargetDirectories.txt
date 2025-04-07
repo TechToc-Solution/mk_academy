@@ -1,0 +1,2 @@
+/Users/apple/flutter pro/mk_academy/android/app/.cxx/RelWithDebInfo/3qg4x2x4/x86_64/CMakeFiles/edit_cache.dir
+/Users/apple/flutter pro/mk_academy/android/app/.cxx/RelWithDebInfo/3qg4x2x4/x86_64/CMakeFiles/rebuild_cache.dir

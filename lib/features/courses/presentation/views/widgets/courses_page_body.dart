@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/shared/models/subjects_model.dart';
-import '../../../../../core/utils/constats.dart';
 import '../../../../../core/utils/services_locater.dart';
-import '../../../../../core/widgets/custom_level_bar.dart';
 import '../../../data/repo/courses_repo.dart';
 import '../../view_model/courses cubit/courses_cubit.dart';
 import 'courses_units_section.dart';
@@ -25,7 +23,6 @@ class CoursesPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (!isGuest) CustomLevelBar(),
         CustomTopNavBar(
           subjects: subjects,
           tabController: _tabController,

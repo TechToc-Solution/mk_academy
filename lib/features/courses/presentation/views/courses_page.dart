@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/shared/cubits/subjects/subjects_cubit.dart';
 import 'package:mk_academy/core/shared/models/subjects_model.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
+import 'package:mk_academy/core/widgets/custom_level_bar.dart';
 import 'package:mk_academy/core/widgets/custom_top_nav_bar.dart';
 import 'widgets/courses_page_body.dart';
 
@@ -83,6 +85,7 @@ class _CoursesPageState extends State<CoursesPage>
                   SizedBox(
                     height: 8,
                   ),
+                  if (!isGuest) CustomLevelBar(),
                   if (mainSubjects[selectedMainIndex].subjects!.isNotEmpty)
                     Flexible(
                       child: Padding(

@@ -3,7 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/constats.dart';
-import 'package:mk_academy/core/widgets/custom_level_bar.dart';
 import 'package:mk_academy/features/curriculum/data/repos/curriculum_repo.dart';
 import 'package:mk_academy/features/curriculum/presentation/views-model/curriculum_cubit.dart';
 import 'package:mk_academy/core/widgets/custom_top_nav_bar.dart';
@@ -25,7 +24,7 @@ class CurriculumPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (!isGuest) CustomLevelBar(),
+       
         CustomTopNavBar(
           subjects: subjects,
           tabController: _tabController,

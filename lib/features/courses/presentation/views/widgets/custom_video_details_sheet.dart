@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/core/utils/services_locater.dart';
 import 'package:mk_academy/core/utils/styles.dart';
 import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
+import 'package:mk_academy/features/auth/presentation/views/login/login_page.dart';
 import 'package:mk_academy/features/auth/presentation/views/widgets/custom_button.dart';
 import 'package:mk_academy/features/courses/data/repo/courses_repo.dart';
 import 'package:mk_academy/features/courses/presentation/view_model/one%20course%20cubit/one_course_cubit.dart';
@@ -58,7 +60,12 @@ class CustomVideoDetailsSheet extends StatelessWidget {
                   ),
                   CustomButton(
                       onPressed: () {
-                        if (state.course!.canShow!) {
+                        if (isGuest) {
+                          messages(context, "you_should_login".tr(context),
+                              Colors.red);
+                          Navigator.pushReplacementNamed(
+                              context, LoginPage.routeName);
+                        } else if (state.course!.canShow!) {
                           context
                               .read<VideosCubit>()
                               .getVideos(courseId: courseId);
@@ -67,7 +74,6 @@ class CustomVideoDetailsSheet extends StatelessWidget {
                             courseId: courseId,
                           )));
                         } else {
-                          // go to pay
                           showDialog(
                             context: context,
                             builder: (context) => BlocProvider(
@@ -83,7 +89,11 @@ class CustomVideoDetailsSheet extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            state.course!.canShow! ? "مشاهدة" : "شراء",
+                            isGuest
+                                ? "login".tr(context)
+                                : state.course!.canShow!
+                                    ? "watch".tr(context)
+                                    : "pay".tr(context),
                             style: Styles.textStyle16
                                 .copyWith(color: Colors.white),
                           ),
@@ -91,9 +101,11 @@ class CustomVideoDetailsSheet extends StatelessWidget {
                             width: 5,
                           ),
                           Icon(
-                            state.course!.canShow!
-                                ? Icons.play_arrow_outlined
-                                : Icons.payment_rounded,
+                            isGuest
+                                ? Icons.login
+                                : state.course!.canShow!
+                                    ? Icons.play_arrow_outlined
+                                    : Icons.payment_rounded,
                             color: Colors.white,
                           ),
                         ],

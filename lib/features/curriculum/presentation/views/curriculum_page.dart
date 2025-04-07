@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/shared/cubits/subjects/subjects_cubit.dart';
 import 'package:mk_academy/core/shared/models/subjects_model.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
+import 'package:mk_academy/core/widgets/custom_level_bar.dart';
 import 'package:mk_academy/core/widgets/custom_top_nav_bar.dart';
 
 import 'widgets/curriculum_page_body.dart';
@@ -79,14 +82,24 @@ class _CurriculumPageState extends State<CurriculumPage>
                 SizedBox(
                   height: 8,
                 ),
-                Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CurriculumPageBody(
-                        subjects: mainSubjects[selectedMainIndex].subjects!,
-                        tabController: _subTabController!),
+                if (!isGuest) CustomLevelBar(),
+                if (mainSubjects[selectedMainIndex].subjects!.isNotEmpty)
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CurriculumPageBody(
+                          subjects: mainSubjects[selectedMainIndex].subjects!,
+                          tabController: _subTabController!),
+                    ),
                   ),
-                ),
+                if (mainSubjects[selectedMainIndex].subjects!.isEmpty)
+                  Expanded(
+                    child: Center(
+                        child: Text(
+                      "no_data".tr(context),
+                      style: TextStyle(color: Colors.white),
+                    )),
+                  )
               ],
             );
           }
