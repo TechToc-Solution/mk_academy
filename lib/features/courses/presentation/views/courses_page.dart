@@ -8,11 +8,10 @@ import 'package:mk_academy/core/widgets/custom_error_widget.dart';
 import 'package:mk_academy/core/widgets/custom_top_nav_bar.dart';
 import 'widgets/courses_page_body.dart';
 
-// ignore: must_be_immutable
 class CoursesPage extends StatefulWidget {
-  CoursesPage({super.key, required this.courseTypeId});
+  const CoursesPage({super.key, required this.courseTypeId});
   static const String routeName = '/units';
-  int courseTypeId;
+  final int courseTypeId;
   @override
   State<CoursesPage> createState() => _CoursesPageState();
 }
@@ -30,21 +29,6 @@ class _CoursesPageState extends State<CoursesPage>
     _mainTabController.dispose();
     _subTabController?.dispose();
     super.dispose();
-  }
-
-  void _initControllers(int mainLength, int subLength) {
-    _mainTabController = TabController(length: mainLength, vsync: this);
-    _subTabController = TabController(length: subLength, vsync: this);
-
-    _mainTabController.addListener(() {
-      setState(() {
-        selectedMainIndex = _mainTabController.index;
-        _subTabController?.dispose();
-        final newSubSubjects = mainSubjects[selectedMainIndex].subjects ?? [];
-        _subTabController =
-            TabController(length: newSubSubjects.length, vsync: this);
-      });
-    });
   }
 
   @override

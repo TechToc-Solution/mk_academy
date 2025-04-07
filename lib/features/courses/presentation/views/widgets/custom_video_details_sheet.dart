@@ -58,7 +58,7 @@ class CustomVideoDetailsSheet extends StatelessWidget {
                   ),
                   CustomButton(
                       onPressed: () {
-                        if (state.course!.can_show!) {
+                        if (state.course!.canShow!) {
                           context
                               .read<VideosCubit>()
                               .getVideos(courseId: courseId);
@@ -83,7 +83,7 @@ class CustomVideoDetailsSheet extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            state.course!.can_show! ? "مشاهدة" : "شراء",
+                            state.course!.canShow! ? "مشاهدة" : "شراء",
                             style: Styles.textStyle16
                                 .copyWith(color: Colors.white),
                           ),
@@ -91,7 +91,7 @@ class CustomVideoDetailsSheet extends StatelessWidget {
                             width: 5,
                           ),
                           Icon(
-                            state.course!.can_show!
+                            state.course!.canShow!
                                 ? Icons.play_arrow_outlined
                                 : Icons.payment_rounded,
                             color: Colors.white,

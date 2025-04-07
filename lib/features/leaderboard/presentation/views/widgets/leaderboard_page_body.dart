@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
 
 import '../../../../../core/utils/constats.dart';
 import '../../../data/models/students_leaderboard_model.dart';
@@ -17,9 +18,11 @@ class LeaderboardPageBody extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
       child: ListView(
         children: [
-          LeaderboardSection(
-            students: students,
-          ),
+          if (students.isNotEmpty)
+            LeaderboardSection(
+              students: students,
+            ),
+          if (students.isEmpty) Center(child: Text("no_data".tr(context))),
           SizedBox(
             height: 16,
           )

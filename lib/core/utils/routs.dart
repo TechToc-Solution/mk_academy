@@ -5,7 +5,7 @@ import 'package:mk_academy/features/home/presentation/views/subjects/all_subject
 import 'package:mk_academy/features/home/presentation/views/subjects/show_subject.dart';
 import 'package:mk_academy/features/show_video/presentation/views/show_video.dart';
 import 'package:mk_academy/features/test_your_self/presentation/views/tests_list_page.dart';
-import 'package:mk_academy/splashScreen.dart';
+import 'package:mk_academy/splash_screen.dart';
 
 import '../../features/auth/presentation/views/login/login_page.dart';
 import '../../features/auth/presentation/views/register/register_page.dart';
@@ -44,7 +44,9 @@ class Routes {
     VerificationPhonePage.routeName: (context) =>
         VerificationPhonePage(fromRigster: false, phoneNumber: ""),
     ResetPasswordPage.routeName: (context) => ResetPasswordPage(),
-    WebViewScreen.routeName: (context) => WebViewScreen(video: null,),
+    WebViewScreen.routeName: (context) => WebViewScreen(
+          video: null,
+        ),
     TestsListPage.routeName: (context) => TestsListPage(),
     ShowSubSubjects.routeName: (context) => ShowSubSubjects(),
     AllSubjects.routeName: (context) => AllSubjects(),

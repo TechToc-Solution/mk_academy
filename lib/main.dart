@@ -18,7 +18,7 @@ import 'package:mk_academy/features/auth/presentation/view-model/token_cubit/tok
 import 'package:mk_academy/features/courses/data/repo/courses_repo.dart';
 import 'package:mk_academy/features/courses/presentation/view_model/courses%20cubit/courses_cubit.dart';
 import 'package:mk_academy/features/courses/presentation/view_model/videos_cubit/videos_cubit.dart';
-import 'package:mk_academy/splashScreen.dart';
+import 'package:mk_academy/splash_screen.dart';
 
 import 'core/shared/cubits/subjects/subjects_cubit.dart';
 import 'core/shared/repos/subjects/subjects_repo.dart';
@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
             create: (context) => CoursesCubit(getit.get<CoursesRepo>())),
         BlocProvider(
             create: (context) => LeaderboardCubit(getit.get<LeaderboardRepo>())
-              ..getLeaderbord()),
+              ..getLeaderboard()),
         BlocProvider(
             create: (context) =>
                 SubjectsCubit(getit.get<SubjectsRepo>())..getSubjects()),

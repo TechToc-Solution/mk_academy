@@ -83,14 +83,23 @@ class CurriculumLessonListView extends StatelessWidget {
           if (state is LessonDetailsError) {
             messages(context, state.errorMsg, Colors.red);
           } else if (state is LessonDetailsSuccess) {
-            if (state.lesson.canSolve ?? false) {
-              Navigator.pushReplacement(
+            if (state.lesson.questions == null ||
+                state.lesson.questions!.isEmpty) {
+              messages(context, "no_data".tr(context), Colors.grey);
+            } else {
+              bool canSolve = state.lesson.canSolve ?? false;
+              if (canSolve) {
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => QuestionsTestPage(
-                          questions: state.lesson.questions!)));
-            } else {
-              messages(context, "quiz_solved".tr(context), Colors.grey);
+                    builder: (context) => QuestionsTestPage(
+                      questions: state.lesson.questions!,
+                    ),
+                  ),
+                );
+              } else {
+                messages(context, "quiz_solved".tr(context), Colors.grey);
+              }
             }
           }
         },

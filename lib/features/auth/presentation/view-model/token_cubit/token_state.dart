@@ -21,5 +21,5 @@ final class IsFirstUseFalse extends TokenState {}
 
 final class TokenErrorState extends TokenState {
   final String errorMsg;
-  TokenErrorState(this.errorMsg);
+  const TokenErrorState(this.errorMsg);
 }

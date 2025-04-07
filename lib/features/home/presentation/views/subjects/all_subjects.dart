@@ -22,7 +22,6 @@ class AllSubjects extends StatefulWidget {
 class _AllSubjectsState extends State<AllSubjects> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<SubjectsCubit>().getSubjects();
   }
