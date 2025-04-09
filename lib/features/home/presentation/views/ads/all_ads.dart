@@ -7,6 +7,7 @@ import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/widgets/custom_app_bar.dart';
 import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
+import 'package:mk_academy/core/widgets/shimmer_container.dart';
 import 'package:mk_academy/features/home/data/model/ads_model.dart';
 import 'package:mk_academy/features/home/presentation/views-model/ads/ads_cubit.dart';
 import 'package:mk_academy/features/test_your_self/presentation/views/widgets/back_ground_image.dart';
@@ -144,7 +145,14 @@ class _AllAdsState extends State<AllAds> {
                             ads: currentAds,
                           ));
                   } else {
-                    return CustomCircualProgressIndicator();
+                    return Expanded(
+                        child: Center(
+                            child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: ShimmerContainer(
+                        circularRadius: 8,
+                      ),
+                    )));
                   }
                 })
               ],
@@ -172,7 +180,6 @@ class _AdsBtnState extends State<AdsBtn> {
         padding: EdgeInsets.symmetric(horizontal: kSizedBoxHeight),
         child: GridView.builder(
             itemCount: widget.ads.length,
-            physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -189,7 +196,7 @@ class _AdsBtnState extends State<AdsBtn> {
                       image: hasError
                           ? AssetImage(AssetsData.logo)
                           : NetworkImage(widget.ads[index].image!),
-                      fit: BoxFit.cover),
+                      fit: BoxFit.fill),
                   borderRadius: BorderRadius.circular(8),
                   color: Colors.white,
                 ),

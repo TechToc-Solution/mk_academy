@@ -20,7 +20,7 @@ class AdsSectionShimmer extends StatelessWidget {
           mainAxisSpacing: 16,
           childAspectRatio: 1,
         ),
-        itemCount: 4,
+        itemCount: 8,
         itemBuilder: (context, index) => Container(
           decoration: BoxDecoration(
             color: Colors.white,

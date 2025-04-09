@@ -14,10 +14,10 @@ class ShimmerContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        itemCount: 8,
+        itemCount: 12,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            childAspectRatio: 12 / 9,
+            childAspectRatio: 1,
             crossAxisSpacing: 16,
             mainAxisSpacing: 16),
         itemBuilder: (BuildContext context, int index) {
