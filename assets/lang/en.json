@@ -102,5 +102,7 @@
     "coming_soon": "Coming Soon...",
     "xp": "XP",
     "type" : "Type",
-    "description" : "Description"
+    "description" : "Description",
+    "internal_ads": "Internal Ads",
+    "external_ads": "External Ads"
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/assets_data.dart';
+import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/widgets/custom_app_bar.dart';
 import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
@@ -19,11 +20,12 @@ class AllAds extends StatefulWidget {
 }
 
 class _AllAdsState extends State<AllAds> {
+  int currentTab = 0; // 0 = internal, 1 = external
   @override
   void initState() {
     super.initState();
     context.read<AdsCubit>().resetPagination();
-    context.read<AdsCubit>().getAds(adsType: 0); // 0 = internal ads
+    context.read<AdsCubit>().getAllAds();
   }
 
   @override
@@ -39,24 +41,107 @@ class _AllAdsState extends State<AllAds> {
                   title: "all_ads".tr(context),
                   backBtn: true,
                 ),
-                SizedBox(
-                  height: kSizedBoxHeight,
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: kSizedBoxHeight / 2),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                          margin: const EdgeInsets.symmetric(horizontal: 4),
+                          decoration: BoxDecoration(
+                            color: currentTab == 0
+                                ? AppColors.primaryColors
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: currentTab == 0
+                                  ? AppColors.primaryColors
+                                  : Colors.grey.withOpacity(0.5),
+                              width: 1.5,
+                            ),
+                          ),
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            onPressed: () => setState(() => currentTab = 0),
+                            child: Text(
+                              "internal_ads".tr(context),
+                              style: TextStyle(
+                                color: currentTab == 0
+                                    ? Colors.white
+                                    : Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                          margin: const EdgeInsets.symmetric(horizontal: 4),
+                          decoration: BoxDecoration(
+                            color: currentTab == 1
+                                ? AppColors.primaryColors
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: currentTab == 1
+                                  ? AppColors.primaryColors
+                                  : Colors.grey.withOpacity(0.5),
+                              width: 1.5,
+                            ),
+                          ),
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            onPressed: () => setState(() => currentTab = 1),
+                            child: Text(
+                              "external_ads".tr(context),
+                              style: TextStyle(
+                                color: currentTab == 1
+                                    ? Colors.white
+                                    : Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 BlocBuilder<AdsCubit, AdsState>(builder: (context, state) {
                   if (state.status == AdsStatus.failure) {
                     return CustomErrorWidget(
                         errorMessage: state.errorMessage!,
-                        onRetry: () =>
-                            context.read<AdsCubit>().getAds(adsType: 0));
+                        onRetry: () => context.read<AdsCubit>().getAllAds());
                   } else if (state.status == AdsStatus.success) {
-                    return state.adsInt.isEmpty
+                    final currentAds =
+                        currentTab == 0 ? state.adsInt : state.adsExt;
+                    return currentAds.isEmpty
                         ? Expanded(
                             child: Text("no_data".tr(context),
                                 style: TextStyle(color: Colors.white)),
                           )
                         : Expanded(
                             child: AdsBtn(
-                            ads: state.adsInt,
+                            ads: currentAds,
                           ));
                   } else {
                     return CustomCircualProgressIndicator();

@@ -29,7 +29,7 @@ class AdsState extends Equatable {
     return AdsState(
       status: status ?? this.status,
       adsInt: adsInt ?? this.adsInt,
-      adsExt: adsInt ?? this.adsExt,
+      adsExt: adsExt ?? this.adsExt,
       hasReachedMax: hasReachedMax ?? this.hasReachedMax,
       currentPage: currentPage ?? this.currentPage,
       errorMessage: errorMessage ?? this.errorMessage,
