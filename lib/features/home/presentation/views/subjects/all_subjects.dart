@@ -6,11 +6,9 @@ import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/utils/styles.dart';
 import 'package:mk_academy/core/widgets/custom_app_bar.dart';
-import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
 import 'package:mk_academy/core/widgets/shimmer_container.dart';
 import 'package:mk_academy/features/home/presentation/views/subjects/show_subject.dart';
-import 'package:mk_academy/features/home/presentation/views/widgets/shimmer/ads_section_shimmer.dart';
 import 'package:mk_academy/features/test_your_self/presentation/views/widgets/back_ground_image.dart';
 
 class AllSubjects extends StatefulWidget {
