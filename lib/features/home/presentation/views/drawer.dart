@@ -48,14 +48,10 @@ class CustomDrawer extends StatelessWidget {
           // ),
           GestureDetector(
             onTap: () {
-              if (isGuest) {
-                showLoginDialog(context);
-              } else {
-                Navigator.of(context).push(goRoute(
-                    x: LeaderboardPage(
-                  backBtn: true,
-                )));
-              }
+              Navigator.of(context).push(goRoute(
+                  x: LeaderboardPage(
+                backBtn: true,
+              )));
             },
             child: CustomDrawerBtn(
               title: "leaderboard".tr(context),
