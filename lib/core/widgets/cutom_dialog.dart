@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/constats.dart';
 
-
 import '../utils/colors.dart';
 
 class CustomDialog extends StatelessWidget {
@@ -44,7 +43,7 @@ class CustomDialog extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
+              color: Colors.black.withOpacity(0.1),
               blurRadius: 16,
               offset: const Offset(0, 8),
             ),

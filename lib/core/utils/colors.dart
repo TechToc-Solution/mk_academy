@@ -9,5 +9,5 @@ class AppColors {
   static const Color avatarColor = Color(0xffD9D9D9);
   static const Color textColor = Color(0xffEBEBEB);
   static const Color baseShimmerColor = Color(0xff2D3548);
-  static Color highLightShimmerColor = Color(0xff3E475A).withValues(alpha: 0.6);
+  static Color highLightShimmerColor = Color(0xff3E475A).withOpacity(0.6);
 }

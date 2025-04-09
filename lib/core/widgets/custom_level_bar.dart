@@ -114,7 +114,7 @@ class _AnimatedCompactLevelBarState extends State<_AnimatedCompactLevelBar>
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.05),
+              color: Colors.white.withOpacity(0.05),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -134,7 +134,7 @@ class _AnimatedCompactLevelBarState extends State<_AnimatedCompactLevelBar>
                     Text(
                       '${"level".tr(context)} $nextLevel',
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.7),
+                        color: Colors.white.withOpacity(0.7),
                         fontSize: 12,
                       ),
                     ),
@@ -153,8 +153,7 @@ class _AnimatedCompactLevelBarState extends State<_AnimatedCompactLevelBar>
                               height: 8,
                               width: constraints.maxWidth,
                               decoration: BoxDecoration(
-                                color: AppColors.avatarColor
-                                    .withValues(alpha: 0.2),
+                                color: AppColors.avatarColor.withOpacity(0.2),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                             ),
@@ -167,8 +166,7 @@ class _AnimatedCompactLevelBarState extends State<_AnimatedCompactLevelBar>
                                 gradient: LinearGradient(
                                   colors: [
                                     AppColors.primaryColors,
-                                    AppColors.primaryColors
-                                        .withValues(alpha: 0.7),
+                                    AppColors.primaryColors.withOpacity(0.7),
                                   ],
                                 ),
                                 borderRadius: BorderRadius.circular(4),
@@ -184,7 +182,7 @@ class _AnimatedCompactLevelBarState extends State<_AnimatedCompactLevelBar>
                                 boxShadow: [
                                   BoxShadow(
                                     color: AppColors.primaryColors
-                                        .withValues(alpha: 0.8),
+                                        .withOpacity(0.8),
                                     blurRadius: 4,
                                     spreadRadius: 1,
                                   ),
@@ -206,7 +204,7 @@ class _AnimatedCompactLevelBarState extends State<_AnimatedCompactLevelBar>
                                     boxShadow: [
                                       BoxShadow(
                                         color: AppColors.primaryColors
-                                            .withValues(alpha: 0.8),
+                                            .withOpacity(0.8),
                                         blurRadius: 4,
                                         spreadRadius: 1,
                                       ),
@@ -226,7 +224,7 @@ class _AnimatedCompactLevelBarState extends State<_AnimatedCompactLevelBar>
                   child: Text(
                     "$currentPoints/$maxPoints ${"xp".tr(context)}",
                     style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.6),
+                      color: Colors.white.withOpacity(0.6),
                       fontSize: 10,
                     ),
                   ),
@@ -244,7 +242,7 @@ class _AnimatedCompactLevelBarState extends State<_AnimatedCompactLevelBar>
       children: [
         CircleAvatar(
           radius: 36,
-          backgroundColor: AppColors.primaryColors.withValues(alpha: 0.2),
+          backgroundColor: AppColors.primaryColors.withOpacity(0.2),
           child: const Icon(
             Icons.person,
             size: 36,
@@ -339,10 +337,10 @@ class _AnimatedLevelBarState extends State<_AnimatedLevelBar>
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.1),
+        color: Colors.white.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.2),
+          color: Colors.white.withOpacity(0.2),
           width: 1,
         ),
       ),
@@ -365,7 +363,7 @@ class _AnimatedLevelBarState extends State<_AnimatedLevelBar>
                     height: 16,
                     width: constraints.maxWidth,
                     decoration: BoxDecoration(
-                      color: AppColors.avatarColor.withValues(alpha: 0.3),
+                      color: AppColors.avatarColor.withOpacity(0.3),
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
@@ -384,8 +382,7 @@ class _AnimatedLevelBarState extends State<_AnimatedLevelBar>
                               gradient: LinearGradient(
                                 colors: [
                                   AppColors.primaryColors,
-                                  AppColors.primaryColors
-                                      .withValues(alpha: 0.7),
+                                  AppColors.primaryColors.withOpacity(0.7),
                                 ],
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
@@ -406,7 +403,7 @@ class _AnimatedLevelBarState extends State<_AnimatedLevelBar>
                                   boxShadow: [
                                     BoxShadow(
                                       color: AppColors.primaryColors
-                                          .withValues(alpha: 0.8),
+                                          .withOpacity(0.8),
                                       blurRadius: 8,
                                       spreadRadius: 2,
                                     ),
@@ -429,7 +426,7 @@ class _AnimatedLevelBarState extends State<_AnimatedLevelBar>
                                   boxShadow: [
                                     BoxShadow(
                                       color: AppColors.primaryColors
-                                          .withValues(alpha: 0.8),
+                                          .withOpacity(0.8),
                                       blurRadius: 8,
                                       spreadRadius: 2,
                                     ),
@@ -449,7 +446,7 @@ class _AnimatedLevelBarState extends State<_AnimatedLevelBar>
                 child: Text(
                   "${widget.userModel.points}/${widget.userModel.maxPoints} ${"xp".tr(context)}",
                   style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.8),
+                    color: Colors.white.withOpacity(0.8),
                     fontSize: 12,
                   ),
                 ),
@@ -466,7 +463,7 @@ class _AnimatedLevelBarState extends State<_AnimatedLevelBar>
       children: [
         CircleAvatar(
           radius: 36,
-          backgroundColor: AppColors.primaryColors.withValues(alpha: 0.2),
+          backgroundColor: AppColors.primaryColors.withOpacity(0.2),
           child: const Icon(
             Icons.person,
             size: 36,
@@ -494,11 +491,11 @@ class _AnimatedLevelBarState extends State<_AnimatedLevelBar>
       decoration: BoxDecoration(
         color: isNextLevel
             ? Colors.transparent
-            : AppColors.primaryColors.withValues(alpha: 0.2),
+            : AppColors.primaryColors.withOpacity(0.2),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: isNextLevel
-              ? Colors.white.withValues(alpha: 0.3)
+              ? Colors.white.withOpacity(0.3)
               : AppColors.primaryColors,
           width: 1.5,
         ),

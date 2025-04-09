@@ -54,7 +54,7 @@ class _CustomAdvertiseListState extends State<CustomAdvertiseList> {
                 shape: BoxShape.circle,
                 color: _currentPage == index
                     ? AppColors.primaryColors
-                    : Colors.grey.withValues(alpha: 0.5),
+                    : Colors.grey.withOpacity(0.5),
               ),
             );
           }).toList(),
