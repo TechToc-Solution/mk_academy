@@ -21,6 +21,8 @@ class CustomTopNavBar extends StatelessWidget {
       color: AppColors.backgroundColor,
       child: TabBar(
         controller: tabController,
+        tabAlignment: TabAlignment.center,
+        isScrollable: true,
         indicatorColor: AppColors.primaryColors,
         labelColor: AppColors.primaryColors,
         unselectedLabelColor: AppColors.textColor,

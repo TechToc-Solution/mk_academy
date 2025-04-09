@@ -33,7 +33,8 @@ class LevelSection extends StatelessWidget {
                 color: AppColors.backgroundColor, fontWeight: FontWeight.w700),
             child: Text(
               "how_increase_level".tr(context),
-              style: Styles.textStyle15.copyWith(color: AppColors.textColor),
+              style: Styles.textStyle15
+                  .copyWith(color: AppColors.textButtonColors),
             ),
           ),
         ],

@@ -31,7 +31,10 @@ class CustomLevelBar extends StatelessWidget {
         } else if (state is ProfileError) {
           return const SizedBox.shrink();
         }
-        return const Center(child: CircularProgressIndicator());
+        return Center(
+            child: compact
+                ? LinearProgressIndicator()
+                : CircularProgressIndicator());
       },
     );
   }
