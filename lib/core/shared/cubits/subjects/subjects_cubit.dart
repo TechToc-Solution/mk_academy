@@ -15,7 +15,7 @@ class SubjectsCubit extends Cubit<SubjectsState> {
     data.fold((failure) {
       emit(GetSubjectsError(erroMsg: failure.message));
     }, (subjects) {
-      emit(GetSubjectsSucess(subjectsData: subjects.subjectData!));
+      emit(GetSubjectsSuccess(subjectsData: subjects.subjectData!));
     });
   }
 }

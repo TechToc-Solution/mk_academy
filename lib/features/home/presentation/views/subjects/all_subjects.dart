@@ -49,7 +49,7 @@ class _AllSubjectsState extends State<AllSubjects> {
                         errorMessage: state.erroMsg,
                         onRetry: () =>
                             context.read<SubjectsCubit>().getSubjects());
-                  } else if (state is GetSubjectsSucess) {
+                  } else if (state is GetSubjectsSuccess) {
                     return state.subjectsData.isEmpty
                         ? Expanded(
                             child: Center(

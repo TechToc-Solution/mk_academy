@@ -48,7 +48,7 @@ class _CoursesPageState extends State<CoursesPage>
               return CustomErrorWidget(
                   errorMessage: state.erroMsg,
                   onRetry: () => context.read<SubjectsCubit>().getSubjects());
-            } else if (state is GetSubjectsSucess) {
+            } else if (state is GetSubjectsSuccess) {
               mainSubjects = state.subjectsData;
 
               if (!_isInitialized) {

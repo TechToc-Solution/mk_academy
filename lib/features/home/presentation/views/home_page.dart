@@ -72,7 +72,7 @@ class HomePage extends StatelessWidget {
                               }
                               // Success State
                               else if (studentsState is LeaderboardSuccess &&
-                                  subjectsState is GetSubjectsSucess &&
+                                  subjectsState is GetSubjectsSuccess &&
                                   adsState.status == AdsStatus.success) {
                                 return Expanded(
                                   child: HomePageBody(

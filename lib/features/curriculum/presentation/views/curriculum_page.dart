@@ -45,7 +45,7 @@ class _CurriculumPageState extends State<CurriculumPage>
           }
         },
         builder: (context, state) {
-          if (state is GetSubjectsSucess) {
+          if (state is GetSubjectsSuccess) {
             mainSubjects = state.subjectsData;
 
             if (!_isInitialized) {
@@ -83,14 +83,17 @@ class _CurriculumPageState extends State<CurriculumPage>
                   height: 8,
                 ),
                 if (!isGuest)
-                  CustomLevelBar(
-                    compact: true,
-                    showProfile: false,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: CustomLevelBar(
+                      compact: true,
+                      showProfile: false,
+                    ),
                   ),
                 if (mainSubjects[selectedMainIndex].subjects!.isNotEmpty)
                   Flexible(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: CurriculumPageBody(
                           subjects: mainSubjects[selectedMainIndex].subjects!,
                           tabController: _subTabController!),

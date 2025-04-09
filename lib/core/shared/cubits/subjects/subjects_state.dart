@@ -9,10 +9,10 @@ sealed class SubjectsState extends Equatable {
 
 final class SubjectsInitial extends SubjectsState {}
 
-final class GetSubjectsSucess extends SubjectsState {
+final class GetSubjectsSuccess extends SubjectsState {
   final List<SubjectsData> subjectsData;
 
-  const GetSubjectsSucess({required this.subjectsData});
+  const GetSubjectsSuccess({required this.subjectsData});
 }
 
 final class GetSubjectsError extends SubjectsState {
