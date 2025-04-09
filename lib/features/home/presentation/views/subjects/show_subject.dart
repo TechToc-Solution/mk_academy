@@ -42,7 +42,8 @@ class ShowSubSubjects extends StatelessWidget {
                     child: Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: kSizedBoxHeight),
-                        child: subject.subjects == null
+                        child: subject.subjects == null ||
+                                subject.subjects!.isEmpty
                             ? Center(
                                 child: Text(
                                   "no_data".tr(context),
