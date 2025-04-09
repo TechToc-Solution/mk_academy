@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:mk_academy/core/shared/cubits/solve_quizzes/solve_quizzes_cubit.dart';
+import 'package:mk_academy/core/shared/repos/solve_quizzes/solve_quizzes_repo.dart';
 // import 'package:mk_academy/core/notification_services/notification.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/locale/locale_cubit.dart';
@@ -79,6 +81,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 ProfileCubit(getit.get<ProfileRepo>())..getProfile()),
+        BlocProvider(
+            create: (context) =>
+                SolveQuizzesCubit(getit.get<SolveQuizzesRepo>())),
       ],
       child: BlocBuilder<LocaleCubit, ChangeLocaleState>(
         builder: (context, state) {

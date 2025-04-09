@@ -82,6 +82,8 @@ class TestDetailsContent extends StatelessWidget {
                   builder: (context) => QuestionsTestPage(
                         questions: details.questions!,
                         asnwerPath: details.answer,
+                        quizId: details.id,
+                        isCurriculumQuizz: false,
                       )));
         } else {
           // Handle purchase logic

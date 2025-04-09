@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/assets_data.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/styles.dart';
+import '../../../../core/shared/cubits/solve_quizzes/solve_quizzes_cubit.dart';
 import '../../../../core/shared/models/questions_model.dart';
 import 'widgets/questions_test/aswer_option.dart';
 import 'widgets/questions_test/progress_dots.dart';
@@ -14,8 +16,14 @@ import 'widgets/questions_test/timer_section.dart';
 class QuestionsTestPage extends StatefulWidget {
   final List<Question> questions;
   final String? asnwerPath;
+  final int quizId;
+  final bool isCurriculumQuizz;
   const QuestionsTestPage(
-      {super.key, required this.questions, this.asnwerPath});
+      {super.key,
+      required this.questions,
+      this.asnwerPath,
+      required this.quizId,
+      required this.isCurriculumQuizz});
   static const String routeName = 'questionsTest';
 
   @override
@@ -29,10 +37,51 @@ class QuestionsTestPageState extends State<QuestionsTestPage> {
   int _remainingTime = 0;
   int _totalMarks = 0;
   int _quizScore = 0;
+  late int _quizId;
+
   @override
   void initState() {
     super.initState();
+    _quizId = widget.quizId; // Initialize quiz ID
     _initializeTimer();
+  }
+
+  void _handleTimeExpired() {
+    final currentQuestion = widget.questions[_currentQuestionIndex];
+
+    // Find first incorrect option or default to first option
+    final incorrectOption = currentQuestion.options.firstWhere(
+      (option) => !option.isCorrect,
+      orElse: () => currentQuestion.options.first,
+    );
+
+    // Store default incorrect answer
+    context.read<SolveQuizzesCubit>().storeAnswer(
+          quizId: _quizId,
+          questionIndex: _currentQuestionIndex,
+          optionId: incorrectOption.id,
+          duration: currentQuestion.duration == 0
+              ? currentQuestion.duration + 1
+              : currentQuestion.duration,
+        );
+
+    _nextQuestion(false);
+  }
+
+  void _onAnswerSelected(int index) {
+    final currentQuestion = widget.questions[_currentQuestionIndex];
+    final duration = currentQuestion.duration - _remainingTime;
+
+    context.read<SolveQuizzesCubit>().storeAnswer(
+          quizId: _quizId,
+          questionIndex: _currentQuestionIndex,
+          optionId: currentQuestion.options[index].id,
+          duration: duration == 0 ? duration + 1 : duration,
+        );
+
+    setState(() => _selectedAnswer = index);
+    _timer.cancel();
+    _nextQuestion(currentQuestion.options[index].isCorrect);
   }
 
   void _initializeTimer() {
@@ -51,10 +100,6 @@ class QuestionsTestPageState extends State<QuestionsTestPage> {
     });
   }
 
-  void _handleTimeExpired() {
-    _nextQuestion(false);
-  }
-
   void _nextQuestion(bool answeredCorrectly) {
     Future.delayed(const Duration(seconds: 1), () {
       if (mounted) {
@@ -69,34 +114,35 @@ class QuestionsTestPageState extends State<QuestionsTestPage> {
             _selectedAnswer = null;
             _initializeTimer();
           } else {
+            context.read<SolveQuizzesCubit>().submitQuizAnswers(
+                isCurriculumQuizz: widget.isCurriculumQuizz, quizId: _quizId);
+            context.read<SolveQuizzesCubit>().clearAnswers();
             Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => TestResultPage(
-                          score: _totalMarks,
-                          quizScore: _quizScore,
-                          answerPath: widget.asnwerPath,
-                        )));
+              context,
+              MaterialPageRoute(
+                builder: (context) => TestResultPage(
+                  score: _totalMarks,
+                  quizScore: _quizScore,
+                  answerPath: widget.asnwerPath,
+                ),
+              ),
+            );
           }
         });
       }
     });
   }
 
-  void _onAnswerSelected(int index) {
-    setState(() {
-      _selectedAnswer = index;
-      _timer.cancel();
-    });
-
-    final currentQuestion = widget.questions[_currentQuestionIndex];
-    bool isCorrect = currentQuestion.options[index].isCorrect;
-    _nextQuestion(isCorrect);
-  }
-
   @override
   void dispose() {
-    _timer.cancel();
+    // Submit answers if user exits early
+    if (_currentQuestionIndex < widget.questions.length - 1) {
+      final cubit = context.read<SolveQuizzesCubit>();
+      if (cubit.getQuizAnswers(_quizId)?.length == _currentQuestionIndex + 1) {
+        cubit.submitQuizAnswers(
+            isCurriculumQuizz: widget.isCurriculumQuizz, quizId: _quizId);
+      }
+    }
     super.dispose();
   }
 

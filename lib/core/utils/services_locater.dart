@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mk_academy/core/shared/repos/pay/pay_repo.dart';
 import 'package:mk_academy/core/shared/repos/pay/pay_repo_iplm.dart';
+import 'package:mk_academy/core/shared/repos/solve_quizzes/solve_quizzes_repo.dart';
 import 'package:mk_academy/features/auth/data/repos/delete_account_repo.dart/delete_aacount_repo_iplm.dart';
 import 'package:mk_academy/features/auth/data/repos/delete_account_repo.dart/delete_account_repo.dart';
 import 'package:mk_academy/features/auth/data/repos/token_repo/token_repo.dart';
@@ -28,6 +29,7 @@ import '../../features/leaderboard/data/repos/leaderboard_repo_iplm.dart';
 import '../../features/profile/data/repos/profile_repo.dart';
 import '../../features/profile/data/repos/profile_repo_iplm.dart';
 import '../Api_services/api_services.dart';
+import '../shared/repos/solve_quizzes/solve_quizzes_repo_iplm.dart';
 import '../shared/repos/subjects/subjects_repo.dart';
 import '../shared/repos/subjects/subjects_repo_iplm.dart';
 
@@ -83,4 +85,8 @@ void setupLocatorServices() {
 
   //pay singleton
   getit.registerSingleton<PayRepo>(PayRepoIplm(getit.get<ApiServices>()));
+
+  //Sovle quizzes singleton
+  getit.registerSingleton<SolveQuizzesRepo>(
+      SolveQuizzesRepoIplm(getit.get<ApiServices>()));
 }

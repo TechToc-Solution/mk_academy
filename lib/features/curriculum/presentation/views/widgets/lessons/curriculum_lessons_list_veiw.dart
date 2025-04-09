@@ -94,6 +94,8 @@ class CurriculumLessonListView extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => QuestionsTestPage(
                       questions: state.lesson.questions!,
+                      quizId: state.lesson.id,
+                      isCurriculumQuizz: true,
                     ),
                   ),
                 );

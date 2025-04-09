@@ -36,6 +36,8 @@ class Routes {
     ProfilePage.routeName: (context) => const ProfilePage(),
     QuestionsTestPage.routeName: (context) => const QuestionsTestPage(
           questions: [],
+          quizId: 0,
+          isCurriculumQuizz: false,
         ),
     TestResultPage.routeName: (context) => const TestResultPage(
           score: 0,
