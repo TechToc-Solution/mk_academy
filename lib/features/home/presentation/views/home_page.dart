@@ -54,7 +54,11 @@ class HomePage extends StatelessWidget {
                     SizedBox(
                       width: 8,
                     ),
-                    if (!isGuest) Expanded(child: CustomLevelBar()),
+                    if (!isGuest)
+                      Expanded(
+                          child: CustomLevelBar(
+                        compact: true,showProfile: false,
+                      )),
                   ],
                 ),
                 BlocBuilder<LeaderboardCubit, LeaderboardState>(

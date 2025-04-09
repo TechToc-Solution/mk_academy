@@ -24,7 +24,7 @@ class CustomDrawer extends StatelessWidget {
         children: [
           if (!isGuest)
             CustomLevelBar(
-              isDrawer: true,
+              compact: true,
             ),
           SizedBox(
             height: kSizedBoxHeight,

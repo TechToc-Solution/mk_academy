@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/core/widgets/custom_level_bar.dart';
 import 'package:mk_academy/features/auth/data/models/user_model.dart';
 
 import '../../../../../core/utils/colors.dart';
@@ -19,11 +20,10 @@ class LevelSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: kSizedBoxHeight),
-          _buildLevelInfoItem("current_level".tr(context), userModel.level!),
-          _buildLevelInfoItem('export_points'.tr(context),
-              "${userModel.points}/${userModel.maxPoints}xp"),
-          _buildProgressBar(userModel.points! / userModel.maxPoints!),
-          SizedBox(height: 40),
+          CustomLevelBar(
+            showProfile: false,
+          ),
+          SizedBox(height: 8),
           CustomButton(
             onPressed: () => _showDeleteDialog(context),
             verticalHieght: kVerticalPadding,
@@ -38,32 +38,6 @@ class LevelSection extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildLevelInfoItem(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(label,
-              style: Styles.textStyle18.copyWith(color: AppColors.textColor)),
-          Text(value,
-              style:
-                  Styles.textStyle18.copyWith(color: AppColors.primaryColors)),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildProgressBar(double progress) {
-    return LinearProgressIndicator(
-      value: progress,
-      backgroundColor: AppColors.avatarColor,
-      valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryColors),
-      minHeight: 12,
-      borderRadius: BorderRadius.circular(10),
     );
   }
 
