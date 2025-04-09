@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/widgets/custom_buttom_sheet.dart';
 import 'package:mk_academy/features/courses/data/model/courses_model.dart';
@@ -21,22 +22,39 @@ class CustomVideoUnitBtn extends StatelessWidget {
                 child: CustomVideoDetailsSheet(courseId: course.id!));
           },
           child: Container(
-            padding: EdgeInsets.all(8),
             margin: EdgeInsets.only(top: 4),
             decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: NetworkImage(course.image!), fit: BoxFit.cover),
               border: Border.all(color: AppColors.primaryColors, width: 2),
               borderRadius: BorderRadius.circular(16),
               color: AppColors.backgroundColor,
             ),
-            child: Center(
-                child: Text(
-              course.name!,
-              style: TextStyle(
-                  overflow: TextOverflow.ellipsis,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24),
-            )),
+            child: Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.black
+                    .withOpacity(0.4), // Adjust opacity (0.3 to 0.7)
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: LayoutBuilder(builder: (context, constraints) {
+                final fontSize =
+                    constraints.maxWidth / (course.name!.length / 2);
+                return Center(
+                    child: Text(
+                  course.name!,
+                  style: TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      shadows: [
+                        Shadow(color: Colors.black, blurRadius: 20),
+                        Shadow(color: AppColors.primaryColors, blurRadius: 5)
+                      ],
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: fontSize.clamp(12, 24)),
+                ));
+              }),
+            ),
           ),
         ),
         Row(
@@ -44,7 +62,9 @@ class CustomVideoUnitBtn extends StatelessWidget {
           children: [
             Container(
               padding: EdgeInsets.all(4),
-              color: AppColors.backgroundColor,
+              decoration: BoxDecoration(
+                  color: AppColors.backgroundColor,
+                  borderRadius: BorderRadius.circular(8)),
               child: Container(
                 height: 40,
                 width: 40,

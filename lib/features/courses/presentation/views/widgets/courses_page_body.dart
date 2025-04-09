@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mk_academy/core/utils/constats.dart';
 
 import '../../../../../core/shared/models/subjects_model.dart';
 import '../../../../../core/utils/services_locater.dart';
@@ -26,6 +27,9 @@ class CoursesPageBody extends StatelessWidget {
         CustomTopNavBar(
           subjects: subjects,
           tabController: _tabController,
+        ),
+        SizedBox(
+          height: kSizedBoxHeight / 2,
         ),
         Expanded(
             child: TabBarView(
