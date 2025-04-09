@@ -34,7 +34,7 @@ class CustomVideoUnitBtn extends StatelessWidget {
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: Colors.black
-                    .withOpacity(0.4), // Adjust opacity (0.3 to 0.7)
+                    .withValues(alpha: 0.4), // Adjust opacity (0.3 to 0.7)
                 borderRadius: BorderRadius.circular(16),
               ),
               child: LayoutBuilder(builder: (context, constraints) {

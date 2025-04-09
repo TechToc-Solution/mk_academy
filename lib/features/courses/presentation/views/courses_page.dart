@@ -85,7 +85,14 @@ class _CoursesPageState extends State<CoursesPage>
                   SizedBox(
                     height: 8,
                   ),
-                  if (!isGuest) CustomLevelBar(),
+                  if (!isGuest)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: CustomLevelBar(
+                        compact: true,
+                        showProfile: false,
+                      ),
+                    ),
                   if (mainSubjects[selectedMainIndex].subjects!.isNotEmpty)
                     Flexible(
                       child: Padding(

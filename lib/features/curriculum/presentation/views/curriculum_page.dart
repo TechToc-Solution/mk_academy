@@ -82,7 +82,11 @@ class _CurriculumPageState extends State<CurriculumPage>
                 SizedBox(
                   height: 8,
                 ),
-                if (!isGuest) CustomLevelBar(),
+                if (!isGuest)
+                  CustomLevelBar(
+                    compact: true,
+                    showProfile: false,
+                  ),
                 if (mainSubjects[selectedMainIndex].subjects!.isNotEmpty)
                   Flexible(
                     child: Padding(
