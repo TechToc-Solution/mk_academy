@@ -76,8 +76,7 @@ class MyApp extends StatelessWidget {
             create: (context) =>
                 SubjectsCubit(getit.get<SubjectsRepo>())..getSubjects()),
         BlocProvider(
-            create: (context) =>
-                AdsCubit(getit.get<AdsRepo>())..getAds(adsType: 0)),
+            create: (context) => AdsCubit(getit.get<AdsRepo>())..getAllAds()),
         BlocProvider(
             create: (context) =>
                 ProfileCubit(getit.get<ProfileRepo>())..getProfile()),

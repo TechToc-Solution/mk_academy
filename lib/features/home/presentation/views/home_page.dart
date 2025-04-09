@@ -114,7 +114,7 @@ class HomePage extends StatelessWidget {
     context.read<AdsCubit>().resetPagination();
     context.read<LeaderboardCubit>().getLeaderboard(loadMore: false);
     context.read<SubjectsCubit>().getSubjects();
-    context.read<AdsCubit>().getAds(adsType: 0);
+    context.read<AdsCubit>().getAllAds();
     isGuest ? null : context.read<ProfileCubit>().getProfile();
   }
 }
