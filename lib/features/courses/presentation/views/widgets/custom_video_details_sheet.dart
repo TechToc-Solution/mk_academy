@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/assets_data.dart';
+import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/core/utils/services_locater.dart';
@@ -48,32 +49,17 @@ class _CustomVideoDetailsSheetState extends State<CustomVideoDetailsSheet> {
             return Center(
               child: Column(
                 children: [
-                  CircleAvatar(
-                    onBackgroundImageError: (exception, stackTrace) {
-                      setState(() {
-                        hasError = true;
-                      });
-                    },
-                    backgroundImage: hasError
-                        ? AssetImage(AssetsData.logo)
-                        : NetworkImage(state.course!.image!),
-                  ),
-                  Text(
-                    state.course!.subject!,
-                    style: Styles.textStyle20.copyWith(color: Colors.white),
-                  ),
-                  Text(
-                    state.course!.courseMode!,
-                    style: Styles.textStyle20.copyWith(color: Colors.white),
-                  ),
-                  Text(
-                    state.course!.description!,
-                    style: Styles.textStyle20.copyWith(color: Colors.white),
-                  ),
-                  Text(
-                    "${state.course!.price.toString()} ${"sp".tr(context)}",
-                    style: Styles.textStyle20.copyWith(color: Colors.white),
-                  ),
+                  _buildDetailItem(Icons.category, "subject".tr(context),
+                      state.course!.subject!, false),
+                  _buildDetailItem(Icons.mode, "type".tr(context),
+                      state.course!.courseMode!, false),
+                  _buildDetailItem(Icons.description, "description".tr(context),
+                      state.course!.description!, false),
+                  _buildDetailItem(
+                      Icons.category,
+                      "price".tr(context),
+                      "${state.course!.price.toString()} ${"sp".tr(context)}",
+                      false),
                   CustomButton(
                       onPressed: () {
                         if (isGuest) {
@@ -133,6 +119,39 @@ class _CustomVideoDetailsSheetState extends State<CustomVideoDetailsSheet> {
           }
           return Center(child: CustomCircualProgressIndicator());
         },
+      ),
+    );
+  }
+
+  Widget _buildDetailItem(
+      IconData icon, String title, String value, bool underTilte) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+          vertical: kVerticalPadding / 2, horizontal: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, color: AppColors.primaryColors),
+              const SizedBox(width: 10),
+              Text('$title: ',
+                  style: Styles.textStyle16.copyWith(
+                      fontWeight: FontWeight.bold, color: Colors.white)),
+              if (!underTilte)
+                Text(
+                  value,
+                  style:
+                      Styles.textStyle16.copyWith(color: AppColors.avatarColor),
+                ),
+            ],
+          ),
+          if (underTilte)
+            Text(
+              value,
+              style: Styles.textStyle16.copyWith(color: AppColors.avatarColor),
+            ),
+        ],
       ),
     );
   }
