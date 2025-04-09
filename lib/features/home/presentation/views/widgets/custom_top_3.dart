@@ -74,18 +74,7 @@ class CustomTopThreeItem extends StatelessWidget {
                           title: students[i].name!,
                           color: Colors.amber.shade700,
                           level: students[i].level!),
-                  // CustomUserShow(
-                  //     top: 2,
-                  //     title: "البطل الثاني",
-                  //     image: AssetsData.medal2,
-                  //     color: Colors.grey.shade600,
-                  //     level: 29),
-                  // CustomUserShow(
-                  //     top: 3,
-                  //     title: "البطل الثالث",
-                  //     image: AssetsData.medal3,
-                  //     color: Colors.brown.shade600,
-                  //     level: 28),
+      
                 ],
               ),
             ),

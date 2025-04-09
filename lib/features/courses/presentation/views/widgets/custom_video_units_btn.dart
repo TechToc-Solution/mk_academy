@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:mk_academy/core/utils/assets_data.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/widgets/custom_buttom_sheet.dart';
 import 'package:mk_academy/features/courses/data/model/courses_model.dart';
 import 'package:mk_academy/features/courses/presentation/views/widgets/custom_video_details_sheet.dart';
 
-class CustomVideoUnitBtn extends StatelessWidget {
+class CustomVideoUnitBtn extends StatefulWidget {
   const CustomVideoUnitBtn({super.key, required this.course});
   final Courses course;
+
+  @override
+  State<CustomVideoUnitBtn> createState() => _CustomVideoUnitBtnState();
+}
+
+class _CustomVideoUnitBtnState extends State<CustomVideoUnitBtn> {
+  bool _hasError = false;
 
   @override
   Widget build(BuildContext context) {
@@ -16,43 +23,53 @@ class CustomVideoUnitBtn extends StatelessWidget {
         GestureDetector(
           onTap: () {
             CustomBottomSheet.show(
-                title: course.name,
+                title: widget.course.name,
                 backgroundColor: AppColors.backgroundColor,
                 context: context,
-                child: CustomVideoDetailsSheet(courseId: course.id!));
+                child: CustomVideoDetailsSheet(courseId: widget.course.id!));
           },
           child: Container(
-            margin: EdgeInsets.only(top: 4),
+            margin: const EdgeInsets.only(top: 4),
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: NetworkImage(course.image!), fit: BoxFit.cover),
+                onError: (exception, stackTrace) {
+                  setState(() {
+                    _hasError = true;
+                  });
+                },
+                image: _hasError
+                    ? AssetImage(AssetsData.logo)
+                    : NetworkImage(widget.course.image!),
+                fit: BoxFit.fill,
+              ),
               border: Border.all(color: AppColors.primaryColors, width: 2),
               borderRadius: BorderRadius.circular(16),
               color: AppColors.backgroundColor,
             ),
             child: Container(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.black
-                    .withValues(alpha: 0.4), // Adjust opacity (0.3 to 0.7)
+                color: Colors.black.withAlpha(102),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: LayoutBuilder(builder: (context, constraints) {
                 final fontSize =
-                    constraints.maxWidth / (course.name!.length / 2);
+                    constraints.maxWidth / (widget.course.name!.length / 2);
                 return Center(
-                    child: Text(
-                  course.name!,
-                  style: TextStyle(
+                  child: Text(
+                    widget.course.name!,
+                    style: TextStyle(
                       overflow: TextOverflow.ellipsis,
-                      shadows: [
+                      shadows: const [
                         Shadow(color: Colors.black, blurRadius: 20),
                         Shadow(color: AppColors.primaryColors, blurRadius: 5)
                       ],
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: fontSize.clamp(12, 24)),
-                ));
+                      fontSize: fontSize.clamp(12, 24),
+                    ),
+                  ),
+                );
               }),
             ),
           ),
@@ -61,17 +78,19 @@ class CustomVideoUnitBtn extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              padding: EdgeInsets.all(4),
+              padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
-                  color: AppColors.backgroundColor,
-                  borderRadius: BorderRadius.circular(8)),
+                color: AppColors.backgroundColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
               child: Container(
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
-                    color: AppColors.primaryColors,
-                    borderRadius: BorderRadius.circular(8)),
-                child: Icon(
+                  color: AppColors.primaryColors,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Icon(
                   Icons.featured_play_list,
                   size: 30,
                 ),

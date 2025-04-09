@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/core/utils/assets_data.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/features/home/presentation/views/ads/all_ads.dart';
 
 import '../../../data/model/ads_model.dart';
 
-class OffersSection extends StatelessWidget {
+class OffersSection extends StatefulWidget {
   final List<Ads> ads;
   const OffersSection({
     super.key,
     required this.ads,
   });
 
+  @override
+  State<OffersSection> createState() => _OffersSectionState();
+}
+
+class _OffersSectionState extends State<OffersSection> {
+  bool hasError = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -43,7 +50,7 @@ class OffersSection extends StatelessWidget {
           height: 8,
         ),
         GridView.builder(
-            itemCount: ads.length,
+            itemCount: widget.ads.length,
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -55,7 +62,13 @@ class OffersSection extends StatelessWidget {
               return Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage(ads[index].image!), fit: BoxFit.fill),
+                      onError: (exception, stackTrace) {
+                        hasError = true;
+                      },
+                      image: hasError
+                          ? AssetImage(AssetsData.logo)
+                          : NetworkImage(widget.ads[index].image!),
+                      fit: BoxFit.fill),
                   borderRadius: BorderRadius.circular(8),
                   color: Colors.white,
                 ),

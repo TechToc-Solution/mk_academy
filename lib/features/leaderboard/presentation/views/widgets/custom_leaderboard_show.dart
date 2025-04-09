@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/assets_data.dart';
 
 import '../../../data/models/students_leaderboard_model.dart';
@@ -25,7 +26,7 @@ class CustomLeaderboardShow extends StatelessWidget {
         style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
       ),
       subtitle: Text(
-        students[index].level!,
+        "${"level".tr(context)} ${students[index].level!}",
         style: TextStyle(color: Colors.white),
       ),
       trailing: index == 0

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/assets_data.dart';
 
 class CustomUserShow extends StatelessWidget {
@@ -22,7 +23,7 @@ class CustomUserShow extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
             spreadRadius: 1,
             blurRadius: 4,
             offset: Offset(0, 2),
@@ -49,9 +50,10 @@ class CustomUserShow extends StatelessWidget {
             ),
           ),
           Text(
-            level.toString(),
+            overflow: TextOverflow.ellipsis,
+            "${"level".tr(context)} ${level.toString()}",
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 12,
               fontWeight: FontWeight.w600,
               color: Colors.black87,
             ),

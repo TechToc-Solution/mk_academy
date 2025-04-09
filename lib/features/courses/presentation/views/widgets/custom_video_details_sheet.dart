@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/core/utils/assets_data.dart';
 import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/core/utils/services_locater.dart';
@@ -19,14 +20,22 @@ import '../../../../../core/shared/cubits/pay/pay_cubit.dart';
 import '../../../../../core/shared/repos/pay/pay_repo.dart';
 import '../../../../../core/widgets/custom_pay_dailog.dart';
 
-class CustomVideoDetailsSheet extends StatelessWidget {
+class CustomVideoDetailsSheet extends StatefulWidget {
   const CustomVideoDetailsSheet({super.key, required this.courseId});
   final int courseId;
+
+  @override
+  State<CustomVideoDetailsSheet> createState() =>
+      _CustomVideoDetailsSheetState();
+}
+
+class _CustomVideoDetailsSheetState extends State<CustomVideoDetailsSheet> {
+  bool hasError = false;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => OneCourseCubit(getit.get<CoursesRepo>())
-        ..getCourse(courseId: courseId),
+        ..getCourse(courseId: widget.courseId),
       child: BlocBuilder<OneCourseCubit, OneCourseState>(
         builder: (context, state) {
           if (state.status == CourseStatus.failure) {
@@ -34,13 +43,20 @@ class CustomVideoDetailsSheet extends StatelessWidget {
                 errorMessage: state.errorMessage!,
                 onRetry: () => context
                     .read<OneCourseCubit>()
-                    .getCourse(courseId: courseId));
+                    .getCourse(courseId: widget.courseId));
           } else if (state.status == CourseStatus.success) {
             return Center(
               child: Column(
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage(state.course!.image!),
+                    onBackgroundImageError: (exception, stackTrace) {
+                      setState(() {
+                        hasError = true;
+                      });
+                    },
+                    backgroundImage: hasError
+                        ? AssetImage(AssetsData.logo)
+                        : NetworkImage(state.course!.image!),
                   ),
                   Text(
                     state.course!.subject!,
@@ -68,10 +84,10 @@ class CustomVideoDetailsSheet extends StatelessWidget {
                         } else if (state.course!.canShow!) {
                           context
                               .read<VideosCubit>()
-                              .getVideos(courseId: courseId);
+                              .getVideos(courseId: widget.courseId);
                           Navigator.of(context).push(goRoute(
                               x: ShowPlayList(
-                            courseId: courseId,
+                            courseId: widget.courseId,
                           )));
                         } else {
                           showDialog(
@@ -79,7 +95,8 @@ class CustomVideoDetailsSheet extends StatelessWidget {
                             builder: (context) => BlocProvider(
                               create: (context) =>
                                   PayCubit(GetIt.instance<PayRepo>()),
-                              child: PaymentCodeDialog(courseId: courseId),
+                              child:
+                                  PaymentCodeDialog(courseId: widget.courseId),
                             ),
                           );
                         }

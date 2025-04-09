@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/core/utils/assets_data.dart';
 import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/widgets/custom_app_bar.dart';
 import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
@@ -70,15 +71,22 @@ class _AllAdsState extends State<AllAds> {
   }
 }
 
-class AdsBtn extends StatelessWidget {
+class AdsBtn extends StatefulWidget {
   const AdsBtn({super.key, required this.ads});
   final List<Ads> ads;
+
+  @override
+  State<AdsBtn> createState() => _AdsBtnState();
+}
+
+class _AdsBtnState extends State<AdsBtn> {
+  bool hasError = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: kSizedBoxHeight),
         child: GridView.builder(
-            itemCount: ads.length,
+            itemCount: widget.ads.length,
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -90,7 +98,12 @@ class AdsBtn extends StatelessWidget {
               return Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage(ads[index].image!),
+                      onError: (exception, stackTrace) {
+                        hasError = true;
+                      },
+                      image: hasError
+                          ? AssetImage(AssetsData.logo)
+                          : NetworkImage(widget.ads[index].image!),
                       fit: BoxFit.cover),
                   borderRadius: BorderRadius.circular(8),
                   color: Colors.white,
