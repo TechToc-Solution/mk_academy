@@ -80,11 +80,12 @@ class QuestionsTestPageState extends State<QuestionsTestPage> {
         );
 
     setState(() => _selectedAnswer = index);
-    _timer.cancel();
+    if (!widget.isCurriculumQuizz) _timer.cancel();
     _nextQuestion(currentQuestion.options[index].isCorrect);
   }
 
   void _initializeTimer() {
+    if (widget.isCurriculumQuizz) return;
     _remainingTime = widget.questions[_currentQuestionIndex].duration;
     _startTimer();
   }
@@ -157,7 +158,8 @@ class QuestionsTestPageState extends State<QuestionsTestPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TimerSection(timeLeft: _remainingTime),
+              if (!widget.isCurriculumQuizz)
+                TimerSection(timeLeft: _remainingTime),
               const SizedBox(height: 16),
               Center(
                 child: Text(
