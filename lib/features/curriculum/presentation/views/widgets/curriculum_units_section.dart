@@ -19,37 +19,44 @@ class CurriculumUnitsSection extends StatelessWidget {
     return BlocBuilder<CurriculumCubit, CurriculumState>(
       builder: (context, state) {
         if (state is UnitsSuccess) {
-          return GridView.builder(
-              itemCount: state.units.length,
-              shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 12 / 9,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16),
-              itemBuilder: (BuildContext context, int index) {
-                return CustomCategoryUnitBtn(
-                    unitText: state.units[index].name,
-                    onTap: () {
-                      if (isGuest) {
-                        showCustomDialog(
-                          context: context,
-                          title: "req_login".tr(context),
-                          description: "you_should_login".tr(context),
-                          primaryButtonText: "login".tr(context),
-                          onPrimaryAction: () {
-                            Navigator.pushReplacementNamed(
-                                context, LoginPage.routeName);
-                          },
-                        );
-                      } else {
-                        Navigator.of(context).push(goRoute(
-                            x: CurriculumLessonsPage(
-                          unit: state.units[index],
-                        )));
-                      }
-                    });
-              });
+          return state.units.isEmpty
+              ? Center(
+                  child: Text(
+                    "no_data".tr(context),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
+              : GridView.builder(
+                  itemCount: state.units.length,
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 12 / 9,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 16),
+                  itemBuilder: (BuildContext context, int index) {
+                    return CustomCategoryUnitBtn(
+                        unitText: state.units[index].name,
+                        onTap: () {
+                          if (isGuest) {
+                            showCustomDialog(
+                              context: context,
+                              title: "req_login".tr(context),
+                              description: "you_should_login".tr(context),
+                              primaryButtonText: "login".tr(context),
+                              onPrimaryAction: () {
+                                Navigator.pushReplacementNamed(
+                                    context, LoginPage.routeName);
+                              },
+                            );
+                          } else {
+                            Navigator.of(context).push(goRoute(
+                                x: CurriculumLessonsPage(
+                              unit: state.units[index],
+                            )));
+                          }
+                        });
+                  });
         } else if (state is UnitsError) {
           return CustomErrorWidget(
             errorMessage: state.errorMsg,

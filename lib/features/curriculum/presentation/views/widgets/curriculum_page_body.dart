@@ -24,7 +24,6 @@ class CurriculumPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-       
         CustomTopNavBar(
           subjects: subjects,
           tabController: _tabController,

@@ -57,13 +57,18 @@ class _CurriculumPageState extends State<CurriculumPage>
                   TabController(length: firstSubSubjects.length, vsync: this);
 
               _mainTabController.addListener(() {
+                if (_mainTabController.indexIsChanging) return;
+
                 setState(() {
                   selectedMainIndex = _mainTabController.index;
-                  _subTabController?.dispose();
+
                   final newSubSubjects =
                       mainSubjects[selectedMainIndex].subjects ?? [];
-                  _subTabController =
-                      TabController(length: newSubSubjects.length, vsync: this);
+                  _subTabController?.dispose();
+                  _subTabController = TabController(
+                    length: newSubSubjects.length,
+                    vsync: this,
+                  );
                 });
               });
 
@@ -95,6 +100,7 @@ class _CurriculumPageState extends State<CurriculumPage>
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: CurriculumPageBody(
+                          key: ValueKey(selectedMainIndex),
                           subjects: mainSubjects[selectedMainIndex].subjects!,
                           tabController: _subTabController!),
                     ),
