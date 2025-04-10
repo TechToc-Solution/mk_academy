@@ -8,6 +8,7 @@ import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
 import 'package:mk_academy/core/widgets/custom_level_bar.dart';
 import 'package:mk_academy/core/widgets/custom_top_nav_bar.dart';
+import 'package:mk_academy/features/courses/presentation/view_model/courses%20cubit/courses_cubit.dart';
 import 'widgets/courses_page_body.dart';
 
 class CoursesPage extends StatefulWidget {
@@ -60,13 +61,19 @@ class _CoursesPageState extends State<CoursesPage>
                     TabController(length: firstSubSubjects.length, vsync: this);
 
                 _mainTabController.addListener(() {
+                  if (_mainTabController.indexIsChanging) return;
+
                   setState(() {
                     selectedMainIndex = _mainTabController.index;
-                    _subTabController?.dispose();
+                    context.read<CoursesCubit>().resetPagination();
+
                     final newSubSubjects =
                         mainSubjects[selectedMainIndex].subjects ?? [];
+                    _subTabController?.dispose();
                     _subTabController = TabController(
-                        length: newSubSubjects.length, vsync: this);
+                      length: newSubSubjects.length,
+                      vsync: this,
+                    );
                   });
                 });
 
@@ -98,6 +105,7 @@ class _CoursesPageState extends State<CoursesPage>
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: CoursesPageBody(
+                          key: ValueKey(selectedMainIndex),
                           courseTypeId: widget.courseTypeId,
                           subjects: mainSubjects[selectedMainIndex].subjects!,
                           tabController: _subTabController!,
