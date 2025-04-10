@@ -104,5 +104,6 @@
     "type" : "Type",
     "description" : "Description",
     "internal_ads": "Internal Ads",
-    "external_ads": "External Ads"
+    "external_ads": "External Ads",
+    "no_rec" : "Screen recording is not allowed."
 }

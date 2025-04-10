@@ -114,5 +114,6 @@
     "type" : "النوع",
     "description" : "الوصف",
     "internal_ads": "عروضنا",
-    "external_ads": "عروض أخرى"
+    "external_ads": "عروض أخرى",
+    "no_rec" : "تسجيل الشاشة غير مسموح."
 }
