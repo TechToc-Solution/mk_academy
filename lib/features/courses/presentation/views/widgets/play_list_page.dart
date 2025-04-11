@@ -31,7 +31,7 @@ class ShowPlayList extends StatelessWidget {
                   if (state.status == VideoStatus.success) {
                     return state.videos == null || state.videos!.isEmpty
                         ? Center(
-                            child: Text("no_data".tr(context),
+                            child: Text("no_video".tr(context),
                                 style: TextStyle(color: Colors.white)),
                           )
                         : PlayListBody(
