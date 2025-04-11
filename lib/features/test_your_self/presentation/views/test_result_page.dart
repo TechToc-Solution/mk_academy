@@ -19,12 +19,14 @@ class TestResultPage extends StatelessWidget {
   final int score;
   final int quizScore;
   final String? answerPath;
+  final bool isFromCurr;
   static const String routeName = "testResult";
   const TestResultPage({
     super.key,
     required this.score,
     required this.quizScore,
     this.answerPath,
+    required this.isFromCurr,
   });
   @override
   Widget build(BuildContext context) {
@@ -63,13 +65,14 @@ class TestResultPage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    Text(
-                      '${"ur_socre".tr(context)}: $score/$quizScore',
-                      style: Styles.textStyle20.copyWith(
-                        color: AppColors.backgroundColor,
+                    if (!isFromCurr) const SizedBox(height: 20),
+                    if (!isFromCurr)
+                      Text(
+                        '${"ur_socre".tr(context)}: $score/$quizScore',
+                        style: Styles.textStyle20.copyWith(
+                          color: AppColors.backgroundColor,
+                        ),
                       ),
-                    ),
                     const SizedBox(height: 20),
                     if (answerPath != null)
                       _buildActionButton(

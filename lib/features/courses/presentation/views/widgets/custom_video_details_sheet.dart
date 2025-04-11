@@ -62,8 +62,9 @@ class _CustomVideoDetailsSheetState extends State<CustomVideoDetailsSheet> {
                   CustomButton(
                       onPressed: () {
                         if (isGuest) {
-                          messages(context, "you_should_login".tr(context),
-                              Colors.red);
+                          // messages(context, "you_should_login".tr(context),
+                          //     Colors.red);
+                          Navigator.pop(context);
                           Navigator.pushReplacementNamed(
                               context, LoginPage.routeName);
                         } else if (state.course!.canShow!) {

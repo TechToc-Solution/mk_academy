@@ -166,6 +166,7 @@ class CustomDrawer extends StatelessWidget {
       description: "you_should_login".tr(context),
       primaryButtonText: "login".tr(context),
       onPrimaryAction: () {
+        Navigator.pop(context);
         Navigator.pushReplacementNamed(context, LoginPage.routeName);
       },
     );

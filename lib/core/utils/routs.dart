@@ -42,6 +42,7 @@ class Routes {
     TestResultPage.routeName: (context) => const TestResultPage(
           score: 0,
           quizScore: 0,
+          isFromCurr: false,
         ),
     VerificationPhonePage.routeName: (context) =>
         VerificationPhonePage(fromRigster: false, phoneNumber: ""),

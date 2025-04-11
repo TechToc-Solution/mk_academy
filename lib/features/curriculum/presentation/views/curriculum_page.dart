@@ -29,8 +29,11 @@ class _CurriculumPageState extends State<CurriculumPage>
 
   @override
   void dispose() {
-    _mainTabController.dispose();
-    _subTabController?.dispose();
+    if (!mounted) {
+      _mainTabController.dispose();
+      _subTabController?.dispose();
+    }
+
     super.dispose();
   }
 
@@ -64,7 +67,7 @@ class _CurriculumPageState extends State<CurriculumPage>
 
                   final newSubSubjects =
                       mainSubjects[selectedMainIndex].subjects ?? [];
-                  _subTabController?.dispose();
+                  if (!mounted) _subTabController?.dispose();
                   _subTabController = TabController(
                     length: newSubSubjects.length,
                     vsync: this,

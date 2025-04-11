@@ -125,6 +125,7 @@ class QuestionsTestPageState extends State<QuestionsTestPage> {
                   score: _totalMarks,
                   quizScore: _quizScore,
                   answerPath: widget.asnwerPath,
+                  isFromCurr: widget.isCurriculumQuizz,
                 ),
               ),
             );
