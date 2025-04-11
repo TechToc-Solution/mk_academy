@@ -53,7 +53,7 @@ class _CustomVideoDetailsSheetState extends State<CustomVideoDetailsSheet> {
                   _buildDetailItem(Icons.mode, "type".tr(context),
                       state.course!.courseMode!, false),
                   _buildDetailItem(Icons.description, "description".tr(context),
-                      state.course!.description!, false),
+                      state.course!.description!, true),
                   _buildDetailItem(
                       Icons.category,
                       "price".tr(context),

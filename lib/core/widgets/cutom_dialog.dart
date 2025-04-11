@@ -103,7 +103,7 @@ class CustomDialog extends StatelessWidget {
                     ),
                   ),
                 ),
-            if (oneButton == null)
+            if (oneButton == null || !oneButton!)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

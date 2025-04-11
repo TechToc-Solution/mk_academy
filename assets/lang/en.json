@@ -106,5 +106,8 @@
     "internal_ads": "Internal Ads",
     "external_ads": "External Ads",
     "no_rec" : "Screen recording is not allowed.",
-    "no_video": "Videos will be available soon, stay tuned..."
+    "no_video": "Videos will be available soon, stay tuned...",
+    "alert": "Alert",
+    "download_before_watch": "You must download the video file first to watch it. Please download before proceeding to viewing",
+    "video_not_available_message": "Sorry, there is currently no video file available for download"
 }

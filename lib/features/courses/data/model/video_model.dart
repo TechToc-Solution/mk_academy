@@ -27,8 +27,15 @@ class Video {
   String? thumbnail;
   String? video;
   String? duration;
+  String? filePath;
 
-  Video({this.id, this.name, this.thumbnail, this.video, this.duration});
+  Video(
+      {this.id,
+      this.name,
+      this.thumbnail,
+      this.video,
+      this.duration,
+      this.filePath});
 
   Video.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -36,6 +43,7 @@ class Video {
     thumbnail = json['thumbnail'];
     video = json['video'];
     duration = json['duration'];
+    filePath = json['file'];
   }
 
   Map<String, dynamic> toJson() {
@@ -45,6 +53,7 @@ class Video {
     data['thumbnail'] = thumbnail;
     data['video'] = video;
     data['duration'] = duration;
+    data['file'] = filePath;
     return data;
   }
 }
