@@ -18,10 +18,7 @@ class WebViewScreenState extends State<WebViewScreen> {
   @override
   void initState() {
     super.initState();
-    disableScreenshot();
-    _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadHtmlString('''
+    final htmlContent = '''
       <!DOCTYPE html>
       <html lang="en">
       <head>
@@ -39,7 +36,11 @@ class WebViewScreenState extends State<WebViewScreen> {
         </div>
       </body>
       </html>
-    ''');
+    ''';
+    disableScreenshot();
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..loadHtmlString(htmlContent);
   }
 
   @override
