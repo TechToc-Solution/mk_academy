@@ -1,7 +1,7 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 
 import '../../features/home/presentation/views-model/ads/ads_cubit.dart';
 import '../../features/leaderboard/presentation/views-model/leaderboard_cubit.dart';
@@ -10,6 +10,7 @@ import '../shared/cubits/subjects/subjects_cubit.dart';
 import '../widgets/cutom_dialog.dart';
 import 'constats.dart';
 
+//navigators
 Route goRoute({required var x}) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => x,
@@ -31,6 +32,7 @@ Route goRoute({required var x}) {
   );
 }
 
+//messages
 void messages(BuildContext context, String error, Color c, {int msgTime = 2}) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     behavior: SnackBarBehavior.floating,
@@ -77,14 +79,6 @@ void showCustomDialog({
   );
 }
 
-resetHomeCubits(BuildContext context) {
-  context.read<AdsCubit>().resetPagination();
-  context.read<LeaderboardCubit>().getLeaderboard(loadMore: false);
-  context.read<SubjectsCubit>().getSubjects();
-  context.read<AdsCubit>().getAllAds();
-  isGuest ? null : context.read<ProfileCubit>().getProfile();
-}
-
 void showAwesomeDialog({
   required BuildContext context,
   required DialogType dialogType,
@@ -107,6 +101,16 @@ void showAwesomeDialog({
   ).show();
 }
 
+//reset home
+resetHomeCubits(BuildContext context) {
+  context.read<AdsCubit>().resetPagination();
+  context.read<LeaderboardCubit>().getLeaderboard(loadMore: false);
+  context.read<SubjectsCubit>().getSubjects();
+  context.read<AdsCubit>().getAllAds();
+  isGuest ? null : context.read<ProfileCubit>().getProfile();
+}
+
+//secure the app
 void toggleScreenshot() async {
   bool result = await noScreenshot.toggleScreenshot();
   debugPrint('Toggle Screenshot: $result');

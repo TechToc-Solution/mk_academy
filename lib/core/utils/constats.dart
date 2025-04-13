@@ -8,4 +8,5 @@ const double kBorderRadius = 15;
 const double kSizedBoxHeight = 25;
 const double kVerticalPadding = 15;
 const double kHorizontalPadding = 10;
+const String verCode = "1.0.0";
 bool isGuest = CacheHelper.getData(key: "token") == null ? true : false;

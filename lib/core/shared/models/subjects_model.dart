@@ -16,13 +16,15 @@ class SubjectsModel {
 class SubjectsData {
   int? id;
   String? name;
+  String? image;
   List<Subjects>? subjects;
 
-  SubjectsData({this.id, this.name, this.subjects});
+  SubjectsData({this.id, this.name, this.image, this.subjects});
 
   SubjectsData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    image = json['image'];
     if (json['subjects'] != null) {
       subjects = <Subjects>[];
       json['subjects'].forEach((v) {
@@ -35,6 +37,7 @@ class SubjectsData {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['name'] = name;
+    data['image'] = image;
     if (subjects != null) {
       data['subjects'] = subjects!.map((v) => v.toJson()).toList();
     }

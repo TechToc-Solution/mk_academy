@@ -30,4 +30,7 @@ class Urls {
   //Ads
   static String getInternalAds = "ads/internal";
   static String getExternalAds = "ads/external";
+
+  //version
+  static String getVersion = "versions";
 }

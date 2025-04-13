@@ -56,9 +56,6 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => LocaleCubit()..getSaveLanguage()),
-        BlocProvider(
-            create: (context) =>
-                TokenCubit(getit.get<TokenRepo>())..cheackToken()),
         BlocProvider(create: (context) => LogoutCubit(getit.get<LogoutRepo>())),
         BlocProvider(
             create: (context) => VideosCubit(getit.get<CoursesRepo>())),

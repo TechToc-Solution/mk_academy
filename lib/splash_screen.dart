@@ -1,10 +1,19 @@
+import 'dart:developer';
+
+import 'package:mk_academy/core/shared/cubits/app_version/app_version_cubit.dart';
+import 'package:mk_academy/core/shared/cubits/app_version/app_version_state.dart';
+import 'package:mk_academy/core/shared/repos/app_version/pay_repo.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/assets_data.dart';
 import 'package:mk_academy/core/utils/constats.dart';
+import 'package:mk_academy/core/utils/functions.dart';
+import 'package:mk_academy/core/utils/services_locater.dart';
 import 'package:mk_academy/core/widgets/custom_bottom_nav_bar.dart';
 import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 // import 'package:zein_store/Future/Home/Widgets/error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mk_academy/features/auth/data/repos/token_repo/token_repo.dart';
 import 'package:mk_academy/features/auth/presentation/view-model/token_cubit/token_cubit.dart';
 import 'package:mk_academy/features/auth/presentation/views/login/login_page.dart';
 
@@ -19,8 +28,8 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
-  late final Animation<double> _scaleAnimation =
-      CurvedAnimation(parent: animationController, curve: Curves.fastOutSlowIn);
+  late Animation<double> _scaleAnimation;
+  bool _hasShownDialog = false;
 
   @override
   void initState() {
@@ -29,6 +38,8 @@ class _SplashScreenState extends State<SplashScreen>
       vsync: this,
       duration: const Duration(milliseconds: 800),
     );
+    _scaleAnimation = CurvedAnimation(
+        parent: animationController, curve: Curves.fastOutSlowIn);
     animationController.forward();
   }
 
@@ -38,94 +49,187 @@ class _SplashScreenState extends State<SplashScreen>
     animationController.dispose();
   }
 
+  void _navigateBasedOnTokenState(TokenState state) {
+    log(state.toString());
+    if (state is IsVaildToken || state is IsFirstUseTrue) {
+      if (state is IsFirstUseTrue) isGuest = true;
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const CustomBottomNavBar()),
+      );
+    } else {
+      if (state is! TokenLoadingState) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const LoginPage()),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TokenCubit, TokenState>(
-      builder: (context, state) {
-        Future.delayed(const Duration(seconds: 3), () {
-          if (state is IsVaildToken) {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (builder) {
-              return const CustomBottomNavBar();
-            }));
-          } else if (state is IsFirstUseTrue) {
-            isGuest = true;
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (builder) {
-              return const CustomBottomNavBar();
-            }));
-          } else if (state is IsNotVaildToken) {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (builder) {
-              return LoginPage();
-            }));
-          } else if (state is TokenErrorState) {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (builder) {
-              return LoginPage();
-            }));
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AppVersionCubit(getit.get<AppVersionRepo>())
+            ..checkAppVersion(context),
+        ),
+        BlocProvider(create: (context) => TokenCubit(getit.get<TokenRepo>()))
+      ],
+      child: BlocListener<AppVersionCubit, AppVersionState>(
+        listener: (context, state) {
+          if (state is AppVersionInRange) {
+            context.read<TokenCubit>().cheackToken();
           }
-        });
-        return Scaffold(
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(flex: 2),
-              ScaleTransition(
-                scale: _scaleAnimation,
-                child: Padding(
-                  padding: const EdgeInsets.all(60.0),
-                  child: Image.asset(
-                    width: MediaQuery.sizeOf(context).width * 0.4,
-                    height: MediaQuery.sizeOf(context).height * 0.3,
-                    AssetsData.logoNoBg,
-                    color: Colors.white,
-                    // fit: BoxFit.cover,
-                  ),
-                ),
+        },
+        child: BlocBuilder<AppVersionCubit, AppVersionState>(
+          builder: (context, appVersionState) {
+            if (appVersionState is AppVersionOutdated) {
+              if (!_hasShownDialog) {
+                _hasShownDialog = true;
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  showCustomDialog(
+                      oneButton: true,
+                      icon: Icons.security_update,
+                      title: "version".tr(context),
+                      description: "outdated_description".tr(context),
+                      context: context,
+                      primaryButtonText: "",
+                      secondaryButtonText: 'update'.tr(context),
+                      onSecondaryAction: () {},
+                      onPrimaryAction: () {});
+                });
+              }
+            } else if (appVersionState is AppVersionError) {
+              if (!_hasShownDialog) {
+                _hasShownDialog = true;
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  showCustomDialog(
+                      oneButton: true,
+                      icon: Icons.error,
+                      title: "version".tr(context),
+                      description: appVersionState.message.isNotEmpty
+                          ? appVersionState.message
+                          : "error_description_fallback".tr(context),
+                      context: context,
+                      secondaryButtonText: 'try_agen'.tr(context),
+                      onSecondaryAction: () {
+                        Navigator.pop(context);
+                        if (mounted) {
+                          setState(() {
+                            _hasShownDialog = false;
+                          });
+                        }
+                        context
+                            .read<AppVersionCubit>()
+                            .checkAppVersion(context);
+                      },
+                      primaryButtonText: '',
+                      onPrimaryAction: () {});
+                });
+              }
+            } else if (appVersionState is AppVersionInRange ||
+                appVersionState is AppVersionUnsupported) {
+              if (appVersionState is AppVersionUnsupported &&
+                  !_hasShownDialog) {
+                _hasShownDialog = true;
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  showCustomDialog(
+                      icon: Icons.security_update_warning,
+                      title: "version".tr(context),
+                      description: "unsupported_description".tr(context),
+                      context: context,
+                      primaryButtonText: 'update'.tr(context),
+                      onPrimaryAction: () {},
+                      secondaryButtonText: "later".tr(context),
+                      onSecondaryAction: () {
+                        Navigator.pop(context);
+                        if (mounted) {
+                          setState(() {
+                            _hasShownDialog = false;
+                          });
+                        }
+                        context.read<TokenCubit>().cheackToken();
+                      });
+                });
+              }
+              return BlocListener<TokenCubit, TokenState>(
+                listener: (context, tokenState) {
+                  log(tokenState.toString());
+                  Future.delayed(const Duration(milliseconds: 800), () {
+                    _navigateBasedOnTokenState(tokenState);
+                  });
+                },
+                child: _buildSplashContent(),
+              );
+            }
+            return _buildSplashContent();
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSplashContent() {
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Spacer(flex: 2),
+          ScaleTransition(
+            scale: _scaleAnimation,
+            child: Padding(
+              padding: const EdgeInsets.all(60.0),
+              child: Image.asset(
+                width: MediaQuery.sizeOf(context).width * 0.4,
+                height: MediaQuery.sizeOf(context).height * 0.3,
+                AssetsData.logoNoBg,
+                color: Colors.white,
               ),
-              const Spacer(flex: 1),
-              const Center(child: CustomCircualProgressIndicator()),
-              // state is IsFirstUseTrue
-              //     ? Row(
-              //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //         children: [
-              //           ElevatedButton(
-              //               onPressed: () {
-              //                 context.read<LocaleCubit>().changeLanguage("en");
-              //                 Navigator.pushReplacement(context,
-              //                     MaterialPageRoute(builder: (builder) {
-              //                   return ConditionsScreen(
-              //                     home: false,
-              //                   );
-              //                 }));
-              //               },
-              //               child: Text(
-              //                 "English",
-              //                 style: TextStyle(fontWeight: FontWeight.bold),
-              //               )),
-              //           ElevatedButton(
-              //               onPressed: () {
-              //                 context.read<LocaleCubit>().changeLanguage("ar");
-              //                 Navigator.pushReplacement(context,
-              //                     MaterialPageRoute(builder: (builder) {
-              //                   return ConditionsScreen(
-              //                     home: false,
-              //                   );
-              //                 }));
-              //               },
-              //               child: Text(
-              //                 "العربية",
-              //                 style: TextStyle(fontWeight: FontWeight.bold),
-              //               ))
-              //         ],
-              //       )
-              //     : const Center(child: CustomCircularProgressIndicator()),
-              const Spacer(flex: 2),
-            ],
+            ),
           ),
-        );
-      },
+          const Spacer(flex: 1),
+          const Center(child: CustomCircualProgressIndicator()),
+          const Spacer(flex: 2),
+        ],
+      ),
     );
   }
 }
+          // state is IsFirstUseTrue
+          //     ? Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //         children: [
+          //           ElevatedButton(
+          //               onPressed: () {
+          //                 context.read<LocaleCubit>().changeLanguage("en");
+          //                 Navigator.pushReplacement(context,
+          //                     MaterialPageRoute(builder: (builder) {
+          //                   return ConditionsScreen(
+          //                     home: false,
+          //                   );
+          //                 }));
+          //               },
+          //               child: Text(
+          //                 "English",
+          //                 style: TextStyle(fontWeight: FontWeight.bold),
+          //               )),
+          //           ElevatedButton(
+          //               onPressed: () {
+          //                 context.read<LocaleCubit>().changeLanguage("ar");
+          //                 Navigator.pushReplacement(context,
+          //                     MaterialPageRoute(builder: (builder) {
+          //                   return ConditionsScreen(
+          //                     home: false,
+          //                   );
+          //                 }));
+          //               },
+          //               child: Text(
+          //                 "العربية",
+          //                 style: TextStyle(fontWeight: FontWeight.bold),
+          //               ))
+          //         ],
+          //       )
+          //     : const Center(child: CustomCircularProgressIndicator()),

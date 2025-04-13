@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mk_academy/core/shared/repos/app_version/pay_repo.dart';
+import 'package:mk_academy/core/shared/repos/app_version/pay_repo_iplm.dart';
 import 'package:mk_academy/core/shared/repos/pay/pay_repo.dart';
 import 'package:mk_academy/core/shared/repos/pay/pay_repo_iplm.dart';
 import 'package:mk_academy/core/shared/repos/solve_quizzes/solve_quizzes_repo.dart';
@@ -89,4 +91,8 @@ void setupLocatorServices() {
   //Sovle quizzes singleton
   getit.registerSingleton<SolveQuizzesRepo>(
       SolveQuizzesRepoIplm(getit.get<ApiServices>()));
+
+  //App Version
+  getit.registerSingleton<AppVersionRepo>(
+      AppVersionIplm(getit.get<ApiServices>()));
 }
