@@ -9,12 +9,15 @@ class WebViewScreen extends StatefulWidget {
 
   const WebViewScreen({super.key, required this.video});
   final Video? video;
+
   @override
   WebViewScreenState createState() => WebViewScreenState();
 }
 
 class WebViewScreenState extends State<WebViewScreen> {
   late final WebViewController _controller;
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
@@ -24,9 +27,15 @@ class WebViewScreenState extends State<WebViewScreen> {
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
-          body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+          body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #000; }
           .container { position: relative; width: 100%; height: 100vh; }
-          .iframe-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+          .iframe-container {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+          }
         </style>
       </head>
       <body>
@@ -37,32 +46,64 @@ class WebViewScreenState extends State<WebViewScreen> {
       </body>
       </html>
     ''';
+
     disableScreenshot();
+
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setNavigationDelegate(NavigationDelegate(
+        onPageFinished: (_) {
+          setState(() {
+            _isLoading = false;
+          });
+        },
+      ))
       ..loadHtmlString(htmlContent);
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    super.dispose();
     enableScreenshot();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
-          children: [
-            CustomAppBar(
-              title: widget.video!.name!,
-              backBtn: true,
-            ),
-            Expanded(child: WebViewWidget(controller: _controller)),
-          ],
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF141E30), Color(0xFF243B55)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              CustomAppBar(
+                title: widget.video!.name!,
+                backBtn: true,
+              ),
+              Expanded(
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: WebViewWidget(controller: _controller),
+                    ),
+                    if (_isLoading)
+                      const Center(
+                        child: CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
