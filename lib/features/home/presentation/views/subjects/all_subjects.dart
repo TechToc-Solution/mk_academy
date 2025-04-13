@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/shared/cubits/subjects/subjects_cubit.dart';
 import 'package:mk_academy/core/shared/models/subjects_model.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/core/utils/assets_data.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/utils/styles.dart';
@@ -113,27 +114,24 @@ class SubjectBtn extends StatelessWidget {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      // خلفية الصورة
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.network(
-                          subject.image ??
-                              '', // تأكد أن `subject.image` هي الرابط الصحيح
+                          subject.image ?? '',
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) =>
-                              Container(
-                            color: Colors.grey[300],
+                              Image.asset(
+                            AssetsData.logo,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                      // تغطية خفيفة على الصورة لتحسين وضوح النص
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           color: Colors.black.withOpacity(0.4),
                         ),
                       ),
-                      // النص
                       Center(
                         child: Text(
                           subject.name ?? '',
