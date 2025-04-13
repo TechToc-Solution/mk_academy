@@ -28,8 +28,7 @@ class _UnitsPageState extends State<UnitPage> {
             ),
             Expanded(
                 child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: UnitSection(
                 subjectId: widget.subjectId!,
               ),

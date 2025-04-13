@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/shared/cubits/subjects/subjects_cubit.dart';
 import 'package:mk_academy/core/shared/models/subjects_model.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/utils/styles.dart';
 import 'package:mk_academy/core/widgets/custom_app_bar.dart';
@@ -90,7 +91,6 @@ class SubjectBtn extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: kSizedBoxHeight),
         child: GridView.builder(
             itemCount: subjects.length,
-            physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -98,21 +98,59 @@ class SubjectBtn extends StatelessWidget {
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16),
             itemBuilder: (BuildContext context, int index) {
+              final subject = subjects[index];
               return GestureDetector(
                 onTap: () => Navigator.pushNamed(
-                    context, ShowSubSubjects.routeName,
-                    arguments: {'subject': subjects[index]}),
+                  context,
+                  ShowSubSubjects.routeName,
+                  arguments: {'subject': subject},
+                ),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     color: Colors.white,
                   ),
-                  child: Center(
-                    child: Text(
-                      overflow: TextOverflow.ellipsis,
-                      subjects[index].name!,
-                      style: Styles.textStyle25,
-                    ),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      // خلفية الصورة
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.network(
+                          subject.image ??
+                              '', // تأكد أن `subject.image` هي الرابط الصحيح
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
+                            color: Colors.grey[300],
+                          ),
+                        ),
+                      ),
+                      // تغطية خفيفة على الصورة لتحسين وضوح النص
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.black.withOpacity(0.4),
+                        ),
+                      ),
+                      // النص
+                      Center(
+                        child: Text(
+                          subject.name ?? '',
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style: Styles.textStyle25.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            shadows: const [
+                              Shadow(color: Colors.black, blurRadius: 20),
+                              Shadow(
+                                  color: AppColors.primaryColors, blurRadius: 5)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               );
