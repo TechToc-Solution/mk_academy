@@ -7,7 +7,7 @@ import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
 
 import 'package:mk_academy/features/courses/presentation/view_model/videos_cubit/videos_cubit.dart';
-import 'package:mk_academy/features/courses/presentation/views/widgets/play_list_body.dart';
+import 'package:mk_academy/features/courses/presentation/views/widgets/video_play_list/play_list_body.dart';
 
 class ShowPlayList extends StatelessWidget {
   const ShowPlayList({super.key, required this.courseId});

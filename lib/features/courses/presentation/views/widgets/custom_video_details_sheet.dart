@@ -14,7 +14,7 @@ import 'package:mk_academy/features/auth/presentation/views/widgets/custom_butto
 import 'package:mk_academy/features/courses/data/repo/courses_repo.dart';
 import 'package:mk_academy/features/courses/presentation/view_model/one%20course%20cubit/one_course_cubit.dart';
 import 'package:mk_academy/features/courses/presentation/view_model/videos_cubit/videos_cubit.dart';
-import 'package:mk_academy/features/courses/presentation/views/widgets/play_list_page.dart';
+import 'package:mk_academy/features/courses/presentation/views/play_list_page.dart';
 
 import '../../../../../core/shared/cubits/pay/pay_cubit.dart';
 import '../../../../../core/shared/repos/pay/pay_repo.dart';
