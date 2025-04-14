@@ -38,17 +38,21 @@ class CoursesPageBody extends StatelessWidget {
             for (int i = 0; i < subjects.length; i++)
               BlocProvider(
                 create: (context) => CoursesCubit(getit.get<CoursesRepo>())
+                  ..resetPagination()
                   ..getCourses(
-                    courseTypeId: courseTypeId,
-                    subjectId: subjects[i].id!,
-                  ),
+                      courseTypeId: courseTypeId,
+                      subjectId: subjects[i].id!,
+                      loadMore: false),
                 child: CoursesUnitsSection(
                   courseTypeId: courseTypeId,
                   subjectId: subjects[i].id!,
                 ),
               ),
           ],
-        ))
+        )),
+        SizedBox(
+          height: 8,
+        )
       ],
     );
   }

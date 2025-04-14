@@ -37,7 +37,7 @@ class _CustomVideoUnitBtnState extends State<CustomVideoUnitBtn> {
                     _hasError = true;
                   });
                 },
-                image: _hasError
+                image: _hasError || widget.course.image == null
                     ? AssetImage(AssetsData.logo)
                     : NetworkImage(widget.course.image!),
                 fit: BoxFit.fill,
