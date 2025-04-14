@@ -155,14 +155,13 @@ class _SplashScreenState extends State<SplashScreen>
                       });
                 });
               }
-              return BlocListener<TokenCubit, TokenState>(
-                listener: (context, tokenState) {
-                  log(tokenState.toString());
+              return BlocBuilder<TokenCubit, TokenState>(
+                builder: (context, tokenState) {
                   Future.delayed(const Duration(milliseconds: 800), () {
                     _navigateBasedOnTokenState(tokenState);
                   });
+                  return _buildSplashContent();
                 },
-                child: _buildSplashContent(),
               );
             }
             return _buildSplashContent();
