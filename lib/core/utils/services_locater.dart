@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mk_academy/core/shared/repos/app_version/pay_repo.dart';
 import 'package:mk_academy/core/shared/repos/app_version/pay_repo_iplm.dart';
+import 'package:mk_academy/core/shared/repos/download_handler/download_handler_repo.dart';
+import 'package:mk_academy/core/shared/repos/download_handler/download_handler_repo_iplm.dart';
 import 'package:mk_academy/core/shared/repos/pay/pay_repo.dart';
 import 'package:mk_academy/core/shared/repos/pay/pay_repo_iplm.dart';
 import 'package:mk_academy/core/shared/repos/solve_quizzes/solve_quizzes_repo.dart';
@@ -39,12 +41,12 @@ final getit = GetIt.instance;
 
 void setupLocatorServices() {
   // init Dio
-  getit.registerSingleton<Dio>(Dio(BaseOptions(
+  getit.registerLazySingleton<Dio>(() => Dio(BaseOptions(
       connectTimeout: Duration(minutes: 1),
       sendTimeout: const Duration(minutes: 1),
       receiveTimeout: Duration(minutes: 1))));
   // init API Service
-  getit.registerSingleton<ApiServices>(ApiServices(getit.get<Dio>()));
+  getit.registerLazySingleton<ApiServices>(() => ApiServices(getit.get<Dio>()));
 
   //auth singleton
   getit.registerSingleton<LoginRepo>(LoginRepoIpml(getit.get<ApiServices>()));
@@ -95,4 +97,8 @@ void setupLocatorServices() {
   //App Version
   getit.registerSingleton<AppVersionRepo>(
       AppVersionIplm(getit.get<ApiServices>()));
+
+  //download hendler
+  getit.registerLazySingleton<DownloadHandlerRepo>(
+      () => DownloadRepositoryImpl(getit.get<Dio>()));
 }

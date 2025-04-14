@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:mk_academy/core/shared/cubits/download_handler/download_handler_cubit.dart';
 import 'package:mk_academy/core/shared/cubits/solve_quizzes/solve_quizzes_cubit.dart';
 import 'package:mk_academy/core/shared/repos/solve_quizzes/solve_quizzes_repo.dart';
 // import 'package:mk_academy/core/notification_services/notification.dart';
@@ -22,6 +23,7 @@ import 'package:mk_academy/firebase_options.dart';
 import 'package:mk_academy/splash_screen.dart';
 
 import 'core/shared/cubits/subjects/subjects_cubit.dart';
+import 'core/shared/repos/download_handler/download_handler_repo.dart';
 import 'core/shared/repos/subjects/subjects_repo.dart';
 import 'features/auth/data/repos/logout_repo/logout_repo.dart';
 import 'features/auth/data/repos/register_repo/register_repo.dart';
@@ -81,6 +83,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 SolveQuizzesCubit(getit.get<SolveQuizzesRepo>())),
+        BlocProvider(
+            create: (context) =>
+                DownloadCubit(repo: getit.get<DownloadHandlerRepo>())),
       ],
       child: BlocBuilder<LocaleCubit, ChangeLocaleState>(
         builder: (context, state) {
