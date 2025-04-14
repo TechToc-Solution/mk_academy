@@ -44,7 +44,8 @@ class DownloadRepositoryImpl implements DownloadHandlerRepo {
       }
 
       // 3. Handle Android permissions (if applicable)
-      if (Platform.isAndroid && !await _requestAndroidPermissions()) {
+      final status = await Permission.storage.request();
+      if (Platform.isAndroid && status.isDenied) {
         return right(DownloadResult(status: DownloadStatus.permissionDenied));
       }
 
@@ -61,10 +62,5 @@ class DownloadRepositoryImpl implements DownloadHandlerRepo {
       log("Downold File Error: $e");
       return left(ErrorHandler.handle(e));
     }
-  }
-
-  Future<bool> _requestAndroidPermissions() async {
-    final status = await Permission.storage.request();
-    return status.isGranted;
   }
 }
