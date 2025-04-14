@@ -17,6 +17,7 @@ dependencies:
   date_format: ^2.0.9
   dio: ^5.7.0
   equatable: ^2.0.5
+  external_path: ^2.2.0
   firebase_core: ^3.10.0
   firebase_messaging: ^15.2.0
   flutter:
@@ -31,6 +32,7 @@ dependencies:
   get_it: ^8.0.3
   motion_tab_bar: ^2.0.4
   no_screenshot: ^0.3.1
+  open_file: ^3.5.10
   package_info_plus: ^8.3.0
   path_provider: ^2.1.5
   permission_handler: ^12.0.0+1
@@ -41,7 +43,6 @@ dependencies:
   url_launcher: ^6.3.1
   version: ^3.0.2
   webview_flutter: ^4.10.0
-
 dev_dependencies:
   flutter_launcher_icons: "^0.14.1"
   flutter_lints: ^5.0.0

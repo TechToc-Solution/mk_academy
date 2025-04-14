@@ -1,3 +1,6 @@
+import 'package:dartz/dartz.dart';
+import 'package:mk_academy/core/errors/failuer.dart';
+
 import '../../../utils/enums.dart';
 
 class DownloadResult {
@@ -7,7 +10,7 @@ class DownloadResult {
 }
 
 abstract class DownloadHandlerRepo {
-  Future<DownloadResult> downloadFile({
+  Future<Either<Failure, DownloadResult>> downloadFile({
     required String url,
     required String fileName,
   });

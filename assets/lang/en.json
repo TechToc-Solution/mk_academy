@@ -115,5 +115,8 @@
     "later": "Later",
     "unsupported_description": "Please update the app to enjoy the latest features and ensure stability.",
     "outdated_description": "This version of the app is no longer supported. Please update to continue using it.",
-    "error_description_fallback": "An error occurred while checking the app version. Please try again later."
+    "error_description_fallback": "An error occurred while checking the app version. Please try again later.",
+        "download_success":"The file has been downloaded successfully",
+    "open_file" : "Open the file",
+        "permission_denied_msg" : "The application must be given the permission to access the storage in order to download the file"
 }

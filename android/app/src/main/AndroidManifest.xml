@@ -20,6 +20,15 @@
         android:label="MK Academy"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+        <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="${applicationId}.fileProvider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/filepaths"/>
+        </provider>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -47,6 +56,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
