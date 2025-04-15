@@ -15,7 +15,7 @@ import 'package:mk_academy/features/courses/data/repo/courses_repo.dart';
 import 'package:mk_academy/features/courses/presentation/view_model/one%20course%20cubit/one_course_cubit.dart';
 import 'package:mk_academy/features/courses/presentation/view_model/videos_cubit/videos_cubit.dart';
 import 'package:mk_academy/features/courses/presentation/views/play_list_page.dart';
-
+import 'package:flutter_html/flutter_html.dart';
 import '../../../../../core/shared/cubits/pay/pay_cubit.dart';
 import '../../../../../core/shared/repos/pay/pay_repo.dart';
 import '../../../../../core/widgets/custom_pay_dailog.dart';
@@ -53,7 +53,7 @@ class _CustomVideoDetailsSheetState extends State<CustomVideoDetailsSheet> {
                   _buildDetailItem(Icons.mode, "type".tr(context),
                       state.course!.courseMode!, false),
                   _buildDetailItem(Icons.description, "description".tr(context),
-                      state.course!.description!, true),
+                      state.course!.description ?? "", true),
                   _buildDetailItem(
                       Icons.category,
                       "price".tr(context),
@@ -139,17 +139,28 @@ class _CustomVideoDetailsSheetState extends State<CustomVideoDetailsSheet> {
                   style: Styles.textStyle16.copyWith(
                       fontWeight: FontWeight.bold, color: Colors.white)),
               if (!underTilte)
-                Text(
-                  value,
-                  style:
-                      Styles.textStyle16.copyWith(color: AppColors.avatarColor),
+                Html(
+                  data: value,
+                  style: {
+                    "body": Style(
+                        color: AppColors.avatarColor,
+                        fontSize: FontSize(16.0),
+                        margin: Margins.zero,
+                        padding: HtmlPaddings.zero),
+                  },
                 ),
             ],
           ),
           if (underTilte)
-            Text(
-              value,
-              style: Styles.textStyle16.copyWith(color: AppColors.avatarColor),
+            Html(
+              data: value,
+              style: {
+                "body": Style(
+                    color: AppColors.avatarColor,
+                    fontSize: FontSize(16.0),
+                    margin: Margins.zero,
+                    padding: HtmlPaddings.zero),
+              },
             ),
         ],
       ),

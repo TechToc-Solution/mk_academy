@@ -42,7 +42,6 @@ class HomePage extends StatelessWidget {
                 horizontal: kHorizontalPadding, vertical: kVerticalPadding),
             child: SliderDrawer(
               isDraggable: false,
-              slideDirection: SlideDirection.rightToLeft,
               key: _sliderDrawerKey,
               backgroundColor: AppColors.backgroundColor,
               slider: CustomDrawer(),

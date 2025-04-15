@@ -10,7 +10,7 @@ import 'widgets/questions_test/aswer_option.dart';
 import 'widgets/questions_test/progress_dots.dart';
 import 'test_result_page.dart';
 import 'dart:async';
-
+import 'package:flutter_html/flutter_html.dart';
 import 'widgets/questions_test/timer_section.dart';
 
 class QuestionsTestPage extends StatefulWidget {
@@ -172,14 +172,15 @@ class QuestionsTestPageState extends State<QuestionsTestPage> {
                 ),
               ),
               const SizedBox(height: 16),
-              Text(
-                currentQuestion.title,
-                style: Styles.textStyle16.copyWith(
-                  height: 1.5,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.textColor,
-                ),
-                textAlign: TextAlign.center,
+              Html(
+                data: currentQuestion.title,
+                style: {
+                  "body": Style(
+                      fontWeight: FontWeight.w400,
+                      fontSize: FontSize(16),
+                      color: AppColors.textColor,
+                      textAlign: TextAlign.center)
+                },
               ),
               const SizedBox(height: 16),
               ListView.separated(
