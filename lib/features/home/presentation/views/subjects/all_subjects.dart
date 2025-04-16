@@ -118,11 +118,11 @@ class SubjectBtn extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                         child: Image.network(
                           subject.image ?? '',
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                           errorBuilder: (context, error, stackTrace) =>
                               Image.asset(
                             AssetsData.logo,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),

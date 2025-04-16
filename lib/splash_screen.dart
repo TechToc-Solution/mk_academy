@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:mk_academy/core/shared/cubits/app_version/app_version_cubit.dart';
 import 'package:mk_academy/core/shared/cubits/app_version/app_version_state.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/features/auth/data/repos/token_repo/token_repo.dart';
 import 'package:mk_academy/features/auth/presentation/view-model/token_cubit/token_cubit.dart';
 import 'package:mk_academy/features/auth/presentation/views/login/login_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName = "/splash";
@@ -98,7 +100,11 @@ class _SplashScreenState extends State<SplashScreen>
                       context: context,
                       primaryButtonText: "",
                       secondaryButtonText: 'update'.tr(context),
-                      onSecondaryAction: () {},
+                      onSecondaryAction: () => _launchUpdateUrl(
+                          context,
+                          Platform.isAndroid
+                              ? appVersionState.version.android ?? ""
+                              : appVersionState.version.ios ?? ""),
                       onPrimaryAction: () {});
                 });
               }
@@ -142,7 +148,11 @@ class _SplashScreenState extends State<SplashScreen>
                       description: "unsupported_description".tr(context),
                       context: context,
                       primaryButtonText: 'update'.tr(context),
-                      onPrimaryAction: () {},
+                      onPrimaryAction: () => _launchUpdateUrl(
+                          context,
+                          Platform.isAndroid
+                              ? appVersionState.version.android ?? ""
+                              : appVersionState.version.ios ?? ""),
                       secondaryButtonText: "later".tr(context),
                       onSecondaryAction: () {
                         Navigator.pop(context);
@@ -195,6 +205,17 @@ class _SplashScreenState extends State<SplashScreen>
         ],
       ),
     );
+  }
+
+  Future<void> _launchUpdateUrl(BuildContext context, String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(
+        Uri.parse(url),
+        mode: LaunchMode.externalApplication,
+      );
+    } else {
+      messages(context, 'error_open_update_url'.tr(context), Colors.red);
+    }
   }
 }
           // state is IsFirstUseTrue

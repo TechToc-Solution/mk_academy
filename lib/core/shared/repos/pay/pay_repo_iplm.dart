@@ -1,5 +1,8 @@
 // pay_repo_iplm.dart
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
+import 'package:mk_academy/features/courses/data/model/courses_model.dart';
 
 import '../../../Api_services/api_services.dart';
 import '../../../Api_services/urls.dart';
@@ -13,12 +16,10 @@ class PayRepoIplm implements PayRepo {
   PayRepoIplm(this._apiServices);
 
   @override
-  Future<Either<Failure, void>> payCourse(int courseId, String code) async {
+  Future<Either<Failure, void>> payCourse(String code) async {
     try {
-      final response = await _apiServices.post(
-        endPoint: "${Urls.getCourses}/$courseId",
-        data: {'code': code},
-      );
+      final response = await _apiServices
+          .post(endPoint: "${Urls.purchaseUse}/$code", data: {});
 
       if (response.statusCode == 204) {
         return right(null);
@@ -28,6 +29,28 @@ class PayRepoIplm implements PayRepo {
         response.data['message'] ?? ErrorHandler.defaultMessage(),
       ));
     } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Courses>>> getCodeData({
+    required String code,
+  }) async {
+    try {
+      var resp =
+          await _apiServices.get(endPoint: "${Urls.purchaseCheck}/$code");
+      if (resp.statusCode == 200 && resp.data['success']) {
+        List<Courses>? courses = <Courses>[];
+        resp.data['data'].forEach((v) {
+          courses.add(Courses.fromJson(v));
+        });
+        return right(courses);
+      }
+      return left(
+          ServerFailure(resp.data['message'] ?? ErrorHandler.defaultMessage()));
+    } catch (e) {
+      log(e.toString());
       return left(ErrorHandler.handle(e));
     }
   }

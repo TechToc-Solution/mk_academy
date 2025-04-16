@@ -81,8 +81,10 @@ class _CustomVideoDetailsSheetState extends State<CustomVideoDetailsSheet> {
                             builder: (context) => BlocProvider(
                               create: (context) =>
                                   PayCubit(GetIt.instance<PayRepo>()),
-                              child:
-                                  PaymentCodeDialog(courseId: widget.courseId),
+                              child: PaymentCodeDialog(
+                                courseId: widget.courseId,
+                                public: false,
+                              ),
                             ),
                           );
                         }

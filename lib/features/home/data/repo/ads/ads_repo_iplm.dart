@@ -5,9 +5,9 @@ import 'package:mk_academy/core/Api_services/api_services.dart';
 import 'package:mk_academy/core/Api_services/urls.dart';
 import 'package:mk_academy/core/errors/failuer.dart';
 import 'package:mk_academy/features/home/data/model/ads_model.dart';
-import 'package:mk_academy/features/home/data/repo/ads.dart';
+import 'package:mk_academy/features/home/data/repo/ads/ads.dart';
 
-import '../../../../core/errors/error_handler.dart';
+import '../../../../../core/errors/error_handler.dart';
 
 class AdsRepoIplm implements AdsRepo {
   final ApiServices _apiServices;

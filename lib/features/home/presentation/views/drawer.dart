@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mk_academy/core/shared/cubits/pay/pay_cubit.dart';
+import 'package:mk_academy/core/shared/repos/pay/pay_repo.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/widgets/custom_level_bar.dart';
+import 'package:mk_academy/core/widgets/custom_pay_dailog.dart';
 import 'package:mk_academy/features/auth/presentation/view-model/logout_cubit/logout_cubit.dart';
 import 'package:mk_academy/features/auth/presentation/views/login/login_page.dart';
 import 'package:mk_academy/features/leaderboard/presentation/views/leaderboard.dart';
@@ -40,6 +44,24 @@ class CustomDrawer extends StatelessWidget {
             child: CustomDrawerBtn(
               title: "profile".tr(context),
               icon: Icons.person,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => BlocProvider(
+                  create: (context) => PayCubit(GetIt.instance<PayRepo>()),
+                  child: PaymentCodeDialog(
+                    courseId: null,
+                    public: true,
+                  ),
+                ),
+              );
+            },
+            child: CustomDrawerBtn(
+              title: "activate_code".tr(context),
+              icon: Icons.payment,
             ),
           ),
           // CustomDrawerBtn(

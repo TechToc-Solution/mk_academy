@@ -44,9 +44,9 @@ class AppVersionCubit extends Cubit<AppVersionState> {
           }
 
           if (_isVersionOutdated(currentVersion, min)) {
-            emit(AppVersionOutdated());
+            emit(AppVersionOutdated(version: version));
           } else if (_isVersionInRange(currentVersion, min, max)) {
-            emit(AppVersionUnsupported());
+            emit(AppVersionUnsupported(version: version));
           } else {
             emit(AppVersionInRange());
           }

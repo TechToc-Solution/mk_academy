@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:mk_academy/core/shared/models/version_model.dart';
 
 abstract class AppVersionState extends Equatable {
   const AppVersionState();
@@ -13,9 +14,17 @@ class AppVersionLoading extends AppVersionState {}
 
 class AppVersionInRange extends AppVersionState {}
 
-class AppVersionOutdated extends AppVersionState {}
+class AppVersionOutdated extends AppVersionState {
+  final VersionModel version;
 
-class AppVersionUnsupported extends AppVersionState {}
+  const AppVersionOutdated({required this.version});
+}
+
+class AppVersionUnsupported extends AppVersionState {
+  final VersionModel version;
+
+  const AppVersionUnsupported({required this.version});
+}
 
 class AppVersionError extends AppVersionState {
   final String message;
