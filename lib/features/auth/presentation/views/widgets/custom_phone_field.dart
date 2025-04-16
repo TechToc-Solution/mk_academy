@@ -54,6 +54,7 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
         child: PhoneFormField(
           controller: widget.controller,
           focusNode: fNode,
+          countrySelectorNavigator: CountrySelectorNavigator.dialog(),
           countryButtonStyle: CountryButtonStyle(
             showDialCode: true,
             showIsoCode: true,

@@ -119,7 +119,7 @@ class _CustomVideoDetailsSheetState extends State<CustomVideoDetailsSheet> {
               ),
             );
           }
-          return Center(child: CustomCircualProgressIndicator());
+          return Center(child: LinearProgressIndicator());
         },
       ),
     );
