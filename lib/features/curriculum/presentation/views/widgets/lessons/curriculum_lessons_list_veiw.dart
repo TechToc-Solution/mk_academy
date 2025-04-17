@@ -13,11 +13,42 @@ import '../../../../data/model/units_model.dart';
 import '../../../views-model/curriculum_cubit.dart';
 import 'custom_lessons_item.dart';
 
-class CurriculumLessonListView extends StatelessWidget {
+class CurriculumLessonListView extends StatefulWidget {
   const CurriculumLessonListView(
       {super.key, required this.lessons, required this.unit});
   final List<Lesson> lessons;
   final Unit unit;
+
+  @override
+  State<CurriculumLessonListView> createState() =>
+      _CurriculumLessonListViewState();
+}
+
+class _CurriculumLessonListViewState extends State<CurriculumLessonListView> {
+  final _scrollController = ScrollController();
+  late CurriculumCubit _cubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _cubit = context.read<CurriculumCubit>();
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      if (!_cubit.hasReachedMax) {
+        _cubit.getLessons(widget.unit.id, loadMore: true);
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,22 +59,22 @@ class CurriculumLessonListView extends StatelessWidget {
         builder: (context, state) {
           return ListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
-            itemCount: lessons.length + (cubit.hasReachedMax ? 0 : 1),
+            itemCount: widget.lessons.length + (cubit.hasReachedMax ? 0 : 1),
             physics: BouncingScrollPhysics(),
+            controller: _scrollController,
             itemBuilder: (context, index) {
-              if (index >= lessons.length) {
+              if (index >= widget.lessons.length) {
                 if (!cubit.hasReachedMax) {
-                  cubit.getLessons(unit.id, loadMore: true);
+                  return const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Center(
+                        child: CircularProgressIndicator(
+                      color: Colors.white,
+                    )),
+                  );
                 }
-                return const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(
-                      child: CircularProgressIndicator(
-                    color: Colors.white,
-                  )),
-                );
               }
-              final lesson = lessons[index];
+              final lesson = widget.lessons[index];
               Widget actionButton;
               if (state is LessonDetailsLoading &&
                   state.lessonId == lesson.id) {
