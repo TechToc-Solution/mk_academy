@@ -33,4 +33,9 @@ class Urls {
 
   //version
   static String getVersion = "versions";
+
+  //purchase
+  static String purchase = "purchase-codes";
+  static String purchaseCheck = "$purchase/check";
+  static String purchaseUse = "$purchase/use";
 }

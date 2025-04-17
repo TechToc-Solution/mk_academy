@@ -52,6 +52,7 @@ class ShowSubSubjects extends StatelessWidget {
                               )
                             : GridView.builder(
                                 itemCount: subject.subjects!.length,
+                                physics: BouncingScrollPhysics(),
                                 shrinkWrap: true,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
@@ -67,10 +68,10 @@ class ShowSubSubjects extends StatelessWidget {
                                             .read<CoursesCubit>()
                                             .resetPagination();
                                         context.read<CoursesCubit>().getCourses(
-                                              courseTypeId: null,
-                                              subjectId:
-                                                  subject.subjects![index].id!,
-                                            );
+                                            courseTypeId: null,
+                                            subjectId:
+                                                subject.subjects![index].id!,
+                                            loadMore: false);
                                         Navigator.of(context).push(goRoute(
                                             x: UnitPage(
                                                 subjectId: subject

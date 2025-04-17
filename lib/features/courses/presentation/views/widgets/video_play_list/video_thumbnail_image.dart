@@ -15,18 +15,25 @@ class VideoThumbnailImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
-      child: Image.network(
-        video.thumbnail!,
-        width: 60,
-        height: 60,
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) => Image.asset(
-          AssetsData.logo,
-          width: 60,
-          height: 60,
-          fit: BoxFit.cover,
-        ),
-      ),
+      child: video.thumbnail == null
+          ? Image.asset(
+              AssetsData.logo,
+              width: 60,
+              height: 60,
+              fit: BoxFit.cover,
+            )
+          : Image.network(
+              video.thumbnail!,
+              width: 60,
+              height: 60,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Image.asset(
+                AssetsData.logo,
+                width: 60,
+                height: 60,
+                fit: BoxFit.cover,
+              ),
+            ),
     );
   }
 }

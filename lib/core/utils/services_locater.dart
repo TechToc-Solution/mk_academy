@@ -11,8 +11,8 @@ import 'package:mk_academy/features/auth/data/repos/delete_account_repo.dart/del
 import 'package:mk_academy/features/auth/data/repos/delete_account_repo.dart/delete_account_repo.dart';
 import 'package:mk_academy/features/auth/data/repos/token_repo/token_repo.dart';
 import 'package:mk_academy/features/auth/data/repos/token_repo/token_repo_ipml.dart';
-import 'package:mk_academy/features/home/data/repo/ads.dart';
-import 'package:mk_academy/features/home/data/repo/ads_repo_iplm.dart';
+import 'package:mk_academy/features/home/data/repo/ads/ads.dart';
+import 'package:mk_academy/features/home/data/repo/ads/ads_repo_iplm.dart';
 import 'package:mk_academy/features/test_your_self/data/repo/tests_repo.dart';
 import 'package:mk_academy/features/test_your_self/data/repo/tests_repo_iplm.dart';
 

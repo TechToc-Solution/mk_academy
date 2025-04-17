@@ -30,7 +30,7 @@ import 'features/auth/data/repos/register_repo/register_repo.dart';
 import 'features/auth/data/repos/reset_password_repo/reset_password_repo.dart';
 import 'features/auth/presentation/view-model/logout_cubit/logout_cubit.dart';
 import 'features/auth/presentation/view-model/register_cubit/register_cubit.dart';
-import 'features/home/data/repo/ads.dart';
+import 'features/home/data/repo/ads/ads.dart';
 import 'features/home/presentation/views-model/ads/ads_cubit.dart';
 import 'features/leaderboard/data/repos/leaderboard_repo.dart';
 import 'features/leaderboard/presentation/views-model/leaderboard_cubit.dart';

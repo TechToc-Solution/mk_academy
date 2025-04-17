@@ -23,6 +23,7 @@ class _CustomVideoUnitBtnState extends State<CustomVideoUnitBtn> {
         GestureDetector(
           onTap: () {
             CustomBottomSheet.show(
+                heightFactor: 0.5,
                 title: widget.course.name,
                 backgroundColor: AppColors.backgroundColor,
                 context: context,
@@ -37,7 +38,7 @@ class _CustomVideoUnitBtnState extends State<CustomVideoUnitBtn> {
                     _hasError = true;
                   });
                 },
-                image: _hasError
+                image: _hasError || widget.course.image == null
                     ? AssetImage(AssetsData.logo)
                     : NetworkImage(widget.course.image!),
                 fit: BoxFit.fill,

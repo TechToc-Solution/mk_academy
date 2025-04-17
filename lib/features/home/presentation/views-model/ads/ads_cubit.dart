@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mk_academy/features/home/data/model/ads_model.dart';
-import 'package:mk_academy/features/home/data/repo/ads.dart';
+import 'package:mk_academy/features/home/data/repo/ads/ads.dart';
 
 part 'ads_state.dart';
 

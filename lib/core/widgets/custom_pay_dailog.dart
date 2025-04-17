@@ -1,17 +1,22 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/utils/colors.dart';
+import 'package:mk_academy/core/widgets/custom_qr_code_scanner.dart';
+import 'package:mk_academy/features/home/presentation/views/widgets/check_code.dart';
+import 'package:mk_academy/features/profile/presentation/views-model/profile_cubit.dart';
 
 import '../shared/cubits/pay/pay_cubit.dart';
 import '../shared/cubits/pay/pay_state.dart';
 import '../utils/functions.dart';
 
 class PaymentCodeDialog extends StatefulWidget {
-  final int courseId;
-
-  const PaymentCodeDialog({super.key, required this.courseId});
+  final int? courseId;
+  bool public = false;
+  PaymentCodeDialog({super.key, required this.courseId, required this.public});
 
   @override
   State<PaymentCodeDialog> createState() => _PaymentCodeDialogState();
@@ -64,6 +69,24 @@ class _PaymentCodeDialogState extends State<PaymentCodeDialog> {
                 TextField(
                   controller: _codeController,
                   decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        Icons.qr_code,
+                        color: AppColors.primaryColors,
+                      ),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (_) => QRScannerPage(
+                            onScanned: (scannedCode) {
+                              setState(() {
+                                _codeController.text = scannedCode;
+                              });
+                            },
+                          ),
+                        );
+                      },
+                    ),
                     hintText: 'promo_code'.tr(context),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -94,13 +117,23 @@ class _PaymentCodeDialogState extends State<PaymentCodeDialog> {
                         ),
                         onPressed: () {
                           if (_codeController.text.isNotEmpty) {
-                            context.read<PayCubit>().payCourse(
-                                  widget.courseId,
-                                  _codeController.text,
-                                );
+                            if (widget.public) {
+                              Navigator.of(context).push(
+                                goRoute(
+                                    x: CheckCodePage(
+                                  code: _codeController.text,
+                                )),
+                              );
+                            } else {
+                              context.read<PayCubit>().payCourse(
+                                    _codeController.text,
+                                  );
+                            }
                           }
                         },
-                        child: Text('apply'.tr(context)),
+                        child: Text(widget.public
+                            ? 'code_check'.tr(context)
+                            : 'apply'.tr(context)),
                       ),
                     ],
                   ),
@@ -111,6 +144,7 @@ class _PaymentCodeDialogState extends State<PaymentCodeDialog> {
             if (state is PaySuccess) {
               Navigator.pop(context);
               Navigator.pop(context);
+              context.read<ProfileCubit>().getProfile();
               messages(context, 'payment_success'.tr(context), Colors.green);
             }
             if (state is PayError) {

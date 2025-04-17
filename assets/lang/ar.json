@@ -22,7 +22,7 @@
     "weekly_sessions" : "اسبوعية",
     "leaderboard": "المتصدرين",
     "show_all": "عرض الكل",
-    "top3_title": "أبطال MK Academy",
+    "top3_title": "متفوقو MK Academy",
     "curriculum" : "المنهاج",
     "test_your_self" : "اختبر نفسك",
     "test_result" : "نتيجة الاختبار",
@@ -128,7 +128,10 @@
     "error_description_fallback": "حدث خطأ أثناء التحقق من إصدار التطبيق. حاول مرة أخرى لاحقًا.",
     "download_success":"تم تحميل الملف بنجاح",
     "open_file" : "افتح الملف",
-    "permission_denied_msg" : "يجب اعطاء التطبيق الصلاحية للوصول الى التخزين حتى تتمكن من تحميل الملف"
-
-
+    "permission_denied_msg" : "يجب اعطاء التطبيق الصلاحية للوصول الى التخزين حتى تتمكن من تحميل الملف",
+    "error_open_update_url" : "حدث خطأ اثناء فتح رابط تحديث التطبيق.",
+    "activate_code": "تفعيل الرمز",
+    "code_check" : "التحقق من الرمز",
+    "scan_qr_code" : "امسح الرمز",
+    "align_qr" : "ضع الرمز ضمن الإطار"
 }

@@ -8,12 +8,14 @@ part 'courses_state.dart';
 class CoursesCubit extends Cubit<CoursesState> {
   CoursesCubit(this._coursesRepo) : super(CoursesState());
   final CoursesRepo _coursesRepo;
-  Future<void> getCourses({
-    required int? courseTypeId,
-    required int subjectId,
-    String? search,
-  }) async {
+  Future<void> getCourses(
+      {required int? courseTypeId,
+      required int subjectId,
+      String? search,
+      bool loadMore = false}) async {
     if (state.hasReachedMax || isClosed) return;
+    if (!loadMore) resetPagination();
+
     var data = await _coursesRepo.getCourses(
         courseTypeId: courseTypeId,
         subjectId: subjectId,

@@ -3,7 +3,7 @@ import 'package:no_screenshot/no_screenshot.dart';
 
 final noScreenshot = NoScreenshot.instance;
 
-String lang = "en";
+String lang = "ar";
 const double kBorderRadius = 15;
 const double kSizedBoxHeight = 25;
 const double kVerticalPadding = 15;

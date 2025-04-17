@@ -8,11 +8,13 @@ class CoursesState extends Equatable {
   final bool hasReachedMax;
   final int currentPage;
   final String? errorMessage;
+  final bool isFirstFetch;
 
   const CoursesState({
     this.status = CoursesStatus.loading,
     this.courses = const [],
     this.hasReachedMax = false,
+    this.isFirstFetch = true,
     this.currentPage = 0,
     this.errorMessage,
   });
@@ -40,5 +42,6 @@ class CoursesState extends Equatable {
         hasReachedMax,
         currentPage,
         errorMessage,
+        isFirstFetch
       ];
 }

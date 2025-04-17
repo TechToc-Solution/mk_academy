@@ -36,9 +36,7 @@ Route goRoute({required var x}) {
 void messages(BuildContext context, String error, Color c, {int msgTime = 2}) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     behavior: SnackBarBehavior.floating,
-    margin: EdgeInsets.symmetric(
-      horizontal: 16,
-    ),
+    margin: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     backgroundColor: c,
     content: Text(error),

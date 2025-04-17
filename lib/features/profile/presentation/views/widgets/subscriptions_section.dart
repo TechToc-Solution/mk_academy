@@ -23,7 +23,6 @@ class SubscriptionsSection extends StatelessWidget {
     }
     if (courses.isNotEmpty) {
       return ListView.separated(
-        physics: NeverScrollableScrollPhysics(),
         itemCount: courses.length,
         itemBuilder: (BuildContext context, int index) {
           return _buildSubscriptionItem(courses[index], context);

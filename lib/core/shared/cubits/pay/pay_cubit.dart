@@ -8,14 +8,25 @@ class PayCubit extends Cubit<PayState> {
 
   PayCubit(this._payRepo) : super(PayInitial());
 
-  Future<void> payCourse(int courseId, String code) async {
+  Future<void> payCourse( String code) async {
     emit(PayLoading());
 
-    final result = await _payRepo.payCourse(courseId, code);
+    final result = await _payRepo.payCourse(code);
 
     result.fold(
       (failure) => emit(PayError(failure.message)),
       (_) => emit(PaySuccess()),
+    );
+  }
+
+  Future<void> checkCode(String code) async {
+    emit(CheckLoading());
+
+    final result = await _payRepo.getCodeData(code: code);
+
+    result.fold(
+      (failure) => emit(CheckError(failure.message)),
+      (courses) => emit(CheckSuccess(courses: courses)),
     );
   }
 }

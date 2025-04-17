@@ -41,8 +41,11 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(
                 horizontal: kHorizontalPadding, vertical: kVerticalPadding),
             child: SliderDrawer(
+              slideDirection:
+                  Localizations.localeOf(context).languageCode == "ar"
+                      ? SlideDirection.rightToLeft
+                      : SlideDirection.leftToRight,
               isDraggable: false,
-              slideDirection: SlideDirection.rightToLeft,
               key: _sliderDrawerKey,
               backgroundColor: AppColors.backgroundColor,
               slider: CustomDrawer(),
