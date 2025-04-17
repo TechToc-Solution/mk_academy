@@ -6,7 +6,7 @@ import 'package:mk_academy/features/leaderboard/presentation/views/widgets/custo
 import '../../../data/models/students_leaderboard_model.dart';
 import '../../views-model/leaderboard_cubit.dart';
 
-class LeaderboardSection extends StatelessWidget {
+class LeaderboardSection extends StatefulWidget {
   final List<StudentsLeaderboardModel> students;
   const LeaderboardSection({
     super.key,
@@ -14,30 +14,58 @@ class LeaderboardSection extends StatelessWidget {
   });
 
   @override
+  State<LeaderboardSection> createState() => _LeaderboardSectionState();
+}
+
+class _LeaderboardSectionState extends State<LeaderboardSection> {
+  final _scrollController = ScrollController();
+  late LeaderboardCubit _cubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _cubit = context.read<LeaderboardCubit>();
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      if (!_cubit.hasReachedMax) {
+        _cubit.getLeaderboard(loadMore: true);
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final cubit = context.read<LeaderboardCubit>();
     return ListView.builder(
-        itemCount: students.length + (cubit.hasReachedMax ? 0 : 1),
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
+        controller: _scrollController,
+        itemCount: widget.students.length + (_cubit.hasReachedMax ? 0 : 1),
+        physics: BouncingScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
-          if (index >= students.length) {
-            if (!cubit.hasReachedMax) {
-              context.read<LeaderboardCubit>().getLeaderboard(loadMore: true);
+          if (index >= widget.students.length) {
+            if (!_cubit.hasReachedMax) {
+              return const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Center(
+                    child: CircularProgressIndicator(
+                  color: Colors.white,
+                )),
+              );
             }
-            return const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Center(
-                  child: CircularProgressIndicator(
-                color: Colors.white,
-              )),
-            );
           }
           return CustomLeaderboardShow(
               index: index,
-              students: students,
+              students: widget.students,
               isYou: CacheHelper.getData(key: "userId") ==
-                  students[index].id.toString());
+                  widget.students[index].id.toString());
         });
   }
 }
