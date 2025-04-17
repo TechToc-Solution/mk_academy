@@ -46,24 +46,25 @@ class CustomDrawer extends StatelessWidget {
               icon: Icons.person,
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (context) => BlocProvider(
-                  create: (context) => PayCubit(GetIt.instance<PayRepo>()),
-                  child: PaymentCodeDialog(
-                    courseId: null,
-                    public: true,
+          if (!isGuest)
+            GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => BlocProvider(
+                    create: (context) => PayCubit(GetIt.instance<PayRepo>()),
+                    child: PaymentCodeDialog(
+                      courseId: null,
+                      public: true,
+                    ),
                   ),
-                ),
-              );
-            },
-            child: CustomDrawerBtn(
-              title: "activate_code".tr(context),
-              icon: Icons.payment,
+                );
+              },
+              child: CustomDrawerBtn(
+                title: "activate_code".tr(context),
+                icon: Icons.payment,
+              ),
             ),
-          ),
           // CustomDrawerBtn(
           //   title: "settings".tr(context),
           //   icon: Icons.settings,
