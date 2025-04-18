@@ -10,33 +10,39 @@ class LeaderboardCubit extends Cubit<LeaderboardState> {
   List<StudentsLeaderboardModel> students = [];
   int _currentPage = 1;
   bool hasReachedMax = false;
-
+  bool _isFetching = false;
   LeaderboardCubit(this._leaderboardRepo) : super(LeaderboardInitial());
 
   Future<void> getLeaderboard({bool loadMore = false}) async {
-    if (isClosed || (hasReachedMax && loadMore)) return;
+    // short‑circuit if another fetch is already in progress
+    if (_isFetching || isClosed || (hasReachedMax && loadMore)) return;
 
-    if (!loadMore) {
-      _currentPage = 1;
-      hasReachedMax = false;
-      students.clear();
-      emit(LeaderboardLoading(isFirstFetch: true));
-    } else {
-      emit(LeaderboardLoading(isFirstFetch: false));
-    }
+    _isFetching = true;
+    try {
+      if (!loadMore) {
+        _currentPage = 1;
+        hasReachedMax = false;
+        students.clear();
+        emit(LeaderboardLoading(isFirstFetch: true));
+      } else {
+        emit(LeaderboardLoading(isFirstFetch: false));
+      }
 
-    final result = await _leaderboardRepo.getLeaderbord(_currentPage);
+      final result = await _leaderboardRepo.getLeaderbord(_currentPage);
 
-    if (!isClosed) {
-      return result.fold(
+      if (isClosed) return;
+
+      result.fold(
         (failure) => emit(LeaderboardError(errorMsg: failure.message)),
         (data) {
           _currentPage++;
           hasReachedMax = !data.hasNext!;
-          students = [...students, ...data.students!];
+          students.addAll(data.students!);
           emit(LeaderboardSuccess(students: students));
         },
       );
+    } finally {
+      _isFetching = false;
     }
   }
 

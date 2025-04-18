@@ -12,7 +12,7 @@ class CurriculumCubit extends Cubit<CurriculumState> {
   List<Lesson> lessons = [];
   int _currentPage = 1;
   bool hasReachedMax = false;
-
+  bool _isFetching = false;
   CurriculumCubit(this._curriculumRepo) : super(CurriculumInitial());
 
   Future<void> getUnits({required int subjectId}) async {
@@ -29,29 +29,33 @@ class CurriculumCubit extends Cubit<CurriculumState> {
   }
 
   Future<void> getLessons(int unitId, {bool loadMore = false}) async {
-    if (isClosed || hasReachedMax) return;
+    if (_isFetching || isClosed || (hasReachedMax && loadMore)) return;
+    _isFetching = true;
+    try {
+      if (!loadMore) {
+        _currentPage = 1;
+        hasReachedMax = false;
+        lessons.clear();
+        emit(LessonsLoading(isFirstFetch: true));
+      } else {
+        emit(LessonsLoading(isFirstFetch: false));
+      }
 
-    if (!loadMore) {
-      _currentPage = 1;
-      hasReachedMax = false;
-      lessons.clear();
-      emit(LessonsLoading(isFirstFetch: true));
-    } else {
-      emit(LessonsLoading(isFirstFetch: false));
-    }
+      final result = await _curriculumRepo.fetchLessons(unitId, _currentPage);
 
-    final result = await _curriculumRepo.fetchLessons(unitId, _currentPage);
-
-    if (!isClosed) {
-      result.fold(
-        (failure) => emit(LessonsError(errorMsg: failure.message)),
-        (lessonsModel) {
-          _currentPage++;
-          hasReachedMax = !lessonsModel.hasNext;
-          lessons = [...lessons, ...lessonsModel.lessons];
-          emit(LessonsSuccess());
-        },
-      );
+      if (!isClosed) {
+        result.fold(
+          (failure) => emit(LessonsError(errorMsg: failure.message)),
+          (lessonsModel) {
+            _currentPage++;
+            hasReachedMax = !lessonsModel.hasNext;
+            lessons = [...lessons, ...lessonsModel.lessons];
+            emit(LessonsSuccess());
+          },
+        );
+      }
+    } finally {
+      _isFetching = false;
     }
   }
 

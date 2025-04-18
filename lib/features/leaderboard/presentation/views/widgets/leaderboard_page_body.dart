@@ -16,18 +16,11 @@ class LeaderboardPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
-      child: ListView(
-        children: [
-          if (students.isNotEmpty)
-            LeaderboardSection(
+      child: students.isNotEmpty
+          ? LeaderboardSection(
               students: students,
-            ),
-          if (students.isEmpty) Center(child: Text("no_data".tr(context))),
-          SizedBox(
-            height: 16,
-          )
-        ],
-      ),
+            )
+          : Center(child: Text("no_data".tr(context))),
     );
   }
 }
