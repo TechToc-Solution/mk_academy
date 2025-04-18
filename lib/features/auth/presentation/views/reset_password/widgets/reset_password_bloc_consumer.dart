@@ -30,7 +30,7 @@ class ResetPasswordBlocConsumer extends StatelessWidget {
         if (state is ResetPasswordLoading) {
           return CustomButton(
             onPressed: () {},
-            child: const Center(
+            child: Center(
               child: CustomCircualProgressIndicator(),
             ),
           );

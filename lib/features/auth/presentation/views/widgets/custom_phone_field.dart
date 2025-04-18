@@ -2,6 +2,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/styles.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 
 import '../../../../../core/utils/constats.dart';
@@ -47,10 +48,12 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.ltr,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 15,
-        ),
+      child: Container(
+        decoration: BoxDecoration(
+            color: fillColor,
+            borderRadius: BorderRadius.circular(kBorderRadius)),
+        padding: EdgeInsets.only(top: 8),
+        margin: EdgeInsets.symmetric(vertical: 16),
         child: PhoneFormField(
           controller: widget.controller,
           focusNode: fNode,

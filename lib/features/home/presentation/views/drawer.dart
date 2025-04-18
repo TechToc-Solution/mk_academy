@@ -54,7 +54,6 @@ class CustomDrawer extends StatelessWidget {
                   builder: (context) => BlocProvider(
                     create: (context) => PayCubit(GetIt.instance<PayRepo>()),
                     child: PaymentCodeDialog(
-                      courseId: null,
                       public: true,
                     ),
                   ),

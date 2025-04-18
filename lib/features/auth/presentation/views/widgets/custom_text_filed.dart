@@ -64,8 +64,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 15),
+    return Container(
+      decoration: BoxDecoration(
+          color: fillColor, borderRadius: BorderRadius.circular(kBorderRadius)),
+      padding: EdgeInsets.only(top: 8),
+      margin: EdgeInsets.symmetric(vertical: 16),
       child: TextFormField(
         style: Styles.textStyle16.copyWith(
           color: textColor,
@@ -79,6 +82,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         maxLines: widget.maxLine,
         obscureText: widget.isPassword ? !showPassowrd : false,
         decoration: InputDecoration(
+          floatingLabelBehavior: FloatingLabelBehavior.auto,
           labelStyle: TextStyle(color: labelTextColor),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(

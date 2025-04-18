@@ -6,6 +6,7 @@ import 'package:mk_academy/core/shared/cubits/app_version/app_version_state.dart
 import 'package:mk_academy/core/shared/repos/app_version/pay_repo.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/assets_data.dart';
+import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/core/utils/services_locater.dart';
@@ -183,6 +184,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   Widget _buildSplashContent() {
     return Scaffold(
+      backgroundColor: AppColors.textColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -195,12 +197,14 @@ class _SplashScreenState extends State<SplashScreen>
                 width: MediaQuery.sizeOf(context).width * 0.4,
                 height: MediaQuery.sizeOf(context).height * 0.3,
                 AssetsData.logoNoBg,
-                color: Colors.white,
               ),
             ),
           ),
           const Spacer(flex: 1),
-          const Center(child: CustomCircualProgressIndicator()),
+          Center(
+              child: CustomCircualProgressIndicator(
+            color: AppColors.backgroundColor,
+          )),
           const Spacer(flex: 2),
         ],
       ),

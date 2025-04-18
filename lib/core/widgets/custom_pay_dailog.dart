@@ -14,9 +14,8 @@ import '../shared/cubits/pay/pay_state.dart';
 import '../utils/functions.dart';
 
 class PaymentCodeDialog extends StatefulWidget {
-  final int? courseId;
   bool public = false;
-  PaymentCodeDialog({super.key, required this.courseId, required this.public});
+  PaymentCodeDialog({super.key,required this.public});
 
   @override
   State<PaymentCodeDialog> createState() => _PaymentCodeDialogState();

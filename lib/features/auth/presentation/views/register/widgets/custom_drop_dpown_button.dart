@@ -23,8 +23,12 @@ class CustomDropdownButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15),
+    return Container(
+      decoration: BoxDecoration(
+          color: const Color(0xffF4F7FE),
+          borderRadius: BorderRadius.circular(kBorderRadius)),
+      padding: EdgeInsets.only(top: 8),
+      margin: EdgeInsets.symmetric(vertical: 16),
       child: BlocConsumer<RegisterCubit, RegisterState>(
         builder: (context, state) {
           List<City> cities = context.read<RegisterCubit>().cities;
