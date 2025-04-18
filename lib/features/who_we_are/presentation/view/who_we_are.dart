@@ -140,15 +140,9 @@ class WhoWeAre extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: InkWell(
                 onTap: () async {
-                  // Copy the number to the clipboard
                   await Clipboard.setData(ClipboardData(text: number));
-                  // Show a snackbar to confirm the action
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("copied_to_clipboard".tr(context)),
-                      backgroundColor: Colors.green,
-                    ),
-                  );
+                  messages(context, "copied_to_clipboard".tr(context),
+                      AppColors.primaryColors);
                 },
                 child: Row(
                   children: [
