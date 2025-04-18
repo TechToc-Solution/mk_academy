@@ -62,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen>
         MaterialPageRoute(builder: (_) => const CustomBottomNavBar()),
       );
     } else {
-      if (state is! TokenLoadingState) {
+      if (state is! TokenLoadingState && state is! TokenInitial) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => const LoginPage()),
@@ -157,11 +157,6 @@ class _SplashScreenState extends State<SplashScreen>
                       secondaryButtonText: "later".tr(context),
                       onSecondaryAction: () {
                         Navigator.pop(context);
-                        if (mounted) {
-                          setState(() {
-                            _hasShownDialog = false;
-                          });
-                        }
                         context.read<TokenCubit>().cheackToken();
                       });
                 });
