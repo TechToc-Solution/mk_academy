@@ -24,6 +24,9 @@ class ProfilePageBodyState extends State<ProfilePageBody>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(() {
+      setState(() {}); // update view when tab changes
+    });
   }
 
   @override
@@ -36,39 +39,36 @@ class ProfilePageBodyState extends State<ProfilePageBody>
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
-      child: ListView(
-        children: [
-          SizedBox(height: kSizedBoxHeight),
-          ProfilePageHeader(
-            userModel: widget.userModel,
-          ),
-          SizedBox(height: kSizedBoxHeight),
-          Divider(
-            color: AppColors.primaryColors,
-            height: kSizedBoxHeight,
-            thickness: 0.5,
-          ),
-          SizedBox(height: kSizedBoxHeight),
-          StatsSection(
-            userModel: widget.userModel,
-          ),
-          SizedBox(height: kSizedBoxHeight),
-          ProfileTabBar(tabController: _tabController),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.5,
-            child: TabBarView(
-              controller: _tabController,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: kSizedBoxHeight),
+            ProfilePageHeader(
+              userModel: widget.userModel,
+            ),
+            SizedBox(height: kSizedBoxHeight),
+            Divider(
+              color: AppColors.primaryColors,
+              height: kSizedBoxHeight,
+              thickness: 0.5,
+            ),
+            SizedBox(height: kSizedBoxHeight),
+            StatsSection(
+              userModel: widget.userModel,
+            ),
+            SizedBox(height: kSizedBoxHeight),
+            ProfileTabBar(tabController: _tabController),
+            IndexedStack(
+              index: _tabController.index,
               children: [
                 SubscriptionsSection(
                   courses: widget.userModel.courses ?? [],
                 ),
-                LevelSection(
-                  userModel: widget.userModel,
-                ),
+                LevelSection(userModel: widget.userModel),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

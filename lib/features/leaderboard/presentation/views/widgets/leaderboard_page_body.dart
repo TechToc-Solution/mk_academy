@@ -14,13 +14,26 @@ class LeaderboardPageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
-      child: students.isNotEmpty
-          ? LeaderboardSection(
-              students: students,
-            )
-          : Center(child: Text("no_data".tr(context))),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+          child: students.isNotEmpty
+              ? Column(
+                  children: [
+                    Expanded(
+                      child: LeaderboardSection(
+                        students: students,
+                      ),
+                    ),
+                  ],
+                )
+              : SizedBox(
+                  height: constraints.maxHeight,
+                  child: Center(child: Text("no_data".tr(context))),
+                ),
+        );
+      },
     );
   }
 }

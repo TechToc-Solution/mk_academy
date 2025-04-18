@@ -26,11 +26,23 @@ class _LeaderboardSectionState extends State<LeaderboardSection> {
     super.initState();
     _cubit = context.read<LeaderboardCubit>();
     _scrollController.addListener(_onScroll);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkIfNeedsMoreData();
+    });
   }
 
   void _onScroll() {
     if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 200) {
+        _scrollController.position.maxScrollExtent - 300) {
+      if (!_cubit.hasReachedMax) {
+        _cubit.getLeaderboard(loadMore: true);
+      }
+    }
+  }
+
+  void _checkIfNeedsMoreData() {
+    if (_scrollController.position.maxScrollExtent <=
+        _scrollController.position.viewportDimension) {
       if (!_cubit.hasReachedMax) {
         _cubit.getLeaderboard(loadMore: true);
       }
@@ -48,19 +60,19 @@ class _LeaderboardSectionState extends State<LeaderboardSection> {
     return ListView.builder(
         controller: _scrollController,
         itemCount: widget.students.length + (_cubit.hasReachedMax ? 0 : 1),
-        physics: BouncingScrollPhysics(),
+        physics: AlwaysScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           if (index >= widget.students.length) {
-            if (!_cubit.hasReachedMax) {
-              return const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Center(
-                    child: CircularProgressIndicator(
+            return const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: LinearProgressIndicator(
                   color: Colors.white,
-                )),
-              );
-            }
+                ),
+              ),
+            );
           }
+
           return CustomLeaderboardShow(
               index: index,
               students: widget.students,
