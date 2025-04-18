@@ -15,7 +15,7 @@ class WhoWeAre extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.sizeOf(context).width, kToolbarHeight),
+        preferredSize: MediaQuery.sizeOf(context),
         child: SafeArea(
           child: CustomAppBar(
             title: "who_we_are".tr(context),
