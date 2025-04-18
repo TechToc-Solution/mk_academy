@@ -29,7 +29,6 @@
     "capacitors": "Capacitors",
     "exam_sessions": "Exam Sessions",
     "subscriptions": "Subscriptions",
-    "who_are_we": "Who We Are",
     "work_papers": "Worksheets",
     "logout": "Logout",
     "delete_account": "Delete Account",
@@ -133,5 +132,8 @@
     "activate_code": "Activate Code",
     "code_check": "Check Code",
     "scan_qr_code": "Scan QR Code",
-    "align_qr": "Align the code within the frame"
+    "align_qr": "Align the code within the frame",
+    "who_we_are": "Who we are",
+    "telegram_url": "Telegram Link",
+    "error_link": "There was an error in the link."
 }

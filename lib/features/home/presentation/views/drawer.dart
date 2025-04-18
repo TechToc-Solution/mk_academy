@@ -11,6 +11,7 @@ import 'package:mk_academy/features/auth/presentation/view-model/logout_cubit/lo
 import 'package:mk_academy/features/auth/presentation/views/login/login_page.dart';
 import 'package:mk_academy/features/leaderboard/presentation/views/leaderboard.dart';
 import 'package:mk_academy/features/profile/presentation/views/profile_page.dart';
+import 'package:mk_academy/features/who_we_are/presentation/view/who_we_are.dart';
 //import 'package:mk_academy/features/work%20papers/presentation/views/work_papers_page.dart';
 
 import '../../../../core/utils/colors.dart';
@@ -80,9 +81,12 @@ class CustomDrawer extends StatelessWidget {
               icon: Icons.leaderboard,
             ),
           ),
-          CustomDrawerBtn(
-            title: "who_are_we".tr(context),
-            icon: Icons.people,
+          GestureDetector(
+            onTap: () => Navigator.of(context).push(goRoute(x: WhoWeAre())),
+            child: CustomDrawerBtn(
+              title: "who_we_are".tr(context),
+              icon: Icons.people,
+            ),
           ),
           GestureDetector(
             onTap: () => messages(

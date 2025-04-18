@@ -29,7 +29,6 @@
     "capacitors" : "مكثفات",
     "exam_sessions" : "امتحانية",
     "subscriptions" : "الاشتراكات",
-    "who_are_we" : "من نحن",
     "work_papers" : "اوراق عمل",
     "logout" : "تسجيل خروج",
     "delete_account" : "حذف الحساب",
@@ -133,5 +132,8 @@
     "activate_code": "تفعيل الرمز",
     "code_check" : "التحقق من الرمز",
     "scan_qr_code" : "امسح الرمز",
-    "align_qr" : "ضع الرمز ضمن الإطار"
+    "align_qr" : "ضع الرمز ضمن الإطار",
+    "who_we_are" : "من نحن",
+    "telegram_url": "رابط تيليغرام",
+    "error_link": "يوجد خطأ في الرابط."
 }
