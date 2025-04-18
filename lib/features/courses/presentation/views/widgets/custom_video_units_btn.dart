@@ -39,7 +39,7 @@ class _CustomVideoUnitBtnState extends State<CustomVideoUnitBtn> {
                   });
                 },
                 image: _hasError || widget.course.image == null
-                    ? AssetImage(AssetsData.logo)
+                    ? AssetImage(AssetsData.defaultImage)
                     : NetworkImage(widget.course.image!),
                 fit: BoxFit.fill,
               ),
@@ -51,7 +51,7 @@ class _CustomVideoUnitBtnState extends State<CustomVideoUnitBtn> {
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: Colors.black.withAlpha(102),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(14),
               ),
               child: LayoutBuilder(builder: (context, constraints) {
                 final fontSize =

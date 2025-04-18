@@ -138,5 +138,6 @@
     "error_link": "There was an error in the link.",
     "technical_support": "Technical Support Team (WhatsApp + Telegram)",
     "technical_team": "Technical Team (WhatsApp + Telegram)",
-    "otp_note": "The number sending the OTP verification code is not intended for support"
+    "otp_note": "The number sending the OTP verification code is not intended for support",
+    "copied_to_clipboard": "Number copied to clipboard"
 }

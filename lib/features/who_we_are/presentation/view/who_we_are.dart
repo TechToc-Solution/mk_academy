@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
@@ -52,15 +53,15 @@ class WhoWeAre extends StatelessWidget {
                     _buildContactInfo(
                       context,
                       Icons.phone,
-                      "technical_support".tr(context),
-                      ["0954943107", "0994376448", "0992981517"],
+                      "technical_team".tr(context),
+                      ["0948583508", "0962273814"],
                     ),
                     const Divider(color: Colors.grey),
                     _buildContactInfo(
                       context,
                       Icons.phone,
-                      "technical_team".tr(context),
-                      ["0948583508", "0962273814"],
+                      "technical_support".tr(context),
+                      ["0954943107", "0994376448", "0992981517"],
                     ),
                     const SizedBox(height: 8),
                     Text(
@@ -137,18 +138,32 @@ class WhoWeAre extends StatelessWidget {
         const SizedBox(height: 8),
         ...phoneNumbers.map((number) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Row(
-                children: [
-                  Icon(Icons.phone, size: 16, color: AppColors.backgroundColor),
-                  const SizedBox(width: 8),
-                  Text(
-                    number,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: AppColors.backgroundColor,
+              child: InkWell(
+                onTap: () async {
+                  // Copy the number to the clipboard
+                  await Clipboard.setData(ClipboardData(text: number));
+                  // Show a snackbar to confirm the action
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("copied_to_clipboard".tr(context)),
+                      backgroundColor: Colors.green,
                     ),
-                  ),
-                ],
+                  );
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.phone,
+                        size: 16, color: AppColors.backgroundColor),
+                    const SizedBox(width: 8),
+                    Text(
+                      number,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppColors.backgroundColor,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             )),
       ],

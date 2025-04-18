@@ -5,6 +5,7 @@ import 'package:mk_academy/core/shared/cubits/pay/pay_cubit.dart';
 import 'package:mk_academy/core/shared/cubits/pay/pay_state.dart';
 import 'package:mk_academy/core/shared/repos/pay/pay_repo.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/core/utils/assets_data.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/core/utils/services_locater.dart';
@@ -98,7 +99,22 @@ class CourseCardDetails extends StatelessWidget {
                 course.image!,
                 width: double.infinity,
                 height: 180,
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    AssetsData.defaultImage,
+                    width: double.infinity,
+                    height: 180,
+                    fit: BoxFit.fill,
+                  );
+                },
+              ),
+            if (course.image == null)
+              Image.asset(
+                AssetsData.defaultImage,
+                width: double.infinity,
+                height: 180,
+                fit: BoxFit.fill,
               ),
             Padding(
               padding: const EdgeInsets.all(16.0),
