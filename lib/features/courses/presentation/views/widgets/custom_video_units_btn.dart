@@ -39,7 +39,7 @@ class _CustomVideoUnitBtnState extends State<CustomVideoUnitBtn> {
                   });
                 },
                 image: _hasError || widget.course.image == null
-                    ? AssetImage(AssetsData.defaultImage)
+                    ? AssetImage(AssetsData.defaultImage3)
                     : NetworkImage(widget.course.image!),
                 fit: BoxFit.fill,
               ),

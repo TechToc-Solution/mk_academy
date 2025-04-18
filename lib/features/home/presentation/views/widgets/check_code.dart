@@ -102,7 +102,7 @@ class CourseCardDetails extends StatelessWidget {
                 fit: BoxFit.fill,
                 errorBuilder: (context, error, stackTrace) {
                   return Image.asset(
-                    AssetsData.defaultImage,
+                    AssetsData.defaultImage5,
                     width: double.infinity,
                     height: 180,
                     fit: BoxFit.fill,
@@ -111,7 +111,7 @@ class CourseCardDetails extends StatelessWidget {
               ),
             if (course.image == null)
               Image.asset(
-                AssetsData.defaultImage,
+                AssetsData.defaultImage5,
                 width: double.infinity,
                 height: 180,
                 fit: BoxFit.fill,
