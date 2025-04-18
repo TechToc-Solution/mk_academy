@@ -7,7 +7,6 @@ import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/core/utils/services_locater.dart';
 import 'package:mk_academy/core/utils/styles.dart';
-import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
 import 'package:mk_academy/features/auth/presentation/views/login/login_page.dart';
 import 'package:mk_academy/features/auth/presentation/views/widgets/custom_button.dart';
