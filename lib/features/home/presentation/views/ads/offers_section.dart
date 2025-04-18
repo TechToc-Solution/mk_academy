@@ -61,16 +61,20 @@ class _OffersSectionState extends State<OffersSection> {
             itemBuilder: (BuildContext context, int index) {
               return Container(
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                      onError: (exception, stackTrace) {
-                        hasError = true;
-                      },
-                      image: hasError
-                          ? AssetImage(AssetsData.logo)
-                          : NetworkImage(widget.ads[index].image!),
-                      fit: BoxFit.fill),
                   borderRadius: BorderRadius.circular(8),
                   color: Colors.white,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: FadeInImage(
+                    image: NetworkImage(widget.ads[index].image!),
+                    placeholder: AssetImage(AssetsData.defaultImage3),
+                    imageErrorBuilder: (context, error, stackTrace) {
+                      return Image.asset(AssetsData.defaultImage3,
+                          fit: BoxFit.fill);
+                    },
+                    fit: BoxFit.fill,
+                  ),
                 ),
               );
             })

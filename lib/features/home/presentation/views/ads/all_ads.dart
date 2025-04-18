@@ -193,7 +193,7 @@ class _AdsBtnState extends State<AdsBtn> {
                         hasError = true;
                       },
                       image: hasError
-                          ? AssetImage(AssetsData.logo)
+                          ? AssetImage(AssetsData.defaultImage3)
                           : NetworkImage(widget.ads[index].image!),
                       fit: BoxFit.fill),
                   borderRadius: BorderRadius.circular(8),
