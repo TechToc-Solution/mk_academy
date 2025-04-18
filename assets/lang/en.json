@@ -135,5 +135,8 @@
     "align_qr": "Align the code within the frame",
     "who_we_are": "Who we are",
     "telegram_url": "Telegram Link",
-    "error_link": "There was an error in the link."
+    "error_link": "There was an error in the link.",
+    "technical_support": "Technical Support Team (WhatsApp + Telegram)",
+    "technical_team": "Technical Team (WhatsApp + Telegram)",
+    "otp_note": "The number sending the OTP verification code is not intended for support"
 }
