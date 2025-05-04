@@ -9,16 +9,17 @@ class DownloadCubit extends Cubit<DownloadHandlerState> {
   DownloadCubit({required this.repo}) : super(DownloadHandlerInitial());
 
   Future<void> startDownload(
-      {required String url, required String fileName}) async {
-    emit(DownloadHandlerLoding());
+      {required String url, required String fileName, required int id}) async {
+    emit(DownloadHandlerLoding(id: id));
     final result = await repo.downloadFile(url: url, fileName: fileName);
     result.fold(
-        (failure) => emit(DownloadHandlerError(errorMsg: failure.message)),
+        (failure) =>
+            emit(DownloadHandlerError(errorMsg: failure.message, id: id)),
         (downloadResult) {
       if (downloadResult.status == DownloadStatus.completed) {
-        emit(DownloadHandlerSuccess(filePath: downloadResult.filePath));
+        emit(DownloadHandlerSuccess(filePath: downloadResult.filePath, id: id));
       } else if (downloadResult.status == DownloadStatus.permissionDenied) {
-        emit(DownloadHandlerDenied());
+        emit(DownloadHandlerDenied(id: id));
       }
     });
   }

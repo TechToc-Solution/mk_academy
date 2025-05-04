@@ -21,13 +21,12 @@ class DownloadFileBlocConsumer extends StatelessWidget {
     return BlocConsumer<DownloadCubit, DownloadHandlerState>(
       builder: (context, state) {
         return CustomCircularIcon(
-          showProgress: state is DownloadHandlerLoding,
+          showProgress: state is DownloadHandlerLoding && state.id == video.id,
           icon: Icons.download_for_offline_rounded,
           onTap: () {
             if (video.filePath != null) {
-              context
-                  .read<DownloadCubit>()
-                  .startDownload(url: video.filePath!, fileName: video.name!);
+              context.read<DownloadCubit>().startDownload(
+                  url: video.filePath!, fileName: video.name!, id: video.id!);
             } else {
               messages(context, "video_not_available_message".tr(context),
                   Colors.grey);
@@ -37,11 +36,17 @@ class DownloadFileBlocConsumer extends StatelessWidget {
       },
       listener: (BuildContext context, DownloadHandlerState state) {
         if (state is DownloadHandlerSuccess && state.filePath != null) {
-          DownloadSnackBar.show(context: context, filePath: state.filePath!);
+          if (state.id == video.id) {
+            DownloadSnackBar.show(context: context, filePath: state.filePath!);
+          }
         } else if (state is DownloadHandlerError) {
-          messages(context, state.errorMsg, Colors.red);
+          if (state.id == video.id) {
+            messages(context, state.errorMsg, Colors.red);
+          }
         } else if (state is DownloadHandlerDenied) {
-          messages(context, "permission_denied_msg".tr(context), Colors.red);
+          if (state.id == video.id) {
+            messages(context, "permission_denied_msg".tr(context), Colors.red);
+          }
         }
       },
     );

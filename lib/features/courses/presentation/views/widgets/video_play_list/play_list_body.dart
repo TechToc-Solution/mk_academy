@@ -75,13 +75,11 @@ class PlayListBody extends StatelessWidget {
     );
   }
 
-  void _handleDownload(BuildContext context, String url, String fileName) {
+  void _handleDownload(
+      BuildContext context, String url, String fileName, int id) {
     final cubit = context.read<DownloadCubit>();
 
-    cubit.startDownload(
-      url: url,
-      fileName: fileName,
-    );
+    cubit.startDownload(url: url, fileName: fileName, id: id);
   }
 
   void _handleVideoPress(
@@ -97,7 +95,7 @@ class PlayListBody extends StatelessWidget {
       oneButton: false,
       onPrimaryAction: () {
         Navigator.pop(context);
-        _handleDownload(context, url, fileName);
+        _handleDownload(context, url, fileName, videos[index].id!);
       },
       onSecondaryAction: () {
         Navigator.pop(context);

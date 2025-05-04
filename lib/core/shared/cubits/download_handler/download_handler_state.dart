@@ -10,17 +10,27 @@ sealed class DownloadHandlerState extends Equatable {
 final class DownloadHandlerInitial extends DownloadHandlerState {}
 
 final class DownloadHandlerError extends DownloadHandlerState {
+  final int id;
   final String errorMsg;
 
-  const DownloadHandlerError({required this.errorMsg});
+  const DownloadHandlerError({required this.errorMsg, required this.id});
 }
 
 final class DownloadHandlerSuccess extends DownloadHandlerState {
+  final int id;
   final String? filePath;
 
-  const DownloadHandlerSuccess({required this.filePath});
+  const DownloadHandlerSuccess({required this.filePath, required this.id});
 }
 
-final class DownloadHandlerLoding extends DownloadHandlerState {}
+final class DownloadHandlerLoding extends DownloadHandlerState {
+  final int id;
 
-final class DownloadHandlerDenied extends DownloadHandlerState {}
+  const DownloadHandlerLoding({required this.id});
+}
+
+final class DownloadHandlerDenied extends DownloadHandlerState {
+  final int id;
+
+  const DownloadHandlerDenied({required this.id});
+}

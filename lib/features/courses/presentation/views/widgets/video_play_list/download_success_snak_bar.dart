@@ -15,7 +15,7 @@ class DownloadSnackBar {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
-      margin: const EdgeInsets.all(16.0),
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
       duration: const Duration(seconds: 4),
       content: Row(
         children: [
