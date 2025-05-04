@@ -15,6 +15,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   dartz: ^0.10.1
   date_format: ^2.0.9
+  device_info_plus: ^11.4.0
   dio: ^5.7.0
   equatable: ^2.0.5
   external_path: ^2.2.0
@@ -23,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.5
+  flutter_download_manager: ^0.5.5
   flutter_html: ^3.0.0
   flutter_local_notifications: ^18.0.1
   flutter_localizations:

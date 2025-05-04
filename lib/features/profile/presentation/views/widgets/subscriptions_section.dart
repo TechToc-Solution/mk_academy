@@ -67,6 +67,7 @@ class SubscriptionsSection extends StatelessWidget {
                       borderRadius: BorderRadius.circular(35)),
                   onPressed: () {
                     CustomBottomSheet.show(
+                        heightFactor: 0.6,
                         title: course.name,
                         backgroundColor: AppColors.backgroundColor,
                         context: context,
