@@ -21,18 +21,42 @@ class ShimmerContainer extends StatelessWidget {
             crossAxisSpacing: 16,
             mainAxisSpacing: 16),
         itemBuilder: (BuildContext context, int index) {
-          return Shimmer.fromColors(
-            baseColor: AppColors.baseShimmerColor,
-            highlightColor: AppColors.highLightShimmerColor,
-            child: Container(
-              margin: margin,
-              width: width,
-              height: height,
-              decoration: BoxDecoration(
-                  color: AppColors.baseShimmerColor,
-                  borderRadius: BorderRadius.circular(kBorderRadius)),
-            ),
+          return ShimmerWidget(
+            margin: margin,
+            width: width,
+            height: height,
+            radius: kBorderRadius,
           );
         });
+  }
+}
+
+class ShimmerWidget extends StatelessWidget {
+  const ShimmerWidget(
+      {super.key,
+      required this.margin,
+      required this.width,
+      required this.height,
+      required this.radius});
+
+  final EdgeInsetsGeometry? margin;
+  final double? width;
+  final double? height;
+  final double? radius;
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: AppColors.baseShimmerColor,
+      highlightColor: AppColors.highLightShimmerColor,
+      child: Container(
+        margin: margin,
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+            color: AppColors.baseShimmerColor,
+            borderRadius: BorderRadius.circular(radius!)),
+      ),
+    );
   }
 }

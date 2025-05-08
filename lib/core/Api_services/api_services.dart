@@ -17,7 +17,7 @@ class ApiServices {
         error: true,
         request: true,
         compact: true,
-        maxWidth: 10000));
+        maxWidth: 50));
   }
 
   Map<String, String> _headers() {
