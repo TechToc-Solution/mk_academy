@@ -10,6 +10,8 @@ import 'package:mk_academy/core/widgets/shimmer_container.dart';
 import 'package:mk_academy/features/home/data/model/ads_model.dart';
 import 'package:mk_academy/features/home/presentation/views-model/ads/ads_cubit.dart';
 import 'package:mk_academy/features/test_your_self/presentation/views/widgets/back_ground_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shimmer/shimmer.dart';
 
 class AllAds extends StatefulWidget {
   static const String routeName = '/allAds';
@@ -141,6 +143,7 @@ class _AllAdsState extends State<AllAds> {
                           )
                         : Expanded(
                             child: AdsBtn(
+                            ext: currentTab == 1 ? true : false,
                             ads: currentAds,
                           ));
                   } else {
@@ -164,8 +167,9 @@ class _AllAdsState extends State<AllAds> {
 }
 
 class AdsBtn extends StatefulWidget {
-  const AdsBtn({super.key, required this.ads});
+  const AdsBtn({super.key, required this.ads, required this.ext});
   final List<Ads> ads;
+  final bool ext;
 
   @override
   State<AdsBtn> createState() => _AdsBtnState();
@@ -181,23 +185,33 @@ class _AdsBtnState extends State<AdsBtn> {
             itemCount: widget.ads.length,
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1,
+                crossAxisCount: widget.ext ? 1 : 2,
+                childAspectRatio: widget.ext ? 2 : 1,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16),
             itemBuilder: (BuildContext context, int index) {
               return Container(
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                      onError: (exception, stackTrace) {
-                        hasError = true;
-                      },
-                      image: hasError
-                          ? AssetImage(AssetsData.defaultImage3)
-                          : NetworkImage(widget.ads[index].image!),
-                      fit: BoxFit.fill),
                   borderRadius: BorderRadius.circular(8),
                   color: Colors.white,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: CachedNetworkImage(
+                    imageUrl: widget.ads[index].image ?? '',
+                    fit: BoxFit.fill,
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.grey.shade100,
+                      child: Container(
+                        color: Colors.white,
+                      ),
+                    ),
+                    errorWidget: (context, error, stackTrace) => Image.asset(
+                      AssetsData.defaultImage3,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
                 ),
               );
             }));

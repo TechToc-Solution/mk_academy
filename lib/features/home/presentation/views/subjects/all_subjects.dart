@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/shared/cubits/subjects/subjects_cubit.dart';
@@ -12,6 +13,7 @@ import 'package:mk_academy/core/widgets/custom_error_widget.dart';
 import 'package:mk_academy/core/widgets/shimmer_container.dart';
 import 'package:mk_academy/features/home/presentation/views/subjects/show_subject.dart';
 import 'package:mk_academy/features/test_your_self/presentation/views/widgets/back_ground_image.dart';
+import 'package:shimmer/shimmer.dart';
 
 class AllSubjects extends StatefulWidget {
   static const String routeName = '/allSubjects';
@@ -116,10 +118,17 @@ class SubjectBtn extends StatelessWidget {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8),
-                        child: Image.network(
-                          subject.image ?? '',
+                        child: CachedNetworkImage(
+                          imageUrl: subject.image ?? '',
                           fit: BoxFit.fill,
-                          errorBuilder: (context, error, stackTrace) =>
+                          placeholder: (context, url) => Shimmer.fromColors(
+                            baseColor: Colors.grey.shade300,
+                            highlightColor: Colors.grey.shade100,
+                            child: Container(
+                              color: Colors.white,
+                            ),
+                          ),
+                          errorWidget: (context, error, stackTrace) =>
                               Image.asset(
                             AssetsData.logo,
                             fit: BoxFit.fill,
@@ -143,7 +152,8 @@ class SubjectBtn extends StatelessWidget {
                             shadows: const [
                               Shadow(color: Colors.black, blurRadius: 20),
                               Shadow(
-                                  color: AppColors.primaryColors, blurRadius: 5)
+                                  color: AppColors.primaryColors,
+                                  blurRadius: 5),
                             ],
                           ),
                         ),

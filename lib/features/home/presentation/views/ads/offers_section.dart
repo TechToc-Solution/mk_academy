@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/assets_data.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/features/home/presentation/views/ads/all_ads.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../data/model/ads_model.dart';
 
@@ -66,14 +68,20 @@ class _OffersSectionState extends State<OffersSection> {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: FadeInImage(
-                    image: NetworkImage(widget.ads[index].image!),
-                    placeholder: AssetImage(AssetsData.defaultImage3),
-                    imageErrorBuilder: (context, error, stackTrace) {
-                      return Image.asset(AssetsData.defaultImage3,
-                          fit: BoxFit.fill);
-                    },
+                  child: CachedNetworkImage(
+                    imageUrl: widget.ads[index].image ?? '',
                     fit: BoxFit.fill,
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.grey.shade100,
+                      child: Container(
+                        color: Colors.white,
+                      ),
+                    ),
+                    errorWidget: (context, error, stackTrace) => Image.asset(
+                      AssetsData.defaultImage3,
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
               );
