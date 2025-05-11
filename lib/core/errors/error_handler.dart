@@ -70,8 +70,6 @@ class ErrorHandler {
         return NetworkFailure(_messages['connectionError']!);
       case DioExceptionType.badResponse:
         return _handleResponseError(error);
-      default:
-        return ServerFailure(_messages['error_tryAgain']!);
     }
   }
 

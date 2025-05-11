@@ -17,9 +17,8 @@ class Validator {
       case ValidationState.price:
         return _validatePrice(text);
       case ValidationState.normal:
-      default:
-        return null;
     }
+    return null;
   }
 
   static String? _validateEmail(String text) {
