@@ -26,6 +26,7 @@ import 'package:mk_academy/splash_screen.dart';
 import 'core/shared/cubits/subjects/subjects_cubit.dart';
 import 'core/shared/repos/download_handler/download_handler_repo.dart';
 import 'core/shared/repos/subjects/subjects_repo.dart';
+import 'core/utils/constats.dart';
 import 'features/auth/data/repos/logout_repo/logout_repo.dart';
 import 'features/auth/data/repos/register_repo/register_repo.dart';
 import 'features/auth/data/repos/reset_password_repo/reset_password_repo.dart';
@@ -92,6 +93,7 @@ class MyApp extends StatelessWidget {
       child: BlocBuilder<LocaleCubit, ChangeLocaleState>(
         builder: (context, state) {
           return MaterialApp(
+            navigatorKey: navigatorKey,
             // locale: state.locale,
             locale: Locale("ar"),
             supportedLocales: const [
