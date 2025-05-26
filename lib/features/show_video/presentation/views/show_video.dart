@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/core/widgets/custom_app_bar.dart';
 import 'package:mk_academy/features/courses/data/model/video_model.dart';
@@ -68,42 +69,64 @@ class WebViewScreenState extends State<WebViewScreen> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF141E30), Color(0xFF243B55)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: AppColors.primaryColors,
+        title: Text(
+          overflow: TextOverflow.ellipsis,
+          widget.video!.name!,
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              fontFamily: "cocon-next-arabic"),
         ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              CustomAppBar(
-                title: widget.video!.name!,
-                backBtn: true,
-              ),
-              Expanded(
-                child: Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: WebViewWidget(controller: _controller),
-                    ),
-                    if (_isLoading)
-                      const Center(
-                        child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.white),
-                        ),
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 250,
+              child: Stack(
+                children: [
+                  WebViewWidget(controller: _controller),
+                  if (_isLoading)
+                    const Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       ),
-                  ],
-                ),
+                    ),
+                ],
               ),
-            ],
-          ),
+            ),
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Video Title: ${widget.video!.name}',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Description: ${widget.video?.name ?? "No description available"}',
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(height: 16),
+                  // Add more info here like duration, author, etc.
+                  if (widget.video?.duration != null)
+                    Text('Duration: ${widget.video!.duration}'),
+                  // Example additional info
+                  const Text('Author: MK Academy'),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

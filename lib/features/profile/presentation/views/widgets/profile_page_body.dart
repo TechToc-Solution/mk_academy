@@ -67,17 +67,7 @@ class ProfilePageBodyState extends State<ProfilePageBody>
             ProfilePageHeader(
               userModel: widget.userModel,
             ),
-            SizedBox(height: kSizedBoxHeight),
-            Divider(
-              color: AppColors.primaryColors,
-              height: kSizedBoxHeight,
-              thickness: 0.5,
-            ),
-            SizedBox(height: kSizedBoxHeight),
-            StatsSection(
-              userModel: widget.userModel,
-            ),
-            SizedBox(height: kSizedBoxHeight),
+            SizedBox(height: kSizedBoxHeight / 2),
             BlocConsumer<DeleteAccountCubit, DeleteAccountState>(
               listener: (context, state) {
                 if (state is DeleteAccountSuccess) {
@@ -99,6 +89,16 @@ class ProfilePageBodyState extends State<ProfilePageBody>
                 );
               },
             ),
+            Divider(
+              color: AppColors.primaryColors,
+              height: kSizedBoxHeight,
+              thickness: 0.5,
+            ),
+            SizedBox(height: kSizedBoxHeight),
+            StatsSection(
+              userModel: widget.userModel,
+            ),
+            SizedBox(height: kSizedBoxHeight),
             ProfileTabBar(tabController: _tabController),
             IndexedStack(
               index: _tabController.index,
