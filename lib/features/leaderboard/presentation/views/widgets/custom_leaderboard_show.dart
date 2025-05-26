@@ -11,22 +11,23 @@ class CustomLeaderboardShow extends StatelessWidget {
       required this.isYou,
       required this.students});
   final int index;
-  final List<StudentsLeaderboardModel> students;
+  final StudentsLeaderboardModel students;
   final bool isYou;
   @override
   Widget build(BuildContext context) {
     return ListTile(
       selected: isYou,
       selectedTileColor: const Color.fromARGB(55, 0, 0, 0),
-      leading: CircleAvatar(
-        child: Icon(Icons.person),
-      ),
+      // leading: CircleAvatar(
+      //   child: Icon(Icons.person),
+      // ),
+
       title: Text(
-        students[index].name!,
+        students.name!,
         style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
       ),
       subtitle: Text(
-        "${"level".tr(context)} ${students[index].level!}",
+        "${"level".tr(context)} ${students.level!}",
         style: TextStyle(color: Colors.white),
       ),
       trailing: index == 0

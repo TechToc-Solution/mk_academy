@@ -25,29 +25,29 @@ class _LeaderboardSectionState extends State<LeaderboardSection> {
   void initState() {
     super.initState();
     _cubit = context.read<LeaderboardCubit>();
-    _scrollController.addListener(_onScroll);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _checkIfNeedsMoreData();
-    });
+    // _scrollController.addListener(_onScroll);
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   _checkIfNeedsMoreData();
+    // });
   }
 
-  void _onScroll() {
-    if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 300) {
-      if (!_cubit.hasReachedMax) {
-        _cubit.getLeaderboard(loadMore: true);
-      }
-    }
-  }
+  // void _onScroll() {
+  //   if (_scrollController.position.pixels >=
+  //       _scrollController.position.maxScrollExtent - 300) {
+  //     if (!_cubit.hasReachedMax) {
+  //       _cubit.getLeaderboard(loadMore: true);
+  //     }
+  //   }
+  // }
 
-  void _checkIfNeedsMoreData() {
-    if (_scrollController.position.maxScrollExtent <=
-        _scrollController.position.viewportDimension) {
-      if (!_cubit.hasReachedMax) {
-        _cubit.getLeaderboard(loadMore: true);
-      }
-    }
-  }
+  // void _checkIfNeedsMoreData() {
+  //   if (_scrollController.position.maxScrollExtent <=
+  //       _scrollController.position.viewportDimension) {
+  //     if (!_cubit.hasReachedMax) {
+  //       _cubit.getLeaderboard(loadMore: true);
+  //     }
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -59,23 +59,24 @@ class _LeaderboardSectionState extends State<LeaderboardSection> {
   Widget build(BuildContext context) {
     return ListView.builder(
         controller: _scrollController,
-        itemCount: widget.students.length + (_cubit.hasReachedMax ? 0 : 1),
+        // itemCount: widget.students.length + (_cubit.hasReachedMax ? 0 : 1),
+        itemCount: widget.students.length,
         physics: AlwaysScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
-          if (index >= widget.students.length) {
-            return const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Center(
-                child: LinearProgressIndicator(
-                  color: Colors.white,
-                ),
-              ),
-            );
-          }
+          // if (index >= widget.students.length) {
+          //   return const Padding(
+          //     padding: EdgeInsets.all(8.0),
+          //     child: Center(
+          //       child: LinearProgressIndicator(
+          //         color: Colors.white,
+          //       ),
+          //     ),
+          //   );
+          // }
 
           return CustomLeaderboardShow(
               index: index,
-              students: widget.students,
+              students: widget.students[index],
               isYou: CacheHelper.getData(key: "userId") ==
                   widget.students[index].id.toString());
         });
