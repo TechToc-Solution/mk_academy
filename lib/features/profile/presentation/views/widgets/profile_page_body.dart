@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/constats.dart';
+import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/features/auth/data/models/user_model.dart';
+import 'package:mk_academy/features/auth/presentation/view-model/delete_account/delete_account_cubit.dart';
+import 'package:mk_academy/features/auth/presentation/views/login/login_page.dart';
+import 'package:mk_academy/features/home/presentation/views/drawer.dart';
 import 'package:mk_academy/features/profile/presentation/views/widgets/level_section.dart';
 import 'package:mk_academy/features/profile/presentation/views/widgets/profile_page_header.dart';
 import 'package:mk_academy/features/profile/presentation/views/widgets/profile_tab_bar.dart';
@@ -35,6 +41,21 @@ class ProfilePageBodyState extends State<ProfilePageBody>
     super.dispose();
   }
 
+  void _showDeleteDialog(BuildContext context) {
+    showCustomDialog(
+      context: context,
+      title: "warning".tr(context),
+      description: "delete_account_warning".tr(context),
+      primaryButtonText: "confirm".tr(context),
+      secondaryButtonText: "cancel".tr(context),
+      primaryButtonColor: Colors.red,
+      secondaryButtonColor: Colors.green,
+      onPrimaryAction: () => context.read<DeleteAccountCubit>().deleteAccount(),
+      onSecondaryAction: Navigator.of(context).pop,
+      icon: Icons.warning_rounded,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -57,6 +78,27 @@ class ProfilePageBodyState extends State<ProfilePageBody>
               userModel: widget.userModel,
             ),
             SizedBox(height: kSizedBoxHeight),
+            BlocConsumer<DeleteAccountCubit, DeleteAccountState>(
+              listener: (context, state) {
+                if (state is DeleteAccountSuccess) {
+                  messages(
+                      context, "account_deleted".tr(context), Colors.green);
+                  Navigator.pushReplacementNamed(context, LoginPage.routeName);
+                }
+                if (state is DeleteAccountError) {
+                  messages(context, state.message, Colors.red);
+                }
+              },
+              builder: (context, state) {
+                return GestureDetector(
+                  onTap: () => _showDeleteDialog(context),
+                  child: CustomDrawerBtn(
+                    title: "delete_account".tr(context),
+                    icon: Icons.delete,
+                  ),
+                );
+              },
+            ),
             ProfileTabBar(tabController: _tabController),
             IndexedStack(
               index: _tabController.index,
