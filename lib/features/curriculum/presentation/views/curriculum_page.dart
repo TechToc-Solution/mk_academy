@@ -80,16 +80,6 @@ class _CurriculumPageState extends State<CurriculumPage>
 
             return Column(
               children: [
-                CustomTopNavBar(
-                  tabController: _mainTabController,
-                  subjects: [
-                    for (var subjectData in mainSubjects)
-                      Subjects(id: subjectData.id, name: subjectData.name)
-                  ],
-                ),
-                SizedBox(
-                  height: 8,
-                ),
                 if (!isGuest)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -98,15 +88,20 @@ class _CurriculumPageState extends State<CurriculumPage>
                       showProfile: false,
                     ),
                   ),
+                CustomTopNavBar(
+                  isPrimary: true,
+                  tabController: _mainTabController,
+                  subjects: [
+                    for (var subjectData in mainSubjects)
+                      Subjects(id: subjectData.id, name: subjectData.name)
+                  ],
+                ),
                 if (mainSubjects[selectedMainIndex].subjects!.isNotEmpty)
                   Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: CurriculumPageBody(
-                          key: ValueKey(selectedMainIndex),
-                          subjects: mainSubjects[selectedMainIndex].subjects!,
-                          tabController: _subTabController!),
-                    ),
+                    child: CurriculumPageBody(
+                        key: ValueKey(selectedMainIndex),
+                        subjects: mainSubjects[selectedMainIndex].subjects!,
+                        tabController: _subTabController!),
                   ),
                 if (mainSubjects[selectedMainIndex].subjects!.isEmpty)
                   Expanded(

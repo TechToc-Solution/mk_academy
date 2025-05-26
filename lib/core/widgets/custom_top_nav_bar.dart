@@ -9,11 +9,12 @@ import 'package:mk_academy/core/utils/styles.dart';
 class CustomTopNavBar extends StatelessWidget {
   final TabController tabController;
   final List<Subjects> subjects;
-  const CustomTopNavBar({
-    super.key,
-    required this.tabController,
-    required this.subjects,
-  });
+  final bool isPrimary;
+  const CustomTopNavBar(
+      {super.key,
+      required this.tabController,
+      required this.subjects,
+      required this.isPrimary});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,9 @@ class CustomTopNavBar extends StatelessWidget {
             Tab(
               child: Text(
                 subjects[i].name!,
-                style: Styles.textStyle20.copyWith(color: AppColors.textColor),
+                style: isPrimary
+                    ? Styles.textStyle20.copyWith(color: AppColors.textColor)
+                    : Styles.textStyle16.copyWith(color: AppColors.textColor),
               ),
             ),
         ],

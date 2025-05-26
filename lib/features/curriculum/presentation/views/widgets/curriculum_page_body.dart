@@ -25,11 +25,12 @@ class CurriculumPageBody extends StatelessWidget {
     return Column(
       children: [
         CustomTopNavBar(
+          isPrimary: false,
           subjects: subjects,
           tabController: _tabController,
         ),
         SizedBox(
-          height: kSizedBoxHeight,
+          height: kSizedBoxHeight / 2,
         ),
         Expanded(
           child: TabBarView(
@@ -42,8 +43,11 @@ class CurriculumPageBody extends StatelessWidget {
                         ..getUnits(
                           subjectId: subjects[i].id!,
                         ),
-                  child: CurriculumUnitsSection(
-                    subjectId: subjects[i].id!,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: CurriculumUnitsSection(
+                      subjectId: subjects[i].id!,
+                    ),
                   ),
                 ),
             ],

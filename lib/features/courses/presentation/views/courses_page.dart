@@ -82,16 +82,6 @@ class _CoursesPageState extends State<CoursesPage>
 
               return Column(
                 children: [
-                  CustomTopNavBar(
-                    tabController: _mainTabController,
-                    subjects: [
-                      for (var subjectData in mainSubjects)
-                        Subjects(id: subjectData.id, name: subjectData.name)
-                    ],
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
                   if (!isGuest)
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -100,16 +90,21 @@ class _CoursesPageState extends State<CoursesPage>
                         showProfile: false,
                       ),
                     ),
+                  CustomTopNavBar(
+                    isPrimary: true,
+                    tabController: _mainTabController,
+                    subjects: [
+                      for (var subjectData in mainSubjects)
+                        Subjects(id: subjectData.id, name: subjectData.name)
+                    ],
+                  ),
                   if (mainSubjects[selectedMainIndex].subjects!.isNotEmpty)
                     Flexible(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: CoursesPageBody(
-                          key: ValueKey(selectedMainIndex),
-                          courseTypeId: widget.courseTypeId,
-                          subjects: mainSubjects[selectedMainIndex].subjects!,
-                          tabController: _subTabController!,
-                        ),
+                      child: CoursesPageBody(
+                        key: ValueKey(selectedMainIndex),
+                        courseTypeId: widget.courseTypeId,
+                        subjects: mainSubjects[selectedMainIndex].subjects!,
+                        tabController: _subTabController!,
                       ),
                     ),
                   if (mainSubjects[selectedMainIndex].subjects!.isEmpty)

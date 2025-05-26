@@ -25,6 +25,7 @@ class CoursesPageBody extends StatelessWidget {
     return Column(
       children: [
         CustomTopNavBar(
+          isPrimary: false,
           subjects: subjects,
           tabController: _tabController,
         ),
@@ -43,9 +44,12 @@ class CoursesPageBody extends StatelessWidget {
                       courseTypeId: courseTypeId,
                       subjectId: subjects[i].id!,
                       loadMore: false),
-                child: CoursesUnitsSection(
-                  courseTypeId: courseTypeId,
-                  subjectId: subjects[i].id!,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: CoursesUnitsSection(
+                    courseTypeId: courseTypeId,
+                    subjectId: subjects[i].id!,
+                  ),
                 ),
               ),
           ],
