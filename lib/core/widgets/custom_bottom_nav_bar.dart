@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/features/curriculum/presentation/views/curriculum_page.dart';
-import 'package:motion_tab_bar/MotionTabBar.dart';
-import '../../features/home/presentation/views/home_page.dart';
-import '../../features/courses/presentation/views/courses_page.dart';
+import 'package:mk_academy/features/home/presentation/views/home_page.dart';
+import 'package:mk_academy/features/courses/presentation/views/courses_page.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
   const CustomBottomNavBar({super.key});
@@ -26,24 +25,6 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
     const CoursesPage(courseTypeId: 1), // exam_sessions
   ];
 
-  // bool isIndexAllowed(int index) {
-  //   if (isGuest) {
-  //     return index == 0 || index == 2;
-  //   }
-  //   return true;
-  // }
-
-  // void _onTabSelected(int index) {
-  //   if (!isIndexAllowed(index)) {
-  //     handleGuestLogin(context);
-  //     return;
-  //   }
-
-  //   setState(() {
-  //     _currentIndex = index;
-  //   });
-  // }
-
   @override
   bool get wantKeepAlive => true;
 
@@ -56,62 +37,50 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
         index: _currentIndex,
         children: _pages,
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 8.0,
-              spreadRadius: 2.0,
-              offset: const Offset(0, -2),
-            ),
-          ],
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        type: BottomNavigationBarType.fixed, // Keeps labels always visible
+        selectedItemColor: AppColors.textButtonColors,
+        unselectedItemColor: AppColors.backgroundColor,
+        backgroundColor: AppColors.primaryColors,
+        selectedIconTheme: IconThemeData(size: 30),
+        selectedLabelStyle:
+            const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+        unselectedLabelStyle:
+            const TextStyle(fontWeight: FontWeight.w600, fontSize: 10),
+        items: [
+          BottomNavigationBarItem(
+            activeIcon: const Icon(Icons.library_books),
+            icon: const Icon(Icons.library_books_outlined),
+            label: "curriculum".tr(context),
           ),
-        ),
-        child: MotionTabBar(
-            initialSelectedTab: "home".tr(context),
-            labels: [
-              "curriculum".tr(context),
-              "weekly_sessions".tr(context),
-              "home".tr(context),
-              "capacitors".tr(context),
-              "exam_sessions".tr(context),
-            ],
-            icons: const [
-              Icons.library_books_outlined,
-              Icons.calendar_today_outlined,
-              Icons.home_outlined,
-              Icons.video_library_outlined,
-              Icons.note_alt_outlined,
-            ],
-            useSafeArea: true,
-            tabIconColor: AppColors.backgroundColor,
-            tabIconSize: 30.0,
-            tabIconSelectedSize: 30.0,
-            tabSelectedColor: AppColors.primaryColors,
-            tabIconSelectedColor: AppColors.textButtonColors,
-            tabBarColor: AppColors.primaryColors,
-            tabSize: 50,
-            tabBarHeight: 60,
-            textStyle: TextStyle(
-                fontSize: 11,
-                color: AppColors.backgroundColor,
-                fontWeight: FontWeight.w600),
-            onTabItemSelected: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            }),
+          BottomNavigationBarItem(
+            activeIcon: const Icon(Icons.calendar_today),
+            icon: const Icon(Icons.calendar_today_outlined),
+            label: "weekly_sessions".tr(context),
+          ),
+          BottomNavigationBarItem(
+            activeIcon: const Icon(Icons.home),
+            icon: const Icon(Icons.home_outlined),
+            label: "home".tr(context),
+          ),
+          BottomNavigationBarItem(
+            activeIcon: const Icon(Icons.video_library),
+            icon: const Icon(Icons.video_library_outlined),
+            label: "capacitors".tr(context),
+          ),
+          BottomNavigationBarItem(
+            activeIcon: const Icon(Icons.note_alt),
+            icon: const Icon(Icons.note_alt_outlined),
+            label: "exam_sessions".tr(context),
+          ),
+        ],
       ),
     );
   }
-
-  // void handleGuestLogin(BuildContext context) {
-  //   messages(context, "you_should_login".tr(context), Colors.red);
-  //   Navigator.pushReplacementNamed(context, LoginPage.routeName);
-  // }
 }
