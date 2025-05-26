@@ -16,7 +16,6 @@ import 'package:mk_academy/features/who_we_are/presentation/view/who_we_are.dart
 
 import '../../../../core/utils/colors.dart';
 import '../../../../core/utils/functions.dart';
-import '../../../auth/presentation/view-model/delete_account/delete_account_cubit.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -147,8 +146,6 @@ class CustomDrawer extends StatelessWidget {
       ),
     );
   }
-
- 
 
   void showLoginDialog(BuildContext context) {
     showCustomDialog(

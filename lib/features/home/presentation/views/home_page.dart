@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
                   Localizations.localeOf(context).languageCode == "ar"
                       ? SlideDirection.rightToLeft
                       : SlideDirection.leftToRight,
-              isDraggable: false,
+              isDraggable: true,
               key: _sliderDrawerKey,
               backgroundColor: AppColors.backgroundColor,
               slider: CustomDrawer(),
