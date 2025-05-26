@@ -10,11 +10,12 @@ class ProfilePageHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildAvatar(userModel.firstName),
-        SizedBox(
-          width: 25,
-        ),
+        // _buildAvatar(userModel.firstName),
+        // SizedBox(
+        //   width: 25,
+        // ),
         Column(
           children: [
             Text("${userModel.firstName} ${userModel.lastName}",

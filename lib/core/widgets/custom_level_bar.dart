@@ -243,16 +243,16 @@ class _AnimatedCompactLevelBarState extends State<_AnimatedCompactLevelBar>
   Widget _buildUserProfile() {
     return Column(
       children: [
-        CircleAvatar(
-          radius: 36,
-          backgroundColor: AppColors.primaryColors.withOpacity(0.2),
-          child: const Icon(
-            Icons.person,
-            size: 36,
-            color: Colors.white,
-          ),
-        ),
-        const SizedBox(height: 8),
+        // CircleAvatar(
+        //   radius: 36,
+        //   backgroundColor: AppColors.primaryColors.withOpacity(0.2),
+        //   child: const Icon(
+        //     Icons.person,
+        //     size: 36,
+        //     color: Colors.white,
+        //   ),
+        // ),
+        // const SizedBox(height: 8),
         Text(
           "${widget.userModel.firstName} ${widget.userModel.lastName}",
           style: const TextStyle(
