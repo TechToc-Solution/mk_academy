@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/cache_helper.dart';
 import 'package:mk_academy/features/leaderboard/presentation/views/widgets/custom_leaderboard_show.dart';
 
 import '../../../data/models/students_leaderboard_model.dart';
-import '../../views-model/leaderboard_cubit.dart';
 
 class LeaderboardSection extends StatefulWidget {
   final List<StudentsLeaderboardModel> students;
@@ -19,12 +17,10 @@ class LeaderboardSection extends StatefulWidget {
 
 class _LeaderboardSectionState extends State<LeaderboardSection> {
   final _scrollController = ScrollController();
-  late LeaderboardCubit _cubit;
 
   @override
   void initState() {
     super.initState();
-    _cubit = context.read<LeaderboardCubit>();
     // _scrollController.addListener(_onScroll);
     // WidgetsBinding.instance.addPostFrameCallback((_) {
     //   _checkIfNeedsMoreData();

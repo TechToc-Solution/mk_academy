@@ -45,25 +45,25 @@ class ProfilePageHeader extends StatelessWidget {
   }
 }
 
-Widget _buildAvatar(String? name) {
-  return Container(
-    width: 120,
-    height: 120,
-    decoration: BoxDecoration(
-      color: AppColors.avatarColor,
-      shape: BoxShape.circle,
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black12,
-          blurRadius: 8,
-          offset: Offset(0, 4),
-        )
-      ],
-    ),
-    alignment: Alignment.center,
-    child: Text(
-      name?.isNotEmpty == true ? name![0].toUpperCase() : '?',
-      style: Styles.textStyle35.copyWith(color: Colors.black),
-    ),
-  );
-}
+// Widget _buildAvatar(String? name) {
+//   return Container(
+//     width: 120,
+//     height: 120,
+//     decoration: BoxDecoration(
+//       color: AppColors.avatarColor,
+//       shape: BoxShape.circle,
+//       boxShadow: [
+//         BoxShadow(
+//           color: Colors.black12,
+//           blurRadius: 8,
+//           offset: Offset(0, 4),
+//         )
+//       ],
+//     ),
+//     alignment: Alignment.center,
+//     child: Text(
+//       name?.isNotEmpty == true ? name![0].toUpperCase() : '?',
+//       style: Styles.textStyle35.copyWith(color: Colors.black),
+//     ),
+//   );
+// }
