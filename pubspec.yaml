@@ -14,6 +14,7 @@ dependencies:
   bloc_concurrency: ^0.2.5
   cached_network_image: ^3.4.1
   carousel_slider: ^5.0.0
+  chewie: ^1.11.3
   cupertino_icons: ^1.0.8
   dartz: ^0.10.1
   date_format: ^2.0.9

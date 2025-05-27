@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
-import 'package:mk_academy/core/widgets/custom_app_bar.dart';
 import 'package:mk_academy/features/courses/data/model/video_model.dart';
+import 'package:mk_academy/features/show_video/presentation/views/widgets/download_section.dart';
+import 'package:mk_academy/features/show_video/presentation/views/widgets/mark_as_watched_switch.dart';
+import 'package:mk_academy/features/show_video/presentation/views/widgets/video_info_message.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewScreen extends StatefulWidget {
-  static const String routeName = '/video';
+  static const String routeName = '/webview';
 
   const WebViewScreen({super.key, required this.video});
   final Video? video;
@@ -18,7 +20,8 @@ class WebViewScreen extends StatefulWidget {
 class WebViewScreenState extends State<WebViewScreen> {
   late final WebViewController _controller;
   bool _isLoading = true;
-
+  bool _isVideoCompleted = false;
+  bool _isVideoWatched = false;
   @override
   void initState() {
     super.initState();
@@ -74,7 +77,20 @@ class WebViewScreenState extends State<WebViewScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: AppColors.primaryColors,
+        backgroundColor: Colors.transparent, // Important!
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                AppColors.primaryColors,
+                AppColors.secColors,
+              ],
+            ),
+          ),
+        ),
         title: Text(
           overflow: TextOverflow.ellipsis,
           widget.video!.name!,
@@ -101,29 +117,27 @@ class WebViewScreenState extends State<WebViewScreen> {
                 ],
               ),
             ),
-            SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Video Title: ${widget.video!.name}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Description: ${widget.video?.name ?? "No description available"}',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 16),
-                  // Add more info here like duration, author, etc.
-                  if (widget.video?.duration != null)
-                    Text('Duration: ${widget.video!.duration}'),
-                  // Example additional info
-                  const Text('Author: MK Academy'),
-                ],
+            const Divider(color: AppColors.primaryColors),
+
+            // Info Message
+            VideoInfoMessage(show: !_isVideoCompleted),
+
+            // Toggle Switch
+            MarkAsWatchedSwitch(
+              isVideoWatched: _isVideoWatched,
+              isVideoCompleted: _isVideoCompleted,
+              onToggle: (value) {
+                setState(() {
+                  _isVideoWatched = value;
+                });
+              },
+            ),
+
+            // Download Section
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: DownloadSection(video: widget.video),
               ),
             ),
           ],

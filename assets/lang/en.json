@@ -139,5 +139,9 @@
     "technical_support": "Technical Support Team (WhatsApp + Telegram)",
     "technical_team": "Technical Team (WhatsApp + Telegram)",
     "otp_note": "The number sending the OTP verification code is not intended for support",
-    "copied_to_clipboard": "Number copied to clipboard"
+    "copied_to_clipboard": "Number copied to clipboard",
+    "download_video": "Download Video",
+    "download_file": "Download File",
+    "mark_as_watched": "Mark as Watched",
+    "finish_video_to_mark": "Finish watching the video to mark it as watched"
 }

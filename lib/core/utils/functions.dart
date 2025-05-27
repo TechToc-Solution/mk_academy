@@ -1,7 +1,9 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mk_academy/core/shared/cubits/download_handler/download_handler_cubit.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
+import 'package:mk_academy/core/utils/colors.dart';
 
 import '../../features/home/presentation/views-model/ads/ads_cubit.dart';
 import '../../features/leaderboard/presentation/views-model/leaderboard_cubit.dart';
@@ -123,3 +125,35 @@ void disableScreenshot() async {
   bool result = await noScreenshot.screenshotOff();
   debugPrint('Screenshot Off: $result');
 }
+
+// download
+void handleDownload(BuildContext context, String url, String fileName, int id) {
+  final cubit = context.read<DownloadCubit>();
+
+  cubit.startDownload(url: url, fileName: fileName, id: id);
+}
+
+// void _handleVideoPress(
+//     BuildContext context, int index, String url, String fileName) {
+//   showCustomDialog(
+//     context: context,
+//     title: 'alert'.tr(context),
+//     description: 'download_before_watch'.tr(context),
+//     primaryButtonText: 'download'.tr(context),
+//     secondaryButtonText: 'watch'.tr(context),
+//     primaryButtonColor: AppColors.primaryColors,
+//     icon: Icons.warning_amber_rounded,
+//     oneButton: false,
+//     onPrimaryAction: () {
+//       Navigator.pop(context);
+//       _handleDownload(context, url, fileName, videos[index].id!);
+//     },
+//     onSecondaryAction: () {
+//       Navigator.pop(context);
+//       Navigator.of(context).push(goRoute(
+//         // x: WebViewScreen(video: videos[index]),
+//         x: VideoPlayerScreen(video: videos[index]),
+//       ));
+//     },
+//   );
+// }

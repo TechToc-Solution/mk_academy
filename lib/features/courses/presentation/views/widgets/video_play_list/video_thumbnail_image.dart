@@ -16,22 +16,16 @@ class VideoThumbnailImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(16),
       child: video.thumbnail == null
           ? Image.asset(
               AssetsData.logo,
-              width: 60,
-              height: 60,
               fit: BoxFit.cover,
             )
           : CachedNetworkImage(
               imageUrl: video.thumbnail!,
-              width: 60,
-              height: 60,
               fit: BoxFit.cover,
               placeholder: (context, url) => const SizedBox(
-                width: 60,
-                height: 60,
                 child: Center(
                   child: ShimmerWidget(
                     margin: EdgeInsets.all(0),
@@ -43,8 +37,6 @@ class VideoThumbnailImage extends StatelessWidget {
               ),
               errorWidget: (context, url, error) => Image.asset(
                 AssetsData.logo,
-                width: 60,
-                height: 60,
                 fit: BoxFit.cover,
               ),
             ),
