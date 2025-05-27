@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/shared/cubits/download_handler/download_handler_cubit.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
-import 'package:mk_academy/core/utils/colors.dart';
 
 import '../../features/home/presentation/views-model/ads/ads_cubit.dart';
 import '../../features/leaderboard/presentation/views-model/leaderboard_cubit.dart';

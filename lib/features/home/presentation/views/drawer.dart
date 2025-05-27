@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mk_academy/core/locale/locale_cubit.dart';
 import 'package:mk_academy/core/shared/cubits/pay/pay_cubit.dart';
 import 'package:mk_academy/core/shared/repos/pay/pay_repo.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';

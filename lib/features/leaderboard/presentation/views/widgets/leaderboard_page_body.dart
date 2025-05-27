@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
-import 'package:mk_academy/core/utils/cache_helper.dart';
-import 'package:mk_academy/features/auth/data/models/user_model.dart';
 import 'package:mk_academy/features/leaderboard/presentation/views/widgets/custom_leaderboard_show.dart';
 import 'package:mk_academy/features/profile/presentation/views-model/profile_cubit.dart';
 
