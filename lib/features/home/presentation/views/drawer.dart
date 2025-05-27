@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mk_academy/core/locale/locale_cubit.dart';
 import 'package:mk_academy/core/shared/cubits/pay/pay_cubit.dart';
 import 'package:mk_academy/core/shared/repos/pay/pay_repo.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
@@ -142,6 +143,22 @@ class CustomDrawer extends StatelessWidget {
                 title: "login".tr(context),
               ),
             ),
+          // GestureDetector(
+          //   onTap: () {
+          //     final currentLocale = Localizations.localeOf(context).toString();
+          //     final cubit = context.read<LocaleCubit>();
+
+          //     if (currentLocale == 'en') {
+          //       cubit.changeLanguage('ar'); // Switch to Arabic
+          //     } else {
+          //       cubit.changeLanguage('en'); // Switch to English
+          //     }
+          //   },
+          //   child: CustomDrawerBtn(
+          //     title: "change_language".tr(context),
+          //     icon: Icons.language,
+          //   ),
+          // ),
         ],
       ),
     );

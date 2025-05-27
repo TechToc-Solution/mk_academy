@@ -143,5 +143,6 @@
     "download_video": "Download Video",
     "download_file": "Download File",
     "mark_as_watched": "Mark as Watched",
-    "finish_video_to_mark": "Finish watching the video to mark it as watched"
+    "finish_video_to_mark": "Finish watching the video to mark it as watched",
+    "change_language": "Change Language"
 }
