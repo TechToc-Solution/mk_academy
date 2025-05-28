@@ -1,6 +1,7 @@
 class Urls {
   //base urls
   static String ip = "191.101.2.34";
+  //static String ip = "191.101.2.34:8082";
   static String baseUrl = "http://$ip/api/";
 
   //auth endpoint

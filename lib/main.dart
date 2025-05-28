@@ -22,7 +22,6 @@ import 'package:mk_academy/features/courses/presentation/view_model/courses%20cu
 import 'package:mk_academy/features/courses/presentation/view_model/videos_cubit/videos_cubit.dart';
 import 'package:mk_academy/firebase_options.dart';
 import 'package:mk_academy/splash_screen.dart';
-
 import 'core/shared/cubits/subjects/subjects_cubit.dart';
 import 'core/shared/repos/download_handler/download_handler_repo.dart';
 import 'core/shared/repos/subjects/subjects_repo.dart';
@@ -41,6 +40,7 @@ import 'features/profile/presentation/views-model/profile_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

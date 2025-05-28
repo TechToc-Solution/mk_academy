@@ -1,4 +1,11 @@
 PODS:
+  - better_player (0.0.1):
+    - Cache (~> 6.0.0)
+    - Flutter
+    - GCDWebServer
+    - HLSCachingReverseProxyServer
+    - PINCache
+  - Cache (6.0.0)
   - device_info_plus (0.0.1):
     - Flutter
   - external_path (2.0.1):
@@ -38,6 +45,9 @@ PODS:
   - Flutter (1.0.0)
   - flutter_local_notifications (0.0.1):
     - Flutter
+  - GCDWebServer (3.5.4):
+    - GCDWebServer/Core (= 3.5.4)
+  - GCDWebServer/Core (3.5.4)
   - GoogleDataTransport (10.1.0):
     - nanopb (~> 3.30910.0)
     - PromisesObjC (~> 2.4)
@@ -76,6 +86,9 @@ PODS:
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
   - GTMSessionFetcher/Core (3.5.0)
+  - HLSCachingReverseProxyServer (0.1.0):
+    - GCDWebServer (~> 3.5)
+    - PINCache (>= 3.0.1-beta.3)
   - MLImage (1.0.0-beta6)
   - MLKitBarcodeScanning (6.0.0):
     - MLKitCommon (~> 12.0)
@@ -113,6 +126,14 @@ PODS:
     - FlutterMacOS
   - permission_handler_apple (9.3.0):
     - Flutter
+  - PINCache (3.0.4):
+    - PINCache/Arc-exception-safe (= 3.0.4)
+    - PINCache/Core (= 3.0.4)
+  - PINCache/Arc-exception-safe (3.0.4):
+    - PINCache/Core
+  - PINCache/Core (3.0.4):
+    - PINOperation (~> 1.2.3)
+  - PINOperation (1.2.3)
   - PromisesObjC (2.4.0)
   - rive_common (0.0.1):
     - Flutter
@@ -135,6 +156,7 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
+  - better_player (from `.symlinks/plugins/better_player/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - external_path (from `.symlinks/plugins/external_path/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
@@ -157,25 +179,32 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Cache
     - Firebase
     - FirebaseCore
     - FirebaseCoreInternal
     - FirebaseInstallations
     - FirebaseMessaging
+    - GCDWebServer
     - GoogleDataTransport
     - GoogleMLKit
     - GoogleToolboxForMac
     - GoogleUtilities
     - GTMSessionFetcher
+    - HLSCachingReverseProxyServer
     - MLImage
     - MLKitBarcodeScanning
     - MLKitCommon
     - MLKitVision
     - nanopb
+    - PINCache
+    - PINOperation
     - PromisesObjC
     - ScreenProtectorKit
 
 EXTERNAL SOURCES:
+  better_player:
+    :path: ".symlinks/plugins/better_player/ios"
   device_info_plus:
     :path: ".symlinks/plugins/device_info_plus/ios"
   external_path:
@@ -216,6 +245,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/darwin"
 
 SPEC CHECKSUMS:
+  better_player: 2406bfe8175203c7a46fa15f9d778d73b12e1646
+  Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d
   device_info_plus: bf2e3232933866d73fe290f2942f2156cdd10342
   external_path: 2594f1f0d6afcff9e202cfe9c8908dd605b86f32
   Firebase: 374a441a91ead896215703a674d58cdb3e9d772b
@@ -227,11 +258,13 @@ SPEC CHECKSUMS:
   FirebaseMessaging: e1aca1fcc23e8b9eddb0e33f375ff90944623021
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_local_notifications: df98d66e515e1ca797af436137b4459b160ad8c9
+  GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleMLKit: eff9e23ec1d90ea4157a1ee2e32a4f610c5b3318
   GoogleToolboxForMac: d1a2cbf009c453f4d6ded37c105e2f67a32206d8
   GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
   GTMSessionFetcher: 5aea5ba6bd522a239e236100971f10cb71b96ab6
+  HLSCachingReverseProxyServer: 59935e1e0244ad7f3375d75b5ef46e8eb26ab181
   MLImage: 0ad1c5f50edd027672d8b26b0fee78a8b4a0fc56
   MLKitBarcodeScanning: 0a3064da0a7f49ac24ceb3cb46a5bc67496facd2
   MLKitCommon: 07c2c33ae5640e5380beaaa6e4b9c249a205542d
@@ -243,6 +276,8 @@ SPEC CHECKSUMS:
   package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
+  PINCache: d9a87a0ff397acffe9e2f0db972ac14680441158
+  PINOperation: fb563bcc9c32c26d6c78aaff967d405aa2ee74a7
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   rive_common: 4743dbfd2911c99066547a3c6454681e0fa907df
   ScreenProtectorKit: 83a6281b02c7a5902ee6eac4f5045f674e902ae4

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
+import 'package:mk_academy/features/show_video/presentation/views/video_player.dart';
 import 'package:mk_academy/features/show_video/presentation/views/web_view.dart';
 import '../../../../data/model/video_model.dart';
 import 'video_thumbnail_image.dart';
@@ -34,7 +35,7 @@ class PlayListBody extends StatelessWidget {
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(goRoute(
-            x: WebViewScreen(video: video),
+            x: VideoPlayerScreen(video: video),
           ));
         },
         borderRadius: BorderRadius.circular(16),

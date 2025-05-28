@@ -1,14 +1,11 @@
-// lib/features/courses/presentation/views/video_play_list/screens/video_player_screen.dart
-
 import 'package:flutter/material.dart';
-import 'package:mk_academy/core/utils/functions.dart';
+import 'package:better_player/better_player.dart';
 import 'package:mk_academy/core/utils/colors.dart';
+import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/features/courses/data/model/video_model.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/download_section.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/mark_as_watched_switch.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/video_info_message.dart';
-import 'package:video_player/video_player.dart';
-import 'package:chewie/chewie.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   static const String routeName = '/video';
@@ -17,66 +14,59 @@ class VideoPlayerScreen extends StatefulWidget {
   final Video? video;
 
   @override
-  VideoPlayerScreenState createState() => VideoPlayerScreenState();
+  State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
 }
 
-class VideoPlayerScreenState extends State<VideoPlayerScreen> {
-  late VideoPlayerController _controller;
-  ChewieController? _chewieController;
-  bool _isLoading = true;
+class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+  late BetterPlayerController _betterPlayerController;
   bool _isVideoCompleted = false;
   bool _isVideoWatched = false;
 
   @override
   void initState() {
     super.initState();
-
     disableScreenshot();
+    initializePlayer();
+  }
 
-    if (widget.video?.video != null) {
-      _controller =
-          VideoPlayerController.networkUrl(Uri.parse(widget.video!.video!));
+  void initializePlayer() {
+    String url =
+        "https://vz-1d08d856-dd0.b-cdn.net/473a209d-3f0c-4437-8a47-2eb73473fd6f/playlist.m3u8";
 
-      _controller.initialize().then((_) {
-        setState(() {
-          _isLoading = false;
-        });
+    BetterPlayerDataSource dataSource = BetterPlayerDataSource(
+      BetterPlayerDataSourceType.network,
+      url,
+      useAsmsSubtitles: true,
+      useAsmsAudioTracks: true,
+    );
 
-        _chewieController = ChewieController(
-          videoPlayerController: _controller,
-          autoPlay: true,
-          looping: false,
-          showControls: true,
-          allowFullScreen: true,
-          errorBuilder: (context, errorMessage) {
-            return Center(
-              child: Text(
-                errorMessage,
-                style: const TextStyle(color: Colors.white),
-              ),
-            );
-          },
-        );
-
-        _controller.addListener(() {
-          if (_controller.value.position >= _controller.value.duration) {
+    _betterPlayerController = BetterPlayerController(
+      BetterPlayerConfiguration(
+        autoPlay: true,
+        looping: false,
+        allowedScreenSleep: false,
+        aspectRatio: 16 / 9,
+        controlsConfiguration: const BetterPlayerControlsConfiguration(
+          enableQualities: true,
+          enableOverflowMenu: true,
+        ),
+        eventListener: (event) {
+          if (event.betterPlayerEventType == BetterPlayerEventType.finished) {
             setState(() {
               _isVideoCompleted = true;
               _isVideoWatched = true;
             });
           }
-        });
-      }).catchError((error) {
-        debugPrint("Video initialization error: $error");
-      });
-    }
+        },
+      ),
+      betterPlayerDataSource: dataSource,
+    );
   }
 
   @override
   void dispose() {
     enableScreenshot();
-    _chewieController?.dispose();
-    _controller.dispose();
+    _betterPlayerController.dispose();
     super.dispose();
   }
 
@@ -85,22 +75,19 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.transparent, // Important!
+        backgroundColor: Colors.transparent,
         elevation: 0,
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
+              colors: [AppColors.primaryColors, AppColors.secColors],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                AppColors.primaryColors,
-                AppColors.secColors,
-              ],
             ),
           ),
         ),
         title: Text(
-          widget.video?.name ?? "Video",
+          widget.video?.name ?? "video",
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
@@ -110,46 +97,27 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen> {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            // Video Player
-            SizedBox(
-              height: 250,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: _isLoading
-                      ? const Center(child: CircularProgressIndicator())
-                      : Chewie(controller: _chewieController!),
-                ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              AspectRatio(
+                aspectRatio: 16 / 9,
+                child: BetterPlayer(controller: _betterPlayerController),
               ),
-            ),
-
-            const Divider(color: AppColors.primaryColors),
-
-            // Info Message
-            VideoInfoMessage(show: !_isVideoCompleted),
-
-            // Toggle Switch
-            MarkAsWatchedSwitch(
-              isVideoWatched: _isVideoWatched,
-              isVideoCompleted: _isVideoCompleted,
-              onToggle: (value) {
-                setState(() {
-                  _isVideoWatched = value;
-                });
-              },
-            ),
-
-            // Download Section
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: DownloadSection(video: widget.video),
+              const Divider(color: AppColors.primaryColors),
+              VideoInfoMessage(show: !_isVideoCompleted),
+              MarkAsWatchedSwitch(
+                isVideoWatched: _isVideoWatched,
+                isVideoCompleted: _isVideoCompleted,
+                onToggle: (value) {
+                  setState(() {
+                    _isVideoWatched = value;
+                  });
+                },
               ),
-            ),
-          ],
+              DownloadSection(video: widget.video),
+            ],
+          ),
         ),
       ),
     );
