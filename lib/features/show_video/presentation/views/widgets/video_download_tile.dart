@@ -91,11 +91,24 @@ class _VideoDownloadTileState extends State<VideoDownloadTile> {
                   : GestureDetector(
                       onTap: selectedItem != null
                           ? () {
-                              context.read<DownloadVideoCubit>().downloadVideo(
-                                    widget.video.id.toString(),
-                                    widget.video.downloads!.firstWhere(
-                                        (item) => item.quality == selectedItem),
-                                  );
+                              showCustomDialog(
+                                  icon: Icons.warning,
+                                  context: context,
+                                  title: '',
+                                  description: "download_warning".tr(context),
+                                  primaryButtonText: "yes".tr(context),
+                                  onPrimaryAction: () async {
+                                    context
+                                        .read<DownloadVideoCubit>()
+                                        .downloadVideo(
+                                          widget.video.id.toString(),
+                                          widget.video.downloads!.firstWhere(
+                                              (item) =>
+                                                  item.quality == selectedItem),
+                                        );
+
+                                    Navigator.pop(context);
+                                  });
                             }
                           : () {
                               messages(

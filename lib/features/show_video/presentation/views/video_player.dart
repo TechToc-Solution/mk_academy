@@ -243,7 +243,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                       ),
                     ),
                   ),
-                  const Divider(),
+                  const Divider(
+                    color: AppColors.primaryColors,
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16.0, vertical: 8),

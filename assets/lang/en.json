@@ -153,5 +153,6 @@
     "select_quality_error": "You have to select the quality first",
     "watch_offline": "Watch downloaded videos",
     "quality": "Quality",
-    "go_online": "Watch over internet"
+    "go_online": "Watch over internet",
+    "download_warning": "You must keep the application open at this screen to complete the download process."
 }
