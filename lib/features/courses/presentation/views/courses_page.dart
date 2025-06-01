@@ -82,6 +82,9 @@ class _CoursesPageState extends State<CoursesPage>
 
               return Column(
                 children: [
+                  SizedBox(
+                    height: kSizedBoxHeight / 2,
+                  ),
                   if (!isGuest)
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),

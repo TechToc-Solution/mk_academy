@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/features/courses/data/model/video_model.dart';
-import 'package:mk_academy/features/show_video/presentation/views/widgets/download_section.dart';
+import 'package:mk_academy/features/show_video/presentation/views/widgets/file_download_tile.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/mark_as_watched_switch.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/video_info_message.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -133,13 +133,8 @@ class WebViewScreenState extends State<WebViewScreen> {
               },
             ),
 
-            // Download Section
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: DownloadSection(video: widget.video),
-              ),
-            ),
+            if (widget.video!.filePath != null)
+              FileDownloadTile(video: widget.video!),
           ],
         ),
       ),

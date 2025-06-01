@@ -52,7 +52,6 @@
     "new_password" : "كلمة المرور الجديدة",
     "continue" : "المتابعة",
     "rest_password" : "اعادة تعيين كلمة المرور",
-    "try_agen" : "إعادة المحاولة",
     "age" : "العمر",
     "subs_date" : "تاريخ الاشتراك",
     "moore" : "المزيد",
@@ -144,6 +143,15 @@
     "download_file": "تحميل الملف",
     "mark_as_watched": "قم بوضع علامة على أنه مشاهد",
     "finish_video_to_mark": "شاهد الفيديو بالكامل لوضع علامة عليه كمشاهد",
-    "change_language": "تغيير اللغة"
-
+    "change_language": "تغيير اللغة",
+    "error": "حدث خطأ ما",
+    "video_downloaded": "تم تحميل الفيديو بنجاح",
+    "video_error_download": "حصل خطأ اثناء التحميل",
+    "sec": "ثا",
+    "time": "الوقت",
+    "select_quality": "قم باختيار الجودة",
+    "select_quality_error": "عليك اختيار الجودة اولا",
+    "watch_offline": "مشاهدة الفيديوهات المحفوظة",
+    "quality": "الجودة",
+    "go_online": "مشاهدة عبر الانترنيت"
 }

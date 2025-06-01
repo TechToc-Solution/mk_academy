@@ -52,7 +52,6 @@
     "new_password": "New Password",
     "continue": "Continue",
     "rest_password": "Reset Password",
-    "try_agen": "Try Again",
     "age": "Age",
     "subs_date": "Subscription Date",
     "moore": "More",
@@ -118,7 +117,7 @@
     "no_video": "Videos will be available soon. Stay tuned...",
     "alert": "Alert",
     "download_before_watch": "You must download the video file before watching it. Please download before continuing.",
-    "video_not_available_message": "Sorry, no video file is currently available for download.",
+    "video_not_available_message": "Sorry, no file is currently available for download.",
     "version": "Version",
     "update": "Update",
     "later": "Later",
@@ -144,5 +143,15 @@
     "download_file": "Download File",
     "mark_as_watched": "Mark as Watched",
     "finish_video_to_mark": "Finish watching the video to mark it as watched",
-    "change_language": "Change Language"
+    "change_language": "Change Language",
+    "error": "There was an error",
+    "video_downloaded": "Video downloaded successfully",
+    "video_error_download": "Download failed",
+    "sec": "sec",
+    "time": "Time",
+    "select_quality": "Select the quality",
+    "select_quality_error": "You have to select the quality first",
+    "watch_offline": "Watch downloaded videos",
+    "quality": "Quality",
+    "go_online": "Watch over internet"
 }
