@@ -226,11 +226,11 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                         _initializePlayer();
                       },
                       icon: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: const Icon(Icons.wifi),
                       ),
                       label: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Text("go_online".tr(context)),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -255,28 +255,44 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                   ),
                   Column(
                     children: _downloadedQualities.map((quality) {
-                      return ListTile(
-                        leading: const Icon(Icons.video_library),
-                        title: Text("${"quality".tr(context)}: $quality"),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.play_arrow,
-                              color: AppColors.primaryColors),
-                          onPressed: () async {
-                            final path = await context
-                                .read<DownloadVideoCubit>()
-                                .getDownloadedPath(
-                                    widget.video!.id.toString(), quality);
+                      return Container(
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 1,
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: ListTile(
+                          leading: const Icon(Icons.video_library),
+                          title: Text("${"quality".tr(context)}: $quality"),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.play_arrow,
+                                color: AppColors.primaryColors),
+                            onPressed: () async {
+                              final path = await context
+                                  .read<DownloadVideoCubit>()
+                                  .getDownloadedPath(
+                                      widget.video!.id.toString(), quality);
 
-                            if (path != null) {
-                              setState(() {
-                                _localVideoPath = path;
-                                _isDownloaded = true;
-                                _isPlayerReady = false;
-                              });
-                              _betterPlayerController.dispose();
-                              _initializePlayer(); // يعيد تهيئة المشغل لعرض الفيديو الأوفلاين
-                            }
-                          },
+                              if (path != null) {
+                                setState(() {
+                                  _localVideoPath = path;
+                                  _isDownloaded = true;
+                                  _isPlayerReady = false;
+                                });
+                                _betterPlayerController.dispose();
+                                _initializePlayer(); // يعيد تهيئة المشغل لعرض الفيديو الأوفلاين
+                              }
+                            },
+                          ),
                         ),
                       );
                     }).toList(),
