@@ -65,4 +65,23 @@ class CoursesRepoIplm implements CoursesRepo {
       return left(ErrorHandler.handle(e));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> markAsWatched({
+    required int courseId,
+    required int videoId,
+  }) async {
+    try {
+      var resp = await _apiServices.post(
+          endPoint: "${Urls.getCourses}/$courseId/videos/$videoId/mark-as-view",
+          data: {});
+      if (resp.statusCode == 200 && resp.data['success']) {
+        return right(null);
+      }
+      return left(
+          ServerFailure(resp.data['message'] ?? ErrorHandler.defaultMessage()));
+    } catch (e) {
+      return left(ErrorHandler.handle(e));
+    }
+  }
 }
