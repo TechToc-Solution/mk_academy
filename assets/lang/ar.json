@@ -160,5 +160,7 @@
     "please_enter_the_required_data" : "الرجاء ادخال البيانات المطلوبة",
     "enter_the_required_data" : "الرجاء ادخال البيانات المطلوبة",
     "enter_the_required_city" : "الرجاء اختيار المدينة",
-    "update_profile_success" : "تم تعديل الملف الشخصي بنجاح"
+    "update_profile_success" : "تم تعديل الملف الشخصي بنجاح",
+    "user_subscriptions" : "الاشتراكات الحالية",
+    "profile_updated" : "تم تعديل الملف الشخصي بنجاح"
 }
