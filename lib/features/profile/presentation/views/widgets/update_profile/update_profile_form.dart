@@ -24,39 +24,42 @@ class UpdateProfileForm extends StatelessWidget {
   final ValueChanged<String?> onCityChanged;
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Column(
-        children: [
-          CustomTextField(
-            controller: firstNameController,
-            text: "first_name".tr(context),
-            isPassword: false,
-            validatorFun: (value) =>
-                Validator.validate(value!, ValidationState.normal),
-          ),
-          CustomTextField(
-            controller: lastNameController,
-            text: "last_name".tr(context),
-            isPassword: false,
-            validatorFun: (value) =>
-                Validator.validate(value!, ValidationState.normal),
-          ),
-          CustomDropdownButton(
-            text: "city".tr(context),
-            value: selectedCity,
-            onChanged: (value) => onCityChanged,
-            validator: (value) =>
-                value == null ? 'enter_the_required_city'.tr(context) : null,
-          ),
-          CustomDatePicker(
-            controller: dateController,
-            text: "date_of_birth".tr(context),
-            validatorFun: (value) => value?.isEmpty ?? true
-                ? 'enter_the_required_data'.tr(context)
-                : null,
-          ),
-        ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Form(
+        key: formKey,
+        child: Column(
+          children: [
+            CustomTextField(
+              controller: firstNameController,
+              text: "first_name".tr(context),
+              isPassword: false,
+              validatorFun: (value) =>
+                  Validator.validate(value!, ValidationState.normal),
+            ),
+            CustomTextField(
+              controller: lastNameController,
+              text: "last_name".tr(context),
+              isPassword: false,
+              validatorFun: (value) =>
+                  Validator.validate(value!, ValidationState.normal),
+            ),
+            CustomDropdownButton(
+              text: "city".tr(context),
+              value: selectedCity,
+              onChanged: (value) => onCityChanged,
+              validator: (value) =>
+                  value == null ? 'enter_the_required_city'.tr(context) : null,
+            ),
+            CustomDatePicker(
+              controller: dateController,
+              text: "date_of_birth".tr(context),
+              validatorFun: (value) => value?.isEmpty ?? true
+                  ? 'enter_the_required_data'.tr(context)
+                  : null,
+            ),
+          ],
+        ),
       ),
     );
   }

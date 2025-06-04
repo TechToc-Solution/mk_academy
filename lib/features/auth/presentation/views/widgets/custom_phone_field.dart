@@ -65,6 +65,10 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
           ),
           style: TextStyle(color: textColor),
           decoration: InputDecoration(
+            focusedErrorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Color(0xffB2B9C6)),
+              borderRadius: BorderRadius.circular(kBorderRadius),
+            ),
             labelStyle: TextStyle(color: labelTextColor),
             hintStyle: const TextStyle(color: Colors.grey),
             focusedBorder: OutlineInputBorder(

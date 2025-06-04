@@ -71,7 +71,10 @@ class SubscriptionsSection extends StatelessWidget {
                         title: course.name,
                         backgroundColor: AppColors.backgroundColor,
                         context: context,
-                        child: CustomVideoDetailsSheet(courseId: course.id!));
+                        child: CustomVideoDetailsSheet(
+                          courseId: course.id!,
+                          canShow: false,
+                        ));
                   },
                   child: Text(
                     "moore".tr(context),

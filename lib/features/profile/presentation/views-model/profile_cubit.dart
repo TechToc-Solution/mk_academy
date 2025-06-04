@@ -10,11 +10,13 @@ part 'profile_state.dart';
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit(this._profileRepo) : super(ProfileInitial());
   final ProfileRepo _profileRepo;
+  UserModel? userModel;
   Future getProfile() async {
     emit(ProfileLoading());
     var data = await _profileRepo.getUserProfile();
     data.fold((failure) => emit(ProfileError(errorMsg: failure.message)),
         (user) {
+      userModel = user;
       emit(ProfileSuccess(userModel: user));
     });
   }
@@ -24,6 +26,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     var data = await _profileRepo.updateUserProfile(params);
     data.fold((failure) => emit(ProfileUpdateError(errorMsg: failure.message)),
         (user) {
+      userModel = user;
       emit(ProfileUpdateSuccess(userModel: user));
     });
   }

@@ -20,9 +20,10 @@ import '../../../../../core/shared/repos/pay/pay_repo.dart';
 import '../../../../../core/widgets/custom_pay_dailog.dart';
 
 class CustomVideoDetailsSheet extends StatefulWidget {
-  const CustomVideoDetailsSheet({super.key, required this.courseId});
+  const CustomVideoDetailsSheet(
+      {super.key, required this.courseId, required this.canShow});
   final int courseId;
-
+  final bool canShow;
   @override
   State<CustomVideoDetailsSheet> createState() =>
       _CustomVideoDetailsSheetState();
@@ -53,11 +54,17 @@ class _CustomVideoDetailsSheetState extends State<CustomVideoDetailsSheet> {
                       state.course!.courseMode!, false),
                   _buildDetailItem(Icons.description, "description".tr(context),
                       state.course!.description ?? "", true),
-                  _buildDetailItem(
-                      Icons.category,
-                      "price".tr(context),
-                      "${state.course!.price.toString()} ${"sp".tr(context)}",
-                      false),
+                  if (widget.canShow)
+                    _buildDetailItem(
+                        Icons.category,
+                        "price".tr(context),
+                        "${state.course!.price.toString()} ${"sp".tr(context)}",
+                        false),
+                  // if (widget.canShow)
+                  //   _buildDetailItem(Icons.numbers_outlined,
+                  //       "videos_watched".tr(context),
+                  //       state.course..videosWatched.toString(),
+                  //       false),
                   CustomButton(
                       onPressed: () {
                         if (isGuest) {
