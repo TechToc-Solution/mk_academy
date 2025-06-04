@@ -28,7 +28,10 @@ class _CustomVideoUnitBtnState extends State<CustomVideoUnitBtn> {
                 title: widget.course.name,
                 backgroundColor: AppColors.backgroundColor,
                 context: context,
-                child: CustomVideoDetailsSheet(courseId: widget.course.id!));
+                child: CustomVideoDetailsSheet(
+                  courseId: widget.course.id!,
+                  canShow: true,
+                ));
           },
           child: Container(
               margin: const EdgeInsets.only(top: 4),

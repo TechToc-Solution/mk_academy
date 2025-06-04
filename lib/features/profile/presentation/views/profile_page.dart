@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
-import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 import 'package:mk_academy/features/profile/presentation/views-model/profile_cubit.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
-import '../../../../core/widgets/custom_error_widget.dart';
 import 'widgets/profile_page_body.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -25,22 +23,9 @@ class ProfilePage extends StatelessWidget {
           child: SafeArea(
               child: CustomAppBar(title: "profile".tr(context), backBtn: true)),
         ),
-        body:
-            BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
-          if (state is ProfileSuccess) {
-            return ProfilePageBody(
-              userModel: state.userModel,
-            );
-          } else if (state is ProfileError) {
-            return CustomErrorWidget(
-              errorMessage: state.errorMsg,
-              onRetry: () {
-                context.read<ProfileCubit>().getProfile();
-              },
-            );
-          }
-          return CustomCircualProgressIndicator();
-        }),
+        body: ProfilePageBody(
+          userModel: context.read<ProfileCubit>().userModel!,
+        ),
       ),
     );
   }

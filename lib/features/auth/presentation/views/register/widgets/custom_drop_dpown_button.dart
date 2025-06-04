@@ -48,7 +48,6 @@ class CustomDropdownButton extends StatelessWidget {
               fillColor: const Color(0xffF4F7FE),
               filled: true,
             ),
-            value: value,
             items: cities.map((value) {
               return DropdownMenuItem<String>(
                 value: value.id.toString(),

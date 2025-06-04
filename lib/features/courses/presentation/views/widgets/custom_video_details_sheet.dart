@@ -20,9 +20,10 @@ import '../../../../../core/shared/repos/pay/pay_repo.dart';
 import '../../../../../core/widgets/custom_pay_dailog.dart';
 
 class CustomVideoDetailsSheet extends StatefulWidget {
-  const CustomVideoDetailsSheet({super.key, required this.courseId});
+  const CustomVideoDetailsSheet(
+      {super.key, required this.courseId, required this.canShow});
   final int courseId;
-
+  final bool canShow;
   @override
   State<CustomVideoDetailsSheet> createState() =>
       _CustomVideoDetailsSheetState();
@@ -53,7 +54,7 @@ class _CustomVideoDetailsSheetState extends State<CustomVideoDetailsSheet> {
                       state.course!.courseMode!, false),
                   _buildDetailItem(Icons.description, "description".tr(context),
                       state.course!.description ?? "", true),
-                  if (state.course!.canShow == false)
+                  if (!state.course!.canShow!)
                     _buildDetailItem(
                         Icons.attach_money,
                         "price".tr(context),

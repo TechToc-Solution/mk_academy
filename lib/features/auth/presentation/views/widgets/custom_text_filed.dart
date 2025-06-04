@@ -82,6 +82,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
         maxLines: widget.maxLine,
         obscureText: widget.isPassword ? !showPassowrd : false,
         decoration: InputDecoration(
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+                color: widget.borderColor == null
+                    ? const Color(0xffB2B9C6)
+                    : widget.borderColor!),
+            borderRadius: BorderRadius.circular(kBorderRadius),
+          ),
           floatingLabelBehavior: FloatingLabelBehavior.auto,
           labelStyle: TextStyle(color: labelTextColor),
           focusedBorder: OutlineInputBorder(

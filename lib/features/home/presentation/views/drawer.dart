@@ -17,6 +17,7 @@ import 'package:mk_academy/features/who_we_are/presentation/view/who_we_are.dart
 import '../../../../core/utils/colors.dart';
 import '../../../../core/utils/functions.dart';
 import '../../../profile/presentation/views/update_profile_page.dart';
+import '../../../profile/presentation/views/user_subscriptions_page.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -58,6 +59,19 @@ class CustomDrawer extends StatelessWidget {
             child: CustomDrawerBtn(
               title: "update_profile".tr(context),
               icon: Icons.edit_outlined,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              if (isGuest) {
+                showLoginDialog(context);
+              } else {
+                Navigator.of(context).push(goRoute(x: UserSubscriptionsPage()));
+              }
+            },
+            child: CustomDrawerBtn(
+              title: "user_subscriptions".tr(context),
+              icon: Icons.subscriptions,
             ),
           ),
           if (!isGuest)
