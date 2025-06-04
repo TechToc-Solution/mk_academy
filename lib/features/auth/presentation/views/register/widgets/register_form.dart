@@ -59,13 +59,15 @@ class RegisterForm extends StatelessWidget {
             text: "city".tr(context),
             value: selectedCity,
             onChanged: (value) => onCityChanged,
-            validator: (value) => value == null ? 'الرجاء اختيار مدينة' : null,
+            validator: (value) =>
+                value == null ? 'enter_the_required_city'.tr(context) : null,
           ),
           CustomDatePicker(
             controller: dateController,
             text: "date_of_birth".tr(context),
-            validatorFun: (value) =>
-                value?.isEmpty ?? true ? 'الرجاء اختيار تاريخ' : null,
+            validatorFun: (value) => value?.isEmpty ?? true
+                ? 'enter_the_required_data'.tr(context)
+                : null,
           ),
           CustomTextField(
               text: "password".tr(context),

@@ -1,7 +1,6 @@
 class Urls {
   //base urls
   static String ip = "191.101.2.34";
-  //static String ip = "191.101.2.34:8082";
   static String baseUrl = "http://$ip/api/";
 
   //auth endpoint
@@ -14,6 +13,7 @@ class Urls {
   static String forgetPassword = "auth/forget-password";
   static String verfiResetPassword = "auth/verify-reset-password";
   static String resendCode = "/auth/resend-code";
+  static String updateProfile = "auth/me";
 
   //leaderbord
   static String getLeaderbord = "students";

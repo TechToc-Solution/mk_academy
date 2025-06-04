@@ -22,3 +22,17 @@ final class ProfileError extends ProfileState {
 }
 
 final class ProfileLoading extends ProfileState {}
+
+final class ProfileUpdateSuccess extends ProfileState {
+  final UserModel userModel;
+
+  const ProfileUpdateSuccess({required this.userModel});
+}
+
+final class ProfileUpdateError extends ProfileState {
+  final String errorMsg;
+
+  const ProfileUpdateError({required this.errorMsg});
+}
+
+final class ProfileUpdateLoading extends ProfileState {}

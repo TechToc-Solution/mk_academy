@@ -154,5 +154,11 @@
     "watch_offline": "مشاهدة الفيديوهات المحفوظة",
     "quality": "الجودة",
     "go_online": "مشاهدة عبر الانترنيت",
-    "download_warning": "عليك البقاء في هذه الصفحة لاتمام عملية التحميل"
+    "download_warning": "عليك البقاء في هذه الصفحة لاتمام عملية التحميل",
+    "update_profile": "تعديل الملف الشخصي",
+    "date_not_valid" : "تنسيق التاريخ غير صالح",
+    "please_enter_the_required_data" : "الرجاء ادخال البيانات المطلوبة",
+    "enter_the_required_data" : "الرجاء ادخال البيانات المطلوبة",
+    "enter_the_required_city" : "الرجاء اختيار المدينة",
+    "update_profile_success" : "تم تعديل الملف الشخصي بنجاح"
 }

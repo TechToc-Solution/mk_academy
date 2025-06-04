@@ -31,4 +31,27 @@ class VideosCubit extends Cubit<VideosState> {
       });
     }
   }
+
+  Future<void> markAsWatched({
+    required int courseId,
+    required int videoId,
+  }) async {
+    if (isClosed) return;
+    emit(VideosState(
+      status: VideoStatus.loading,
+    ));
+    final data = await _coursesRepo.markAsWatched(
+      courseId: courseId,
+      videoId: videoId,
+    );
+    data.fold(
+      (failure) => emit(VideosState(
+        status: VideoStatus.failure,
+        errorMessage: failure.message,
+      )),
+      (success) => emit(VideosState(
+        status: VideoStatus.success,
+      )),
+    );
+  }
 }

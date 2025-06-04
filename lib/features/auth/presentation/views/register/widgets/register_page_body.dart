@@ -122,7 +122,8 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                     final DateTime? birthDate =
                         parseDateFromController(dateController.text);
                     if (birthDate == null) {
-                      messages(context, "تنسيق التاريخ غير صالح", Colors.red);
+                      messages(
+                          context, "date_not_valid".tr(context), Colors.red);
                       return;
                     }
                     context
