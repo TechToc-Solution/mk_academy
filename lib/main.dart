@@ -1,7 +1,12 @@
+import 'dart:isolate';
+import 'dart:ui';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:http/http.dart' as context;
 import 'package:mk_academy/core/shared/cubits/download_handler/download_handler_cubit.dart';
 import 'package:mk_academy/core/shared/cubits/solve_quizzes/solve_quizzes_cubit.dart';
 import 'package:mk_academy/core/shared/repos/solve_quizzes/solve_quizzes_repo.dart';
@@ -20,6 +25,9 @@ import 'package:mk_academy/features/auth/presentation/view-model/reset_password_
 import 'package:mk_academy/features/courses/data/repo/courses_repo.dart';
 import 'package:mk_academy/features/courses/presentation/view_model/courses%20cubit/courses_cubit.dart';
 import 'package:mk_academy/features/courses/presentation/view_model/videos_cubit/videos_cubit.dart';
+import 'package:mk_academy/features/show_video/presentation/views-model/cubit/download_manager_cubit.dart';
+import 'package:mk_academy/features/show_video/presentation/views-model/cubit/download_video_cubit.dart';
+import 'package:mk_academy/features/show_video/presentation/views-model/download_callback.dart';
 import 'package:mk_academy/firebase_options.dart';
 import 'package:mk_academy/splash_screen.dart';
 import 'core/shared/cubits/subjects/subjects_cubit.dart';
@@ -47,6 +55,12 @@ void main() async {
   await CacheHelper.init();
   setupLocatorServices();
   enableScreenshot();
+  // Initialize flutter_downloader
+  await FlutterDownloader.initialize(
+    debug: true,
+  );
+
+  FlutterDownloader.registerCallback(downloadCallback);
   // await FirebaseApi().initNotifications();
   runApp(const MyApp());
 }
@@ -89,6 +103,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 DownloadCubit(repo: getit.get<DownloadHandlerRepo>())),
+        BlocProvider<DownloadManagerCubit>(
+          create: (_) => DownloadManagerCubit(),
+        ),
       ],
       child: BlocBuilder<LocaleCubit, ChangeLocaleState>(
         builder: (context, state) {

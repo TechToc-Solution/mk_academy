@@ -53,11 +53,12 @@ class _CustomVideoDetailsSheetState extends State<CustomVideoDetailsSheet> {
                       state.course!.courseMode!, false),
                   _buildDetailItem(Icons.description, "description".tr(context),
                       state.course!.description ?? "", true),
-                  _buildDetailItem(
-                      Icons.category,
-                      "price".tr(context),
-                      "${state.course!.price.toString()} ${"sp".tr(context)}",
-                      false),
+                  if (state.course!.canShow == false)
+                    _buildDetailItem(
+                        Icons.attach_money,
+                        "price".tr(context),
+                        "${state.course!.price.toString()} ${"sp".tr(context)}",
+                        false),
                   CustomButton(
                       onPressed: () {
                         if (isGuest) {

@@ -70,19 +70,4 @@ class DownloadVideoCubit extends Cubit<DownloadVideoState> {
     final file = File(filePath);
     return await file.exists() ? filePath : null;
   }
-
-  Future<List<String>> getDownloadedQualities(
-      String videoId, List<DownloadItem> qualities) async {
-    final directory = await getApplicationDocumentsDirectory();
-    final List<String> downloadedQualities = [];
-
-    for (final item in qualities) {
-      final filePath = "${directory.path}/$videoId-${item.quality}.mp4";
-      if (await File(filePath).exists()) {
-        downloadedQualities.add(item.quality);
-      }
-    }
-
-    return downloadedQualities;
-  }
 }

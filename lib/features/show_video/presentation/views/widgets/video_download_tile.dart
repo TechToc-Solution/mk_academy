@@ -41,13 +41,13 @@ class _VideoDownloadTileState extends State<VideoDownloadTile> {
   }
 
   void _loadDownloadedQualities() async {
-    final qualities = await context
-        .read<DownloadVideoCubit>()
-        .getDownloadedQualities(
-            widget.video.id.toString(), widget.video.downloads ?? []);
-    setState(() {
-      downloadedQualities = qualities;
-    });
+    // final qualities = await context
+    //     .read<DownloadVideoCubit>()
+    //     .getDownloadedQualities(
+    //         widget.video.id.toString(), widget.video.downloads ?? []);
+    // setState(() {
+    //   downloadedQualities = qualities;
+    // });
   }
 
   bool get isSelectedDownloaded =>

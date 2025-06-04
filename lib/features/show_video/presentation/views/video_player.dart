@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:better_player/better_player.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mk_academy/features/show_video/presentation/views-model/cubit/download_video_cubit.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/file_download_tile.dart';
-import 'package:mk_academy/features/show_video/presentation/views/widgets/video_download_tile.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:mk_academy/features/show_video/presentation/views/widgets/quality_tile.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
@@ -28,59 +25,29 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   bool _isVideoCompleted = false;
   bool _isVideoWatched = false;
 
-  bool _isDownloaded = false;
-  bool _isPlayerReady = false;
+  /// If true, we switch the data source to a local file.
+  bool _isOffline = false;
 
+  /// Local file path for the quality that was tapped “Play”
   String? _localVideoPath;
 
-  String? selectedResolution;
-
-  List<String> _downloadedQualities = [];
+  bool _isPlayerReady = false;
 
   @override
   void initState() {
     super.initState();
     disableScreenshot();
-    context
-        .read<DownloadVideoCubit>()
-        .getDownloadedQualities(
-          widget.video!.id.toString(),
-          widget.video!.downloads ?? [],
-        )
-        .then((qualities) {
-      setState(() {
-        _downloadedQualities = qualities;
-      });
-    });
-    context
-        .read<DownloadVideoCubit>()
-        .checkIfDownloaded(
-            widget.video!.id.toString(), widget.video!.downloads![0].quality)
-        .then((downloaded) {
-      if (downloaded) {
-        final directory = getApplicationDocumentsDirectory();
-        directory.then((dir) {
-          final path = "${dir.path}/${widget.video!.id}.mp4";
-          setState(() {
-            _isDownloaded = true;
-            _localVideoPath = path;
-          });
-          _initializePlayer();
-        });
-      } else {
-        _initializePlayer();
-      }
-    });
+    _initializePlayer();
   }
 
   void _initializePlayer() {
     final source = BetterPlayerDataSource(
-      _isDownloaded
+      _isOffline
           ? BetterPlayerDataSourceType.file
           : BetterPlayerDataSourceType.network,
-      _isDownloaded ? _localVideoPath! : widget.video!.video!,
-      useAsmsSubtitles: !_isDownloaded,
-      useAsmsAudioTracks: !_isDownloaded,
+      _isOffline ? _localVideoPath! : widget.video!.video!,
+      useAsmsSubtitles: !_isOffline,
+      useAsmsAudioTracks: !_isOffline,
     );
 
     _betterPlayerController = BetterPlayerController(
@@ -119,9 +86,11 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           children: [
             const Icon(Icons.error, size: 60, color: Colors.red),
             const SizedBox(height: 10),
-            Text(errorMessage ?? "error".tr(context),
-                textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.white)),
+            Text(
+              errorMessage ?? "error".tr(context),
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Colors.white),
+            ),
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () => _betterPlayerController.retryDataSource(),
@@ -136,6 +105,21 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     enableScreenshot();
     _betterPlayerController.dispose();
     super.dispose();
+  }
+
+  /// Called by a QualityTile when the user taps “Play” on a downloaded file.
+  void _playOffline(String filePath) {
+    setState(() {
+      _isOffline = true;
+      _localVideoPath = filePath;
+      _isPlayerReady = false;
+      _isVideoCompleted = false;
+      _isVideoWatched = false;
+    });
+
+    // Re‐initialize the BetterPlayerController with the local file.
+    _betterPlayerController.dispose();
+    _initializePlayer();
   }
 
   @override
@@ -167,6 +151,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                // ─── Video Section ─────────────────────────────────────────
                 AspectRatio(
                   aspectRatio: 16 / 9,
                   child: _isPlayerReady
@@ -174,52 +159,42 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                       : const Center(child: CircularProgressIndicator()),
                 ),
                 const Divider(color: AppColors.primaryColors),
+
+                // ─── Mark As Watched Section ─────────────────────────────
                 VideoInfoMessage(show: !_isVideoCompleted),
                 MarkAsWatchedSwitch(
                   isVideoWatched: _isVideoWatched,
                   isVideoCompleted: _isVideoCompleted,
                   onToggle: (value) => setState(() => _isVideoWatched = value),
                 ),
+                const Divider(color: AppColors.primaryColors),
+
+                // ─── Download File Section (if any) ──────────────────────
                 if (widget.video!.filePath != null)
                   FileDownloadTile(video: widget.video!),
-                BlocBuilder<DownloadVideoCubit, DownloadVideoState>(
-                  builder: (context, state) {
-                    final allQualities = widget.video?.downloads
-                            ?.map((e) => e.quality)
-                            .toList() ??
-                        [];
+                if (widget.video!.filePath != null)
+                  const Divider(color: AppColors.primaryColors),
 
-                    final allDownloaded = allQualities.every(
-                        (quality) => _downloadedQualities.contains(quality));
+                // ─── Download Qualities Section ──────────────────────────
+                if (widget.video!.downloads!.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 8),
+                    child: Text(
+                      "watch_offline".tr(context),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
 
-                    if (allDownloaded) {
-                      return const SizedBox();
-                    }
-
-                    return VideoDownloadTile(
-                      video: widget.video!,
-                      isDownloaded:
-                          _isDownloaded || state is DownloadVideoSuccess,
-                      isDownloading: state is DownloadVideoInProgress,
-                      downloadProgress:
-                          state is DownloadVideoInProgress ? state.progress : 0,
-                      downloadTotalSize:
-                          state is DownloadVideoInProgress ? state.total : 0,
-                      downloadReceivedSize:
-                          state is DownloadVideoInProgress ? state.received : 0,
-                      estimatedTime: state is DownloadVideoInProgress
-                          ? state.estimatedTime
-                          : Duration.zero,
-                    );
-                  },
-                ),
-                if (_downloadedQualities.isNotEmpty) ...[
+                // If currently “playing offline,” show a button to go back online:
+                if (_isOffline)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: ElevatedButton.icon(
                       onPressed: () {
                         setState(() {
-                          _isDownloaded = false;
+                          _isOffline = false;
                           _isPlayerReady = false;
                         });
                         _betterPlayerController.dispose();
@@ -243,63 +218,20 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                       ),
                     ),
                   ),
-                  const Divider(
-                    color: AppColors.primaryColors,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 8),
-                    child: Text(
-                      "watch_offline".tr(context),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                  ),
-                  Column(
-                    children: _downloadedQualities.map((quality) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 8),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
-                              spreadRadius: 1,
-                              blurRadius: 4,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: ListTile(
-                          leading: const Icon(Icons.video_library),
-                          title: Text("${"quality".tr(context)}: $quality"),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.play_arrow,
-                                color: AppColors.primaryColors),
-                            onPressed: () async {
-                              final path = await context
-                                  .read<DownloadVideoCubit>()
-                                  .getDownloadedPath(
-                                      widget.video!.id.toString(), quality);
 
-                              if (path != null) {
-                                setState(() {
-                                  _localVideoPath = path;
-                                  _isDownloaded = true;
-                                  _isPlayerReady = false;
-                                });
-                                _betterPlayerController.dispose();
-                                _initializePlayer(); // يعيد تهيئة المشغل لعرض الفيديو الأوفلاين
-                              }
-                            },
+                // Build one QualityTile per available quality.
+                if (widget.video!.downloads!.isNotEmpty)
+                  Column(
+                    children: widget.video!.downloads!
+                        .map(
+                          (quality) => QualityTile(
+                            videoId: widget.video!.id!.toString(),
+                            quality: quality,
+                            onPlayOffline: _playOffline,
                           ),
-                        ),
-                      );
-                    }).toList(),
+                        )
+                        .toList(),
                   ),
-                ],
               ],
             ),
           ),
