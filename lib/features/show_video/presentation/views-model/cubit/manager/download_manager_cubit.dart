@@ -119,7 +119,7 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
     }
 
     // 1) Compute local file path for this (videoId, quality).
-    final directory = await getApplicationDocumentsDirectory();
+    final directory = await getApplicationSupportDirectory();
     final filePath = '${directory.path}/$videoId-${item.resolution}.mp4';
     final tempFile = File(filePath);
 
@@ -289,7 +289,7 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
   /// Helper to check if a fully‐downloaded file already exists on disk.
   /// Returns the local path if found, otherwise null.
   Future<String?> getDownloadedPath(String videoId, String quality) async {
-    final directory = await getApplicationDocumentsDirectory();
+    final directory = await getApplicationSupportDirectory();
     final filePath = '${directory.path}/$videoId-$quality.mp4';
     final file = File(filePath);
     return (await file.exists()) ? filePath : null;

@@ -12,6 +12,7 @@ import 'package:mk_academy/core/utils/cache_helper.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/core/utils/routs.dart';
+import 'package:mk_academy/core/utils/secure_storage.dart';
 import 'package:mk_academy/core/utils/services_locater.dart';
 import 'package:mk_academy/core/utils/styles.dart';
 import 'package:mk_academy/features/auth/data/repos/delete_account_repo.dart/delete_account_repo.dart';
@@ -46,7 +47,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  await generateAndStoreKey();
   setupLocatorServices();
   enableScreenshot();
   // await FirebaseApi().initNotifications();
