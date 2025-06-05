@@ -138,6 +138,7 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
       );
     } catch (e) {
       // If HEAD fails, assume totalBytes = 0 for now.
+      print("HEAD request failed: $e");
       totalBytes = 0;
     }
 
@@ -213,7 +214,7 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
     try {
       // 8) Issue a ranged GET request from `downloadedBytes` onwards.
       final response = await _dio.get<ResponseBody>(
-        item.resolution!,
+        item.url!,
         options: Options(
           responseType: ResponseType.stream,
           headers: {'range': 'bytes=$downloadedBytes-'},

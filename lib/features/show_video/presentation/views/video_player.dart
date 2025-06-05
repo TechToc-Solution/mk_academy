@@ -64,10 +64,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       _isOffline
           ? BetterPlayerDataSourceType.file
           : BetterPlayerDataSourceType.network,
-      headers: {
-        "Authorization": "Bearer ${CacheHelper.getData(key: "token")}",
-        "User-Agent": "ExoPlayer",
-      },
+      // headers: {
+      //   "Authorization": "Bearer ${CacheHelper.getData(key: "token")}",
+      //   "User-Agent": "ExoPlayer",
+      // },
       _isOffline ? _localVideoPath! : video!.hlsUrl!,
       useAsmsSubtitles: !_isOffline,
       useAsmsAudioTracks: !_isOffline,

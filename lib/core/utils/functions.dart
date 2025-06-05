@@ -261,7 +261,7 @@ String fixBadCdnUrl(String decryptedJsonString) {
 
       final fileName = pathSegments.last;
 
-      final fixedPath = '//$tokenSegment//$uuid//$fileName';
+      final fixedPath = '/$tokenSegment/$uuid/$fileName';
 
       return "${uri.scheme}://${uri.host}$fixedPath";
     } catch (e) {
