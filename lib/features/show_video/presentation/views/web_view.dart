@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
-import 'package:mk_academy/features/courses/data/model/video_model.dart';
+import 'package:mk_academy/features/show_video/data/Models/video_model.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/file_download_tile.dart';
-import 'package:mk_academy/features/show_video/presentation/views/widgets/mark_as_watched_switch.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/video_info_message.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -11,7 +10,7 @@ class WebViewScreen extends StatefulWidget {
   static const String routeName = '/webview';
 
   const WebViewScreen({super.key, required this.video});
-  final Video? video;
+  final VideoDataModel? video;
 
   @override
   WebViewScreenState createState() => WebViewScreenState();
@@ -21,7 +20,7 @@ class WebViewScreenState extends State<WebViewScreen> {
   late final WebViewController _controller;
   bool _isLoading = true;
   final bool _isVideoCompleted = false;
-  bool _isVideoWatched = false;
+  final bool _isVideoWatched = false;
   @override
   void initState() {
     super.initState();
@@ -44,7 +43,7 @@ class WebViewScreenState extends State<WebViewScreen> {
       </head>
       <body>
         <div class="container">
-          <iframe class="iframe-container" src="${widget.video!.video!}" frameborder="0"
+          <iframe class="iframe-container" src="${widget.video!.hlsUrl!}" frameborder="0"
             allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
         </div>
       </body>
@@ -123,17 +122,18 @@ class WebViewScreenState extends State<WebViewScreen> {
             VideoInfoMessage(show: !_isVideoCompleted),
 
             // Toggle Switch
-            MarkAsWatchedSwitch(
-              isVideoWatched: _isVideoWatched,
-              isVideoCompleted: _isVideoCompleted,
-              onToggle: (value) {
-                setState(() {
-                  _isVideoWatched = value;
-                });
-              },
-            ),
+            // MarkAsWatchedSwitch(
+            //   isVideoWatched: _isVideoWatched,
+            //   isVideoCompleted: _isVideoCompleted,
 
-            if (widget.video!.filePath != null)
+            //   onToggle: (value) {
+            //     setState(() {
+            //       _isVideoWatched = value;
+            //     });
+            //   },
+            // ),
+
+            if (widget.video!.file != null)
               FileDownloadTile(video: widget.video!),
           ],
         ),

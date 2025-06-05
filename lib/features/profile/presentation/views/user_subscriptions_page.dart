@@ -22,6 +22,7 @@ class UserSubscriptionsPage extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
           child: SubscriptionsSection(
+              scroll: true,
               courses: context.read<ProfileCubit>().userModel!.courses ?? []),
         ));
   }

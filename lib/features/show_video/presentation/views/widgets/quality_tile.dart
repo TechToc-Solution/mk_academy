@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
-import 'package:mk_academy/features/courses/data/model/video_model.dart';
-import 'package:mk_academy/features/show_video/presentation/views-model/cubit/download_manager_cubit.dart';
+import 'package:mk_academy/features/show_video/data/Models/video_model.dart';
+import 'package:mk_academy/features/show_video/presentation/views-model/cubit/manager/download_manager_cubit.dart';
 
 typedef OnPlayOfflineCallback = void Function(String localFilePath);
 
@@ -17,7 +17,7 @@ class QualityTile extends StatefulWidget {
   });
 
   final String videoId;
-  final DownloadItem quality;
+  final DownloadUrls quality;
   final OnPlayOfflineCallback onPlayOffline;
 
   @override
@@ -33,7 +33,7 @@ class _QualityTileState extends State<QualityTile> {
     _manager = context.read<DownloadManagerCubit>();
 
     // If a task for this key already exists (partial or failed), resume it.
-    final key = '${widget.videoId}-${widget.quality.quality}';
+    final key = '${widget.videoId}-${widget.quality.resolution}';
     final existing = _manager.state.tasks[key];
     if (existing != null && existing.status != DownloadStatus.success) {
       _manager.startDownload(widget.videoId, widget.quality);
@@ -42,7 +42,7 @@ class _QualityTileState extends State<QualityTile> {
 
   @override
   Widget build(BuildContext context) {
-    final key = '${widget.videoId}-${widget.quality.quality}';
+    final key = '${widget.videoId}-${widget.quality.resolution}';
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -52,7 +52,7 @@ class _QualityTileState extends State<QualityTile> {
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         title: Text(
-          "${"quality".tr(context)}: ${widget.quality.quality}",
+          "${"quality".tr(context)}: ${widget.quality.resolution}",
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,

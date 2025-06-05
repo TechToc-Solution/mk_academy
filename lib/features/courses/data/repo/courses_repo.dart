@@ -19,9 +19,4 @@ abstract class CoursesRepo {
   Future<Either<Failure, VideoData>> getVideos({
     required int? courseId,
   });
-
-  Future<Either<Failure, void>> markAsWatched({
-    required int courseId,
-    required int videoId,
-  });
 }

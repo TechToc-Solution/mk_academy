@@ -12,3 +12,5 @@ const double kHorizontalPadding = 10;
 const String verCode = "1.0.0";
 bool isGuest = CacheHelper.getData(key: "token") == null ? true : false;
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+

@@ -1,19 +1,32 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:better_player/better_player.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mk_academy/core/utils/cache_helper.dart';
+import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
+import 'package:mk_academy/core/widgets/custom_error_widget.dart';
+import 'package:mk_academy/features/show_video/data/Models/video_model.dart';
+import 'package:mk_academy/features/show_video/presentation/views-model/cubit/video_cubit/videos_cubit.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/file_download_tile.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/quality_tile.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
-import 'package:mk_academy/features/courses/data/model/video_model.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/mark_as_watched_switch.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/video_info_message.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   static const String routeName = '/video';
-  final Video? video;
+  final int? videoId;
+  final int? courseId;
+  final String videoName;
 
-  const VideoPlayerScreen({super.key, required this.video});
+  const VideoPlayerScreen(
+      {super.key,
+      required this.videoId,
+      required this.videoName,
+      required this.courseId});
 
   @override
   State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
@@ -23,58 +36,74 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   late BetterPlayerController _betterPlayerController;
 
   bool _isVideoCompleted = false;
-  bool _isVideoWatched = false;
-
-  /// If true, we switch the data source to a local file.
   bool _isOffline = false;
-
-  /// Local file path for the quality that was tapped “Play”
   String? _localVideoPath;
-
   bool _isPlayerReady = false;
 
   @override
   void initState() {
     super.initState();
     disableScreenshot();
-    _initializePlayer();
+    context
+        .read<VideoCubit>()
+        .getVideo(videoId: widget.videoId, courseId: widget.courseId);
   }
 
-  void _initializePlayer() {
+  Future<bool> isUrlAccessible(String url) async {
+    try {
+      final response = await HttpClient().headUrl(Uri.parse(url));
+      final res = await response.close();
+      return res.statusCode == 200;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  void _initializePlayer(VideoDataModel? video) async {
     final source = BetterPlayerDataSource(
       _isOffline
           ? BetterPlayerDataSourceType.file
           : BetterPlayerDataSourceType.network,
-      _isOffline ? _localVideoPath! : widget.video!.video!,
+      headers: {
+        "Authorization": "Bearer ${CacheHelper.getData(key: "token")}",
+        "User-Agent": "ExoPlayer",
+      },
+      _isOffline ? _localVideoPath! : video!.hlsUrl!,
       useAsmsSubtitles: !_isOffline,
       useAsmsAudioTracks: !_isOffline,
     );
 
-    _betterPlayerController = BetterPlayerController(
-      BetterPlayerConfiguration(
-        autoPlay: true,
-        looping: false,
-        allowedScreenSleep: false,
-        aspectRatio: 16 / 9,
-        controlsConfiguration: const BetterPlayerControlsConfiguration(
-          enableQualities: true,
-          enableOverflowMenu: true,
+    try {
+      _betterPlayerController = BetterPlayerController(
+        BetterPlayerConfiguration(
+          autoPlay: true,
+          looping: false,
+          allowedScreenSleep: false,
+          aspectRatio: 16 / 9,
+          controlsConfiguration: const BetterPlayerControlsConfiguration(
+            enableQualities: true,
+            enableOverflowMenu: true,
+          ),
+          errorBuilder: (context, errorMessage) =>
+              _buildErrorWidget(context, errorMessage),
+          eventListener: _handlePlayerEvents,
         ),
-        errorBuilder: (context, errorMessage) =>
-            _buildErrorWidget(context, errorMessage),
-        eventListener: _handlePlayerEvents,
-      ),
-      betterPlayerDataSource: source,
-    );
+        betterPlayerDataSource: source,
+      );
 
-    setState(() => _isPlayerReady = true);
+      setState(() => _isPlayerReady = true);
+    } catch (e) {
+      print("Failed to initialize player: $e");
+      setState(() => _isPlayerReady = false);
+    }
   }
 
   void _handlePlayerEvents(BetterPlayerEvent event) {
     if (event.betterPlayerEventType == BetterPlayerEventType.finished) {
       setState(() {
         _isVideoCompleted = true;
-        _isVideoWatched = true;
+        context.read<VideoCubit>().markAsWatched(
+            videoId: widget.videoId!, courseId: widget.courseId!);
       });
     }
   }
@@ -93,7 +122,13 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             ),
             const SizedBox(height: 10),
             ElevatedButton(
-              onPressed: () => _betterPlayerController.retryDataSource(),
+              onPressed: () {
+                try {
+                  _betterPlayerController.retryDataSource();
+                } catch (e) {
+                  debugPrint("Retry failed: $e");
+                }
+              },
               child: Text("try_again".tr(context)),
             ),
           ],
@@ -114,17 +149,15 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       _localVideoPath = filePath;
       _isPlayerReady = false;
       _isVideoCompleted = false;
-      _isVideoWatched = false;
     });
 
     // Re‐initialize the BetterPlayerController with the local file.
     _betterPlayerController.dispose();
-    _initializePlayer();
+    _initializePlayer(null);
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -138,7 +171,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             ),
           ),
           title: Text(
-            widget.video?.name ?? "video",
+            widget.videoName,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
@@ -147,94 +180,129 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             ),
           ),
         ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                // ─── Video Section ─────────────────────────────────────────
-                AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: _isPlayerReady
-                      ? BetterPlayer(controller: _betterPlayerController)
-                      : const Center(child: CircularProgressIndicator()),
-                ),
-                const Divider(color: AppColors.primaryColors),
-
-                // ─── Mark As Watched Section ─────────────────────────────
-                VideoInfoMessage(show: !_isVideoCompleted),
-                MarkAsWatchedSwitch(
-                  isVideoWatched: _isVideoWatched,
-                  isVideoCompleted: _isVideoCompleted,
-                  onToggle: (value) => setState(() => _isVideoWatched = value),
-                ),
-                const Divider(color: AppColors.primaryColors),
-
-                // ─── Download File Section (if any) ──────────────────────
-                if (widget.video!.filePath != null)
-                  FileDownloadTile(video: widget.video!),
-                if (widget.video!.filePath != null)
-                  const Divider(color: AppColors.primaryColors),
-
-                // ─── Download Qualities Section ──────────────────────────
-                if (widget.video!.downloads!.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 8),
-                    child: Text(
-                      "watch_offline".tr(context),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                  ),
-
-                // If currently “playing offline,” show a button to go back online:
-                if (_isOffline)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        setState(() {
-                          _isOffline = false;
-                          _isPlayerReady = false;
-                        });
-                        _betterPlayerController.dispose();
-                        _initializePlayer();
-                      },
-                      icon: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: const Icon(Icons.wifi),
-                      ),
-                      label: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text("go_online".tr(context)),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryColors,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+        body: BlocBuilder<VideoCubit, VideoState>(
+          builder: (context, state) {
+            if (state.status == VideoStatus.success && !_isPlayerReady) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Future.microtask(() => _initializePlayer(state.video));
+              });
+            }
+            if (state.status == VideoStatus.success && _isPlayerReady) {
+              return SafeArea(
+                child: Container(
+                  height: double.infinity,
+                  color: Colors.white,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        // ─── Video Section ─────────────────────────────────────────
+                        AspectRatio(
+                          aspectRatio: 16 / 9,
+                          child: _isPlayerReady
+                              ? BetterPlayer(
+                                  controller: _betterPlayerController)
+                              : const Center(
+                                  child: CircularProgressIndicator()),
                         ),
-                      ),
+                        const Divider(color: AppColors.primaryColors),
+
+                        // ─── Mark As Watched Section ─────────────────────────────
+                        VideoInfoMessage(show: !_isVideoCompleted),
+                        MarkAsWatchedSwitch(
+                          isVideoWatched: state.video!.isViewed!,
+                          isVideoCompleted: _isVideoCompleted,
+                          videoId: widget.videoId!,
+                          courseId: widget.courseId!,
+                          onToggle: (value) =>
+                              setState(() => state.video!.isViewed = value),
+                        ),
+                        const Divider(color: AppColors.primaryColors),
+
+                        // ─── Download File Section (if any) ──────────────────────
+                        if (state.video!.file != null)
+                          FileDownloadTile(video: state.video!),
+                        if (state.video!.file != null)
+                          const Divider(color: AppColors.primaryColors),
+
+                        // ─── Download Qualities Section ──────────────────────────
+                        if (state.video!.downloadUrls!.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16.0, vertical: 8),
+                            child: Text(
+                              "watch_offline".tr(context),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                          ),
+
+                        // If currently “playing offline,” show a button to go back online:
+                        if (_isOffline)
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: ElevatedButton.icon(
+                              onPressed: () {
+                                setState(() {
+                                  _isOffline = false;
+                                  _isPlayerReady = false;
+                                });
+                                if (_betterPlayerController
+                                    .isVideoInitialized()!) {
+                                  _betterPlayerController.dispose();
+                                }
+
+                                _initializePlayer(state.video!);
+                              },
+                              icon: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: const Icon(Icons.wifi),
+                              ),
+                              label: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Text("go_online".tr(context)),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primaryColors,
+                                foregroundColor: Colors.white,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 12),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
+
+                        // Build one QualityTile per available quality.
+                        if (state.video!.downloadUrls!.isNotEmpty)
+                          Column(
+                            children: state.video!.downloadUrls!
+                                .map(
+                                  (quality) => QualityTile(
+                                    videoId: state.video!.id!.toString(),
+                                    quality: quality,
+                                    onPlayOffline: _playOffline,
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                      ],
                     ),
                   ),
-
-                // Build one QualityTile per available quality.
-                if (widget.video!.downloads!.isNotEmpty)
-                  Column(
-                    children: widget.video!.downloads!
-                        .map(
-                          (quality) => QualityTile(
-                            videoId: widget.video!.id!.toString(),
-                            quality: quality,
-                            onPlayOffline: _playOffline,
-                          ),
-                        )
-                        .toList(),
-                  ),
-              ],
-            ),
-          ),
+                ),
+              );
+            } else if (state.status == VideoStatus.failure) {
+              return CustomErrorWidget(
+                  errorMessage: state.errorMessage!,
+                  onRetry: () => context.read<VideoCubit>().getVideo(
+                      videoId: widget.videoId, courseId: widget.courseId));
+            } else {
+              return CustomCircualProgressIndicator();
+            }
+          },
         ),
       );
 }

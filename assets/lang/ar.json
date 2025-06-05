@@ -162,5 +162,7 @@
     "enter_the_required_city" : "الرجاء اختيار المدينة",
     "update_profile_success" : "تم تعديل الملف الشخصي بنجاح",
     "user_subscriptions" : "الاشتراكات الحالية",
-    "profile_updated" : "تم تعديل الملف الشخصي بنجاح"
+    "profile_updated" : "تم تعديل الملف الشخصي بنجاح",
+    "videos": "الفيديوهات",
+    "watched_videos": "الفيديوهات المشاهدة"
 }

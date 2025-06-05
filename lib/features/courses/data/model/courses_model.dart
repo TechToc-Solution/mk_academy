@@ -48,6 +48,8 @@ class Courses {
   String? image;
   bool? canShow;
   String? subject;
+  int? total_videos;
+  int? viewed_videos_count;
 
   Courses(
       {this.id,
@@ -58,7 +60,9 @@ class Courses {
       this.courseMode,
       this.image,
       this.canShow,
-      this.subject});
+      this.subject,
+      this.total_videos,
+      this.viewed_videos_count});
 
   Courses.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -70,6 +74,8 @@ class Courses {
     image = json['image'];
     canShow = json['can_show'];
     subject = json['subject'];
+    total_videos = json['total_videos'];
+    viewed_videos_count = json['viewed_videos_count'];
   }
 
   Map<String, dynamic> toJson() {
@@ -83,6 +89,8 @@ class Courses {
     data['image'] = image;
     data['can_show'] = canShow;
     data['subject'] = subject;
+    data['total_videos'] = total_videos;
+    data['viewed_videos_count'] = viewed_videos_count;
     return data;
   }
 }

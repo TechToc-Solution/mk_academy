@@ -1,6 +1,14 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/material.dart';
+import 'package:crypto/crypto.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:encrypt/encrypt.dart';
+import 'package:flutter/material.dart' hide Key;
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:mk_academy/core/shared/cubits/download_handler/download_handler_cubit.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 
@@ -10,6 +18,15 @@ import '../../features/profile/presentation/views-model/profile_cubit.dart';
 import '../shared/cubits/subjects/subjects_cubit.dart';
 import '../widgets/cutom_dialog.dart';
 import 'constats.dart';
+
+//secret keys
+String getStaticKey() {
+  return ['TechToc', 'AppAESKey', '12345678', '90abcd00'].join();
+}
+
+const _encryptedKey =
+    '/WBrxIreRSfLCV9taIo+Y1wnkrszW+t7L1gtCeu7/NQmpozKQ4FrFQOZCE/w9g7O';
+const _ivBase64 = 'k3D7jLeEfp7sp0RqLtEkQQ==';
 
 //navigators
 Route goRoute({required var x}) {
@@ -156,3 +173,110 @@ void handleDownload(BuildContext context, String url, String fileName, int id) {
 //     },
 //   );
 // }
+Future<bool> isRunningOnEmulator() async {
+  final deviceInfo = DeviceInfoPlugin();
+
+  if (Platform.isAndroid) {
+    final androidInfo = await deviceInfo.androidInfo;
+    return !androidInfo.isPhysicalDevice ||
+        androidInfo.model.toLowerCase().contains('sdk') ||
+        androidInfo.manufacturer.toLowerCase().contains('genymotion');
+  } else if (Platform.isIOS) {
+    final iosInfo = await deviceInfo.iosInfo;
+    return !iosInfo.isPhysicalDevice;
+  }
+
+  return false;
+}
+
+Future<void> blockIfDebugOrEmulator() async {
+  final emulator = await isRunningOnEmulator();
+  var inDebugMode = false;
+
+  assert(() {
+    inDebugMode = true;
+    return true;
+  }());
+
+  if (inDebugMode || emulator) {
+    exit(0);
+  }
+}
+
+String getDecryptedSecretKey() {
+  final key = Key.fromUtf8(getStaticKey());
+  final iv = IV.fromBase64(_ivBase64);
+
+  final encrypter = Encrypter(AES(key));
+  final decrypted = encrypter.decrypt64(_encryptedKey, iv: iv);
+
+  return decrypted;
+}
+
+String decryptVideoData(String base64Data, String token) {
+  final secret = getDecryptedSecretKey();
+  // 1. Derive AES key from token + secret
+  final keyBytes = sha256.convert(utf8.encode(token + secret)).bytes;
+  final key = Key(Uint8List.fromList(keyBytes));
+
+  // 2. Decode base64-encoded input (IV + ciphertext)
+  final fullData = base64.decode(base64Data);
+
+  // 3. Split IV and ciphertext
+  final iv = IV(fullData.sublist(0, 16));
+  final cipherText = fullData.sublist(16);
+
+  // 4. AES Decrypt using AES-256-CBC
+  final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
+  final decrypted = encrypter.decrypt(Encrypted(cipherText), iv: iv);
+
+  return fixBadCdnUrl(decrypted);
+}
+
+String fixBadCdnUrl(String decryptedJsonString) {
+  final jsonMap = json.decode(decryptedJsonString);
+
+  String fixUrl(String url) {
+    if (!url.contains('bcdn_token') || !url.contains('expires')) return url;
+
+    try {
+      final uri = Uri.parse(url);
+      final pathSegments = uri.pathSegments;
+
+      // استخراج الجزء الذي يحتوي على البارامترات
+      final tokenSegment = pathSegments.firstWhere(
+        (s) => s.contains('bcdn_token') && s.contains('expires'),
+        orElse: () => '',
+      );
+
+      // استخراج uuid
+      final uuid = pathSegments.firstWhere(
+        (part) => RegExp(
+          r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+        ).hasMatch(part),
+        orElse: () => '',
+      );
+
+      if (tokenSegment.isEmpty || uuid.isEmpty) return url;
+
+      final fileName = pathSegments.last;
+
+      final fixedPath = '//$tokenSegment//$uuid//$fileName';
+
+      return "${uri.scheme}://${uri.host}$fixedPath";
+    } catch (e) {
+      return url;
+    }
+  }
+
+  // إصلاح الحقول المطلوبة
+  jsonMap['hls_url'] = fixUrl(jsonMap['hls_url']);
+
+  if (jsonMap['download_urls'] is List) {
+    for (var item in jsonMap['download_urls']) {
+      item['url'] = fixUrl(item['url']);
+    }
+  }
+
+  return json.encode(jsonMap);
+}

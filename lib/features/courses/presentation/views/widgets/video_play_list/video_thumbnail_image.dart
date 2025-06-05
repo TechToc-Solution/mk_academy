@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:mk_academy/core/widgets/shimmer_container.dart';
+import 'package:mk_academy/features/courses/data/model/video_model.dart';
 
 import '../../../../../../core/utils/assets_data.dart';
-import '../../../../data/model/video_model.dart';
 
 class VideoThumbnailImage extends StatelessWidget {
   const VideoThumbnailImage({

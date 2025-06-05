@@ -154,5 +154,7 @@
     "watch_offline": "Watch downloaded videos",
     "quality": "Quality",
     "go_online": "Watch over internet",
-    "download_warning": "You must keep the application open to complete the download process."
+    "download_warning": "You must keep the application open to complete the download process.",
+    "videos": "Videos",
+    "watched_videos": "Watched Videos"
 }

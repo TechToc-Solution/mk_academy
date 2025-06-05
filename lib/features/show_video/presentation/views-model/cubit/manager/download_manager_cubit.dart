@@ -6,7 +6,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
-import 'package:mk_academy/features/courses/data/model/video_model.dart';
+import 'package:mk_academy/features/show_video/data/Models/video_model.dart';
 import 'package:path_provider/path_provider.dart';
 
 part 'download_manager_state.dart';
@@ -105,8 +105,8 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
 
   /// Public method to start (or resume) a download. If a partial file already exists,
   /// it picks up from where it left off; otherwise it starts from zero.
-  Future<void> startDownload(String videoId, DownloadItem item) async {
-    final key = _keyFor(videoId, item.quality);
+  Future<void> startDownload(String videoId, DownloadUrls item) async {
+    final key = _keyFor(videoId, item.resolution!);
 
     // If there's already a task in progress or succeeded for this key, do nothing.
     final existing = state.tasks[key];
@@ -120,7 +120,7 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
 
     // 1) Compute local file path for this (videoId, quality).
     final directory = await getApplicationDocumentsDirectory();
-    final filePath = '${directory.path}/$videoId-${item.quality}.mp4';
+    final filePath = '${directory.path}/$videoId-${item.resolution}.mp4';
     final tempFile = File(filePath);
 
     // 2) Determine how many bytes are already downloaded (if any).
@@ -132,7 +132,7 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
     // 3) Send a HEAD request to find out total size (in bytes).
     int totalBytes;
     try {
-      final headResp = await _dio.head(item.url);
+      final headResp = await _dio.head(item.url!);
       totalBytes = int.parse(
         headResp.headers.value(HttpHeaders.contentLengthHeader) ?? '0',
       );
@@ -147,7 +147,7 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
         downloadedBytes >= totalBytes) {
       final finishedTask = DownloadTask(
         videoId: videoId,
-        quality: item.quality,
+        quality: item.resolution!,
         status: DownloadStatus.success,
         progress: 100,
         totalBytes: totalBytes,
@@ -171,7 +171,7 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
 
     var initialTask = DownloadTask(
       videoId: videoId,
-      quality: item.quality,
+      quality: item.resolution!,
       status: DownloadStatus.inProgress,
       progress: initialProgress,
       totalBytes: totalBytes,
@@ -213,7 +213,7 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
     try {
       // 8) Issue a ranged GET request from `downloadedBytes` onwards.
       final response = await _dio.get<ResponseBody>(
-        item.url,
+        item.resolution!,
         options: Options(
           responseType: ResponseType.stream,
           headers: {'range': 'bytes=$downloadedBytes-'},

@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
-import 'package:mk_academy/features/show_video/presentation/views-model/cubit/download_video_cubit.dart';
+import 'package:mk_academy/core/utils/services_locater.dart';
+import 'package:mk_academy/features/show_video/data/repo/video_repo.dart';
+import 'package:mk_academy/features/show_video/presentation/views-model/cubit/video_cubit/videos_cubit.dart';
 import 'package:mk_academy/features/show_video/presentation/views/video_player.dart';
 import '../../../../data/model/video_model.dart';
 import 'video_thumbnail_image.dart';
 
 class PlayListBody extends StatelessWidget {
-  const PlayListBody({super.key, required this.videos});
+  const PlayListBody({super.key, required this.videos, required this.courseId});
   final List<Video> videos;
+  final courseId;
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +40,12 @@ class PlayListBody extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(goRoute(
             x: BlocProvider(
-              create: (_) => DownloadVideoCubit(),
-              child: VideoPlayerScreen(video: video),
+              create: (context) => VideoCubit(getit.get<VideoRepo>()),
+              child: VideoPlayerScreen(
+                videoId: video.id,
+                videoName: video.name ?? "",
+                courseId: courseId,
+              ),
             ),
           ));
         },

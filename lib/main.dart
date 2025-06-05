@@ -1,5 +1,6 @@
+
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Key;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mk_academy/core/shared/cubits/download_handler/download_handler_cubit.dart';
@@ -20,7 +21,7 @@ import 'package:mk_academy/features/auth/presentation/view-model/reset_password_
 import 'package:mk_academy/features/courses/data/repo/courses_repo.dart';
 import 'package:mk_academy/features/courses/presentation/view_model/courses%20cubit/courses_cubit.dart';
 import 'package:mk_academy/features/courses/presentation/view_model/videos_cubit/videos_cubit.dart';
-import 'package:mk_academy/features/show_video/presentation/views-model/cubit/download_manager_cubit.dart';
+import 'package:mk_academy/features/show_video/presentation/views-model/cubit/manager/download_manager_cubit.dart';
 import 'package:mk_academy/firebase_options.dart';
 import 'package:mk_academy/splash_screen.dart';
 import 'core/shared/cubits/subjects/subjects_cubit.dart';
@@ -41,11 +42,12 @@ import 'features/profile/presentation/views-model/profile_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  //await blockIfDebugOrEmulator();
+  await CacheHelper.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await CacheHelper.init();
+
   setupLocatorServices();
   enableScreenshot();
   // await FirebaseApi().initNotifications();

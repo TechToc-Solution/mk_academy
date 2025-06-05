@@ -10,7 +10,9 @@ import '../../../../courses/presentation/views/widgets/custom_video_details_shee
 
 class SubscriptionsSection extends StatelessWidget {
   final List<UserCourses> courses;
-  const SubscriptionsSection({super.key, required this.courses});
+  final bool scroll;
+  const SubscriptionsSection(
+      {super.key, required this.courses, required this.scroll});
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +25,9 @@ class SubscriptionsSection extends StatelessWidget {
     }
     if (courses.isNotEmpty) {
       return ListView.separated(
+        physics:
+            scroll ? BouncingScrollPhysics() : NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
         itemCount: courses.length,
         itemBuilder: (BuildContext context, int index) {
           return _buildSubscriptionItem(courses[index], context);

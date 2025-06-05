@@ -35,8 +35,7 @@ class ShowPlayList extends StatelessWidget {
                                 style: TextStyle(color: Colors.white)),
                           )
                         : PlayListBody(
-                            videos: state.videos!,
-                          );
+                            videos: state.videos!, courseId: courseId);
                   } else if (state.status == VideoStatus.failure) {
                     return CustomErrorWidget(
                         errorMessage: state.errorMessage!,

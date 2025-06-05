@@ -52,6 +52,14 @@ class _CustomVideoDetailsSheetState extends State<CustomVideoDetailsSheet> {
                       state.course!.subject!, false),
                   _buildDetailItem(Icons.mode, "type".tr(context),
                       state.course!.courseMode!, false),
+                  _buildDetailItem(Icons.playlist_play, "videos".tr(context),
+                      state.course!.total_videos.toString(), false),
+                  if (state.course!.canShow!)
+                    _buildDetailItem(
+                        Icons.playlist_add_check,
+                        "watched_videos".tr(context),
+                        state.course!.viewed_videos_count.toString(),
+                        false),
                   _buildDetailItem(Icons.description, "description".tr(context),
                       state.course!.description ?? "", true),
                   if (!state.course!.canShow!)

@@ -52,7 +52,9 @@ class Routes {
           video: null,
         ),
     VideoPlayerScreen.routeName: (context) => VideoPlayerScreen(
-          video: null,
+          videoId: null,
+          videoName: '',
+          courseId: null,
         ),
     TestsListPage.routeName: (context) => TestsListPage(),
     ShowSubSubjects.routeName: (context) => ShowSubSubjects(),

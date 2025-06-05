@@ -27,14 +27,6 @@ class VideoInfoSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 4),
-          if (video.duration != null)
-            Text(
-              "المدة: ${video.duration}",
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[600],
-              ),
-            ),
         ],
       ),
     );

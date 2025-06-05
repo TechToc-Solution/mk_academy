@@ -13,6 +13,8 @@ import 'package:mk_academy/features/auth/data/repos/token_repo/token_repo.dart';
 import 'package:mk_academy/features/auth/data/repos/token_repo/token_repo_ipml.dart';
 import 'package:mk_academy/features/home/data/repo/ads/ads.dart';
 import 'package:mk_academy/features/home/data/repo/ads/ads_repo_iplm.dart';
+import 'package:mk_academy/features/show_video/data/repo/video_repo.dart';
+import 'package:mk_academy/features/show_video/data/repo/video_repo_iplm.dart';
 import 'package:mk_academy/features/test_your_self/data/repo/tests_repo.dart';
 import 'package:mk_academy/features/test_your_self/data/repo/tests_repo_iplm.dart';
 
@@ -98,7 +100,10 @@ void setupLocatorServices() {
   getit.registerSingleton<AppVersionRepo>(
       AppVersionIplm(getit.get<ApiServices>()));
 
-  //download hendler
+  //Download hendler
   getit.registerLazySingleton<DownloadHandlerRepo>(
       () => DownloadRepositoryImpl(getit.get<Dio>()));
+
+  //Get Video
+  getit.registerSingleton<VideoRepo>(VideoRepoIplm(getit.get<ApiServices>()));
 }
