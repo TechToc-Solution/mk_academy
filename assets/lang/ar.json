@@ -164,5 +164,6 @@
     "user_subscriptions" : "الاشتراكات الحالية",
     "profile_updated" : "تم تعديل الملف الشخصي بنجاح",
     "videos": "الفيديوهات",
-    "watched_videos": "الفيديوهات المشاهدة"
+    "watched_videos": "الفيديوهات المشاهدة",
+    "change_video_watch_state": "تم تغيير حالة مشاهدة الفيديو"
 }

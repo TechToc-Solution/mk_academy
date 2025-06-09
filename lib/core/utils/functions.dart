@@ -229,7 +229,6 @@ String decryptVideoData(String base64Data, String token) {
   // 4. AES Decrypt using AES-256-CBC
   final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
   final decrypted = encrypter.decrypt(Encrypted(cipherText), iv: iv);
-
   return fixBadCdnUrl(decrypted);
 }
 
@@ -237,36 +236,31 @@ String fixBadCdnUrl(String decryptedJsonString) {
   final jsonMap = json.decode(decryptedJsonString);
 
   String fixUrl(String url) {
-    if (!url.contains('bcdn_token') || !url.contains('expires')) return url;
+    final uri = Uri.parse(url);
 
-    try {
-      final uri = Uri.parse(url);
-      final pathSegments = uri.pathSegments;
+    // Extract query parameters
+    final queryParams = uri.queryParameters;
 
-      // استخراج الجزء الذي يحتوي على البارامترات
-      final tokenSegment = pathSegments.firstWhere(
-        (s) => s.contains('bcdn_token') && s.contains('expires'),
-        orElse: () => '',
-      );
+    if (!queryParams.containsKey('token_path')) return url;
 
-      // استخراج uuid
-      final uuid = pathSegments.firstWhere(
-        (part) => RegExp(
-          r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
-        ).hasMatch(part),
-        orElse: () => '',
-      );
+    String tokenPath = queryParams['token_path']!;
+    tokenPath = Uri.decodeComponent(tokenPath); // decode once
 
-      if (tokenSegment.isEmpty || uuid.isEmpty) return url;
+    // Ensure single slash between paths
+    tokenPath = tokenPath.replaceAll(RegExp('/+'), '/');
 
-      final fileName = pathSegments.last;
+    // Rebuild the query with corrected token_path
+    final newQueryParams = Map<String, String>.from(queryParams)
+      ..['token_path'] = tokenPath;
 
-      final fixedPath = '/$tokenSegment/$uuid/$fileName';
+    final newUri = Uri(
+      scheme: uri.scheme,
+      host: uri.host,
+      pathSegments: uri.pathSegments,
+      queryParameters: newQueryParams,
+    );
 
-      return "${uri.scheme}://${uri.host}$fixedPath";
-    } catch (e) {
-      return url;
-    }
+    return newUri.toString();
   }
 
   // إصلاح الحقول المطلوبة

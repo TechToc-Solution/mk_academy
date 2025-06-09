@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
-import 'package:mk_academy/features/show_video/presentation/views-model/cubit/video_cubit/videos_cubit.dart';
+import 'package:mk_academy/core/utils/functions.dart';
+import 'package:mk_academy/features/show_video/presentation/views-model/cubit/mark_as_watched/mark_as_watched_cubit.dart';
 
 class MarkAsWatchedSwitch extends StatelessWidget {
   final bool isVideoWatched;
-  final bool isVideoCompleted;
   final ValueChanged<bool> onToggle;
 
   final int videoId;
@@ -16,7 +16,6 @@ class MarkAsWatchedSwitch extends StatelessWidget {
   const MarkAsWatchedSwitch({
     super.key,
     required this.isVideoWatched,
-    required this.isVideoCompleted,
     required this.onToggle,
     required this.videoId,
     required this.courseId,
@@ -24,28 +23,55 @@ class MarkAsWatchedSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-      child: ListTile(
-        title: Text(
-          'mark_as_watched'.tr(context),
-          style: const TextStyle(fontWeight: FontWeight.w600),
-        ),
-        trailing: Switch(
-          value: isVideoWatched,
-          onChanged: (value) {
-            onToggle(value);
-
-            if (value == true) {
-              context.read<VideoCubit>().markAsWatched(
-                    videoId: videoId,
-                    courseId: courseId,
+    return BlocListener<MarkAsWatchedCubit, MarkAsWatchedState>(
+      listener: (context, state) {
+        if (state.status == MarkAsWatchedStatus.success) {
+          messages(context, "change_video_watch_state".tr(context),
+              AppColors.primaryColors);
+        } else if (state.status == MarkAsWatchedStatus.failure) {
+          messages(
+              context, state.errorMessage ?? "error".tr(context), Colors.red);
+        }
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                'mark_as_watched'.tr(context),
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+            ),
+            BlocBuilder<MarkAsWatchedCubit, MarkAsWatchedState>(
+              builder: (context, state) {
+                if (state.status == MarkAsWatchedStatus.loading) {
+                  return SizedBox(
+                    width: 50,
+                    child: LinearProgressIndicator(
+                      color: AppColors.primaryColors,
+                    ),
                   );
-            }
-          },
-          activeColor: AppColors.primaryColors,
-          inactiveTrackColor: Colors.grey[300],
-          inactiveThumbColor: Colors.grey[500],
+                } else {
+                  return Switch(
+                    value: isVideoWatched,
+                    onChanged: (value) {
+                      context.read<MarkAsWatchedCubit>().markAsWatched(
+                            videoId: videoId,
+                            courseId: courseId,
+                          );
+                      if (state.status == MarkAsWatchedStatus.success) {
+                        onToggle(value);
+                      }
+                    },
+                    activeColor: AppColors.primaryColors,
+                    inactiveTrackColor: Colors.grey[300],
+                    inactiveThumbColor: Colors.grey[500],
+                  );
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mk_academy/core/utils/cache_helper.dart';
 import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
 import 'package:mk_academy/features/show_video/data/Models/video_model.dart';
+import 'package:mk_academy/features/show_video/presentation/views-model/cubit/mark_as_watched/mark_as_watched_cubit.dart';
 import 'package:mk_academy/features/show_video/presentation/views-model/cubit/video_cubit/videos_cubit.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/file_download_tile.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/quality_tile.dart';
@@ -64,10 +64,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       _isOffline
           ? BetterPlayerDataSourceType.file
           : BetterPlayerDataSourceType.network,
-      // headers: {
-      //   "Authorization": "Bearer ${CacheHelper.getData(key: "token")}",
-      //   "User-Agent": "ExoPlayer",
-      // },
       _isOffline ? _localVideoPath! : video!.hlsUrl!,
       useAsmsSubtitles: !_isOffline,
       useAsmsAudioTracks: !_isOffline,
@@ -93,18 +89,15 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
       setState(() => _isPlayerReady = true);
     } catch (e) {
-      print("Failed to initialize player: $e");
       setState(() => _isPlayerReady = false);
     }
   }
 
   void _handlePlayerEvents(BetterPlayerEvent event) {
     if (event.betterPlayerEventType == BetterPlayerEventType.finished) {
-      setState(() {
-        _isVideoCompleted = true;
-        context.read<VideoCubit>().markAsWatched(
-            videoId: widget.videoId!, courseId: widget.courseId!);
-      });
+      context
+          .read<MarkAsWatchedCubit>()
+          .markAsWatched(videoId: widget.videoId!, courseId: widget.courseId!);
     }
   }
 
@@ -183,6 +176,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         body: BlocBuilder<VideoCubit, VideoState>(
           builder: (context, state) {
             if (state.status == VideoStatus.success && !_isPlayerReady) {
+              _isVideoCompleted = state.video!.isViewed!;
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 Future.microtask(() => _initializePlayer(state.video));
               });
@@ -210,11 +204,12 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                         VideoInfoMessage(show: !_isVideoCompleted),
                         MarkAsWatchedSwitch(
                           isVideoWatched: state.video!.isViewed!,
-                          isVideoCompleted: _isVideoCompleted,
                           videoId: widget.videoId!,
                           courseId: widget.courseId!,
-                          onToggle: (value) =>
-                              setState(() => state.video!.isViewed = value),
+                          onToggle: (value) => setState(() {
+                            state.video!.isViewed = value;
+                            _isVideoCompleted = value;
+                          }),
                         ),
                         const Divider(color: AppColors.primaryColors),
 

@@ -1,5 +1,3 @@
-// lib/features/show_video/presentation/views-model/cubit/download_manager_cubit.dart
-
 import 'dart:async';
 import 'dart:io';
 
@@ -18,6 +16,7 @@ enum DownloadStatus { initial, inProgress, success, failure }
 class DownloadTask extends Equatable {
   final String videoId;
   final String quality;
+  final bool downloaded;
 
   /// current status: initial → inProgress → success/failure
   final DownloadStatus status;
@@ -43,18 +42,18 @@ class DownloadTask extends Equatable {
   /// so we can cancel if ever needed
   final CancelToken cancelToken;
 
-  const DownloadTask({
-    required this.videoId,
-    required this.quality,
-    required this.status,
-    required this.progress,
-    required this.totalBytes,
-    required this.receivedBytes,
-    required this.estimatedTime,
-    required this.cancelToken,
-    this.filePath,
-    this.error,
-  });
+  const DownloadTask(
+      {required this.videoId,
+      required this.quality,
+      required this.status,
+      required this.progress,
+      required this.totalBytes,
+      required this.receivedBytes,
+      required this.estimatedTime,
+      required this.cancelToken,
+      this.filePath,
+      this.error,
+      this.downloaded = false});
 
   DownloadTask copyWith({
     DownloadStatus? status,
@@ -67,17 +66,17 @@ class DownloadTask extends Equatable {
     CancelToken? cancelToken,
   }) {
     return DownloadTask(
-      videoId: videoId,
-      quality: quality,
-      status: status ?? this.status,
-      progress: progress ?? this.progress,
-      totalBytes: totalBytes ?? this.totalBytes,
-      receivedBytes: receivedBytes ?? this.receivedBytes,
-      estimatedTime: estimatedTime ?? this.estimatedTime,
-      cancelToken: cancelToken ?? this.cancelToken,
-      filePath: filePath ?? this.filePath,
-      error: error ?? this.error,
-    );
+        videoId: videoId,
+        quality: quality,
+        status: status ?? this.status,
+        progress: progress ?? this.progress,
+        totalBytes: totalBytes ?? this.totalBytes,
+        receivedBytes: receivedBytes ?? this.receivedBytes,
+        estimatedTime: estimatedTime ?? this.estimatedTime,
+        cancelToken: cancelToken ?? this.cancelToken,
+        filePath: filePath ?? this.filePath,
+        error: error ?? this.error,
+        downloaded: downloaded);
   }
 
   @override
@@ -91,6 +90,7 @@ class DownloadTask extends Equatable {
         estimatedTime,
         filePath,
         error,
+        downloaded
       ];
 }
 
@@ -137,8 +137,6 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
         headResp.headers.value(HttpHeaders.contentLengthHeader) ?? '0',
       );
     } catch (e) {
-      // If HEAD fails, assume totalBytes = 0 for now.
-      print("HEAD request failed: $e");
       totalBytes = 0;
     }
 
@@ -146,18 +144,19 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
     if (downloadedBytes > 0 &&
         totalBytes > 0 &&
         downloadedBytes >= totalBytes) {
+      // Only emit success if we know the total size and it's fully downloaded
       final finishedTask = DownloadTask(
-        videoId: videoId,
-        quality: item.resolution!,
-        status: DownloadStatus.success,
-        progress: 100,
-        totalBytes: totalBytes,
-        receivedBytes: downloadedBytes,
-        estimatedTime: Duration.zero,
-        cancelToken: CancelToken(),
-        filePath: filePath,
-        error: null,
-      );
+          videoId: videoId,
+          quality: item.resolution!,
+          status: DownloadStatus.success,
+          progress: 100,
+          totalBytes: totalBytes,
+          receivedBytes: downloadedBytes,
+          estimatedTime: Duration.zero,
+          cancelToken: CancelToken(),
+          filePath: filePath,
+          error: null,
+          downloaded: false);
       final newMap = Map<String, DownloadTask>.from(state.tasks)
         ..[key] = finishedTask;
       emit(state.copyWith(tasks: newMap));
@@ -171,17 +170,17 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
         : 0;
 
     var initialTask = DownloadTask(
-      videoId: videoId,
-      quality: item.resolution!,
-      status: DownloadStatus.inProgress,
-      progress: initialProgress,
-      totalBytes: totalBytes,
-      receivedBytes: downloadedBytes,
-      estimatedTime: Duration.zero,
-      cancelToken: cancelToken,
-      filePath: null,
-      error: null,
-    );
+        videoId: videoId,
+        quality: item.resolution!,
+        status: DownloadStatus.inProgress,
+        progress: initialProgress,
+        totalBytes: totalBytes,
+        receivedBytes: downloadedBytes,
+        estimatedTime: Duration.zero,
+        cancelToken: cancelToken,
+        filePath: null,
+        error: null,
+        downloaded: false);
 
     // 6) Emit initial inProgress state.
     final updatedMap = Map<String, DownloadTask>.from(state.tasks)
@@ -256,6 +255,8 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
       // 9) Once the stream is done, close the sink, stop the stopwatch.
       await sink.flush();
       await sink.close();
+      // Save metadata
+      await _saveDownloadMetadata(filePath, totalBytes);
       _stopwatch.stop();
 
       // 10) Emit success state
@@ -295,12 +296,62 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
     return (await file.exists()) ? filePath : null;
   }
 
+  Future<void> _saveDownloadMetadata(String filePath, int totalBytes) async {
+    final metaFile = File('$filePath.meta');
+    await metaFile.writeAsString(totalBytes.toString());
+  }
+
   /// (Optional) If you ever want to cancel a running download:
   void cancelDownload(String videoId, String quality) {
     final key = _keyFor(videoId, quality);
     final task = state.tasks[key];
     if (task != null && task.status == DownloadStatus.inProgress) {
       task.cancelToken.cancel('User requested cancel');
+    }
+  }
+
+  Future<void> scanExistingDownloads() async {
+    final directory = await getApplicationSupportDirectory();
+    final files = directory.listSync();
+
+    final Map<String, DownloadTask> existingTasks = {};
+
+    for (var entity in files) {
+      if (entity is File && entity.path.endsWith('.mp4')) {
+        final fileName = entity.path.split('/').last;
+        final parts = fileName.split('-');
+        if (parts.length >= 2) {
+          final videoId = parts[0];
+          final resolution = parts[1].replaceAll('.mp4', '');
+
+          final metaFile = File('${entity.path}.meta');
+          if (!await metaFile.exists()) continue;
+
+          final totalBytes = int.tryParse(await metaFile.readAsString());
+          final receivedBytes = await entity.length();
+
+          if (totalBytes == null || receivedBytes < totalBytes) continue;
+
+          final key = _keyFor(videoId, resolution);
+
+          existingTasks[key] = DownloadTask(
+              videoId: videoId,
+              quality: resolution,
+              status: DownloadStatus.success,
+              progress: 100,
+              totalBytes: totalBytes,
+              receivedBytes: receivedBytes,
+              estimatedTime: Duration.zero,
+              cancelToken: CancelToken(),
+              filePath: entity.path,
+              error: null,
+              downloaded: true);
+        }
+      }
+    }
+
+    if (existingTasks.isNotEmpty) {
+      emit(state.copyWith(tasks: {...state.tasks, ...existingTasks}));
     }
   }
 }

@@ -93,7 +93,7 @@ class MyApp extends StatelessWidget {
             create: (context) =>
                 DownloadCubit(repo: getit.get<DownloadHandlerRepo>())),
         BlocProvider<DownloadManagerCubit>(
-          create: (_) => DownloadManagerCubit(),
+          create: (_) => DownloadManagerCubit()..scanExistingDownloads(),
         ),
       ],
       child: BlocBuilder<LocaleCubit, ChangeLocaleState>(

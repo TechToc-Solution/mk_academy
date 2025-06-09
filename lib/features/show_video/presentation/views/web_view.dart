@@ -20,7 +20,6 @@ class WebViewScreenState extends State<WebViewScreen> {
   late final WebViewController _controller;
   bool _isLoading = true;
   final bool _isVideoCompleted = false;
-  final bool _isVideoWatched = false;
   @override
   void initState() {
     super.initState();

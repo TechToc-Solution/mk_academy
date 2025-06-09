@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:external_path/external_path.dart';
+import 'package:mk_academy/core/utils/cache_helper.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -34,7 +35,6 @@ class DownloadRepositoryImpl implements DownloadHandlerRepo {
         final sdkInt = androidInfo.version.sdkInt;
 
         if (sdkInt >= 30) {
-          // Android 11+ (API 30+)
           var managePermission = await Permission.manageExternalStorage.status;
           if (!managePermission.isGranted) {
             managePermission = await Permission.manageExternalStorage.request();
@@ -75,7 +75,13 @@ class DownloadRepositoryImpl implements DownloadHandlerRepo {
       final filePath = path.join(dir.path, cleanFileName);
       log("Downloading to: $filePath");
 
-      await dio.download(url, filePath);
+      await dio.download(
+        url,
+        filePath,
+        options: Options(headers: {
+          'Authorization': 'Bearer ${CacheHelper.getData(key: "token")}',
+        }),
+      );
 
       final fileExists = await File(filePath).exists();
       return right(fileExists

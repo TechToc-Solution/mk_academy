@@ -58,7 +58,8 @@ class _QualityTileState extends State<QualityTile> {
         if (task != null && task.status != _lastTaskStatus) {
           _lastTaskStatus = task.status;
 
-          if (task.status == DownloadStatus.success) {
+          if (task.status == DownloadStatus.success &&
+              task.downloaded == false) {
             // Show success message
             messages(
                 context,
@@ -69,7 +70,7 @@ class _QualityTileState extends State<QualityTile> {
             showCustomDialog(
               context: context,
               title: "video_error_download".tr(context),
-              description: task.error ?? "error".tr(context),
+              description: "",
               primaryButtonText: "ok".tr(context),
               onPrimaryAction: () => Navigator.pop(context),
             );

@@ -40,7 +40,7 @@ class CustomCircularIcon extends StatelessWidget {
               height: 40,
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                strokeWidth: 2,
+                color: AppColors.secColors,
               ),
             ),
         ],

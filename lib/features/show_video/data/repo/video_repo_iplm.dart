@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:mk_academy/core/Api_services/api_services.dart';
@@ -28,10 +27,8 @@ class VideoRepoIplm implements VideoRepo {
           resp.data['data'],
           CacheHelper.getData(key: "token"),
         );
-        log("The Data: $realResp");
 
         VideoDataModel video = VideoDataModel.fromJson(json.decode(realResp));
-
         return right(video);
       }
       return left(
@@ -50,7 +47,7 @@ class VideoRepoIplm implements VideoRepo {
       var resp = await _apiServices.post(
           endPoint: "${Urls.getCourses}/$courseId/videos/$videoId/mark-view",
           data: {});
-      if (resp.statusCode == 200 && resp.data['success']) {
+      if (resp.statusCode == 204) {
         return right(null);
       }
       return left(

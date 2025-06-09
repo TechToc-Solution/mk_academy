@@ -4,6 +4,7 @@ import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/core/utils/services_locater.dart';
 import 'package:mk_academy/features/show_video/data/repo/video_repo.dart';
+import 'package:mk_academy/features/show_video/presentation/views-model/cubit/mark_as_watched/mark_as_watched_cubit.dart';
 import 'package:mk_academy/features/show_video/presentation/views-model/cubit/video_cubit/videos_cubit.dart';
 import 'package:mk_academy/features/show_video/presentation/views/video_player.dart';
 import '../../../../data/model/video_model.dart';
@@ -39,8 +40,16 @@ class PlayListBody extends StatelessWidget {
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(goRoute(
-            x: BlocProvider(
-              create: (context) => VideoCubit(getit.get<VideoRepo>()),
+            x: MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => VideoCubit(getit.get<VideoRepo>()),
+                ),
+                BlocProvider(
+                  create: (context) =>
+                      MarkAsWatchedCubit(getit.get<VideoRepo>()),
+                ),
+              ],
               child: VideoPlayerScreen(
                 videoId: video.id,
                 videoName: video.name ?? "",
