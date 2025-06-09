@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mk_academy/features/show_video/data/Models/video_model.dart';
@@ -13,6 +13,7 @@ part 'download_manager_state.dart';
 enum DownloadStatus { initial, inProgress, success, failure }
 
 /// Represents a single download keyed by "$videoId-$quality".
+// ignore: must_be_immutable
 class DownloadTask extends Equatable {
   final String videoId;
   final String quality;

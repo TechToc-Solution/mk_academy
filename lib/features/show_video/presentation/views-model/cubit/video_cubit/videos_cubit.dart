@@ -27,5 +27,6 @@ class VideoCubit extends Cubit<VideoState> {
         ));
       });
     }
+    return null;
   }
 }

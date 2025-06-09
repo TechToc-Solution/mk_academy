@@ -7,6 +7,7 @@ import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/features/show_video/presentation/views-model/cubit/mark_as_watched/mark_as_watched_cubit.dart';
 
+// ignore: must_be_immutable
 class MarkAsWatchedSwitch extends StatelessWidget {
   bool isVideoWatched;
   final ValueChanged<bool> onToggle;
@@ -34,8 +35,10 @@ class MarkAsWatchedSwitch extends StatelessWidget {
               context, state.errorMessage ?? "error".tr(context), Colors.red);
         }
       },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        padding: EdgeInsets.all(16),
+        decoration: boxDecoration(),
         child: Row(
           children: [
             Expanded(

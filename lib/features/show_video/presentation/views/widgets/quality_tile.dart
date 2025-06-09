@@ -80,7 +80,7 @@ class _QualityTileState extends State<QualityTile> {
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-        decoration: _boxDecoration(),
+        decoration: boxDecoration(),
         child: ListTile(
           leading: const Icon(Icons.video_library),
           contentPadding:
@@ -175,17 +175,4 @@ class _QualityTileState extends State<QualityTile> {
       ),
     );
   }
-
-  BoxDecoration _boxDecoration() => BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      );
 }

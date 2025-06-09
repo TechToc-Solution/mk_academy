@@ -186,7 +186,7 @@ class _AdsBtnState extends State<AdsBtn> {
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: widget.ext ? 1 : 2,
-                childAspectRatio: widget.ext ? 2 : 1,
+                childAspectRatio: widget.ext ? 16 / 9 : 1,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16),
             itemBuilder: (BuildContext context, int index) {

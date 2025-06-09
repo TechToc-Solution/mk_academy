@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:mk_academy/core/Api_services/urls.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-
 import '../../features/auth/presentation/views/login/login_page.dart';
 import 'auth_interceptor.dart';
 import '../utils/cache_helper.dart';
@@ -11,17 +9,17 @@ class ApiServices {
   final Dio _dio;
   ApiServices(this._dio) {
     _dio.options.baseUrl = Urls.baseUrl;
-    _dio.interceptors.add(
-      PrettyDioLogger(
-          requestHeader: true,
-          requestBody: true,
-          responseBody: true,
-          responseHeader: true,
-          error: true,
-          request: true,
-          compact: true,
-          maxWidth: 50),
-    );
+    // _dio.interceptors.add(
+    //   PrettyDioLogger(
+    //       requestHeader: true,
+    //       requestBody: true,
+    //       responseBody: true,
+    //       responseHeader: true,
+    //       error: true,
+    //       request: true,
+    //       compact: true,
+    //       maxWidth: 50),
+    // );
     _dio.interceptors.add(AuthInterceptor(onUnauthorized: () {
       navigatorKey.currentState?.pushNamedAndRemoveUntil(
         LoginPage.routeName,

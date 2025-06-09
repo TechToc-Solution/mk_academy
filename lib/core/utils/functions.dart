@@ -128,17 +128,17 @@ resetHomeCubits(BuildContext context) {
 
 //secure the app
 void toggleScreenshot() async {
-  bool result = await noScreenshot.toggleScreenshot();
+  await noScreenshot.toggleScreenshot();
   // debugPrint('Toggle Screenshot: $result');
 }
 
 void enableScreenshot() async {
-  bool result = await noScreenshot.screenshotOn();
+  await noScreenshot.screenshotOn();
   // debugPrint('Enable Screenshot: $result');
 }
 
 void disableScreenshot() async {
-  bool result = await noScreenshot.screenshotOff();
+  await noScreenshot.screenshotOff();
   // debugPrint('Screenshot Off: $result');
 }
 
@@ -173,6 +173,19 @@ void handleDownload(BuildContext context, String url, String fileName, int id) {
 //     },
 //   );
 // }
+
+BoxDecoration boxDecoration() => BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(12),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.3),
+          spreadRadius: 1,
+          blurRadius: 4,
+          offset: const Offset(0, 2),
+        ),
+      ],
+    );
 Future<bool> isRunningOnEmulator() async {
   final deviceInfo = DeviceInfoPlugin();
 

@@ -1,3 +1,4 @@
+
 import 'package:dio/dio.dart';
 import 'dart:io';
 
@@ -87,8 +88,13 @@ class ErrorHandler {
       case 422:
         return ValidationFailure(_handleValidationErrors(response.data));
       case 500:
-        return ServerFailure(
-            response.data['message'] ?? _messages['internalServerError']!);
+        try {
+          return ServerFailure(
+              response.data['message'] ?? _messages['internalServerError']!);
+        } catch (e) {
+          return ServerFailure(_messages['internalServerError']!);
+        }
+
       case 503:
         return ServerFailure(
             response.data['message'] ?? _messages['serverError']!);
