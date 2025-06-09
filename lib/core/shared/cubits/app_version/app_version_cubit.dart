@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,7 +23,7 @@ class AppVersionCubit extends Cubit<AppVersionState> {
     try {
       final PackageInfo packageInfo = await PackageInfo.fromPlatform();
       final String currentVersion = packageInfo.version;
-      log("The version is: $currentVersion");
+      // log("The version is: $currentVersion");
 
       final Either<Failure, VersionModel> result =
           await _appVersionRepo.getVersionFromApi();
@@ -36,7 +35,7 @@ class AppVersionCubit extends Cubit<AppVersionState> {
         (version) {
           final String? min = version.minRequiredVersion;
           final String? max = version.maxVersion;
-          log("The min: $min | The current: $currentVersion | The max: $max");
+          // log("The min: $min | The current: $currentVersion | The max: $max");
 
           if (min == null || max == null) {
             emit(AppVersionError("error_description_fallback".tr(context)));

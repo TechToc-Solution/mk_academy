@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,7 +58,7 @@ class HomePage extends StatelessWidget {
                         builder: (context, subjectsState) {
                           return BlocBuilder<AdsCubit, AdsState>(
                             builder: (context, adsState) {
-                              log("$studentsState, $subjectsState, $adsState");
+                              // log("$studentsState, $subjectsState, $adsState");
                               // Error Handling
                               if (studentsState is LeaderboardError ||
                                   subjectsState is GetSubjectsError ||

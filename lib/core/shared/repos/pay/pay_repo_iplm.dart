@@ -1,5 +1,4 @@
 // pay_repo_iplm.dart
-import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:mk_academy/features/courses/data/model/courses_model.dart';
@@ -50,7 +49,7 @@ class PayRepoIplm implements PayRepo {
       return left(
           ServerFailure(resp.data['message'] ?? ErrorHandler.defaultMessage()));
     } catch (e) {
-      log(e.toString());
+      // log(e.toString());
       return left(ErrorHandler.handle(e));
     }
   }

@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:mk_academy/core/Api_services/api_services.dart';
@@ -26,7 +25,7 @@ class TestsRepoIplm implements TestsRepo {
       return left(
           ServerFailure(resp.data['message'] ?? ErrorHandler.defaultMessage()));
     } catch (e) {
-      log(e.toString());
+      // log(e.toString());
       return left(ErrorHandler.handle(e));
     }
   }
@@ -43,7 +42,7 @@ class TestsRepoIplm implements TestsRepo {
       return left(
           ServerFailure(resp.data['message'] ?? ErrorHandler.defaultMessage()));
     } catch (e) {
-      log(e.toString());
+      // log(e.toString());
       return left(ErrorHandler.handle(e));
     }
   }

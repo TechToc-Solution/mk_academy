@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -73,7 +72,7 @@ class DownloadRepositoryImpl implements DownloadHandlerRepo {
       }
 
       final filePath = path.join(dir.path, cleanFileName);
-      log("Downloading to: $filePath");
+      // log("Downloading to: $filePath");
 
       await dio.download(
         url,
@@ -88,7 +87,7 @@ class DownloadRepositoryImpl implements DownloadHandlerRepo {
           ? DownloadResult(status: DownloadStatus.completed, filePath: filePath)
           : DownloadResult(status: DownloadStatus.failed));
     } catch (e) {
-      log("Download File Error: $e");
+      // log("Download File Error: $e");
       return left(ErrorHandler.handle(e));
     }
   }

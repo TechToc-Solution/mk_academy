@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -22,15 +21,15 @@ class AdsCubit extends Cubit<AdsState> {
     ]);
 
     // Debug prints
-    results[0].fold(
-      (failure) => log('Internal ads error: ${failure.message}'),
-      (data) => log('Internal ads data: ${data.ads?.length} items'),
-    );
+    // results[0].fold(
+    //   (failure) => log('Internal ads error: ${failure.message}'),
+    //   (data) => log('Internal ads data: ${data.ads?.length} items'),
+    // );
 
-    results[1].fold(
-      (failure) => log('External ads error: ${failure.message}'),
-      (data) => log('External ads data: ${data.ads?.length} items'),
-    );
+    // results[1].fold(
+    //   (failure) => log('External ads error: ${failure.message}'),
+    //   (data) => log('External ads data: ${data.ads?.length} items'),
+    // );
     // Process results
     final internalAds = results[0];
     final externalAds = results[1];
