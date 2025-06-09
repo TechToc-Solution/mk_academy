@@ -28,6 +28,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         (user) {
       userModel = user;
       emit(ProfileUpdateSuccess(userModel: user));
+      emit(ProfileSuccess(userModel: user));
     });
   }
 }

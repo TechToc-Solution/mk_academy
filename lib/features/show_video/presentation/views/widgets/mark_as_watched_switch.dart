@@ -8,12 +8,12 @@ import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/features/show_video/presentation/views-model/cubit/mark_as_watched/mark_as_watched_cubit.dart';
 
 class MarkAsWatchedSwitch extends StatelessWidget {
-  final bool isVideoWatched;
+  bool isVideoWatched;
   final ValueChanged<bool> onToggle;
 
   final int videoId;
   final int courseId;
-  const MarkAsWatchedSwitch({
+  MarkAsWatchedSwitch({
     super.key,
     required this.isVideoWatched,
     required this.onToggle,
@@ -28,6 +28,7 @@ class MarkAsWatchedSwitch extends StatelessWidget {
         if (state.status == MarkAsWatchedStatus.success) {
           messages(context, "change_video_watch_state".tr(context),
               AppColors.primaryColors);
+          onToggle(!isVideoWatched);
         } else if (state.status == MarkAsWatchedStatus.failure) {
           messages(
               context, state.errorMessage ?? "error".tr(context), Colors.red);
@@ -60,9 +61,6 @@ class MarkAsWatchedSwitch extends StatelessWidget {
                             videoId: videoId,
                             courseId: courseId,
                           );
-                      if (state.status == MarkAsWatchedStatus.success) {
-                        onToggle(value);
-                      }
                     },
                     activeColor: AppColors.primaryColors,
                     inactiveTrackColor: Colors.grey[300],

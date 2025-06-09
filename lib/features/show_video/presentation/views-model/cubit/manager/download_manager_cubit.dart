@@ -16,7 +16,7 @@ enum DownloadStatus { initial, inProgress, success, failure }
 class DownloadTask extends Equatable {
   final String videoId;
   final String quality;
-  final bool downloaded;
+  bool downloaded;
 
   /// current status: initial → inProgress → success/failure
   final DownloadStatus status;
@@ -42,7 +42,7 @@ class DownloadTask extends Equatable {
   /// so we can cancel if ever needed
   final CancelToken cancelToken;
 
-  const DownloadTask(
+  DownloadTask(
       {required this.videoId,
       required this.quality,
       required this.status,

@@ -16,6 +16,6 @@ class UpdateProfileParams {
         'first_name': firstName,
         'last_name': lastName,
         'city_id': cityId,
-        'birth_date': birthDate,
+        'birthdate': "${birthDate.year}-${birthDate.month}-${birthDate.day}",
       };
 }

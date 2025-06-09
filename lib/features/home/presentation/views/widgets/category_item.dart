@@ -34,7 +34,7 @@ class CategoryItem extends StatelessWidget {
                   ),
                 ),
                 errorWidget: (context, error, stackTrace) {
-                  debugPrint('Image load failed for ${subject.image}: $error');
+                  // debugPrint('Image load failed for ${subject.image}: $error');
                   return Image.asset(
                     AssetsData.logo,
                     fit: BoxFit.cover,

@@ -65,6 +65,7 @@ class _QualityTileState extends State<QualityTile> {
                 context,
                 "${"video_downloaded".tr(context)} ${widget.quality.resolution}",
                 AppColors.primaryColors);
+            task.downloaded = true;
           } else if (task.status == DownloadStatus.failure) {
             // Show error dialog
             showCustomDialog(

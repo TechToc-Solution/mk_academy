@@ -35,7 +35,6 @@ class VideoPlayerScreen extends StatefulWidget {
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   late BetterPlayerController _betterPlayerController;
 
-  bool _isVideoCompleted = false;
   bool _isOffline = false;
   String? _localVideoPath;
   bool _isPlayerReady = false;
@@ -47,16 +46,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     context
         .read<VideoCubit>()
         .getVideo(videoId: widget.videoId, courseId: widget.courseId);
-  }
-
-  Future<bool> isUrlAccessible(String url) async {
-    try {
-      final response = await HttpClient().headUrl(Uri.parse(url));
-      final res = await response.close();
-      return res.statusCode == 200;
-    } catch (_) {
-      return false;
-    }
   }
 
   void _initializePlayer(VideoDataModel? video) async {
@@ -82,7 +71,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           ),
           errorBuilder: (context, errorMessage) =>
               _buildErrorWidget(context, errorMessage),
-          eventListener: _handlePlayerEvents,
+          // eventListener: _handlePlayerEvents,
         ),
         betterPlayerDataSource: source,
       );
@@ -93,13 +82,13 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     }
   }
 
-  void _handlePlayerEvents(BetterPlayerEvent event) {
-    if (event.betterPlayerEventType == BetterPlayerEventType.finished) {
-      context
-          .read<MarkAsWatchedCubit>()
-          .markAsWatched(videoId: widget.videoId!, courseId: widget.courseId!);
-    }
-  }
+  // void _handlePlayerEvents(BetterPlayerEvent event) {
+  //   if (event.betterPlayerEventType == BetterPlayerEventType.finished) {
+  //     context
+  //         .read<MarkAsWatchedCubit>()
+  //         .markAsWatched(videoId: widget.videoId!, courseId: widget.courseId!);
+  //   }
+  // }
 
   Widget _buildErrorWidget(BuildContext context, String? errorMessage) =>
       Center(
@@ -109,7 +98,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             const Icon(Icons.error, size: 60, color: Colors.red),
             const SizedBox(height: 10),
             Text(
-              errorMessage ?? "error".tr(context),
+              // errorMessage ??
+              "error".tr(context),
               textAlign: TextAlign.center,
               style: const TextStyle(color: Colors.white),
             ),
@@ -119,7 +109,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                 try {
                   _betterPlayerController.retryDataSource();
                 } catch (e) {
-                  debugPrint("Retry failed: $e");
+                  // debugPrint("Retry failed: $e");
                 }
               },
               child: Text("try_again".tr(context)),
@@ -141,7 +131,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       _isOffline = true;
       _localVideoPath = filePath;
       _isPlayerReady = false;
-      _isVideoCompleted = false;
     });
 
     // Re‐initialize the BetterPlayerController with the local file.
@@ -176,7 +165,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         body: BlocBuilder<VideoCubit, VideoState>(
           builder: (context, state) {
             if (state.status == VideoStatus.success && !_isPlayerReady) {
-              _isVideoCompleted = state.video!.isViewed!;
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 Future.microtask(() => _initializePlayer(state.video));
               });
@@ -201,14 +189,13 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                         const Divider(color: AppColors.primaryColors),
 
                         // ─── Mark As Watched Section ─────────────────────────────
-                        VideoInfoMessage(show: !_isVideoCompleted),
+                        VideoInfoMessage(show: !state.video!.isViewed!),
                         MarkAsWatchedSwitch(
                           isVideoWatched: state.video!.isViewed!,
                           videoId: widget.videoId!,
                           courseId: widget.courseId!,
                           onToggle: (value) => setState(() {
                             state.video!.isViewed = value;
-                            _isVideoCompleted = value;
                           }),
                         ),
                         const Divider(color: AppColors.primaryColors),

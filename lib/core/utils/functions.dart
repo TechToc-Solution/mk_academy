@@ -129,17 +129,17 @@ resetHomeCubits(BuildContext context) {
 //secure the app
 void toggleScreenshot() async {
   bool result = await noScreenshot.toggleScreenshot();
-  debugPrint('Toggle Screenshot: $result');
+  // debugPrint('Toggle Screenshot: $result');
 }
 
 void enableScreenshot() async {
   bool result = await noScreenshot.screenshotOn();
-  debugPrint('Enable Screenshot: $result');
+  // debugPrint('Enable Screenshot: $result');
 }
 
 void disableScreenshot() async {
   bool result = await noScreenshot.screenshotOff();
-  debugPrint('Screenshot Off: $result');
+  // debugPrint('Screenshot Off: $result');
 }
 
 // download

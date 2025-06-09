@@ -8,8 +8,9 @@ part 'videos_state.dart';
 class VideoCubit extends Cubit<VideoState> {
   final VideoRepo _videoRepo;
   VideoCubit(this._videoRepo) : super(VideoState());
-  Future<void> getVideo({required int? courseId, required int? videoId}) async {
-    if (isClosed) return;
+  Future<VideoDataModel?> getVideo(
+      {required int? courseId, required int? videoId}) async {
+    if (isClosed) return null;
     var data = await _videoRepo.getVideo(courseId: courseId, videoId: videoId);
     emit(VideoState(
       status: VideoStatus.loading,
@@ -27,6 +28,4 @@ class VideoCubit extends Cubit<VideoState> {
       });
     }
   }
-
-  
 }
