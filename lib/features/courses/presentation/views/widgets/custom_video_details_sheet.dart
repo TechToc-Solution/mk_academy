@@ -31,6 +31,12 @@ class CustomVideoDetailsSheet extends StatefulWidget {
 
 class _CustomVideoDetailsSheetState extends State<CustomVideoDetailsSheet> {
   bool hasError = false;
+
+  double getProgress(int watched, int total) {
+    if (total == 0) return 0.0;
+    return watched / total.toDouble();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -45,6 +51,10 @@ class _CustomVideoDetailsSheetState extends State<CustomVideoDetailsSheet> {
                     .read<OneCourseCubit>()
                     .getCourse(courseId: widget.courseId));
           } else if (state.status == CourseStatus.success) {
+            final course = state.course!;
+            final watched = course.viewed_videos_count;
+            final total = course.total_videos;
+            final progress = getProgress(watched!, total!);
             return Center(
               child: Column(
                 children: [
@@ -60,6 +70,18 @@ class _CustomVideoDetailsSheetState extends State<CustomVideoDetailsSheet> {
                         "watched_videos".tr(context),
                         state.course!.viewed_videos_count.toString(),
                         false),
+                  if (course.canShow!)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: kVerticalPadding / 2, horizontal: 8),
+                      child: LinearProgressIndicator(
+                        minHeight: 8,
+                        borderRadius: BorderRadius.circular(16),
+                        value: progress,
+                        color: AppColors.primaryColors,
+                        backgroundColor: Colors.grey[300],
+                      ),
+                    ),
                   _buildDetailItem(Icons.description, "description".tr(context),
                       state.course!.description ?? "", true),
                   if (!state.course!.canShow!)

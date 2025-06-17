@@ -115,13 +115,13 @@ class _SplashScreenState extends State<SplashScreen>
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   showCustomDialog(
                       oneButton: true,
-                      icon: Icons.error,
-                      title: "version".tr(context),
+                      icon: Icons.nearby_error,
+                      title: "error_title".tr(context),
                       description: appVersionState.message.isNotEmpty
                           ? appVersionState.message
                           : "error_description_fallback".tr(context),
                       context: context,
-                      secondaryButtonText: 'try_agen'.tr(context),
+                      secondaryButtonText: 'try_again'.tr(context),
                       onSecondaryAction: () {
                         Navigator.pop(context);
                         if (mounted) {

@@ -149,6 +149,7 @@
     "video_error_download": "Download failed",
     "sec": "sec",
     "time": "Time",
+    "error_title": "Error",
     "select_quality": "Select the quality",
     "select_quality_error": "You have to select the quality first",
     "watch_offline": "Watch downloaded videos",

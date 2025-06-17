@@ -36,7 +36,7 @@ class _QualityTileState extends State<QualityTile> {
     final key = '${widget.videoId}-${widget.quality.resolution}';
     final existing = _manager.state.tasks[key];
     if (existing != null && existing.status != DownloadStatus.success) {
-      _manager.startDownload(widget.videoId, widget.quality);
+      _manager.startDownload(widget.videoId, widget.quality, context);
     }
   }
 
@@ -70,6 +70,7 @@ class _QualityTileState extends State<QualityTile> {
             // Show error dialog
             showCustomDialog(
               context: context,
+              icon: Icons.download,
               title: "video_error_download".tr(context),
               description: "",
               primaryButtonText: "ok".tr(context),
@@ -86,6 +87,7 @@ class _QualityTileState extends State<QualityTile> {
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           title: Text(
+            overflow: TextOverflow.ellipsis,
             "${"quality".tr(context)}: ${widget.quality.resolution}",
             style: const TextStyle(
               fontSize: 16,
@@ -97,81 +99,213 @@ class _QualityTileState extends State<QualityTile> {
             builder: (context, state) {
               final task = state.tasks[key];
 
-              // If download succeeded, show Play button
-              if (task != null && task.status == DownloadStatus.success) {
-                return Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.primaryColors,
-                  ),
-                  child: IconButton(
-                    icon:
-                        const Icon(Icons.play_circle_fill, color: Colors.white),
-                    tooltip: "play_offline".tr(context),
-                    onPressed: () {
-                      widget.onPlayOffline(task.filePath!);
-                    },
-                  ),
-                );
+              if (task == null || task.status == DownloadStatus.initial) {
+                // Not started
+                return _btnDownload();
               }
-
-              // If download is in progress, show MB downloaded / total MB
-              return Row(mainAxisSize: MainAxisSize.min, children: [
-                if (task != null && task.status == DownloadStatus.inProgress)
-                  Text(
-                    "${(task.receivedBytes / (1024 * 1024)).toStringAsFixed(1)}/${(task.totalBytes / (1024 * 1024)).toStringAsFixed(1)} MB",
-                    style: const TextStyle(fontSize: 10),
-                  ),
-                SizedBox(
-                  width: 8,
-                ),
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    if (task != null &&
-                        task.status == DownloadStatus.inProgress)
-                      SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: CircularProgressIndicator(
-                          color: AppColors.secColors,
-                          value: (task.progress / 100),
-                        ),
-                      ),
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.primaryColors,
-                      ),
-                      child: IconButton(
-                        icon: const Icon(Icons.download, color: Colors.white),
-                        tooltip: "download".tr(context),
-                        onPressed: () => showCustomDialog(
-                            icon: Icons.warning,
-                            context: context,
-                            title: '',
-                            description: "download_warning".tr(context),
-                            primaryButtonText: "yes".tr(context),
-                            onPrimaryAction: () async {
-                              _manager.startDownload(
-                                widget.videoId,
-                                widget.quality,
-                              );
-
-                              Navigator.pop(context);
-                            }),
-                      ),
-                    ),
-                  ],
-                ),
-              ]);
+              if (task.status == DownloadStatus.inProgress) {
+                return _btnPause(task);
+              }
+              if (task.status == DownloadStatus.paused) {
+                return _btnResume(task);
+              }
+              if (task.status == DownloadStatus.success) {
+                return _btnPlay(task);
+              }
+              if (task.status == DownloadStatus.failure) {
+                return _btnRetry();
+              }
+              return SizedBox.shrink();
             },
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _btnDownload() {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: AppColors.primaryColors,
+      ),
+      child: IconButton(
+        icon: Icon(Icons.download_for_offline, color: Colors.white),
+        onPressed: () => showCustomDialog(
+            icon: Icons.warning,
+            context: context,
+            title: '',
+            description: "download_warning".tr(context),
+            primaryButtonText: "yes".tr(context),
+            onPrimaryAction: () async {
+              _manager.startDownload(widget.videoId, widget.quality, context);
+
+              Navigator.pop(context);
+            }),
+      ),
+    );
+  }
+
+  Widget _btnPause(DownloadTask task) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            '${(task.progress)}%\n${(task.receivedBytes / (1024 * 1024)).toStringAsFixed(1)}/${(task.totalBytes / (1024 * 1024)).toStringAsFixed(1)} MB',
+            style: TextStyle(fontSize: 12)),
+        SizedBox(
+          width: 4,
+        ),
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            SizedBox(
+              height: 40,
+              width: 40,
+              child: CircularProgressIndicator(
+                value: task.progress / 100,
+              ),
+            ),
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.primaryColors,
+              ),
+              child: IconButton(
+                icon: Icon(Icons.pause, color: Colors.white),
+                onPressed: () =>
+                    _manager.pauseDownload(widget.videoId, task.quality),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          width: 4,
+        ),
+        Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: AppColors.primaryColors,
+          ),
+          child: IconButton(
+            icon: Icon(Icons.cancel, color: Colors.white),
+            onPressed: () =>
+                _manager.cancelDownload(widget.videoId, task.quality),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _btnResume(DownloadTask task) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            '${(task.progress)}%\n${(task.receivedBytes / (1024 * 1024)).toStringAsFixed(1)}/${(task.totalBytes / (1024 * 1024)).toStringAsFixed(1)} MB',
+            style: TextStyle(fontSize: 12)),
+        SizedBox(width: 4),
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            SizedBox(
+              height: 40,
+              width: 40,
+              child: CircularProgressIndicator(
+                value: task.progress / 100,
+              ),
+            ),
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.primaryColors,
+              ),
+              child: IconButton(
+                icon: Icon(Icons.play_arrow, color: Colors.white),
+                onPressed: () => showCustomDialog(
+                    icon: Icons.warning,
+                    context: context,
+                    title: '',
+                    description: "download_warning".tr(context),
+                    primaryButtonText: "yes".tr(context),
+                    onPrimaryAction: () async {
+                      _manager.startDownload(
+                          widget.videoId, widget.quality, context);
+
+                      Navigator.pop(context);
+                    }),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          width: 4,
+        ),
+        Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: AppColors.primaryColors,
+          ),
+          child: IconButton(
+            icon: Icon(Icons.cancel, color: Colors.white),
+            onPressed: () =>
+                _manager.cancelDownload(widget.videoId, task.quality),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _btnPlay(DownloadTask task) {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: AppColors.primaryColors,
+      ),
+      child: IconButton(
+        icon: Icon(Icons.play_circle_fill, color: Colors.white),
+        onPressed: () => widget.onPlayOffline(task.filePath!),
+      ),
+    );
+  }
+
+  Widget _btnRetry() {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: AppColors.primaryColors,
+      ),
+      child: IconButton(
+        icon: Icon(Icons.refresh, color: Colors.white),
+        onPressed: () => showCustomDialog(
+            icon: Icons.warning,
+            context: context,
+            title: '',
+            description: "download_warning".tr(context),
+            primaryButtonText: "yes".tr(context),
+            onPrimaryAction: () async {
+              _manager.startDownload(widget.videoId, widget.quality, context);
+
+              Navigator.pop(context);
+            }),
       ),
     );
   }

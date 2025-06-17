@@ -1,16 +1,17 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/features/show_video/data/Models/video_model.dart';
 import 'package:path_provider/path_provider.dart';
 
 part 'download_manager_state.dart';
 
 /// Tracks whether a download task is just starting, in progress, succeeded, or failed.
-enum DownloadStatus { initial, inProgress, success, failure }
+enum DownloadStatus { initial, inProgress, paused, success, failure }
 
 /// Represents a single download keyed by "$videoId-$quality".
 // ignore: must_be_immutable
@@ -98,7 +99,11 @@ class DownloadTask extends Equatable {
 class DownloadManagerCubit extends Cubit<DownloadManagerState> {
   DownloadManagerCubit() : super(const DownloadManagerState());
 
-  final Dio _dio = Dio();
+  final Dio _dio = Dio(BaseOptions(
+    connectTimeout: const Duration(seconds: 30),
+    receiveTimeout: const Duration(seconds: 60),
+  ));
+
   final Stopwatch _stopwatch = Stopwatch();
 
   /// Key used internally to track each download.
@@ -106,186 +111,204 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
 
   /// Public method to start (or resume) a download. If a partial file already exists,
   /// it picks up from where it left off; otherwise it starts from zero.
-  Future<void> startDownload(String videoId, DownloadUrls item) async {
+  Future<void> startDownload(
+      String videoId, DownloadUrls item, BuildContext context) async {
     final key = _keyFor(videoId, item.resolution!);
-
-    // If there's already a task in progress or succeeded for this key, do nothing.
     final existing = state.tasks[key];
-    if (existing != null) {
-      if (existing.status == DownloadStatus.inProgress ||
-          existing.status == DownloadStatus.success) {
-        return;
-      }
-      // If it previously failed, we'll restart it below (overwrite).
+
+    if (existing != null &&
+        (existing.status == DownloadStatus.inProgress ||
+            existing.status == DownloadStatus.success)) {
+      return;
     }
 
-    // 1) Compute local file path for this (videoId, quality).
     final directory = await getApplicationSupportDirectory();
     final filePath = '${directory.path}/$videoId-${item.resolution}.mp4';
     final tempFile = File(filePath);
-
-    // 2) Determine how many bytes are already downloaded (if any).
     int downloadedBytes = 0;
+
     if (await tempFile.exists()) {
       downloadedBytes = await tempFile.length();
     }
 
-    // 3) Send a HEAD request to find out total size (in bytes).
     int totalBytes;
     try {
-      final headResp = await _dio.head(item.url!);
+      final headResp = await _dio.head(item.url!,
+          options: Options(sendTimeout: Duration(seconds: 5)));
       totalBytes = int.parse(
         headResp.headers.value(HttpHeaders.contentLengthHeader) ?? '0',
       );
     } catch (e) {
-      totalBytes = 0;
-    }
-
-    // 4) If we already have the full file, emit success immediately.
-    if (downloadedBytes > 0 &&
-        totalBytes > 0 &&
-        downloadedBytes >= totalBytes) {
-      // Only emit success if we know the total size and it's fully downloaded
-      final finishedTask = DownloadTask(
-          videoId: videoId,
-          quality: item.resolution!,
-          status: DownloadStatus.success,
-          progress: 100,
-          totalBytes: totalBytes,
-          receivedBytes: downloadedBytes,
-          estimatedTime: Duration.zero,
-          cancelToken: CancelToken(),
-          filePath: filePath,
-          error: null,
-          downloaded: false);
-      final newMap = Map<String, DownloadTask>.from(state.tasks)
-        ..[key] = finishedTask;
-      emit(state.copyWith(tasks: newMap));
+      emitFailure('video_error_download'.tr(context), key, videoId, item);
       return;
     }
 
-    // 5) Otherwise, we (re)start download from `downloadedBytes`.
+    if (downloadedBytes > 0 &&
+        totalBytes > 0 &&
+        downloadedBytes >= totalBytes) {
+      emitSuccess(filePath, totalBytes, downloadedBytes, key, videoId, item);
+      return;
+    }
+
     final cancelToken = CancelToken();
-    final initialProgress = totalBytes > 0 && downloadedBytes > 0
-        ? ((downloadedBytes / totalBytes) * 100).floor()
-        : 0;
+    final initialProgress =
+        totalBytes > 0 ? ((downloadedBytes / totalBytes) * 100).floor() : 0;
 
-    var initialTask = DownloadTask(
-        videoId: videoId,
-        quality: item.resolution!,
-        status: DownloadStatus.inProgress,
-        progress: initialProgress,
-        totalBytes: totalBytes,
-        receivedBytes: downloadedBytes,
-        estimatedTime: Duration.zero,
-        cancelToken: cancelToken,
-        filePath: null,
-        error: null,
-        downloaded: false);
+    var task = DownloadTask(
+      videoId: videoId,
+      quality: item.resolution!,
+      status: DownloadStatus.inProgress,
+      progress: initialProgress,
+      totalBytes: totalBytes,
+      receivedBytes: downloadedBytes,
+      estimatedTime: Duration.zero,
+      cancelToken: cancelToken,
+      filePath: null,
+      error: null,
+    );
 
-    // 6) Emit initial inProgress state.
-    final updatedMap = Map<String, DownloadTask>.from(state.tasks)
-      ..[key] = initialTask;
-    emit(state.copyWith(tasks: updatedMap));
-
+    emit(state.copyWith(tasks: {...state.tasks, key: task}));
     _stopwatch.reset();
     _stopwatch.start();
 
-    // 7) Create an append‐mode IOSink so we write incoming chunks onto the same file.
     IOSink? sink;
     try {
       sink = tempFile.openWrite(mode: FileMode.append);
     } catch (e) {
-      // If file open fails, emit failure.
-      final failedTask = initialTask.copyWith(
-        status: DownloadStatus.failure,
-        error: 'Cannot open file for writing: $e',
-      );
-      final mapAfterFail = Map<String, DownloadTask>.from(state.tasks)
-        ..[key] = failedTask;
-      emit(state.copyWith(tasks: mapAfterFail));
+      emitFailure('video_error_download'.tr(context), key, videoId, item);
       return;
     }
 
-    // Keep `seenSoFar` in scope for both the streaming loop and the catch block.
     int seenSoFar = downloadedBytes;
-    final total = totalBytes;
 
     try {
-      // 8) Issue a ranged GET request from `downloadedBytes` onwards.
       final response = await _dio.get<ResponseBody>(
         item.url!,
         options: Options(
           responseType: ResponseType.stream,
           headers: {'range': 'bytes=$downloadedBytes-'},
+          receiveTimeout: Duration(seconds: 15),
         ),
         cancelToken: cancelToken,
       );
 
-      final stream = response.data!.stream;
+      final stream = response.data!.stream.timeout(Duration(seconds: 20),
+          onTimeout: (sinkEvent) {
+        throw TimeoutException('Download timed out.');
+      });
 
       await for (final chunk in stream) {
-        // Write chunk to file
         sink.add(chunk);
         seenSoFar += chunk.length;
 
-        // Estimate time remaining
         final elapsedSec = _stopwatch.elapsed.inSeconds;
-        Duration estimated = Duration.zero;
-        if (elapsedSec > 0 && seenSoFar > 0 && total > 0) {
-          final rate = seenSoFar / elapsedSec; // bytes per second
-          final secsLeft = ((total - seenSoFar) / rate).round();
-          estimated = Duration(seconds: secsLeft);
-        }
+        final rate = elapsedSec > 0 ? seenSoFar / elapsedSec : 0;
+        final remaining =
+            rate > 0 ? ((totalBytes - seenSoFar) / rate).round() : 0;
 
-        final percent =
-            total > 0 ? ((seenSoFar / total) * 100).clamp(0, 100).floor() : 0;
-
-        // Emit updated inProgress state
-        final updatedTask = initialTask.copyWith(
-          progress: percent,
+        final progress = ((seenSoFar / totalBytes) * 100).clamp(0, 100).floor();
+        task = task.copyWith(
+          progress: progress,
           receivedBytes: seenSoFar,
-          totalBytes: total,
-          estimatedTime: estimated,
+          estimatedTime: Duration(seconds: remaining),
         );
-        final newMap2 = Map<String, DownloadTask>.from(state.tasks)
-          ..[key] = updatedTask;
-        emit(state.copyWith(tasks: newMap2));
+        emit(state.copyWith(tasks: {...state.tasks, key: task}));
       }
 
-      // 9) Once the stream is done, close the sink, stop the stopwatch.
       await sink.flush();
       await sink.close();
-      // Save metadata
-      await _saveDownloadMetadata(filePath, totalBytes);
       _stopwatch.stop();
+      await _saveDownloadMetadata(filePath, totalBytes);
 
-      // 10) Emit success state
-      final finalTask = initialTask.copyWith(
+      final successTask = task.copyWith(
         status: DownloadStatus.success,
         progress: 100,
-        receivedBytes: total,
         filePath: filePath,
+        receivedBytes: totalBytes,
       );
-      final mapAfterSuccess = Map<String, DownloadTask>.from(state.tasks)
-        ..[key] = finalTask;
-      emit(state.copyWith(tasks: mapAfterSuccess));
+      emit(state.copyWith(tasks: {...state.tasks, key: successTask}));
     } catch (e) {
-      // In case of any error (including cancel), make sure to close the sink.
-      await sink.flush();
-      await sink.close();
       _stopwatch.stop();
+      try {
+        await sink.flush();
+        await sink.close();
+      } catch (_) {}
 
-      final failedTask = initialTask.copyWith(
+      if (e is DioException && CancelToken.isCancel(e)) return;
+
+      final failedTask = task.copyWith(
         status: DownloadStatus.failure,
         error: e.toString(),
         receivedBytes: seenSoFar,
-        totalBytes: totalBytes,
       );
-      final mapAfterFail2 = Map<String, DownloadTask>.from(state.tasks)
-        ..[key] = failedTask;
-      emit(state.copyWith(tasks: mapAfterFail2));
+      emit(state.copyWith(tasks: {...state.tasks, key: failedTask}));
     }
+  }
+
+  void emitFailure(
+      String errorMsg, String key, String videoId, DownloadUrls item) {
+    final failedTask = DownloadTask(
+      videoId: videoId,
+      quality: item.resolution!,
+      status: DownloadStatus.failure,
+      progress: 0,
+      totalBytes: 0,
+      receivedBytes: 0,
+      estimatedTime: Duration.zero,
+      cancelToken: CancelToken(),
+      filePath: null,
+      error: errorMsg,
+    );
+    emit(state.copyWith(tasks: {...state.tasks, key: failedTask}));
+  }
+
+  void emitSuccess(String filePath, int total, int received, String key,
+      String videoId, DownloadUrls item) {
+    final successTask = DownloadTask(
+      videoId: videoId,
+      quality: item.resolution!,
+      status: DownloadStatus.success,
+      progress: 100,
+      totalBytes: total,
+      receivedBytes: received,
+      estimatedTime: Duration.zero,
+      cancelToken: CancelToken(),
+      filePath: filePath,
+      downloaded: true,
+    );
+    emit(state.copyWith(tasks: {...state.tasks, key: successTask}));
+  }
+
+  void pauseDownload(String videoId, String quality) {
+    final key = _keyFor(videoId, quality);
+    final task = state.tasks[key];
+    if (task != null && task.status == DownloadStatus.inProgress) {
+      // Cancel the HTTP stream
+      task.cancelToken.cancel('User paused');
+      // Emit paused state
+      final pausedTask = task.copyWith(status: DownloadStatus.paused);
+      final newMap = Map<String, DownloadTask>.from(state.tasks)
+        ..[key] = pausedTask;
+      emit(state.copyWith(tasks: newMap));
+    }
+  }
+
+  /// Cancel and delete any partial file
+  void cancelDownload(String videoId, String quality) async {
+    final key = _keyFor(videoId, quality);
+    final task = state.tasks[key];
+    if (task != null &&
+        (task.status == DownloadStatus.inProgress ||
+            task.status == DownloadStatus.paused)) {
+      task.cancelToken.cancel('User cancelled');
+    }
+    // remove local file
+    final dir = await getApplicationSupportDirectory();
+    final file = File('${dir.path}/$videoId-$quality.mp4');
+    if (await file.exists()) await file.delete();
+    // remove metadata
+    final newMap = Map<String, DownloadTask>.from(state.tasks)..remove(key);
+    emit(state.copyWith(tasks: newMap));
   }
 
   /// Helper to check if a fully‐downloaded file already exists on disk.
@@ -300,15 +323,6 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
   Future<void> _saveDownloadMetadata(String filePath, int totalBytes) async {
     final metaFile = File('$filePath.meta');
     await metaFile.writeAsString(totalBytes.toString());
-  }
-
-  /// (Optional) If you ever want to cancel a running download:
-  void cancelDownload(String videoId, String quality) {
-    final key = _keyFor(videoId, quality);
-    final task = state.tasks[key];
-    if (task != null && task.status == DownloadStatus.inProgress) {
-      task.cancelToken.cancel('User requested cancel');
-    }
   }
 
   Future<void> scanExistingDownloads() async {

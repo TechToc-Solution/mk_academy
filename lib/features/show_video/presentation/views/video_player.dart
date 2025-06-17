@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,13 +58,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     try {
       _betterPlayerController = BetterPlayerController(
         BetterPlayerConfiguration(
-          autoPlay: true,
+          autoPlay: false,
           looping: false,
           allowedScreenSleep: false,
           aspectRatio: 16 / 9,
           controlsConfiguration: const BetterPlayerControlsConfiguration(
             enableQualities: true,
             enableOverflowMenu: true,
+            enableSubtitles: false,
           ),
           errorBuilder: (context, errorMessage) =>
               _buildErrorWidget(context, errorMessage),
