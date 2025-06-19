@@ -262,6 +262,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                             children: state.video!.downloadUrls!
                                 .map(
                                   (quality) => QualityTile(
+                         
                                     videoId: state.video!.id!.toString(),
                                     quality: quality,
                                     onPlayOffline: _playOffline,

@@ -1,16 +1,18 @@
 // download_manager_state.dart
 part of 'download_manager_cubit.dart';
 
-class DownloadManagerState extends Equatable {
-  /// Keyed by "$videoId-$quality".
-  final Map<String, DownloadTask> tasks;
+abstract class DownloadManagerState extends Equatable {
+  final Map<String, DownloadTaskInfo> tasks;
 
-  const DownloadManagerState({this.tasks = const {}});
-
-  DownloadManagerState copyWith({Map<String, DownloadTask>? tasks}) {
-    return DownloadManagerState(tasks: tasks ?? this.tasks);
-  }
-
+  const DownloadManagerState({required this.tasks});
   @override
-  List<Object?> get props => [tasks];
+  List<Object> get props => [tasks];
+}
+
+class DownloadInitial extends DownloadManagerState {
+  DownloadInitial() : super(tasks: {});
+}
+
+class DownloadUpdated extends DownloadManagerState {
+  const DownloadUpdated({required super.tasks});
 }

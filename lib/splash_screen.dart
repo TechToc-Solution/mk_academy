@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:mk_academy/core/shared/cubits/app_version/app_version_cubit.dart';
@@ -53,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _navigateBasedOnTokenState(TokenState state) {
-    log(state.toString());
+    // log(state.toString());
     if (state is IsVaildToken || state is IsFirstUseTrue) {
       if (state is IsFirstUseTrue) isGuest = true;
 
