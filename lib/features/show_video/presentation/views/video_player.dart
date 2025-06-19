@@ -8,6 +8,7 @@ import 'package:mk_academy/core/shared/repos/download_handler/download_handler_r
 import 'package:mk_academy/core/utils/services_locater.dart';
 import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
+import 'package:mk_academy/core/widgets/custom_top_nav_bar.dart';
 import 'package:mk_academy/features/show_video/data/Models/video_model.dart';
 import 'package:mk_academy/features/show_video/presentation/views-model/cubit/video_cubit/videos_cubit.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/file_download_tile.dart';
@@ -16,6 +17,7 @@ import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/colors.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/mark_as_watched_switch.dart';
+import 'package:mk_academy/features/show_video/presentation/views/widgets/sections_nav.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/video_info_message.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
@@ -34,9 +36,10 @@ class VideoPlayerScreen extends StatefulWidget {
   State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
 }
 
-class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+class _VideoPlayerScreenState extends State<VideoPlayerScreen>
+    with TickerProviderStateMixin {
   late BetterPlayerController _betterPlayerController;
-
+  late TabController _mainTabController;
   bool _isOffline = false;
   String? _localVideoPath;
   bool _isPlayerReady = false;
@@ -44,6 +47,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   @override
   void initState() {
     super.initState();
+    _mainTabController = TabController(length: 3, vsync: this);
+    _mainTabController.addListener(() {
+      setState(() {});
+    });
     disableScreenshot();
     context
         .read<VideoCubit>()
@@ -126,6 +133,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   void dispose() {
     enableScreenshot();
     _betterPlayerController.dispose();
+    _mainTabController.dispose();
     super.dispose();
   }
 
@@ -190,44 +198,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                               : const Center(
                                   child: CircularProgressIndicator()),
                         ),
-                        const Divider(color: AppColors.primaryColors),
-
-                        // ─── Mark As Watched Section ─────────────────────────────
-                        VideoInfoMessage(show: !state.video!.isViewed!),
-                        MarkAsWatchedSwitch(
-                          isVideoWatched: state.video!.isViewed!,
-                          videoId: widget.videoId!,
-                          courseId: widget.courseId!,
-                          onToggle: (value) => setState(() {
-                            state.video!.isViewed = value;
-                          }),
-                        ),
-                        const Divider(color: AppColors.primaryColors),
-
-                        // ─── Download File Section (if any) ──────────────────────
-                        if (state.video!.file != null)
-                          BlocProvider(
-                            create: (context) => DownloadCubit(
-                                repo: getit.get<DownloadHandlerRepo>())
-                              ..checkExistingDownload(
-                                  fileName: state.video!.name!,
-                                  id: state.video!.id!),
-                            child: FileDownloadTile(video: state.video!),
-                          ),
-                        if (state.video!.file != null)
-                          const Divider(color: AppColors.primaryColors),
-
-                        // ─── Download Qualities Section ──────────────────────────
-                        if (state.video!.downloadUrls!.isNotEmpty)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16.0, vertical: 8),
-                            child: Text(
-                              "watch_offline".tr(context),
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                            ),
-                          ),
 
                         // If currently “playing offline,” show a button to go back online:
                         if (_isOffline)
@@ -269,19 +239,80 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                             ),
                           ),
 
-                        // Build one QualityTile per available quality.
-                        if (state.video!.downloadUrls!.isNotEmpty)
-                          Column(
-                            children: state.video!.downloadUrls!
-                                .map(
-                                  (quality) => QualityTile(
-                                    videoId: state.video!.id!.toString(),
-                                    quality: quality,
-                                    onPlayOffline: _playOffline,
+                        SectionsNav(
+                          tabController: _mainTabController,
+                          titles: [
+                            "info".tr(context),
+                            "files".tr(context),
+                            "qualities".tr(context)
+                          ],
+                        ),
+                        IndexedStack(
+                            index: _mainTabController.index,
+                            children: [
+                              // ─── Mark As Watched Section ─────────────────────────────
+                              Column(
+                                children: [
+                                  VideoInfoMessage(
+                                      show: !state.video!.isViewed!),
+                                  MarkAsWatchedSwitch(
+                                    isVideoWatched: state.video!.isViewed!,
+                                    videoId: widget.videoId!,
+                                    courseId: widget.courseId!,
+                                    onToggle: (value) => setState(() {
+                                      state.video!.isViewed = value;
+                                    }),
                                   ),
-                                )
-                                .toList(),
-                          ),
+                                ],
+                              ),
+                              // ─── Download File Section (if any) ──────────────────────
+                              Column(
+                                children: [
+                                  if (state.video!.file != null)
+                                    BlocProvider(
+                                      create: (context) => DownloadCubit(
+                                          repo:
+                                              getit.get<DownloadHandlerRepo>())
+                                        ..checkExistingDownload(
+                                            fileName: state.video!.name!,
+                                            id: state.video!.id!),
+                                      child:
+                                          FileDownloadTile(video: state.video!),
+                                    ),
+                                ],
+                              ),
+                              // ─── Download Qualities Section ──────────────────────────
+                              Column(
+                                children: [
+                                  if (state.video!.downloadUrls!.isNotEmpty)
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16.0, vertical: 8),
+                                      child: Text(
+                                        "watch_offline".tr(context),
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16),
+                                      ),
+                                    ),
+                                  // Build one QualityTile per available quality.
+                                  if (state.video!.downloadUrls!.isNotEmpty)
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: state.video!.downloadUrls!
+                                          .map(
+                                            (quality) => QualityTile(
+                                              videoId:
+                                                  state.video!.id!.toString(),
+                                              quality: quality,
+                                              onPlayOffline: _playOffline,
+                                            ),
+                                          )
+                                          .toList(),
+                                    ),
+                                ],
+                              )
+                            ]),
                       ],
                     ),
                   ),

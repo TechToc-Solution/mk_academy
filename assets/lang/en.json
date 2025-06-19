@@ -158,5 +158,8 @@
     "download_warning": "You must keep the application open to complete the download process.",
     "videos": "Videos",
     "watched_videos": "Watched Videos",
-    "change_video_watch_state": "Video viewing status has changed."
+    "change_video_watch_state": "Video viewing status has changed.",
+    "files": "Files",
+    "qualities": "Qualities",
+    "info": "Info"
 }
