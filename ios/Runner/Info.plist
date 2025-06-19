@@ -18,13 +18,13 @@
 		<string>audio</string>
 	</array>
 	<key>NSCameraUsageDescription</key>
-	<string>We need your permission to use the camera to scan QR codes</string>
+	<string>Camera access is required to scan QR codes for course registration</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to your photo library to save files.</string>
+	<string>Access your photos to select profile pictures or course materials.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>We need access to your photo library to save files.</string>
+	<string>Save downloaded course materials and certificates to your photo library.</string>
 	<key>NSNotificationsUsageDescription</key>
-	<string>We need to send you notifications.</string>
+	<string>Notifications are used to alert you about new courses, deadlines, and important announcements.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
