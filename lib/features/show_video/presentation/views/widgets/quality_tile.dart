@@ -153,6 +153,18 @@ class _QualityTileState extends State<QualityTile> {
         Stack(
           alignment: Alignment.center,
           children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.primaryColors,
+              ),
+              child: IconButton(
+                icon: Icon(Icons.pause, color: Colors.white, size: 20),
+                onPressed: () => cubit.pauseDownload(task.taskId),
+              ),
+            ),
             TweenAnimationBuilder<double>(
               tween: Tween<double>(
                 begin: 0,
@@ -172,18 +184,6 @@ class _QualityTileState extends State<QualityTile> {
                   ),
                 );
               },
-            ),
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primaryColors,
-              ),
-              child: IconButton(
-                icon: Icon(Icons.pause, color: Colors.white, size: 20),
-                onPressed: () => cubit.pauseDownload(task.taskId),
-              ),
             ),
           ],
         ),
@@ -209,6 +209,18 @@ class _QualityTileState extends State<QualityTile> {
         Stack(
           alignment: Alignment.center,
           children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.primaryColors,
+              ),
+              child: IconButton(
+                icon: Icon(Icons.play_arrow, color: Colors.white, size: 20),
+                onPressed: () => cubit.resumeDownload(task.taskId),
+              ),
+            ),
             TweenAnimationBuilder<double>(
               tween: Tween<double>(
                 begin: 0,
@@ -229,18 +241,6 @@ class _QualityTileState extends State<QualityTile> {
                 );
               },
             ),
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primaryColors,
-              ),
-              child: IconButton(
-                icon: Icon(Icons.play_arrow, color: Colors.white, size: 20),
-                onPressed: () => cubit.resumeDownload(task.taskId),
-              ),
-            ),
           ],
         ),
       ],
@@ -253,7 +253,7 @@ class _QualityTileState extends State<QualityTile> {
       height: 40,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: AppColors.primaryColors,
+        color: Colors.green,
       ),
       child: IconButton(
         icon: Icon(Icons.play_circle_fill, color: Colors.white, size: 20),
@@ -268,7 +268,7 @@ class _QualityTileState extends State<QualityTile> {
       height: 40,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: AppColors.primaryColors,
+        color: Colors.red,
       ),
       child: IconButton(
         icon: Icon(Icons.refresh, color: Colors.white, size: 20),

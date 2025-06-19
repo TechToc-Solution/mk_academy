@@ -24,6 +24,7 @@ class DownloadRepositoryImpl implements DownloadHandlerRepo {
   Future<Either<Failure, DownloadResult>> downloadFile({
     required String url,
     required String fileName,
+    Function(double progress)? onProgress,
   }) async {
     try {
       final cleanFileName = '$fileName.pdf';
@@ -77,6 +78,11 @@ class DownloadRepositoryImpl implements DownloadHandlerRepo {
       await dio.download(
         url,
         filePath,
+        onReceiveProgress: (received, total) {
+          if (total != -1 && onProgress != null) {
+            onProgress(received / total);
+          }
+        },
         options: Options(headers: {
           'Authorization': 'Bearer ${CacheHelper.getData(key: "token")}',
         }),
@@ -90,5 +96,25 @@ class DownloadRepositoryImpl implements DownloadHandlerRepo {
       // log("Download File Error: $e");
       return left(ErrorHandler.handle(e));
     }
+  }
+
+  @override
+  Future<String> getFilePath(
+      {required String fileName, required int id}) async {
+    final cleanFileName = '$fileName.pdf';
+    Directory dir;
+
+    if (Platform.isAndroid) {
+      final publicDownloadsPath =
+          await ExternalPath.getExternalStoragePublicDirectory(
+              ExternalPath.DIRECTORY_DOWNLOAD);
+      final appFolderPath =
+          path.join(publicDownloadsPath, 'mk_academy_downloads');
+      dir = Directory(appFolderPath);
+    } else {
+      dir = await getApplicationDocumentsDirectory();
+    }
+
+    return path.join(dir.path, cleanFileName);
   }
 }

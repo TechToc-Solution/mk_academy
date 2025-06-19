@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/functions.dart';
-import 'package:mk_academy/features/courses/presentation/views/widgets/video_play_list/download_file_bloc_consumer.dart';
+import 'package:mk_academy/features/show_video/presentation/views/widgets/download_file_bloc_consumer.dart';
 import 'package:mk_academy/features/show_video/data/Models/video_model.dart';
 
 class FileDownloadTile extends StatelessWidget {

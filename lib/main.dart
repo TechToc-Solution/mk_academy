@@ -1,4 +1,3 @@
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart' hide Key;
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,7 +43,7 @@ import 'features/profile/presentation/views-model/profile_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await blockIfDebugOrEmulator();
+  // await blockIfDebugOrEmulator();
   await CacheHelper.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -91,9 +90,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 SolveQuizzesCubit(getit.get<SolveQuizzesRepo>())),
-        BlocProvider(
-            create: (context) =>
-                DownloadCubit(repo: getit.get<DownloadHandlerRepo>())),
+       
         BlocProvider<DownloadManagerCubit>(
           create: (_) => DownloadManagerCubit(),
         ),

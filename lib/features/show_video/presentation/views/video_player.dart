@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mk_academy/core/shared/cubits/download_handler/download_handler_cubit.dart';
+import 'package:mk_academy/core/shared/repos/download_handler/download_handler_repo.dart';
+import 'package:mk_academy/core/utils/services_locater.dart';
 import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
 import 'package:mk_academy/features/show_video/data/Models/video_model.dart';
@@ -51,8 +56,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           ? BetterPlayerDataSourceType.file
           : BetterPlayerDataSourceType.network,
       _isOffline ? _localVideoPath! : video!.hlsUrl!,
-      useAsmsSubtitles: !_isOffline,
-      useAsmsAudioTracks: !_isOffline,
+      useAsmsSubtitles: _isOffline,
+      useAsmsAudioTracks: _isOffline,
     );
 
     try {
@@ -67,6 +72,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             enableOverflowMenu: true,
             enableSubtitles: false,
           ),
+
           errorBuilder: (context, errorMessage) =>
               _buildErrorWidget(context, errorMessage),
           // eventListener: _handlePlayerEvents,
@@ -200,7 +206,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
                         // ─── Download File Section (if any) ──────────────────────
                         if (state.video!.file != null)
-                          FileDownloadTile(video: state.video!),
+                          BlocProvider(
+                            create: (context) => DownloadCubit(
+                                repo: getit.get<DownloadHandlerRepo>())
+                              ..checkExistingDownload(
+                                  fileName: state.video!.name!,
+                                  id: state.video!.id!),
+                            child: FileDownloadTile(video: state.video!),
+                          ),
                         if (state.video!.file != null)
                           const Divider(color: AppColors.primaryColors),
 
@@ -262,7 +275,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                             children: state.video!.downloadUrls!
                                 .map(
                                   (quality) => QualityTile(
-                         
                                     videoId: state.video!.id!.toString(),
                                     quality: quality,
                                     onPlayOffline: _playOffline,

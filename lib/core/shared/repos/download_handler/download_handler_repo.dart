@@ -13,5 +13,7 @@ abstract class DownloadHandlerRepo {
   Future<Either<Failure, DownloadResult>> downloadFile({
     required String url,
     required String fileName,
+    Function(double progress)? onProgress,
   });
+  Future<String> getFilePath({required String fileName, required int id});
 }

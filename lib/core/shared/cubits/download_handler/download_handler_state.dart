@@ -19,14 +19,20 @@ final class DownloadHandlerError extends DownloadHandlerState {
 final class DownloadHandlerSuccess extends DownloadHandlerState {
   final int id;
   final String? filePath;
+  final bool downloaded;
 
-  const DownloadHandlerSuccess({required this.filePath, required this.id});
+  const DownloadHandlerSuccess(
+      {required this.filePath, required this.id, this.downloaded = false});
 }
 
-final class DownloadHandlerLoding extends DownloadHandlerState {
+final class DownloadHandlerProgress extends DownloadHandlerState {
   final int id;
+  final double progress;
 
-  const DownloadHandlerLoding({required this.id});
+  const DownloadHandlerProgress({required this.id, this.progress = 0.0});
+
+  @override
+  List<Object> get props => [progress];
 }
 
 final class DownloadHandlerDenied extends DownloadHandlerState {
