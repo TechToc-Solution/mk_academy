@@ -28,56 +28,50 @@ class DownloadRepositoryImpl implements DownloadHandlerRepo {
   }) async {
     try {
       final cleanFileName = '$fileName.pdf';
+      Directory targetDir;
 
+      // Platform-specific directory handling
       if (Platform.isAndroid) {
-        final deviceInfo = DeviceInfoPlugin();
-        final androidInfo = await deviceInfo.androidInfo;
+        // Android permission handling
+        final androidInfo = await DeviceInfoPlugin().androidInfo;
         final sdkInt = androidInfo.version.sdkInt;
 
         if (sdkInt >= 30) {
-          var managePermission = await Permission.manageExternalStorage.status;
-          if (!managePermission.isGranted) {
-            managePermission = await Permission.manageExternalStorage.request();
-            if (!managePermission.isGranted) {
-              await openAppSettings();
+          // Android 11+
+          if (!await Permission.manageExternalStorage.isGranted) {
+            final status = await Permission.manageExternalStorage.request();
+            if (!status.isGranted) {
               return right(
                   DownloadResult(status: DownloadStatus.permissionDenied));
             }
           }
         } else {
           // Android 10 and below
-          var storagePermission = await Permission.storage.status;
-          if (!storagePermission.isGranted) {
-            storagePermission = await Permission.storage.request();
-            if (!storagePermission.isGranted) {
-              await openAppSettings();
+          if (!await Permission.storage.isGranted) {
+            final status = await Permission.storage.request();
+            if (!status.isGranted) {
               return right(
                   DownloadResult(status: DownloadStatus.permissionDenied));
             }
           }
         }
-      }
-
-      // Get correct directory
-      Directory dir;
-      if (Platform.isAndroid) {
-        final publicDownloadsPath =
-            await ExternalPath.getExternalStoragePublicDirectory(
-                ExternalPath.DIRECTORY_DOWNLOAD);
-        final appFolderPath =
-            path.join(publicDownloadsPath, 'mk_academy_downloads');
-        dir = Directory(appFolderPath);
-        if (!await dir.exists()) await dir.create(recursive: true);
+        targetDir = Directory('/storage/emulated/0/Download');
       } else {
-        dir = await getApplicationDocumentsDirectory();
+        // iOS and other platforms
+        targetDir = await getApplicationDocumentsDirectory();
       }
 
-      final filePath = path.join(dir.path, cleanFileName);
-      // log("Downloading to: $filePath");
+      // Create app-specific subdirectory
+      final appDir =
+          Directory(path.join(targetDir.path, 'mk_academy_downloads'));
+      if (!await appDir.exists()) await appDir.create(recursive: true);
+
+      final filePath = path.join(appDir.path, cleanFileName);
 
       await dio.download(
         url,
         filePath,
+        deleteOnError: true,
         onReceiveProgress: (received, total) {
           if (total != -1 && onProgress != null) {
             onProgress(received / total);

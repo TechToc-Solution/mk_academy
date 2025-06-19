@@ -49,8 +49,8 @@ class WebViewScreenState extends State<WebViewScreen> {
       </html>
     ''';
 
-    disableScreenshot();
-
+    // disableScreenshot();
+    toggleScreenshot();
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(NavigationDelegate(
@@ -65,7 +65,8 @@ class WebViewScreenState extends State<WebViewScreen> {
 
   @override
   void dispose() {
-    enableScreenshot();
+    // enableScreenshot();
+    toggleScreenshot();
     super.dispose();
   }
 

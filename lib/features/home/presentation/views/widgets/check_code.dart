@@ -13,6 +13,7 @@ import 'package:mk_academy/core/widgets/custom_app_bar.dart';
 import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
 import 'package:mk_academy/features/courses/data/model/courses_model.dart';
+import 'package:mk_academy/features/profile/presentation/views-model/profile_cubit.dart';
 
 class CheckCodePage extends StatelessWidget {
   static const String routeName = "/checkCode";
@@ -28,6 +29,7 @@ class CheckCodePage extends StatelessWidget {
             if (state is PaySuccess) {
               Navigator.pop(context);
               Navigator.pop(context);
+              context.read<ProfileCubit>().getProfile();
               messages(context, 'payment_success'.tr(context), Colors.green);
             }
             if (state is PayError) {

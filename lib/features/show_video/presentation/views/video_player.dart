@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +6,6 @@ import 'package:mk_academy/core/shared/repos/download_handler/download_handler_r
 import 'package:mk_academy/core/utils/services_locater.dart';
 import 'package:mk_academy/core/widgets/custom_circual_progress_indicator.dart';
 import 'package:mk_academy/core/widgets/custom_error_widget.dart';
-import 'package:mk_academy/core/widgets/custom_top_nav_bar.dart';
 import 'package:mk_academy/features/show_video/data/Models/video_model.dart';
 import 'package:mk_academy/features/show_video/presentation/views-model/cubit/video_cubit/videos_cubit.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/file_download_tile.dart';
@@ -51,7 +48,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen>
     _mainTabController.addListener(() {
       setState(() {});
     });
-    disableScreenshot();
+    // disableScreenshot();
+    toggleScreenshot();
     context
         .read<VideoCubit>()
         .getVideo(videoId: widget.videoId, courseId: widget.courseId);
@@ -131,7 +129,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen>
 
   @override
   void dispose() {
-    enableScreenshot();
+    // enableScreenshot();
+    toggleScreenshot();
     _betterPlayerController.dispose();
     _mainTabController.dispose();
     super.dispose();

@@ -1,13 +1,16 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:audio_session/audio_session.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:crypto/crypto.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:flutter/material.dart' hide Key;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_audio/just_audio.dart';
 
 import 'package:mk_academy/core/shared/cubits/download_handler/download_handler_cubit.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
@@ -27,6 +30,57 @@ String getStaticKey() {
 const _encryptedKey =
     '/WBrxIreRSfLCV9taIo+Y1wnkrszW+t7L1gtCeu7/NQmpozKQ4FrFQOZCE/w9g7O';
 const _ivBase64 = 'k3D7jLeEfp7sp0RqLtEkQQ==';
+
+Future<void> initAudioSession() async {
+  // Initialize silent audio player
+  await silencePlayer.setLoopMode(LoopMode.one);
+  await silencePlayer.setVolume(0.0);
+
+  // Configure audio session
+  final session = await AudioSession.instance;
+  await session.configure(const AudioSessionConfiguration(
+    avAudioSessionCategory: AVAudioSessionCategory.playback,
+    avAudioSessionCategoryOptions: AVAudioSessionCategoryOptions.mixWithOthers,
+    avAudioSessionMode: AVAudioSessionMode.defaultMode,
+  ));
+  enableScreenshot();
+}
+
+Future<void> toggleScreenshot() async {
+  if (isSecureMode) {
+    await enableScreenshot();
+  } else {
+    await disableScreenshot();
+  }
+}
+
+Future<void> enableScreenshot() async {
+  // 1. Allow screenshots
+  await noScreenshot.screenshotOn();
+
+  // 2. Restore audio session
+  final session = await AudioSession.instance;
+  await session.setActive(true);
+
+  // 3. Stop silent audio
+  await silencePlayer.stop();
+
+  isSecureMode = false;
+}
+
+Future<void> disableScreenshot() async {
+  // 1. Block screenshots/recordings
+  await noScreenshot.screenshotOff();
+
+  // 2. Mute through audio session
+  final session = await AudioSession.instance;
+  await session.setActive(false);
+
+  // 3. Play silent audio to occupy audio channel
+  await silencePlayer.setAsset('assets/audio/silence.mp3');
+  await silencePlayer.play();
+  isSecureMode = true;
+}
 
 //navigators
 Route goRoute({required var x}) {
@@ -124,22 +178,6 @@ resetHomeCubits(BuildContext context) {
   context.read<SubjectsCubit>().getSubjects();
   context.read<AdsCubit>().getAllAds();
   isGuest ? null : context.read<ProfileCubit>().getProfile();
-}
-
-//secure the app
-void toggleScreenshot() async {
-  await noScreenshot.toggleScreenshot();
-  // debugPrint('Toggle Screenshot: $result');
-}
-
-void enableScreenshot() async {
-  await noScreenshot.screenshotOn();
-  // debugPrint('Enable Screenshot: $result');
-}
-
-void disableScreenshot() async {
-  await noScreenshot.screenshotOff();
-  // debugPrint('Screenshot Off: $result');
 }
 
 // download
