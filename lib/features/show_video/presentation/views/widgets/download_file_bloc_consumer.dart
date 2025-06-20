@@ -44,8 +44,10 @@ class DownloadFileBlocConsumer extends StatelessWidget {
           icon: Icons.download_for_offline_rounded,
           onTap: () {
             if (video.file != null) {
-              context.read<DownloadCubit>().startDownload(
-                  url: video.file!, fileName: video.name!, id: video.id!);
+              if (state is! DownloadHandlerProgress) {
+                context.read<DownloadCubit>().startDownload(
+                    url: video.file!, fileName: video.name!, id: video.id!);
+              }
             } else {
               messages(context, "video_not_available_message".tr(context),
                   Colors.grey);

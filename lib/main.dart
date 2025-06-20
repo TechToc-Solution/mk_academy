@@ -41,7 +41,7 @@ import 'features/profile/presentation/views-model/profile_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await blockIfDebugOrEmulator();
+  // await blockIfDebugOrEmulator();
   await CacheHelper.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

@@ -198,46 +198,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen>
                                   child: CircularProgressIndicator()),
                         ),
 
-                        // If currently “playing offline,” show a button to go back online:
-                        if (_isOffline)
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: ElevatedButton.icon(
-                              onPressed: () {
-                                setState(() {
-                                  _isOffline = false;
-                                  _isPlayerReady = false;
-                                });
-                                if (_betterPlayerController
-                                    .isVideoInitialized()!) {
-                                  _betterPlayerController.dispose();
-                                }
-
-                                _initializePlayer(state.video!);
-                              },
-                              icon: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: const Icon(Icons.wifi),
-                              ),
-                              label: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Text("go_online".tr(context)),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primaryColors,
-                                foregroundColor: Colors.white,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 12),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                            ),
-                          ),
-
                         SectionsNav(
                           tabController: _mainTabController,
                           titles: [
@@ -292,6 +252,47 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen>
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),
+                                      ),
+                                    ),
+                                  // If currently “playing offline,” show a button to go back online:
+                                  if (_isOffline)
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16.0),
+                                      child: ElevatedButton.icon(
+                                        onPressed: () {
+                                          setState(() {
+                                            _isOffline = false;
+                                            _isPlayerReady = false;
+                                          });
+                                          if (_betterPlayerController
+                                              .isVideoInitialized()!) {
+                                            _betterPlayerController.dispose();
+                                          }
+
+                                          _initializePlayer(state.video!);
+                                        },
+                                        icon: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0),
+                                          child: const Icon(Icons.wifi),
+                                        ),
+                                        label: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0),
+                                          child: Text("go_online".tr(context)),
+                                        ),
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              AppColors.primaryColors,
+                                          foregroundColor: Colors.white,
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 12),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   // Build one QualityTile per available quality.

@@ -86,24 +86,101 @@ class _QualityTileState extends State<QualityTile> {
               final cubit = context.read<DownloadManagerCubit>();
 
               if (task == null) {
-                return _btnDownload(cubit);
+                return Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _btnDownload(cubit),
+                    SizedBox(
+                      width: 8,
+                    ),
+                  ],
+                );
               }
               switch (task.status) {
                 case DownloadTaskStatus.running:
                 case DownloadTaskStatus.enqueued:
-                  return _btnPause(task, cubit);
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _btnPause(task, cubit),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      _btnDelete(task, cubit),
+                    ],
+                  );
                 case DownloadTaskStatus.paused:
-                  return _btnResume(task, cubit);
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _btnResume(task, cubit),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      _btnDelete(task, cubit),
+                    ],
+                  );
                 case DownloadTaskStatus.complete:
-                  return _btnPlay(task);
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _btnPlay(task),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      _btnDelete(task, cubit),
+                    ],
+                  );
                 case DownloadTaskStatus.failed: // ADD FAILED CASE
                 case DownloadTaskStatus.canceled: // ADD CANCELED CASE
-                  return _btnRetry(cubit);
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _btnRetry(task, cubit),
+                      SizedBox(
+                        width: 8,
+                      ),
+                    ],
+                  );
                 default: // Failed/canceled
-                  return _btnRetry(cubit);
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _btnRetry(task, cubit),
+                      SizedBox(
+                        width: 8,
+                      ),
+                    ],
+                  );
               }
             },
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _btnDelete(DownloadTaskInfo task, DownloadManagerCubit cubit) {
+    return Container(
+      width: 40,
+      height: 40,
+      margin: const EdgeInsets.only(left: 8),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.grey.shade300,
+      ),
+      child: IconButton(
+        icon: Icon(Icons.delete, size: 20, color: Colors.black54),
+        onPressed: () => showCustomDialog(
+          icon: Icons.delete,
+          context: context,
+          title: 'warning'.tr(context),
+          description: "delete_warning".tr(context),
+          primaryButtonText: "yes".tr(context),
+          onPrimaryAction: () {
+            cubit.deleteDownload(task.taskId);
+            Navigator.pop(context);
+          },
         ),
       ),
     );
@@ -153,18 +230,6 @@ class _QualityTileState extends State<QualityTile> {
         Stack(
           alignment: Alignment.center,
           children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primaryColors,
-              ),
-              child: IconButton(
-                icon: Icon(Icons.pause, color: Colors.white, size: 20),
-                onPressed: () => cubit.pauseDownload(task.taskId),
-              ),
-            ),
             TweenAnimationBuilder<double>(
               tween: Tween<double>(
                 begin: 0,
@@ -177,13 +242,25 @@ class _QualityTileState extends State<QualityTile> {
                   width: 40,
                   child: CircularProgressIndicator(
                     value: value,
-                    strokeWidth: 3,
+                    strokeWidth: 6,
                     backgroundColor: Colors.grey.shade200,
                     valueColor:
                         AlwaysStoppedAnimation<Color>(AppColors.secColors),
                   ),
                 );
               },
+            ),
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.primaryColors,
+              ),
+              child: IconButton(
+                icon: Icon(Icons.pause, color: Colors.white, size: 20),
+                onPressed: () => cubit.pauseDownload(task.taskId),
+              ),
             ),
           ],
         ),
@@ -209,18 +286,6 @@ class _QualityTileState extends State<QualityTile> {
         Stack(
           alignment: Alignment.center,
           children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primaryColors,
-              ),
-              child: IconButton(
-                icon: Icon(Icons.play_arrow, color: Colors.white, size: 20),
-                onPressed: () => cubit.resumeDownload(task.taskId),
-              ),
-            ),
             TweenAnimationBuilder<double>(
               tween: Tween<double>(
                 begin: 0,
@@ -233,13 +298,25 @@ class _QualityTileState extends State<QualityTile> {
                   width: 40,
                   child: CircularProgressIndicator(
                     value: value,
-                    strokeWidth: 3,
+                    strokeWidth: 6,
                     backgroundColor: Colors.grey.shade200,
                     valueColor:
                         AlwaysStoppedAnimation<Color>(AppColors.secColors),
                   ),
                 );
               },
+            ),
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.primaryColors,
+              ),
+              child: IconButton(
+                icon: Icon(Icons.play_arrow, color: Colors.white, size: 20),
+                onPressed: () => cubit.resumeDownload(task.taskId),
+              ),
             ),
           ],
         ),
@@ -262,7 +339,7 @@ class _QualityTileState extends State<QualityTile> {
     );
   }
 
-  Widget _btnRetry(DownloadManagerCubit cubit) {
+  Widget _btnRetry(DownloadTaskInfo task, DownloadManagerCubit cubit) {
     return Container(
       width: 40,
       height: 40,
@@ -279,8 +356,10 @@ class _QualityTileState extends State<QualityTile> {
           description: "download_warning".tr(context),
           primaryButtonText: "yes".tr(context),
           onPrimaryAction: () {
-            cubit.addDownload(widget.videoId, widget.quality.resolution!,
-                widget.quality.url!);
+            // cubit.addDownload(widget.videoId, widget.quality.resolution!,
+            //     widget.quality.url!);
+            cubit.retryDownload(task.taskId);
+
             Navigator.pop(context);
           },
         ),

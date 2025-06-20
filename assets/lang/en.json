@@ -155,11 +155,12 @@
     "watch_offline": "Watch downloaded videos",
     "quality": "Quality",
     "go_online": "Watch over internet",
-    "download_warning": "You must keep the application open to complete the download process.",
+    "download_warning": "You must keep the application open to complete the download process, Try not to download more than 3 videos at the same time.",
     "videos": "Videos",
     "watched_videos": "Watched Videos",
     "change_video_watch_state": "Video viewing status has changed.",
     "files": "Files",
     "qualities": "Qualities",
-    "info": "Info"
+    "info": "Info",
+    "delete_warning": "Are you sure you want to delete the video ?"
 }

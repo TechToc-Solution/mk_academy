@@ -2,11 +2,13 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 part 'download_manager_state.dart';
 
@@ -60,6 +62,20 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
       _updateTaskProgress(id, status, progress);
     });
   }
+  Future<bool> _checkNotificationPermission() async {
+    if (Platform.isAndroid) {
+      // Only required for Android 13+
+      final androidInfo = await DeviceInfoPlugin().androidInfo;
+      if (androidInfo.version.sdkInt >= 33) {
+        final status = await Permission.notification.status;
+        if (!status.isGranted) {
+          final result = await Permission.notification.request();
+          return result.isGranted;
+        }
+      }
+    }
+    return true;
+  }
 
   Future<void> _initDownloader() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -80,7 +96,6 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
 
         final key = task.filename!.replaceFirst('.mp4', '');
         final filePath = '${task.savedDir}/${task.filename}';
-        final file = File(filePath);
 
         // Handle all completed downloads
         if (task.status == DownloadTaskStatus.complete) {
@@ -92,27 +107,7 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
             status: DownloadTaskStatus.complete,
             progress: 100,
           );
-        }
-        // Handle failed downloads with existing files
-        else if (task.status == DownloadTaskStatus.failed &&
-            await file.exists() &&
-            file.lengthSync() > 0) {
-          await FlutterDownloader.remove(
-            taskId: task.taskId,
-            shouldDeleteContent: false,
-          );
-
-          updatedTasks[key] = DownloadTaskInfo(
-            taskId: task.taskId,
-            url: task.url,
-            fileName: task.filename!,
-            filePath: filePath,
-            status: DownloadTaskStatus.complete,
-            progress: 100,
-          );
-        }
-        // Handle other active tasks
-        else {
+        } else {
           updatedTasks[key] = DownloadTaskInfo(
             taskId: task.taskId,
             url: task.url,
@@ -147,6 +142,8 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
   }
 
   Future<void> addDownload(String videoId, String quality, String url) async {
+    await _checkNotificationPermission();
+
     final dir = (await getApplicationSupportDirectory()).path;
     final fileName = '$videoId-$quality.mp4';
     final filePath = '$dir/$fileName'; // Calculate full path
@@ -177,11 +174,13 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
   }
 
   Future<void> pauseDownload(String taskId) async {
+    await _checkNotificationPermission();
     await FlutterDownloader.pause(taskId: taskId);
     _updateTaskStatus(taskId, DownloadTaskStatus.paused);
   }
 
   Future<void> resumeDownload(String taskId) async {
+    await _checkNotificationPermission();
     final newTaskId = await FlutterDownloader.resume(taskId: taskId);
     if (newTaskId == null) return;
 
@@ -205,30 +204,70 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
     _updateTaskStatus(taskId, DownloadTaskStatus.canceled);
   }
 
+  Future<void> deleteDownload(String taskId) async {
+    // 1. Remove from flutter_downloader (this also cancels if needed)
+    await FlutterDownloader.remove(
+      taskId: taskId,
+      shouldDeleteContent: true, // deletes partial file on disk
+    );
+
+    // 2. Delete any leftover file just in case
+    final entry =
+        state.tasks.entries.firstWhere((e) => e.value.taskId == taskId);
+
+    final file = File(entry.value.filePath);
+    if (await file.exists()) {
+      await file.delete();
+    }
+
+    // 3. Remove from our in‐memory map
+    final updated = Map<String, DownloadTaskInfo>.from(state.tasks)
+      ..remove(entry.key);
+    emit(DownloadUpdated(tasks: updated));
+  }
+
+  Future<void> retryDownload(String taskId) async {
+    await _checkNotificationPermission();
+    final newTaskId = await FlutterDownloader.retry(taskId: taskId);
+    if (newTaskId == null) return;
+
+    final key = state.tasks.entries
+        .firstWhere(
+          (e) => e.value.taskId == taskId,
+          orElse: () => throw StateError('Task not found'),
+        )
+        .key;
+
+    final updatedTasks = Map<String, DownloadTaskInfo>.from(state.tasks)
+      ..[key] = state.tasks[key]!.copyWith(
+        taskId: newTaskId,
+        status: DownloadTaskStatus.running,
+      );
+
+    emit(DownloadUpdated(tasks: updatedTasks));
+  }
+
   void _updateTaskProgress(
       String taskId, DownloadTaskStatus status, int progress) {
     try {
       final key =
           state.tasks.entries.firstWhere((e) => e.value.taskId == taskId).key;
       final task = state.tasks[key]!;
-      final file = File(task.filePath);
 
-      // Handle HTTP 416 error by marking as complete
-      if (status == DownloadTaskStatus.failed &&
-          file.existsSync() &&
-          file.lengthSync() > 0) {
-        final updatedTask =
-            task.copyWith(status: DownloadTaskStatus.complete, progress: 100);
-        final updatedTasks = Map<String, DownloadTaskInfo>.from(state.tasks)
-          ..[key] = updatedTask;
-        emit(DownloadUpdated(tasks: updatedTasks));
-        return;
+      // Handle -1 progress by keeping previous progress value
+      int newProgress = progress;
+      if (progress == -1 && task.status == DownloadTaskStatus.running) {
+        newProgress = task.progress;
       }
 
-      // Normal progress update
-      final updatedTask = task.copyWith(status: status, progress: progress);
+      final updatedTask = task.copyWith(
+        status: status,
+        progress: newProgress,
+      );
+
       final updatedTasks = Map<String, DownloadTaskInfo>.from(state.tasks)
         ..[key] = updatedTask;
+
       emit(DownloadUpdated(tasks: updatedTasks));
     } catch (_) {}
   }

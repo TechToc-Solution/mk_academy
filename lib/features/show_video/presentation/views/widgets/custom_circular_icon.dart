@@ -42,18 +42,6 @@ class CustomCircularIcon extends StatelessWidget {
           Stack(
             alignment: Alignment.center,
             children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: downloaded ? Colors.green : AppColors.primaryColors),
-                child: Icon(
-                  icon,
-                  size: 24,
-                  color: Colors.white,
-                ),
-              ),
               if (showProgress)
                 TweenAnimationBuilder<double>(
                     tween: Tween<double>(
@@ -67,13 +55,25 @@ class CustomCircularIcon extends StatelessWidget {
                         height: 40,
                         child: CircularProgressIndicator(
                           value: value,
-                          strokeWidth: 3,
+                          strokeWidth: 6,
                           backgroundColor: Colors.grey.shade200,
                           valueColor: AlwaysStoppedAnimation<Color>(
                               AppColors.secColors),
                         ),
                       );
                     }),
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: downloaded ? Colors.green : AppColors.primaryColors),
+                child: Icon(
+                  icon,
+                  size: 24,
+                  color: Colors.white,
+                ),
+              ),
             ],
           ),
         ],
