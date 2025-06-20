@@ -34,7 +34,7 @@ class VideoPlayerScreen extends StatefulWidget {
 }
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   late BetterPlayerController _betterPlayerController;
   late TabController _mainTabController;
   bool _isOffline = false;
@@ -44,11 +44,11 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen>
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _mainTabController = TabController(length: 3, vsync: this);
     _mainTabController.addListener(() {
       setState(() {});
     });
-    // disableScreenshot();
     toggleScreenshot();
     context
         .read<VideoCubit>()
@@ -57,13 +57,13 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen>
 
   void _initializePlayer(VideoDataModel? video) async {
     final source = BetterPlayerDataSource(
-      _isOffline
-          ? BetterPlayerDataSourceType.file
-          : BetterPlayerDataSourceType.network,
-      _isOffline ? _localVideoPath! : video!.hlsUrl!,
-      useAsmsSubtitles: _isOffline,
-      useAsmsAudioTracks: _isOffline,
-    );
+        _isOffline
+            ? BetterPlayerDataSourceType.file
+            : BetterPlayerDataSourceType.network,
+        _isOffline ? _localVideoPath! : video!.hlsUrl!,
+        useAsmsSubtitles: !_isOffline,
+        useAsmsAudioTracks: !_isOffline,
+        useAsmsTracks: !_isOffline);
 
     try {
       _betterPlayerController = BetterPlayerController(
