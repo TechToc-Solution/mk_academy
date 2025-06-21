@@ -164,7 +164,7 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
       taskId: taskId,
       url: url,
       fileName: fileName,
-      filePath: filePath, // Added
+      filePath: filePath, 
       status: DownloadTaskStatus.enqueued,
     );
 
