@@ -12,12 +12,14 @@ class VideosCubit extends Cubit<VideosState> {
     required int? courseId,
   }) async {
     if (isClosed) return;
-    var data = await _coursesRepo.getVideos(
-      courseId: courseId,
-    );
+
     emit(VideosState(
       status: VideoStatus.loading,
     ));
+    var data = await _coursesRepo.getVideos(
+      courseId: courseId,
+    );
+
     if (!isClosed) {
       data.fold(
           (failure) => emit(VideosState(

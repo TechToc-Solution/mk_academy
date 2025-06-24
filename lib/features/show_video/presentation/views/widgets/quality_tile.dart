@@ -106,7 +106,7 @@ class _QualityTileState extends State<QualityTile> {
                       SizedBox(
                         width: 8,
                       ),
-                      _btnDelete(task, cubit),
+                      _btnCancel(task, cubit),
                     ],
                   );
                 case DownloadTaskStatus.paused:
@@ -117,7 +117,7 @@ class _QualityTileState extends State<QualityTile> {
                       SizedBox(
                         width: 8,
                       ),
-                      _btnDelete(task, cubit),
+                      _btnCancel(task, cubit),
                     ],
                   );
                 case DownloadTaskStatus.complete:
@@ -131,8 +131,8 @@ class _QualityTileState extends State<QualityTile> {
                       _btnDelete(task, cubit),
                     ],
                   );
-                case DownloadTaskStatus.failed: // ADD FAILED CASE
-                case DownloadTaskStatus.canceled: // ADD CANCELED CASE
+                case DownloadTaskStatus.failed:
+                case DownloadTaskStatus.canceled:
                   return Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -182,6 +182,22 @@ class _QualityTileState extends State<QualityTile> {
             Navigator.pop(context);
           },
         ),
+      ),
+    );
+  }
+
+  Widget _btnCancel(DownloadTaskInfo task, DownloadManagerCubit cubit) {
+    return Container(
+      width: 40,
+      height: 40,
+      margin: const EdgeInsets.only(left: 8),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.grey.shade300,
+      ),
+      child: IconButton(
+        icon: Icon(Icons.cancel, size: 20, color: Colors.black54),
+        onPressed: () => cubit.cancelDownload(task.taskId),
       ),
     );
   }

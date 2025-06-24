@@ -18,7 +18,7 @@ class DownloadTaskInfo {
   final String taskId;
   final String url;
   final String fileName;
-  final String filePath; // Added file path
+  final String filePath;
   final DownloadTaskStatus status;
   final int progress;
 
@@ -26,7 +26,7 @@ class DownloadTaskInfo {
     required this.taskId,
     required this.url,
     required this.fileName,
-    required this.filePath, // Added
+    required this.filePath,
     required this.status,
     this.progress = 0,
   });
@@ -164,7 +164,7 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
       taskId: taskId,
       url: url,
       fileName: fileName,
-      filePath: filePath, 
+      filePath: filePath,
       status: DownloadTaskStatus.enqueued,
     );
 
@@ -200,8 +200,37 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
   }
 
   Future<void> cancelDownload(String taskId) async {
-    await FlutterDownloader.cancel(taskId: taskId);
-    _updateTaskStatus(taskId, DownloadTaskStatus.canceled);
+    try {
+      // Cancel the download via flutter_downloader
+      await FlutterDownloader.cancel(taskId: taskId);
+
+      // Optionally delete the partial file
+      final entry = state.tasks.entries.firstWhere(
+        (e) => e.value.taskId == taskId,
+        orElse: () => throw StateError('Task not found'),
+      );
+
+      final filePath = entry.value.filePath;
+      final file = File(filePath);
+      if (await file.exists()) {
+        await file.delete(); // Delete partial file
+      }
+
+      // Update UI to show canceled status
+      _updateTaskStatus(taskId, DownloadTaskStatus.canceled);
+
+      // Optionally remove the task from the list
+      final updatedTasks = Map<String, DownloadTaskInfo>.from(state.tasks)
+        ..remove(entry.key);
+      emit(DownloadUpdated(tasks: updatedTasks));
+    } catch (e, stackTrace) {
+      // Handle error gracefully
+      print("Failed to cancel download: $e");
+      print(stackTrace);
+
+      // Optionally update UI to reflect error
+      _updateTaskStatus(taskId, DownloadTaskStatus.failed);
+    }
   }
 
   Future<void> deleteDownload(String taskId) async {

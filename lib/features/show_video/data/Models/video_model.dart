@@ -3,6 +3,7 @@ class VideoDataModel {
   String? name;
   String? thumbnail;
   String? hlsUrl;
+  String? iframeUrl;
   List<DownloadUrls>? downloadUrls;
   String? file;
   bool? isViewed;
@@ -12,6 +13,7 @@ class VideoDataModel {
       this.name,
       this.thumbnail,
       this.hlsUrl,
+      this.iframeUrl,
       this.downloadUrls,
       this.file,
       this.isViewed});
@@ -21,6 +23,7 @@ class VideoDataModel {
     name = json['name'];
     thumbnail = json['thumbnail'];
     hlsUrl = json['hls_url'];
+    iframeUrl = json['iframe_url'];
     if (json['download_urls'] != null) {
       downloadUrls = <DownloadUrls>[];
       json['download_urls'].forEach((v) {
@@ -37,6 +40,7 @@ class VideoDataModel {
     data['name'] = name;
     data['thumbnail'] = thumbnail;
     data['hls_url'] = hlsUrl;
+    data['iframe_url'] = iframeUrl;
     if (downloadUrls != null) {
       data['download_urls'] = downloadUrls!.map((v) => v.toJson()).toList();
     }

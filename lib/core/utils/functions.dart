@@ -75,9 +75,6 @@ Future<void> disableScreenshot() async {
   final session = await AudioSession.instance;
   await session.setActive(false);
 
-  // 3. Play silent audio to occupy audio channel
-  await silencePlayer.setAsset('assets/audio/silence.mp3');
-  await silencePlayer.play();
   isSecureMode = true;
 }
 
