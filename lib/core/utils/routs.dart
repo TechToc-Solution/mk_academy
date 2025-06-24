@@ -4,7 +4,7 @@ import 'package:mk_academy/features/home/presentation/views/ads/all_ads.dart';
 import 'package:mk_academy/features/home/presentation/views/subjects/all_subjects.dart';
 import 'package:mk_academy/features/home/presentation/views/subjects/show_subject.dart';
 import 'package:mk_academy/features/show_video/presentation/views/video_player.dart';
-import 'package:mk_academy/features/show_video/presentation/views/web_view.dart';
+import 'package:mk_academy/features/show_video/presentation/views/video_player_old.dart';
 import 'package:mk_academy/features/test_your_self/presentation/views/tests_list_page.dart';
 import 'package:mk_academy/splash_screen.dart';
 
@@ -48,8 +48,11 @@ class Routes {
     VerificationPhonePage.routeName: (context) =>
         VerificationPhonePage(fromRigster: false, phoneNumber: ""),
     ResetPasswordPage.routeName: (context) => ResetPasswordPage(),
-    WebViewScreen.routeName: (context) => WebViewScreen(
-          video: null,
+    VideoPlayerOldDevicesScreen.routeName: (context) =>
+        VideoPlayerOldDevicesScreen(
+          videoId: null,
+          videoName: '',
+          courseId: null,
         ),
     VideoPlayerScreen.routeName: (context) => VideoPlayerScreen(
           videoId: null,

@@ -1,12 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/utils/colors.dart';
+import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/core/utils/services_locater.dart';
 import 'package:mk_academy/features/show_video/data/repo/video_repo.dart';
 import 'package:mk_academy/features/show_video/presentation/views-model/cubit/mark_as_watched/mark_as_watched_cubit.dart';
 import 'package:mk_academy/features/show_video/presentation/views-model/cubit/video_cubit/videos_cubit.dart';
 import 'package:mk_academy/features/show_video/presentation/views/video_player.dart';
+import 'package:mk_academy/features/show_video/presentation/views/video_player_old.dart';
 import '../../../../data/model/video_model.dart';
 import 'video_thumbnail_image.dart';
 
@@ -50,11 +54,17 @@ class PlayListBody extends StatelessWidget {
                       MarkAsWatchedCubit(getit.get<VideoRepo>()),
                 ),
               ],
-              child: VideoPlayerScreen(
-                videoId: video.id,
-                videoName: video.name ?? "",
-                courseId: courseId,
-              ),
+              child: Platform.isAndroid && sdkInt < oldDevicesVer
+                  ? VideoPlayerOldDevicesScreen(
+                      videoId: video.id,
+                      videoName: video.name ?? "",
+                      courseId: courseId,
+                    )
+                  : VideoPlayerScreen(
+                      videoId: video.id,
+                      videoName: video.name ?? "",
+                      courseId: courseId,
+                    ),
             ),
           ));
         },

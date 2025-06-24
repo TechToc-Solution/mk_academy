@@ -1,3 +1,7 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart' hide Key;
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,6 +53,11 @@ void main() async {
   await generateAndStoreKey();
   setupLocatorServices();
   await initAudioSession();
+  if (Platform.isAndroid) {
+    final androidInfo = await DeviceInfoPlugin().androidInfo;
+    sdkInt = androidInfo.version.sdkInt;
+    log(sdkInt.toString());
+  }
   // await FirebaseApi().initNotifications();
   runApp(const MyApp());
 }

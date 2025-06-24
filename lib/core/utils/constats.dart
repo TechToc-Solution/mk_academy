@@ -12,6 +12,10 @@ const double kBorderRadius = 15;
 const double kSizedBoxHeight = 25;
 const double kVerticalPadding = 15;
 const double kHorizontalPadding = 10;
+
+int sdkInt = 30;
+
+int oldDevicesVer = 21;
 const String verCode = "1.0.0";
 bool isGuest = CacheHelper.getData(key: "token") == null ? true : false;
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

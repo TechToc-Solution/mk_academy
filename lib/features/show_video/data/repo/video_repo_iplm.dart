@@ -23,13 +23,13 @@ class VideoRepoIplm implements VideoRepo {
     try {
       var resp = await _apiServices.get(
           endPoint: "${Urls.getCourses}/$courseId/videos/$videoId");
-   
+
       if (resp.statusCode == 200 && resp.data['success']) {
         var realResp = decryptVideoData(
           resp.data['data'],
           CacheHelper.getData(key: "token"),
         );
-   
+
         VideoDataModel video = VideoDataModel.fromJson(json.decode(realResp));
 
         return right(video);

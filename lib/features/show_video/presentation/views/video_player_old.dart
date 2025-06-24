@@ -16,43 +16,40 @@ import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/mark_as_watched_switch.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/sections_nav.dart';
 import 'package:mk_academy/features/show_video/presentation/views/widgets/video_info_message.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
-class VideoPlayerScreen extends StatefulWidget {
-  static const String routeName = '/video';
+class VideoPlayerOldDevicesScreen extends StatefulWidget {
+  static const String routeName = '/video-old';
   final int? videoId;
   final int? courseId;
   final String videoName;
 
-  const VideoPlayerScreen(
+  const VideoPlayerOldDevicesScreen(
       {super.key,
       required this.videoId,
       required this.videoName,
       required this.courseId});
 
   @override
-  State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
+  State<VideoPlayerOldDevicesScreen> createState() =>
+      _VideoPlayerOldDevicesScreenState();
 }
 
-class _VideoPlayerScreenState extends State<VideoPlayerScreen>
-    with TickerProviderStateMixin, WidgetsBindingObserver {
+class _VideoPlayerOldDevicesScreenState
+    extends State<VideoPlayerOldDevicesScreen> with TickerProviderStateMixin {
   late BetterPlayerController _betterPlayerController;
   late TabController _mainTabController;
   bool _isOffline = false;
   String? _localVideoPath;
   bool _isPlayerReady = false;
-  bool _isBetterPlayerInitialized = false;
-
-  WebViewController? _controller;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
     _mainTabController = TabController(length: 3, vsync: this);
     _mainTabController.addListener(() {
       setState(() {});
     });
+    // disableScreenshot();
     toggleScreenshot();
     context
         .read<VideoCubit>()
@@ -60,122 +57,38 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen>
   }
 
   void _initializePlayer(VideoDataModel? video) async {
-    if (_isOffline) {
-      final source = BetterPlayerDataSource(
-        BetterPlayerDataSourceType.file,
-        _localVideoPath!,
-        useAsmsSubtitles: !_isOffline,
-        useAsmsAudioTracks: !_isOffline,
-        useAsmsTracks: !_isOffline,
+    final source = BetterPlayerDataSource(
+      _isOffline
+          ? BetterPlayerDataSourceType.file
+          : BetterPlayerDataSourceType.network,
+      _isOffline ? _localVideoPath! : video!.hlsUrl!,
+      useAsmsSubtitles: _isOffline,
+      useAsmsAudioTracks: _isOffline,
+    );
+
+    try {
+      _betterPlayerController = BetterPlayerController(
+        BetterPlayerConfiguration(
+          autoPlay: false,
+          looping: false,
+          allowedScreenSleep: false,
+          aspectRatio: 16 / 9,
+          controlsConfiguration: const BetterPlayerControlsConfiguration(
+            enableQualities: true,
+            enableOverflowMenu: true,
+            enableSubtitles: false,
+          ),
+
+          errorBuilder: (context, errorMessage) =>
+              _buildErrorWidget(context, errorMessage),
+          // eventListener: _handlePlayerEvents,
+        ),
+        betterPlayerDataSource: source,
       );
 
-      try {
-        _betterPlayerController = BetterPlayerController(
-          BetterPlayerConfiguration(
-            autoPlay: false,
-            looping: false,
-            allowedScreenSleep: false,
-            aspectRatio: 16 / 9,
-            controlsConfiguration: const BetterPlayerControlsConfiguration(
-              enableQualities: true,
-              enableOverflowMenu: true,
-              enableSubtitles: false,
-            ),
-            errorBuilder: (context, errorMessage) =>
-                _buildErrorWidget(context, errorMessage),
-          ),
-          betterPlayerDataSource: source,
-        );
-        _isBetterPlayerInitialized = true;
-
-        setState(() => _isPlayerReady = true);
-      } catch (e) {
-        setState(() => _isPlayerReady = false);
-      }
-    } else {
-      if (video == null || video.iframeUrl == null) {
-        setState(() => _isPlayerReady = false);
-        return;
-      }
-
-      final htmlContent = '''
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-          body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-            background-color: #000;
-          }
-          .container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-          }
-          .iframe-container {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            height: 100%;
-          }
-          .error-overlay {
-            display: none;
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #111;
-            color: white;
-            font-family: sans-serif;
-            font-size: 1.5rem;
-            text-align: center;
-            padding-top: 20%;
-            box-sizing: border-box;
-          }
-        </style>
-      </head>
-      <body>
-        <div class="container">
-            <iframe class="iframe-container" id="videoFrame"
-              src="${video.iframeUrl!}"
-              frameborder="0"
-              allow="accelerometer; gyroscope; autoplay; encrypted-media;"
-              allowfullscreen>
-            </iframe>
-
-          <div class="error-overlay" id="errorOverlay">
-            Sorry, the video could not be loaded.
-          </div>
-        </div>
-
-        <script>
-          const iframe = document.getElementById('videoFrame');
-          const errorOverlay = document.getElementById('errorOverlay');
-
-          iframe.onerror = function () {
-            iframe.style.display = 'none';
-            errorOverlay.style.display = 'block';
-          };
-        </script>
-      </body>
-      </html>
-    ''';
-      if (_controller == null) {
-        _controller = WebViewController()
-          ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..setNavigationDelegate(NavigationDelegate(
-            onPageFinished: (_) {
-              setState(() => _isPlayerReady = true);
-            },
-          ))
-          ..loadHtmlString(htmlContent);
-      } else {
-        setState(() => _isPlayerReady = true);
-      }
+      setState(() => _isPlayerReady = true);
+    } catch (e) {
+      setState(() => _isPlayerReady = false);
     }
   }
 
@@ -219,9 +132,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen>
   void dispose() {
     // enableScreenshot();
     toggleScreenshot();
-    if (_isBetterPlayerInitialized) {
-      _betterPlayerController.dispose();
-    }
+    _betterPlayerController.dispose();
     _mainTabController.dispose();
     super.dispose();
   }
@@ -234,11 +145,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen>
       _isPlayerReady = false;
     });
 
-    if (_isBetterPlayerInitialized) {
-      _betterPlayerController.dispose();
-      _isBetterPlayerInitialized = false;
-    }
-
+    // Re‐initialize the BetterPlayerController with the local file.
+    _betterPlayerController.dispose();
     _initializePlayer(null);
   }
 
@@ -273,7 +181,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen>
                 Future.microtask(() => _initializePlayer(state.video));
               });
             }
-            if (state.status == VideoStatus.success) {
+            if (state.status == VideoStatus.success && _isPlayerReady) {
               return SafeArea(
                 child: Container(
                   height: double.infinity,
@@ -282,14 +190,11 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen>
                     child: Column(
                       children: [
                         // ─── Video Section ─────────────────────────────────────────
-
                         AspectRatio(
                           aspectRatio: 16 / 9,
                           child: _isPlayerReady
-                              ? _isOffline
-                                  ? BetterPlayer(
-                                      controller: _betterPlayerController)
-                                  : WebViewWidget(controller: _controller!)
+                              ? BetterPlayer(
+                                  controller: _betterPlayerController)
                               : const Center(
                                   child: CircularProgressIndicator()),
                         ),
