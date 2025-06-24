@@ -3,7 +3,7 @@ description: "Mk Academy app for Students."
 
 publish_to: "none"
 
-version: 1.0.1+1
+version: 2.0.0+1
 
 environment:
   sdk: ^3.5.3
