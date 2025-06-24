@@ -311,8 +311,12 @@ String fixBadCdnUrl(String decryptedJsonString) {
   }
 
   // إصلاح الحقول المطلوبة
-  jsonMap['hls_url'] = fixUrl(jsonMap['hls_url']);
-
+  if (jsonMap['hls_url'] != null) {
+    jsonMap['hls_url'] = fixUrl(jsonMap['hls_url']);
+  }
+  if (jsonMap['iframe_url'] != null) {
+    jsonMap['iframe_url'] = fixUrl(jsonMap['iframe_url']);
+  }
   if (jsonMap['download_urls'] is List) {
     for (var item in jsonMap['download_urls']) {
       item['url'] = fixUrl(item['url']);

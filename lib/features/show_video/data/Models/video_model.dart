@@ -22,8 +22,8 @@ class VideoDataModel {
     id = json['id'];
     name = json['name'];
     thumbnail = json['thumbnail'];
-    hlsUrl = json['hls_url'];
-    iframeUrl = json['iframe_url'];
+    if (json['hls_url'] != null) hlsUrl = json['hls_url'];
+    if (json['iframe_url'] != null) iframeUrl = json['iframe_url'];
     if (json['download_urls'] != null) {
       downloadUrls = <DownloadUrls>[];
       json['download_urls'].forEach((v) {

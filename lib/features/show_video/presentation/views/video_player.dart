@@ -95,7 +95,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen>
         setState(() => _isPlayerReady = false);
       }
     } else {
-      if (video == null || video.hlsUrl == null) {
+      if (video == null || video.iframeUrl == null) {
         setState(() => _isPlayerReady = false);
         return;
       }
@@ -166,7 +166,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen>
       </body>
       </html>
     ''';
-      log(video.hlsUrl!);
       if (_controller == null) {
         _controller = WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -276,7 +275,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen>
                 Future.microtask(() => _initializePlayer(state.video));
               });
             }
-            if (state.status == VideoStatus.success && _isPlayerReady) {
+            if (state.status == VideoStatus.success) {
               return SafeArea(
                 child: Container(
                   height: double.infinity,

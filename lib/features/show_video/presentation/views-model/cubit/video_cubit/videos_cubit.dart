@@ -11,10 +11,11 @@ class VideoCubit extends Cubit<VideoState> {
   Future<VideoDataModel?> getVideo(
       {required int? courseId, required int? videoId}) async {
     if (isClosed) return null;
-    var data = await _videoRepo.getVideo(courseId: courseId, videoId: videoId);
     emit(VideoState(
       status: VideoStatus.loading,
     ));
+    var data = await _videoRepo.getVideo(courseId: courseId, videoId: videoId);
+
     if (!isClosed) {
       data.fold(
           (failure) => emit(VideoState(
