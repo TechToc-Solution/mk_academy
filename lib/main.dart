@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
@@ -43,9 +42,19 @@ import 'features/leaderboard/presentation/views-model/leaderboard_cubit.dart';
 import 'features/profile/data/repos/profile_repo.dart';
 import 'features/profile/presentation/views-model/profile_cubit.dart';
 
+class DevHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await blockIfDebugOrEmulator();
+  // HttpOverrides.global = DevHttpOverrides();
+  await blockIfDebugOrEmulator();
   await CacheHelper.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -56,7 +65,6 @@ void main() async {
   if (Platform.isAndroid) {
     final androidInfo = await DeviceInfoPlugin().androidInfo;
     sdkInt = androidInfo.version.sdkInt;
-    log(sdkInt.toString());
   }
   // await FirebaseApi().initNotifications();
   runApp(const MyApp());

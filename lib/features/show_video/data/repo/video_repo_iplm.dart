@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dartz/dartz.dart';
 import 'package:mk_academy/core/Api_services/api_services.dart';
 import 'package:mk_academy/core/Api_services/urls.dart';
@@ -28,7 +27,6 @@ class VideoRepoIplm implements VideoRepo {
           resp.data['data'],
           CacheHelper.getData(key: "token"),
         );
-
         VideoDataModel video = VideoDataModel.fromJson(json.decode(realResp));
 
         return right(video);

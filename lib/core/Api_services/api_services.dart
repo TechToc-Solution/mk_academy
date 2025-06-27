@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
-import 'package:dio/io.dart';
 import 'package:mk_academy/core/Api_services/urls.dart';
 import '../../features/auth/presentation/views/login/login_page.dart';
 import 'auth_interceptor.dart';
@@ -11,12 +8,12 @@ import '../utils/constats.dart';
 class ApiServices {
   final Dio _dio;
   ApiServices(this._dio) {
-    (_dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
-        (client) {
-      client.badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-      return client;
-    };
+    // (_dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
+    //     (client) {
+    //   client.badCertificateCallback =
+    //       (X509Certificate cert, String host, int port) => true;
+    //   return client;
+    // };
     _dio.options.baseUrl = Urls.baseUrl;
     // _dio.interceptors.add(
     //   PrettyDioLogger(

@@ -24,6 +24,9 @@ class VideoThumbnailImage extends StatelessWidget {
             )
           : CachedNetworkImage(
               imageUrl: video.thumbnail!,
+              httpHeaders: {
+                'Accept': 'image/*',
+              },
               fit: BoxFit.cover,
               placeholder: (context, url) => const SizedBox(
                 child: Center(

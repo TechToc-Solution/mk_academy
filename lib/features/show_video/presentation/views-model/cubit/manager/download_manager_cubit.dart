@@ -223,11 +223,7 @@ class DownloadManagerCubit extends Cubit<DownloadManagerState> {
       final updatedTasks = Map<String, DownloadTaskInfo>.from(state.tasks)
         ..remove(entry.key);
       emit(DownloadUpdated(tasks: updatedTasks));
-    } catch (e, stackTrace) {
-      // Handle error gracefully
-      print("Failed to cancel download: $e");
-      print(stackTrace);
-
+    } catch (e) {
       // Optionally update UI to reflect error
       _updateTaskStatus(taskId, DownloadTaskStatus.failed);
     }
