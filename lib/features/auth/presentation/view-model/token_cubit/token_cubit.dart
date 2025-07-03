@@ -12,16 +12,21 @@ class TokenCubit extends Cubit<TokenState> {
   Future cheackToken() async {
     emit(TokenLoadingState());
 
-    String? token = CacheHelper.getData(key: 'token');
-    if (token == null) {
-      emit(IsNotVaildToken());
+    bool isFirstUse = CacheHelper.getData(key: 'firstTime') ?? true;
+    if (isFirstUse) {
+      emit(IsFirstUseTrue());
     } else {
-      var resp = await _tokenRepo.cheackToken();
-      resp.fold((failure) {
-        emit(TokenErrorState(failure.message));
-      }, (user) {
-        emit(IsVaildToken());
-      });
+      String? token = CacheHelper.getData(key: 'token');
+      if (token == null) {
+        emit(IsNotVaildToken());
+      } else {
+        var resp = await _tokenRepo.cheackToken();
+        resp.fold((failure) {
+          emit(TokenErrorState(failure.message));
+        }, (user) {
+          emit(IsVaildToken());
+        });
+      }
     }
   }
 }

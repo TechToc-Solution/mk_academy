@@ -54,7 +54,7 @@ class DevHttpOverrides extends HttpOverrides {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // HttpOverrides.global = DevHttpOverrides();
-  await blockIfDebugOrEmulator();
+  // await blockIfDebugOrEmulator();
   await CacheHelper.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

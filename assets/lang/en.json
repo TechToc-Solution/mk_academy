@@ -162,5 +162,9 @@
     "files": "Files",
     "qualities": "Download Qualities",
     "info": "Info",
-    "delete_warning": "Are you sure you want to delete the video ?"
+    "delete_warning": "Are you sure you want to delete the video ?",
+    "privacy_title": "By continuing, you agree to our Privacy Policy.",
+    "privacy_link": "Read Privacy Policy",
+    "privacy_checkbox": "I accept the privacy policy",
+    "continue_button": "Continue"
 }

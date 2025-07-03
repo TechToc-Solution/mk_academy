@@ -6,7 +6,6 @@ import 'package:mk_academy/core/shared/repos/app_version/pay_repo.dart';
 import 'package:mk_academy/core/utils/app_localizations.dart';
 import 'package:mk_academy/core/utils/assets_data.dart';
 import 'package:mk_academy/core/utils/colors.dart';
-import 'package:mk_academy/core/utils/constats.dart';
 import 'package:mk_academy/core/utils/functions.dart';
 import 'package:mk_academy/core/utils/services_locater.dart';
 import 'package:mk_academy/core/widgets/custom_bottom_nav_bar.dart';
@@ -17,6 +16,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/features/auth/data/repos/token_repo/token_repo.dart';
 import 'package:mk_academy/features/auth/presentation/view-model/token_cubit/token_cubit.dart';
 import 'package:mk_academy/features/auth/presentation/views/login/login_page.dart';
+import 'package:mk_academy/privacy_policy_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -52,14 +52,18 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _navigateBasedOnTokenState(TokenState state) {
-    // log(state.toString());
     if (state is IsVaildToken || state is IsFirstUseTrue) {
-      if (state is IsFirstUseTrue) isGuest = true;
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const CustomBottomNavBar()),
-      );
+      if (state is IsFirstUseTrue) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => PrivacyPolicyScreen()),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => CustomBottomNavBar()),
+        );
+      }
     } else {
       if (state is! TokenLoadingState && state is! TokenInitial) {
         Navigator.pushReplacement(
