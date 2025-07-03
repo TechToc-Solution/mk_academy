@@ -23,8 +23,6 @@ import 'package:mk_academy/features/auth/presentation/view-model/reset_password_
 import 'package:mk_academy/features/courses/data/repo/courses_repo.dart';
 import 'package:mk_academy/features/courses/presentation/view_model/courses%20cubit/courses_cubit.dart';
 import 'package:mk_academy/features/courses/presentation/view_model/videos_cubit/videos_cubit.dart';
-import 'package:mk_academy/features/show_video/presentation/views-model/cubit/manager/download_manager_cubit.dart';
-
 import 'package:mk_academy/firebase_options.dart';
 import 'package:mk_academy/splash_screen.dart';
 import 'core/shared/cubits/subjects/subjects_cubit.dart';
@@ -56,12 +54,10 @@ void main() async {
   // HttpOverrides.global = DevHttpOverrides();
   await blockIfDebugOrEmulator();
   await CacheHelper.init();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await generateAndStoreKey();
   setupLocatorServices();
-  await initAudioSession();
+  enableScreenshot();
   if (Platform.isAndroid) {
     final androidInfo = await DeviceInfoPlugin().androidInfo;
     sdkInt = androidInfo.version.sdkInt;
@@ -80,33 +76,39 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => LocaleCubit()..getSaveLanguage()),
         BlocProvider(create: (context) => LogoutCubit(getit.get<LogoutRepo>())),
         BlocProvider(
-            create: (context) => VideosCubit(getit.get<CoursesRepo>())),
+          create: (context) => VideosCubit(getit.get<CoursesRepo>()),
+        ),
         BlocProvider(
-            create: (context) => RegisterCubit(getit.get<RegisterRepo>())),
+          create: (context) => RegisterCubit(getit.get<RegisterRepo>()),
+        ),
         BlocProvider(
-            create: (context) =>
-                ResetPasswordCubit(getit.get<ResetPasswordRepo>())),
+          create: (context) =>
+              ResetPasswordCubit(getit.get<ResetPasswordRepo>()),
+        ),
         BlocProvider(
-            create: (context) =>
-                DeleteAccountCubit(getit.get<DeleteAccountRepo>())),
+          create: (context) =>
+              DeleteAccountCubit(getit.get<DeleteAccountRepo>()),
+        ),
         BlocProvider(
-            create: (context) => CoursesCubit(getit.get<CoursesRepo>())),
+          create: (context) => CoursesCubit(getit.get<CoursesRepo>()),
+        ),
         BlocProvider(
-            create: (context) => LeaderboardCubit(getit.get<LeaderboardRepo>())
-              ..getLeaderboard()),
+          create: (context) =>
+              LeaderboardCubit(getit.get<LeaderboardRepo>())..getLeaderboard(),
+        ),
         BlocProvider(
-            create: (context) =>
-                SubjectsCubit(getit.get<SubjectsRepo>())..getSubjects()),
+          create: (context) =>
+              SubjectsCubit(getit.get<SubjectsRepo>())..getSubjects(),
+        ),
         BlocProvider(
-            create: (context) => AdsCubit(getit.get<AdsRepo>())..getAllAds()),
+          create: (context) => AdsCubit(getit.get<AdsRepo>())..getAllAds(),
+        ),
         BlocProvider(
-            create: (context) =>
-                ProfileCubit(getit.get<ProfileRepo>())..getProfile()),
+          create: (context) =>
+              ProfileCubit(getit.get<ProfileRepo>())..getProfile(),
+        ),
         BlocProvider(
-            create: (context) =>
-                SolveQuizzesCubit(getit.get<SolveQuizzesRepo>())),
-        BlocProvider<DownloadManagerCubit>(
-          create: (_) => DownloadManagerCubit(),
+          create: (context) => SolveQuizzesCubit(getit.get<SolveQuizzesRepo>()),
         ),
       ],
       child: BlocBuilder<LocaleCubit, ChangeLocaleState>(
@@ -115,10 +117,7 @@ class MyApp extends StatelessWidget {
             navigatorKey: navigatorKey,
             // locale: state.locale,
             locale: Locale("ar"),
-            supportedLocales: const [
-              Locale("en"),
-              Locale("ar"),
-            ],
+            supportedLocales: const [Locale("en"), Locale("ar")],
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -138,16 +137,19 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               appBarTheme: AppBarTheme(
-                  backgroundColor: AppColors.backgroundColor,
-                  scrolledUnderElevation: 0,
-                  centerTitle: true,
-                  elevation: 0,
-                  titleTextStyle: Styles.textStyle18
-                      .copyWith(color: AppColors.backgroundColor)),
+                backgroundColor: AppColors.backgroundColor,
+                scrolledUnderElevation: 0,
+                centerTitle: true,
+                elevation: 0,
+                titleTextStyle: Styles.textStyle18.copyWith(
+                  color: AppColors.backgroundColor,
+                ),
+              ),
               fontFamily: "cocon-next-arabic",
               scaffoldBackgroundColor: AppColors.backgroundColor,
-              colorScheme:
-                  ColorScheme.fromSeed(seedColor: AppColors.primaryColors),
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: AppColors.primaryColors,
+              ),
               useMaterial3: true,
             ),
             initialRoute: SplashScreen.routeName,

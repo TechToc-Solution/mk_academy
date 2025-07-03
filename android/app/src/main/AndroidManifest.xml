@@ -39,15 +39,6 @@
                     android:resource="@xml/filepaths"/>
         </provider>
 
-        <provider
-            android:name="vn.hunghd.flutterdownloader.DownloadedFileProvider"
-            android:authorities="${applicationId}.flutter_downloader.downloaded_file"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/flutter_downloader_paths" />
-        </provider>
         <activity
             android:name=".MainActivity"
             android:exported="true"
