@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:mk_academy/core/utils/cache_helper.dart';
 import 'package:no_screenshot/no_screenshot.dart';
 
 final noScreenshot = NoScreenshot.instance;
-final AudioPlayer silencePlayer = AudioPlayer();
 bool isSecureMode = false;
 
 String lang = "ar";

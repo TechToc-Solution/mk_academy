@@ -61,7 +61,7 @@ void main() async {
   );
   await generateAndStoreKey();
   setupLocatorServices();
-  await initAudioSession();
+  enableScreenshot();
   if (Platform.isAndroid) {
     final androidInfo = await DeviceInfoPlugin().androidInfo;
     sdkInt = androidInfo.version.sdkInt;
