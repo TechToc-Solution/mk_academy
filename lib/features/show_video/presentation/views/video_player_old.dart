@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:better_player/better_player.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mk_academy/core/shared/cubits/download_handler/download_handler_cubit.dart';
 import 'package:mk_academy/core/shared/repos/download_handler/download_handler_repo.dart';
@@ -49,7 +50,6 @@ class _VideoPlayerOldDevicesScreenState
     _mainTabController.addListener(() {
       setState(() {});
     });
-    // disableScreenshot();
     toggleScreenshot();
     context
         .read<VideoCubit>()
@@ -64,6 +64,12 @@ class _VideoPlayerOldDevicesScreenState
       _isOffline ? _localVideoPath! : video!.hlsUrl!,
       useAsmsSubtitles: _isOffline,
       useAsmsAudioTracks: _isOffline,
+      cacheConfiguration: _isOffline
+          ? null
+          : BetterPlayerCacheConfiguration(
+              useCache: true,
+              maxCacheSize: 100 * 1024 * 1024, // 10MB
+            ),
     );
 
     try {
@@ -73,15 +79,18 @@ class _VideoPlayerOldDevicesScreenState
           looping: false,
           allowedScreenSleep: false,
           aspectRatio: 16 / 9,
+          deviceOrientationsAfterFullScreen: [
+            DeviceOrientation.portraitUp,
+            DeviceOrientation.landscapeLeft,
+            DeviceOrientation.landscapeRight,
+          ],
           controlsConfiguration: const BetterPlayerControlsConfiguration(
             enableQualities: true,
             enableOverflowMenu: true,
             enableSubtitles: false,
           ),
-
           errorBuilder: (context, errorMessage) =>
               _buildErrorWidget(context, errorMessage),
-          // eventListener: _handlePlayerEvents,
         ),
         betterPlayerDataSource: source,
       );
@@ -91,14 +100,6 @@ class _VideoPlayerOldDevicesScreenState
       setState(() => _isPlayerReady = false);
     }
   }
-
-  // void _handlePlayerEvents(BetterPlayerEvent event) {
-  //   if (event.betterPlayerEventType == BetterPlayerEventType.finished) {
-  //     context
-  //         .read<MarkAsWatchedCubit>()
-  //         .markAsWatched(videoId: widget.videoId!, courseId: widget.courseId!);
-  //   }
-  // }
 
   Widget _buildErrorWidget(BuildContext context, String? errorMessage) =>
       Center(
@@ -130,8 +131,8 @@ class _VideoPlayerOldDevicesScreenState
 
   @override
   void dispose() {
-    // enableScreenshot();
     toggleScreenshot();
+    _betterPlayerController.pause();
     _betterPlayerController.dispose();
     _mainTabController.dispose();
     super.dispose();
@@ -271,7 +272,9 @@ class _VideoPlayerOldDevicesScreenState
                                             _betterPlayerController.dispose();
                                           }
 
-                                          _initializePlayer(state.video!);
+                                          Future.microtask(() {
+                                            _initializePlayer(state.video!);
+                                          });
                                         },
                                         icon: Padding(
                                           padding: const EdgeInsets.symmetric(

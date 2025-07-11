@@ -1,15 +1,17 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:external_path/external_path.dart';
-import 'package:mk_academy/core/utils/cache_helper.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 
 import 'package:mk_academy/core/errors/error_handler.dart';
+import 'package:mk_academy/core/utils/cache_helper.dart';
 
 import '../../../errors/failuer.dart';
 import '../../../utils/enums.dart';

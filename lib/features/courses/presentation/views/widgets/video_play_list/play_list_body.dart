@@ -54,7 +54,8 @@ class PlayListBody extends StatelessWidget {
                       MarkAsWatchedCubit(getit.get<VideoRepo>()),
                 ),
               ],
-              child: Platform.isAndroid && sdkInt < oldDevicesVer
+              child: Platform.isIOS ||
+                      (Platform.isAndroid && sdkInt < oldDevicesVer)
                   ? VideoPlayerOldDevicesScreen(
                       videoId: video.id,
                       videoName: video.name ?? "",

@@ -66,6 +66,7 @@ void main() async {
     final androidInfo = await DeviceInfoPlugin().androidInfo;
     sdkInt = androidInfo.version.sdkInt;
   }
+
   // await FirebaseApi().initNotifications();
   runApp(const MyApp());
 }
